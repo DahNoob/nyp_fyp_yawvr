@@ -5,7 +5,7 @@ using OVR;
 
 public class PlayerHandler : MonoBehaviour
 {
-    [Header("References")]
+    [Header("Hands")]
     public GameObject rightHand;
     public GameObject leftHand;
 

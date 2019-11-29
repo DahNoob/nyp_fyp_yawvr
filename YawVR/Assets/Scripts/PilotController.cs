@@ -21,6 +21,9 @@ public class PilotController : MonoBehaviour
     //The corresponding controller
     private OVRInput.Controller m_controller;
 
+    [SerializeField]
+    MeshRenderer m_armObject;
+
     //Test variables
     private Vector3 origScale;
     private bool yeet = false;
@@ -33,6 +36,7 @@ public class PilotController : MonoBehaviour
     {
         if (yeet)
             transform.localScale = origScale + new Vector3(0.03f, 0.03f, 0.03f) * Mathf.Cos(Time.time);
+        m_armObject.gameObject.SetActive(GetComponent<OVRGrabbable>().isGrabbed);
     }
 
     private void OnCollisionEnter(Collision collision)
