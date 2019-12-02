@@ -44,7 +44,7 @@
 	  void surf(Input IN, inout SurfaceOutput o)
 	  {
 		  float2 skin_uv_offset = fmod(_Time.y * _SkinSpeed, 2.0) - 1.0;//float2(_Time.y, _Time.y) * _SkinSpeed;
-		  float4 skin_tex = tex2D(_SkinTexture, IN.uv_SkinTexture + skin_uv_offset);
+		  float4 skin_tex = tex2D(_SkinTexture, IN.uv_SkinTexture + skin_uv_offset) * _SkinAlpha;
 		  float rim_color_alpha = (cos(_Time.y * _RimFadeRate) + 1.0) * 0.5 + (skin_tex.a);//(_CosTime.a * _RimFadeRate) + 1.0;
 		  float4 rim_color = _RimColor * rim_color_alpha; //_RimColor * float4(rim_color_alpha, rim_color_alpha, rim_color_alpha, rim_color_alpha);
 		  //o.Albedo = _InnerColor;
