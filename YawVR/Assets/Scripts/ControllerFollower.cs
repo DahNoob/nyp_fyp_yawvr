@@ -27,9 +27,12 @@ public class ControllerFollower : MonoBehaviour
     [Range(0.0f, 20.0f)]
     public float m_followSpeed = 8.0f;
 
+    //Local variables
+    private Vector3 prevPosition;
+
     void Start()
     {
-        
+        prevPosition = gameObject.transform.localPosition;
     }
 
     void Update()
@@ -43,6 +46,15 @@ public class ControllerFollower : MonoBehaviour
             Quaternion objectRotGoal = OVRInput.GetLocalControllerRotation(m_controller);
             t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (prevPosition != gameObject.transform.localPosition)
+        {
+            float magnitude = (prevPosition - gameObject.transform.localPosition).sqrMagnitude;
+            OVRInput.SetControllerVibration(magnitude, 0.25f, m_controller);
         }
     }
 }

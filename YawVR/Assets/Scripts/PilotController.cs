@@ -33,6 +33,7 @@ public class PilotController : MonoBehaviour
     private Color origArmRimColor;
 
     private Color currArmInnerColor, currArmRimColor;
+    private bool prevGrab = false;
 
     private Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
 
@@ -44,6 +45,15 @@ public class PilotController : MonoBehaviour
     private void Update()
     {
         bool isGrabbed = GetComponent<OVRGrabbable>().isGrabbed;
+        //if is on frame wher it is grabbed or ungrabbed
+        if (prevGrab != isGrabbed)
+        {
+            prevGrab = isGrabbed;
+            if (isGrabbed)
+            {
+                OVRInput.SetControllerVibration(0.25f, 0.25f, m_controller);
+            }
+        }
         m_armFollower.m_enabled = isGrabbed;
         //m_armObject.gameObject.SetActive(isGrabbed);
         //if(isGrabbed)
