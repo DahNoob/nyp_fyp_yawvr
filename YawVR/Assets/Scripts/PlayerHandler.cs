@@ -9,9 +9,9 @@ public class PlayerHandler : MonoBehaviour
     public GameObject rightHand;
     public GameObject leftHand;
 
-    //[Header("Debug Values")]
-    //[SerializeField]
-    //private bool leftGrabbing;
+    [Header("Debug")]
+    [SerializeField]
+    private GameObject dumbCubesPrefab;
     void Start()
     {
         
@@ -23,6 +23,10 @@ public class PlayerHandler : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
             OVRManager.display.RecenterPose();
+        }
+        if (OVRInput.GetDown(OVRInput.Button.Four))
+        {
+            Instantiate(dumbCubesPrefab);
         }
     }
 }
