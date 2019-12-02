@@ -22,8 +22,11 @@ public class PilotController : MonoBehaviour
     //The corresponding controller
     private OVRInput.Controller m_controller;
 
+    [Header("References")]
     [SerializeField]
     MeshRenderer m_armObject;
+    [SerializeField]
+    ControllerFollower m_armFollower;
 
     //Local variables
     private Color origArmInnerColor;
@@ -41,6 +44,7 @@ public class PilotController : MonoBehaviour
     private void Update()
     {
         bool isGrabbed = GetComponent<OVRGrabbable>().isGrabbed;
+        m_armFollower.m_enabled = isGrabbed;
         //m_armObject.gameObject.SetActive(isGrabbed);
         //if(isGrabbed)
         //{

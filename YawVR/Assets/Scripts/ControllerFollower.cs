@@ -13,7 +13,7 @@ using UnityEngine;
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
 ** 1    02/12/2019, 2:05PM      DahNoob   Created
-* 
+** 2    02/12/2019, 2:43PM      DahNoob   Implemented Version 1
 *******************************/
 public class ControllerFollower : MonoBehaviour
 {
