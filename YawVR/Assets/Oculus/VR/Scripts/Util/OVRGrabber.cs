@@ -392,4 +392,6 @@ public class OVRGrabber : MonoBehaviour
 			}
 		}
 	}
+
+    public OVRInput.Controller GetController() { return m_controller; }
 }

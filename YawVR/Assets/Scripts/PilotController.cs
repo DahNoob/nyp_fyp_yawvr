@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OVRTouchSample;
 
 /******************************  
 ** Name: Pilot Controller Behaviour
@@ -22,47 +21,127 @@ public class PilotController : MonoBehaviour
     //The corresponding controller
     private OVRInput.Controller m_controller;
 
+    [Header("Configuration")]
+    [SerializeField]
+    private float m_handTriggerBegin = 0.55f;
+    [SerializeField]
+    private float m_handTriggerEnd = 0.35f;
+
     [Header("References")]
     [SerializeField]
     MeshRenderer m_armObject;
     [SerializeField]
     ControllerFollower m_armFollower;
+    [SerializeField]
+    GameObject m_ringObject;
+
+    [Header("Offsets")]
+    [SerializeField]
+    Transform m_pivotOffset;
+    [SerializeField]
+    Transform m_ringOffset;
 
     //Local variables
-    private Color origArmInnerColor;
-    private Color origArmRimColor;
 
+    private OVRGrabber grabber;
     private Color currArmInnerColor, currArmRimColor;
-    private bool prevGrab = false;
+    private bool isAttached, isHandTriggered = false;
 
+    private Color ORIG_ARM_INNER_COLOR;
+    private Color ORIG_ARM_RIM_COLOR;
     private Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
-
+    
     private void Start()
     {
-        origArmInnerColor = currArmInnerColor = m_armObject.material.GetColor("_InnerColor");
-        origArmRimColor = currArmRimColor = m_armObject.material.GetColor("_RimColor");
+        ORIG_ARM_INNER_COLOR = m_armObject.material.GetColor("_InnerColor");
+        ORIG_ARM_RIM_COLOR = m_armObject.material.GetColor("_RimColor");
+        currArmInnerColor = currArmRimColor = TRANSPARENT_COLOR;
+        m_armObject.material.SetColor("_InnerColor", TRANSPARENT_COLOR);
+        m_armObject.material.SetColor("_RimColor", TRANSPARENT_COLOR);
     }
     private void Update()
     {
-        bool isGrabbed = GetComponent<OVRGrabbable>().isGrabbed;
-        //if is on frame wher it is grabbed or ungrabbed
-        if (prevGrab != isGrabbed)
+        if (!isAttached)
+            return;
+
+        if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
+            (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
         {
-            prevGrab = isGrabbed;
-            if (isGrabbed)
-            {
-                OVRInput.SetControllerVibration(0.25f, 0.25f, m_controller);
-            }
+            isHandTriggered = !isHandTriggered;
+            if (isHandTriggered)
+                VibrateCrescendo();
         }
-        m_armFollower.m_enabled = isGrabbed;
+        //if is on frame wher it is grabbed or ungrabbed
+        //if (prevGrab != isGrabbed)
+        //{
+        //    prevGrab = isGrabbed;
+        //    if (isGrabbed)
+        //    {
+        //        VibrationManager.SetControllerVibration(m_controller, 4, 2, 200);
+        //    }
+        //}
         //m_armObject.gameObject.SetActive(isGrabbed);
         //if(isGrabbed)
         //{
         float deltaTime_xFour = Time.deltaTime * 4.0f;
-        currArmInnerColor = Color.Lerp(currArmInnerColor, isGrabbed ? origArmInnerColor : TRANSPARENT_COLOR, deltaTime_xFour);
-        currArmRimColor = Color.Lerp(currArmRimColor, isGrabbed ? origArmRimColor : TRANSPARENT_COLOR, deltaTime_xFour);
+
+        m_armFollower.m_enabled = isHandTriggered;
+        currArmInnerColor = Color.Lerp(currArmInnerColor, isHandTriggered ? ORIG_ARM_INNER_COLOR : TRANSPARENT_COLOR, deltaTime_xFour);
+        currArmRimColor = Color.Lerp(currArmRimColor, isHandTriggered ? ORIG_ARM_RIM_COLOR : TRANSPARENT_COLOR, deltaTime_xFour);
         m_armObject.material.SetColor("_InnerColor", currArmInnerColor);
         m_armObject.material.SetColor("_RimColor", currArmRimColor);
         //}
     }
+    private void FixedUpdate()
+    {
+        //MoveGrabbedObject(OVRInput.GetLocalControllerPosition(m_controller), OVRInput.GetLocalControllerRotation(m_controller));
+        MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
+    }
+
+    protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot)
+    {
+        if (!isAttached)
+        {
+            return;
+        }
+
+        //Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
+        //Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
+        //Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
+        Rigidbody body = GetComponent<Rigidbody>();
+
+        body.MovePosition(pos);
+        body.MoveRotation(rot);
+    }
+
+    void VibrateCrescendo()
+    {
+        OVRHapticsClip clip = new OVRHapticsClip();
+        for (int i = 0; i < 80; ++i)
+        {
+            clip.WriteSample(i % 7 == 0 ? (byte)(i * 2.5f) : (byte)0);
+        }
+        VibrationManager.SetControllerVibration(m_controller, clip);
+    }
+
+    void OnTriggerEnter(Collider otherCollider)
+    {
+        // Get the grab trigger
+        //print("ASD");
+        if (isAttached)
+            return;
+        OVRGrabber grabber = otherCollider.GetComponent<OVRGrabber>() ?? otherCollider.GetComponentInParent<OVRGrabber>();
+        if (grabber && grabber.GetController() == m_controller)
+        {
+            isAttached = true;
+            this.grabber = grabber;
+            VibrationManager.SetControllerVibration(m_controller, 4, 2, 200);
+            transform.Find("AnchorPivot").localPosition = m_pivotOffset.localPosition;
+            transform.Find("AnchorPivot").localRotation = m_pivotOffset.localRotation;
+            m_ringObject.transform.localPosition = m_ringOffset.localPosition;
+            m_ringObject.transform.localRotation = m_ringOffset.localRotation;
+            MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
+        }
+    }
+
 }
