@@ -26,6 +26,13 @@ public class PilotController : MonoBehaviour
     private float m_handTriggerBegin = 0.55f;
     [SerializeField]
     private float m_handTriggerEnd = 0.35f;
+    [SerializeField]
+    private float m_indexTriggerBegin = 0.55f;
+    [SerializeField]
+    private float m_indexTriggerEnd = 0.35f;
+    [SerializeField]
+    [Range(0.0f, 20.0f)]
+    private float m_armMaxSpeed = 14.0f;
 
     [Header("References")]
     [SerializeField]
@@ -45,11 +52,12 @@ public class PilotController : MonoBehaviour
 
     private OVRGrabber grabber;
     private Color currArmInnerColor, currArmRimColor;
-    private bool isAttached, isHandTriggered = false;
+    private bool isAttached, isHandTriggered, isIndexTriggered = false;
 
     private Color ORIG_ARM_INNER_COLOR;
     private Color ORIG_ARM_RIM_COLOR;
     private Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
+    private float ARM_MINSPEED;
     
     private void Start()
     {
@@ -58,6 +66,7 @@ public class PilotController : MonoBehaviour
         currArmInnerColor = currArmRimColor = TRANSPARENT_COLOR;
         m_armObject.material.SetColor("_InnerColor", TRANSPARENT_COLOR);
         m_armObject.material.SetColor("_RimColor", TRANSPARENT_COLOR);
+        ARM_MINSPEED = m_armFollower.m_followSpeed;
     }
     private void Update()
     {
@@ -71,6 +80,13 @@ public class PilotController : MonoBehaviour
             if (isHandTriggered)
                 VibrateCrescendo();
         }
+        if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
+            (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
+        {
+            isIndexTriggered = !isIndexTriggered;
+            if (isIndexTriggered && isHandTriggered)
+                VibrationManager.SetControllerVibration(m_controller, 8, 2, 100);
+        }
         //if is on frame wher it is grabbed or ungrabbed
         //if (prevGrab != isGrabbed)
         //{
@@ -83,11 +99,13 @@ public class PilotController : MonoBehaviour
         //m_armObject.gameObject.SetActive(isGrabbed);
         //if(isGrabbed)
         //{
+        float deltaTime_xTwo = Time.deltaTime * 2.0f;
         float deltaTime_xFour = Time.deltaTime * 4.0f;
 
         m_armFollower.m_enabled = isHandTriggered;
         currArmInnerColor = Color.Lerp(currArmInnerColor, isHandTriggered ? ORIG_ARM_INNER_COLOR : TRANSPARENT_COLOR, deltaTime_xFour);
         currArmRimColor = Color.Lerp(currArmRimColor, isHandTriggered ? ORIG_ARM_RIM_COLOR : TRANSPARENT_COLOR, deltaTime_xFour);
+        m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, deltaTime_xTwo);
         m_armObject.material.SetColor("_InnerColor", currArmInnerColor);
         m_armObject.material.SetColor("_RimColor", currArmRimColor);
         //}

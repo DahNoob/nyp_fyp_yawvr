@@ -24,9 +24,16 @@ public class PlayerHandler : MonoBehaviour
         {
             OVRManager.display.RecenterPose();
         }
-        if (OVRInput.GetDown(OVRInput.Button.Four))
+        if (OVRInput.GetDown(OVRInput.Button.Three))
         {
-            Instantiate(dumbCubesPrefab);
+            Instantiate(dumbCubesPrefab).transform.SetParent(GameObject.Find("CubePile").transform);
+        }
+        if(OVRInput.GetDown(OVRInput.Button.Four))
+        {
+            foreach (Transform item in GameObject.Find("CubePile").transform)
+            {
+                Destroy(item.gameObject);
+            }
         }
     }
 }
