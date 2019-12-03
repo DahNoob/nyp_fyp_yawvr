@@ -79,6 +79,8 @@ public class PilotController : MonoBehaviour
             isHandTriggered = !isHandTriggered;
             if (isHandTriggered)
                 VibrateCrescendo();
+            else
+                m_armFollower.m_followSpeed = ARM_MINSPEED;
         }
         if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
             (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
