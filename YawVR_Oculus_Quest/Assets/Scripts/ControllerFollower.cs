@@ -49,8 +49,10 @@ public class ControllerFollower : MonoBehaviour
             Transform t = GetComponent<Transform>();
             objectPosGoal = new Vector3(controllerPos.x * m_offsetScale.x, controllerPos.y * m_offsetScale.y, controllerPos.z * m_offsetScale.z) + m_offsetPosition;
             objectRotGoal = OVRInput.GetLocalControllerRotation(m_controller);
-            t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
-            t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
+            //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
+            //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
+            currPosition = objectPosGoal;
+            currRotation = objectRotGoal;
         }
         else if(m_origin)
         {
@@ -58,8 +60,10 @@ public class ControllerFollower : MonoBehaviour
             Transform t = GetComponent<Transform>();
             objectPosGoal = m_origin.localPosition;
             objectRotGoal = m_origin.localRotation;
-            t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
-            t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
+            //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
+            //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
+            currPosition = objectPosGoal;
+            currRotation = objectRotGoal;
         }
         //if (m_enabled)
         //{
@@ -78,18 +82,11 @@ public class ControllerFollower : MonoBehaviour
         //}
     }
 
-    //void FixedUpdate()
-    //{
-    //    if(m_enabled)
-    //    {
-    //        Vector3 controllerPos = OVRInput.GetLocalControllerPosition(m_controller);
-    //        Vector3 objectPosGoal = new Vector3(controllerPos.x * m_offsetScale.x, controllerPos.y * m_offsetScale.y, controllerPos.z * m_offsetScale.z) + m_offsetPosition;
-    //        Quaternion objectRotGoal = OVRInput.GetLocalControllerRotation(m_controller);
-    //        Transform t = GetComponent<Transform>();
-    //        GetComponent<Rigidbody>().MovePosition(objectPosGoal);
-    //        GetComponent<Rigidbody>().MoveRotation(objectRotGoal);
-    //    }
-    //}
+    void FixedUpdate()
+    {
+        transform.localPosition = Vector3.LerpUnclamped(transform.localPosition, currPosition, 0.2f);
+        transform.localRotation = Quaternion.SlerpUnclamped(transform.localRotation, currRotation, 0.2f);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
