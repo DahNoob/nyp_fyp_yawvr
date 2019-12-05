@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GUIManager : MonoBehaviour
 {
+    //[Header("Configurations")]
+    //[SerializeField]
+    //[Range(0.0f, 1.0f)]
+    //private float m_uiRotationAlpha = 0.5f;
+
+    [Header("Resources")]
     [SerializeField]
     private Transform m_cameraTransform;
 
@@ -14,14 +20,14 @@ public class GUIManager : MonoBehaviour
     void Start()
     {
         transform.position = m_cameraTransform.position;
-        transform.eulerAngles = new Vector3(0, m_cameraTransform.rotation.y, 0);
+        transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
     }
     
     void Update()
     {
         transform.position = m_cameraTransform.position;
-        transform.eulerAngles = new Vector3(0, m_cameraTransform.rotation.y, 0);
+        transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
     }
 

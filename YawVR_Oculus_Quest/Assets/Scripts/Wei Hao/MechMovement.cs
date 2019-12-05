@@ -66,7 +66,7 @@ public class MechMovement : MonoBehaviour
         {
             //speed += acceleration * Time.deltaTime;
             var moveDirGlobal = primaryAxis * speed;
-            float rotY = Mathf.Deg2Rad * (transform.rotation.y/*+ Camera.main.transform.localRotation.y*/);
+            float rotY = Mathf.Deg2Rad * (transform.rotation.y - Camera.main.transform.localEulerAngles.y);
             var moveDirLocal = new Vector2(moveDirGlobal.x * Mathf.Cos(rotY) - moveDirGlobal.y * Mathf.Sin(rotY), moveDirGlobal.x * Mathf.Sin(rotY) + moveDirGlobal.y * Mathf.Cos(rotY));
             Vector3 derp = new Vector3(moveDirLocal.x, 0, moveDirLocal.y);
             Vector3 newPos = transform.position + derp * Time.deltaTime;

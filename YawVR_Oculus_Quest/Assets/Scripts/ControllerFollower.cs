@@ -29,6 +29,10 @@ public class ControllerFollower : MonoBehaviour
     public float m_followSpeed = 8.0f;
     public Transform m_origin;
 
+    [Header("References")]
+    [SerializeField]
+    private Transform m_playerTransform;
+
     //Local variables
     private Vector3 prevPosition, currPosition;
     private Quaternion currRotation;
@@ -47,8 +51,8 @@ public class ControllerFollower : MonoBehaviour
         {
             float follow_speed = m_followSpeed * Time.deltaTime;
             Transform t = GetComponent<Transform>();
-            objectPosGoal = new Vector3(controllerPos.x * m_offsetScale.x, controllerPos.y * m_offsetScale.y, controllerPos.z * m_offsetScale.z) + m_offsetPosition;
-            objectRotGoal = OVRInput.GetLocalControllerRotation(m_controller);
+            objectPosGoal = m_playerTransform.localPosition + Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
+            objectRotGoal = m_playerTransform.localRotation * OVRInput.GetLocalControllerRotation(m_controller);
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
             currPosition = objectPosGoal;
@@ -58,8 +62,8 @@ public class ControllerFollower : MonoBehaviour
         {
             float follow_speed = m_followSpeed * Time.deltaTime;
             Transform t = GetComponent<Transform>();
-            objectPosGoal = m_origin.localPosition;
-            objectRotGoal = m_origin.localRotation;
+            objectPosGoal = m_playerTransform.localPosition + Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * m_origin.localPosition;
+            objectRotGoal = m_playerTransform.localRotation * m_origin.localRotation;
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
             currPosition = objectPosGoal;
@@ -84,8 +88,8 @@ public class ControllerFollower : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.localPosition = Vector3.LerpUnclamped(transform.localPosition, currPosition, 0.2f);
-        transform.localRotation = Quaternion.SlerpUnclamped(transform.localRotation, currRotation, 0.2f);
+        transform.localPosition = Vector3.LerpUnclamped(transform.localPosition, currPosition, 0.05f);
+        transform.localRotation = Quaternion.SlerpUnclamped(transform.localRotation, currRotation, 0.05f);
     }
 
     private void OnCollisionEnter(Collision collision)
