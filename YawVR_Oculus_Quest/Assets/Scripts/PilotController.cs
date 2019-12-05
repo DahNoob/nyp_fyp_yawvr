@@ -89,18 +89,6 @@ public class PilotController : MonoBehaviour
             if (isIndexTriggered && isHandTriggered)
                 VibrationManager.SetControllerVibration(m_controller, 8, 2, 100);
         }
-        //if is on frame wher it is grabbed or ungrabbed
-        //if (prevGrab != isGrabbed)
-        //{
-        //    prevGrab = isGrabbed;
-        //    if (isGrabbed)
-        //    {
-        //        VibrationManager.SetControllerVibration(m_controller, 4, 2, 200);
-        //    }
-        //}
-        //m_armObject.gameObject.SetActive(isGrabbed);
-        //if(isGrabbed)
-        //{
         float deltaTime_xTwo = Time.deltaTime * 2.0f;
         float deltaTime_xFour = Time.deltaTime * 4.0f;
 
@@ -110,11 +98,9 @@ public class PilotController : MonoBehaviour
         m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, deltaTime_xTwo);
         m_armObject.material.SetColor("_InnerColor", currArmInnerColor);
         m_armObject.material.SetColor("_RimColor", currArmRimColor);
-        //}
     }
     private void FixedUpdate()
     {
-        //MoveGrabbedObject(OVRInput.GetLocalControllerPosition(m_controller), OVRInput.GetLocalControllerRotation(m_controller));
         if(isAttached)
             MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
     }
@@ -125,7 +111,7 @@ public class PilotController : MonoBehaviour
         {
             return;
         }
-
+        
         //Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
         //Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
         //Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
