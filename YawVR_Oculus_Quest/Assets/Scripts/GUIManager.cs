@@ -14,14 +14,14 @@ public class GUIManager : MonoBehaviour
     void Start()
     {
         transform.position = m_cameraTransform.position;
-        transform.localEulerAngles = new Vector3(0, m_cameraTransform.rotation.y, 0);
+        transform.eulerAngles = new Vector3(0, m_cameraTransform.rotation.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
     }
     
     void Update()
     {
         transform.position = m_cameraTransform.position;
-        transform.localEulerAngles = new Vector3(0, m_cameraTransform.rotation.y, 0);
+        transform.eulerAngles = new Vector3(0, m_cameraTransform.rotation.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
     }
 
