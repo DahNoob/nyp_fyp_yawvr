@@ -14,14 +14,29 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    03/12/2019, 12:53PM     DahNoob   Created
 ** 2    03/12/2019, 1:46 PM     DahNoob   Implemented
+** 3    06/12/2019, 9:34 AM     DahNoob   Made it a singleton (though not rlly much of a use for doing that rn)
 *******************************/
 [System.Serializable]
-public class VibrationManager// : MonoBehaviour
+public class VibrationManager : MonoBehaviour
 {
-    //public VibrationManager instance { get; } = new VibrationManager(); void Start()
-    //{
-    //    print("VibrationManager instanced!");
-    //}
+    public enum PREFABS
+    {
+        FLAT_LIGHT,
+        FLAT_MEDIUM,
+        FLAT_HARD,
+
+        ASCEND_HARD,
+        DESCEND_HARD
+    }
+
+    private static VibrationManager instance;
+
+    void Start()
+    {
+        if (instance == null)
+            instance = this;
+        print("VibrationManager instanced!");
+    }
 
     public static void SetControllerVibration(OVRInput.Controller _controller, int _iteration, int _frequency, int _strength)
     {
@@ -45,4 +60,6 @@ public class VibrationManager// : MonoBehaviour
         else if (_controller == OVRInput.Controller.LTouch)
             OVRHaptics.LeftChannel.Preempt(_clip);
     }
+
+    //public static void SetControllerVibration(OVRInput.Controller _controller, )
 }

@@ -9,9 +9,6 @@ public class PlayerHandler : MonoBehaviour
     public GameObject rightHand;
     public GameObject leftHand;
 
-    [Header("Debug")]
-    [SerializeField]
-    private GameObject dumbCubesPrefab;
     void Start()
     {
         

@@ -4,7 +4,7 @@ using UnityEngine;
 
 /******************************  
 ** Name: Persistent Behaviour
-** Desc: Makes it so objects with this behaviour will persist after scene changes
+** Desc: Makes it so objects with this behaviour will persist after scene changes, also acts as a singleton if needed
 ** Author: DahNoob
 ** Date: 27/11/2019, 5:05 PM
 **************************
@@ -14,10 +14,15 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    27/11/2019, 5:05 PM     DahNoob   Created and implemented
 *******************************/
+[System.Serializable]
 public class Persistent : MonoBehaviour
 {
+    public static Persistent instance { get; private set; }
     private void Start()
     {
         DontDestroyOnLoad(this);
+        if (instance == null)
+            instance = this;
+        print("Persistent instanced!");
     }
 }

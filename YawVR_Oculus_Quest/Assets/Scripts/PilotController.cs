@@ -31,8 +31,8 @@ public class PilotController : MonoBehaviour
     [SerializeField]
     private float m_indexTriggerEnd = 0.35f;
     [SerializeField]
-    [Range(0.0f, 20.0f)]
-    private float m_armMaxSpeed = 14.0f;
+    [Range(0.0f, 1.0f)]
+    private float m_armMaxSpeed = 0.2f;
 
     [Header("References")]
     [SerializeField]

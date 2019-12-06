@@ -20,18 +20,23 @@ public class ControllerFollower : MonoBehaviour
 {
     [Header("Settings")]
     public bool m_enabled = true;
+    public bool m_followCameraRotation = false;
 
     [Header("Configuration")]
     public OVRInput.Controller m_controller;
     public Vector3 m_offsetPosition = Vector3.zero;
     public Vector3 m_offsetScale = Vector3.one;
-    [Range(0.0f, 20.0f)]
-    public float m_followSpeed = 8.0f;
+    [Range(0.0f, 1.0f)]
+    public float m_followSpeed = 0.05f;
     public Transform m_origin;
 
     [Header("References")]
     [SerializeField]
     private Transform m_playerTransform;
+
+    [Header("Debug")]
+    [SerializeField]
+    private UnityEngine.UI.Text m_shakeStrengthText;
 
     //Local variables
     private Vector3 prevPosition, currPosition;
@@ -51,8 +56,8 @@ public class ControllerFollower : MonoBehaviour
         {
             float follow_speed = m_followSpeed * Time.deltaTime;
             Transform t = GetComponent<Transform>();
-            objectPosGoal = m_playerTransform.localPosition + Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
-            objectRotGoal = m_playerTransform.localRotation * OVRInput.GetLocalControllerRotation(m_controller);
+            objectPosGoal = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
+            objectRotGoal = OVRInput.GetLocalControllerRotation(m_controller);
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
             currPosition = objectPosGoal;
@@ -62,8 +67,8 @@ public class ControllerFollower : MonoBehaviour
         {
             float follow_speed = m_followSpeed * Time.deltaTime;
             Transform t = GetComponent<Transform>();
-            objectPosGoal = m_playerTransform.localPosition + Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * m_origin.localPosition;
-            objectRotGoal = m_playerTransform.localRotation * m_origin.localRotation;
+            objectPosGoal = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * m_origin.localPosition;
+            objectRotGoal = m_origin.localRotation;
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
             currPosition = objectPosGoal;
@@ -88,8 +93,8 @@ public class ControllerFollower : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.localPosition = Vector3.LerpUnclamped(transform.localPosition, currPosition, 0.05f);
-        transform.localRotation = Quaternion.SlerpUnclamped(transform.localRotation, currRotation, 0.05f);
+        transform.localPosition = m_playerTransform.localPosition + Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
+        transform.localRotation = m_playerTransform.localRotation * Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -100,6 +105,8 @@ public class ControllerFollower : MonoBehaviour
             int shakeStrength = (int)Mathf.Lerp(0.0f, 255.0f, magnitude * 0.02f);
             //print("shakeStrength : " + shakeStrength);
             VibrationManager.SetControllerVibration(m_controller, 8, 4, shakeStrength);
+            if (m_shakeStrengthText)
+                m_shakeStrengthText.text = shakeStrength.ToString();
         }
     }
 }
