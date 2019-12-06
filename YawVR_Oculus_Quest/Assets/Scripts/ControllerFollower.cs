@@ -52,11 +52,12 @@ public class ControllerFollower : MonoBehaviour
         Vector3 controllerPos = OVRInput.GetLocalControllerPosition(m_controller);
         //Vector3 objectPosGoal;
         //Quaternion objectRotGoal;
+        prevPosition = transform.localPosition;
+        prevRotation = transform.localRotation;
+
         if (m_enabled)
         {
-            Transform t = GetComponent<Transform>();
-            prevPosition = transform.localPosition;
-            prevRotation = transform.localRotation;
+            Transform t = GetComponent<Transform>();           
             goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
             goalRotation = OVRInput.GetLocalControllerRotation(m_controller);
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
@@ -95,8 +96,8 @@ public class ControllerFollower : MonoBehaviour
 
     void FixedUpdate()
     {
-        currPosition = Vector3.LerpUnclamped(prevPosition, goalPosition, m_followSpeed);
-        currRotation = Quaternion.SlerpUnclamped(prevRotation, goalRotation, m_followSpeed);
+        currPosition = Vector3.LerpUnclamped(currPosition, goalPosition, m_followSpeed);
+        currRotation = Quaternion.SlerpUnclamped(currRotation, goalRotation, m_followSpeed);
     }
 
     private void OnCollisionEnter(Collision collision)
