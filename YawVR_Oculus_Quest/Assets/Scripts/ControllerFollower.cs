@@ -39,8 +39,8 @@ public class ControllerFollower : MonoBehaviour
     private UnityEngine.UI.Text m_shakeStrengthText;
 
     //Local variables
-    private Vector3 prevPosition, currPosition;
-    private Quaternion currRotation;
+    private Vector3 prevPosition, goalPosition, currPosition;
+    private Quaternion prevRotation, goalRotation, currRotation;
 
     void Start()
     {
@@ -50,32 +50,32 @@ public class ControllerFollower : MonoBehaviour
     void Update()
     {
         Vector3 controllerPos = OVRInput.GetLocalControllerPosition(m_controller);
-        Vector3 objectPosGoal;
-        Quaternion objectRotGoal;
+        //Vector3 objectPosGoal;
+        //Quaternion objectRotGoal;
         if (m_enabled)
         {
-            float follow_speed = m_followSpeed * Time.deltaTime;
             Transform t = GetComponent<Transform>();
-            objectPosGoal = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
-            objectRotGoal = OVRInput.GetLocalControllerRotation(m_controller);
+            prevPosition = transform.localPosition;
+            prevRotation = transform.localRotation;
+            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
+            goalRotation = OVRInput.GetLocalControllerRotation(m_controller);
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
-            currPosition = objectPosGoal;
-            currRotation = objectRotGoal;
+            //currPosition = objectPosGoal;
+            //currRotation = objectRotGoal;
         }
         else if(m_origin)
         {
-            float follow_speed = m_followSpeed * Time.deltaTime;
             Transform t = GetComponent<Transform>();
-            objectPosGoal = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * m_origin.localPosition;
-            objectRotGoal = m_origin.localRotation;
+            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * m_origin.localPosition;
+            goalRotation = m_origin.localRotation;
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
-            currPosition = objectPosGoal;
-            currRotation = objectRotGoal;
+            //currPosition = objectPosGoal;
+            //currRotation = objectRotGoal;
         }
-        transform.localPosition = m_playerTransform.localPosition + Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
-        transform.localRotation = m_playerTransform.localRotation * Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
+        transform.localPosition = m_playerTransform.localPosition + currPosition;//Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
+        transform.localRotation = m_playerTransform.localRotation * currRotation;//Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
         //if (m_enabled)
         //{
         //    float follow_speed = m_followSpeed * Time.deltaTime;
@@ -95,7 +95,8 @@ public class ControllerFollower : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        currPosition = Vector3.LerpUnclamped(prevPosition, goalPosition, m_followSpeed);
+        currRotation = Quaternion.SlerpUnclamped(prevRotation, goalRotation, m_followSpeed);
     }
 
     private void OnCollisionEnter(Collision collision)
