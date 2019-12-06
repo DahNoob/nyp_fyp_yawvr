@@ -66,11 +66,6 @@ public class PilotController : MonoBehaviour
     
     private void Start()
     {
-        ORIG_ARM_INNER_COLOR = m_armObject.material.GetColor("_InnerColor");
-        ORIG_ARM_RIM_COLOR = m_armObject.material.GetColor("_RimColor");
-        currArmInnerColor = currArmRimColor = TRANSPARENT_COLOR;
-        m_armObject.material.SetColor("_InnerColor", TRANSPARENT_COLOR);
-        m_armObject.material.SetColor("_RimColor", TRANSPARENT_COLOR);
         ARM_MINSPEED = m_armFollower.m_followSpeed;
     }
     private void Update()
@@ -105,36 +100,21 @@ public class PilotController : MonoBehaviour
         m_armObject.material.SetColor("_RimColor", currArmRimColor);
     }
 
-    public void AttachArmModule(MechArmModule _armModule)
+    public void AttachArmModules(MechArmModule[] _armModules)
     {
-        modules.Add(_armModule);
-        MeshRenderer holoArm = m_controller.Equals(OVRInput.Controller.RTouch) ? _armModule.GetRightHoloObject().GetComponent<MeshRenderer>() :
-            _armModule.GetLeftHoloObject().GetComponent<MeshRenderer>();
-        holoArm.transform.SetParent(m_holos);
-        holoArm.transform.localPosition = Vector3.zero;
-        holoArm.transform.localRotation = Quaternion.identity;
-    }
-
-    void LateUpdate()
-    {
-        //if (isAttached)
-        //    MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
-    }
-
-    protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot)
-    {
-        if (!isAttached)
+        foreach (MechArmModule armModule in _armModules)
         {
-            return;
+            MechArmModule armModuleAgain = CustomUtility.IsObjectPrefab(armModule.gameObject) ? Instantiate(armModule, transform) : armModule;
+            modules.Add(armModuleAgain);
+            GameObject holoArm = armModuleAgain.InitController(m_controller).holoObject;
+            holoArm.transform.SetParent(m_holos);
+            holoArm.transform.localPosition = Vector3.zero;
+            holoArm.transform.localRotation = Quaternion.identity;
+            
         }
-        
-        //Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
-        //Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
-        //Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
-        Rigidbody body = GetComponent<Rigidbody>();
-
-        body.MovePosition(pos);
-        body.MoveRotation(rot);
+        currentHoloArm = modules[0].holoObject.transform.Find("Model").GetComponent<MeshRenderer>();
+        m_armObject = currentHoloArm;
+        ResetHoloArm();
     }
 
     void VibrateCrescendo()
@@ -145,6 +125,15 @@ public class PilotController : MonoBehaviour
             clip.WriteSample(i % 3 == 0 ? (byte)(i * 2.5f) : (byte)0);
         }
         VibrationManager.SetControllerVibration(m_controller, clip);
+    }
+
+    void ResetHoloArm()
+    {
+        ORIG_ARM_INNER_COLOR = m_armObject.material.GetColor("_InnerColor");
+        ORIG_ARM_RIM_COLOR = m_armObject.material.GetColor("_RimColor");
+        currArmInnerColor = currArmRimColor = TRANSPARENT_COLOR;
+        m_armObject.material.SetColor("_InnerColor", TRANSPARENT_COLOR);
+        m_armObject.material.SetColor("_RimColor", TRANSPARENT_COLOR);
     }
 
     void OnTriggerEnter(Collider otherCollider)

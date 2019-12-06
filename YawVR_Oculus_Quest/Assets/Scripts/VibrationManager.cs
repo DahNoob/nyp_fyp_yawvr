@@ -31,11 +31,17 @@ public class VibrationManager : MonoBehaviour
 
     private static VibrationManager instance;
 
-    void Start()
+    void Awake()
     {
         if (instance == null)
             instance = this;
-        print("VibrationManager instanced!");
+        print("VibrationManager awake!");
+    }
+
+    void Start()
+    {
+        
+        print("VibrationManager started!");
     }
 
     public static void SetControllerVibration(OVRInput.Controller _controller, int _iteration, int _frequency, int _strength)

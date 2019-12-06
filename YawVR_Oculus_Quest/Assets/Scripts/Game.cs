@@ -13,22 +13,22 @@ public class Game : MonoBehaviour
     [SerializeField]
     private MechArmModule[] m_leftArmModules;
 
-    void Start()
+    void Awake()
     {
         if (instance == null)
             instance = this;
+        print("Game awake!");
+    }
+
+    void Start()
+    {
         ApplyMechLoadouts();
+        print("Game started!");
     }
 
     public void ApplyMechLoadouts()
     {
-        foreach (MechArmModule module in m_leftArmModules)
-        {
-            PlayerHandler.instance.GetLeftPilotController().AttachArmModule(module);//so crappy but wutever
-        }
-        foreach (MechArmModule module in m_rightArmModules)
-        {
-            PlayerHandler.instance.GetRightPilotController().AttachArmModule(module);//bruh moment
-        }
+        PlayerHandler.instance.GetLeftPilotController().AttachArmModules(m_leftArmModules);
+        PlayerHandler.instance.GetRightPilotController().AttachArmModules(m_rightArmModules);
     }
 }

@@ -35,16 +35,44 @@ abstract public class MechArmModule : BaseMechModule
     [SerializeField]
     protected GameObject m_leftHoloObject;
 
+    [HideInInspector]
+    public GameObject armObject { get; private set; }
+    [HideInInspector]
+    public GameObject holoObject { get; private set; }
+
     void Start()
     {
         if (m_rightHoloObject && m_rightHoloObject.transform.Find("HandReference"))
         {
-            Destroy(m_rightHoloObject.transform.Find("HandReference"));
+            Destroy(m_rightHoloObject.transform.Find("HandReference").gameObject);
         }
         if (m_leftHoloObject && m_leftHoloObject.transform.Find("HandReference"))
         {
-            Destroy(m_leftHoloObject.transform.Find("HandReference"));
+            Destroy(m_leftHoloObject.transform.Find("HandReference").gameObject);
         }
+    }
+
+    //Initialises the arm module so it sets the armObject and holoObject to the corresponding controller whilst deleting the opposing ones
+    public MechArmModule InitController(OVRInput.Controller _controller)
+    {
+        if(_controller.Equals(OVRInput.Controller.LTouch))
+        {
+            Destroy(m_rightHoloObject);
+            Destroy(m_rightArmObject);
+            holoObject = m_leftHoloObject;
+            armObject = m_leftArmObject;
+        }
+        else
+        {
+            Destroy(m_leftHoloObject);
+            Destroy(m_leftArmObject);
+            holoObject = m_rightHoloObject;
+            armObject = m_rightArmObject;
+        }
+        name = m_moduleName;
+        holoObject.name = name + "Holo";
+        //armObject.name = name + "Arm";
+        return this;
     }
 
     public GameObject GetRightArmObject()

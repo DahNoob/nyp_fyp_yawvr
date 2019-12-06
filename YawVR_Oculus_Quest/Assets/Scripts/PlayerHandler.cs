@@ -17,10 +17,16 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField]
     private PilotController m_leftController;
 
-    void Start()
+    void Awake()
     {
         if (instance == null)
             instance = this;
+        print("PlayerHandler awake!");
+    }
+
+    void Start()
+    {
+        print("PlayerHandler started!");
     }
     
     // Update is called once per frame

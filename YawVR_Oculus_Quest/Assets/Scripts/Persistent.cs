@@ -18,11 +18,16 @@ using UnityEngine;
 public class Persistent : MonoBehaviour
 {
     public static Persistent instance { get; private set; }
-    private void Start()
+
+    private void Awake()
     {
         DontDestroyOnLoad(this);
         if (instance == null)
             instance = this;
-        print("Persistent instanced!");
+        print("Persistent awake!");
+    }
+    void Start()
+    {
+        print("Persistent started!");
     }
 }
