@@ -74,6 +74,8 @@ public class ControllerFollower : MonoBehaviour
             currPosition = objectPosGoal;
             currRotation = objectRotGoal;
         }
+        transform.localPosition = m_playerTransform.localPosition + Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
+        transform.localRotation = m_playerTransform.localRotation * Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
         //if (m_enabled)
         //{
         //    float follow_speed = m_followSpeed * Time.deltaTime;
@@ -93,8 +95,7 @@ public class ControllerFollower : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.localPosition = m_playerTransform.localPosition + Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
-        transform.localRotation = m_playerTransform.localRotation * Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
+        
     }
 
     private void OnCollisionEnter(Collision collision)

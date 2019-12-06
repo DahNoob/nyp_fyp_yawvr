@@ -98,11 +98,12 @@ public class PilotController : MonoBehaviour
         m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, deltaTime_xTwo);
         m_armObject.material.SetColor("_InnerColor", currArmInnerColor);
         m_armObject.material.SetColor("_RimColor", currArmRimColor);
+        if (isAttached)
+            MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
     }
     private void FixedUpdate()
     {
-        if(isAttached)
-            MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
+        
     }
 
     protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot)
