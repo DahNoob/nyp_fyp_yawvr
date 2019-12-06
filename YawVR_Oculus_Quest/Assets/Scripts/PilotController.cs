@@ -41,6 +41,8 @@ public class PilotController : MonoBehaviour
     ControllerFollower m_armFollower;
     [SerializeField]
     GameObject m_ringObject;
+    [SerializeField]
+    Transform m_holos;
 
     [Header("Offsets")]
     [SerializeField]
@@ -50,9 +52,12 @@ public class PilotController : MonoBehaviour
 
     //Local variables
 
-    private OVRGrabber grabber;
+    //private OVRGrabber grabber;
     private Color currArmInnerColor, currArmRimColor;
     private bool isAttached, isHandTriggered, isIndexTriggered = false;
+    private MeshRenderer currentHoloArm;
+    private List<MechArmModule> modules = new List<MechArmModule>();
+    private int currModuleIndex = 0;
 
     private Color ORIG_ARM_INNER_COLOR;
     private Color ORIG_ARM_RIM_COLOR;
@@ -100,6 +105,16 @@ public class PilotController : MonoBehaviour
         m_armObject.material.SetColor("_RimColor", currArmRimColor);
     }
 
+    public void AttachArmModule(MechArmModule _armModule)
+    {
+        modules.Add(_armModule);
+        MeshRenderer holoArm = m_controller.Equals(OVRInput.Controller.RTouch) ? _armModule.GetRightHoloObject().GetComponent<MeshRenderer>() :
+            _armModule.GetLeftHoloObject().GetComponent<MeshRenderer>();
+        holoArm.transform.SetParent(m_holos);
+        holoArm.transform.localPosition = Vector3.zero;
+        holoArm.transform.localRotation = Quaternion.identity;
+    }
+
     void LateUpdate()
     {
         //if (isAttached)
@@ -142,14 +157,16 @@ public class PilotController : MonoBehaviour
         if (grabber && grabber.GetController() == m_controller)
         {
             isAttached = true;
-            this.grabber = grabber;
+            //this.grabber = grabber;
             VibrationManager.SetControllerVibration(m_controller, 10, 2, 200);
             transform.Find("AnchorPivot").localPosition = m_pivotOffset.localPosition;
             transform.Find("AnchorPivot").localRotation = m_pivotOffset.localRotation;
             m_ringObject.transform.localPosition = m_ringOffset.localPosition;
             m_ringObject.transform.localRotation = m_ringOffset.localRotation;
             transform.SetParent(grabber.transform);
-            transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            //transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
         }
     }
 

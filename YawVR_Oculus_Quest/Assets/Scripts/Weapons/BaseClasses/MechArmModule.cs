@@ -46,4 +46,21 @@ abstract public class MechArmModule : BaseMechModule
             Destroy(m_leftHoloObject.transform.Find("HandReference"));
         }
     }
+
+    public GameObject GetRightArmObject()
+    {
+        return m_rightArmObject;
+    }
+    public GameObject GetLeftArmObject()
+    {
+        return m_leftArmObject;
+    }
+    public GameObject GetRightHoloObject()
+    {
+        return m_rightHoloObject;
+    }
+    public GameObject GetLeftHoloObject()
+    {
+        return m_leftHoloObject;
+    }
 }

@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using OVR;
 
+[System.Serializable]
 public class PlayerHandler : MonoBehaviour
 {
+    public static PlayerHandler instance { get; private set; }
+
     [Header("Hands")]
     public GameObject rightHand;
     public GameObject leftHand;
+    [Header("Pilot Controllers")]
+    [SerializeField]
+    private PilotController m_rightController;
+    [SerializeField]
+    private PilotController m_leftController;
 
     void Start()
     {
-        
+        if (instance == null)
+            instance = this;
     }
     
     // Update is called once per frame
@@ -32,5 +41,13 @@ public class PlayerHandler : MonoBehaviour
         //        Destroy(item.gameObject);
         //    }
         //}
+    }
+    public PilotController GetRightPilotController()
+    {
+        return m_rightController;
+    }
+    public PilotController GetLeftPilotController()
+    {
+        return m_leftController;
     }
 }

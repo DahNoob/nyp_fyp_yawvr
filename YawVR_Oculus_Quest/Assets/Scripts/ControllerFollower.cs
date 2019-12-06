@@ -57,10 +57,10 @@ public class ControllerFollower : MonoBehaviour
 
         if (m_enabled)
         {
-            float camRot = (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0.0f);
+            //float camRot = (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0.0f);
             Transform t = GetComponent<Transform>();           
-            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y + camRot, Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
-            goalRotation = OVRInput.GetLocalControllerRotation(m_controller) * Quaternion.AngleAxis(camRot, Vector3.up);
+            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
+            goalRotation = OVRInput.GetLocalControllerRotation(m_controller);// * Quaternion.AngleAxis(camRot, Vector3.up);
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
             //currPosition = objectPosGoal;
@@ -70,8 +70,8 @@ public class ControllerFollower : MonoBehaviour
         {
             float camRot = (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0.0f);
             Transform t = GetComponent<Transform>();
-            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y + camRot, Vector3.up) * m_origin.localPosition;
-            goalRotation = m_origin.localRotation * Quaternion.AngleAxis(camRot, Vector3.up);
+            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * m_origin.localPosition;
+            goalRotation = m_origin.localRotation;// * Quaternion.AngleAxis(camRot, Vector3.up);
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
             //currPosition = objectPosGoal;
