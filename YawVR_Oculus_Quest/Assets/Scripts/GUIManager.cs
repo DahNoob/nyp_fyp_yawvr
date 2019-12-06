@@ -23,8 +23,8 @@ public class GUIManager : MonoBehaviour
         transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
     }
-    
-    void Update()
+
+    void LateUpdate()
     {
         transform.position = m_cameraTransform.position;
         transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);

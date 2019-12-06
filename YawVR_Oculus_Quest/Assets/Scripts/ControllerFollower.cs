@@ -58,7 +58,7 @@ public class ControllerFollower : MonoBehaviour
         if (m_enabled)
         {
             Transform t = GetComponent<Transform>();           
-            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
+            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y + (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
             goalRotation = OVRInput.GetLocalControllerRotation(m_controller);
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
@@ -68,15 +68,14 @@ public class ControllerFollower : MonoBehaviour
         else if(m_origin)
         {
             Transform t = GetComponent<Transform>();
-            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y - (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * m_origin.localPosition;
+            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y + (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0), Vector3.up) * m_origin.localPosition;
             goalRotation = m_origin.localRotation;
             //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
             //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
             //currPosition = objectPosGoal;
             //currRotation = objectRotGoal;
         }
-        transform.localPosition = m_playerTransform.localPosition + currPosition;//Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
-        transform.localRotation = m_playerTransform.localRotation * currRotation;//Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
+        
         //if (m_enabled)
         //{
         //    float follow_speed = m_followSpeed * Time.deltaTime;
@@ -100,12 +99,18 @@ public class ControllerFollower : MonoBehaviour
         currRotation = Quaternion.SlerpUnclamped(currRotation, goalRotation, m_followSpeed);
     }
 
+    void LateUpdate()
+    {
+        transform.localPosition = m_playerTransform.localPosition + currPosition;//Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
+        transform.localRotation = m_playerTransform.localRotation * currRotation;//Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (prevPosition != gameObject.transform.localPosition)
         {
             float magnitude = (prevPosition - gameObject.transform.localPosition).sqrMagnitude * 2;
-            int shakeStrength = (int)Mathf.Lerp(0.0f, 255.0f, magnitude * 0.02f);
+            int shakeStrength = (int)Mathf.Lerp(0.0f, 255.0f, magnitude);
             //print("shakeStrength : " + shakeStrength);
             VibrationManager.SetControllerVibration(m_controller, 8, 4, shakeStrength);
             if (m_shakeStrengthText)
