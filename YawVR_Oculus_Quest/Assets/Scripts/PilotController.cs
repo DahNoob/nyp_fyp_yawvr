@@ -102,8 +102,8 @@ public class PilotController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (isAttached)
-            MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
+        //if (isAttached)
+        //    MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
     }
 
     protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot)
@@ -127,7 +127,7 @@ public class PilotController : MonoBehaviour
         OVRHapticsClip clip = new OVRHapticsClip();
         for (int i = 0; i < 80; ++i)
         {
-            clip.WriteSample(i % 7 == 0 ? (byte)(i * 2.5f) : (byte)0);
+            clip.WriteSample(i % 3 == 0 ? (byte)(i * 2.5f) : (byte)0);
         }
         VibrationManager.SetControllerVibration(m_controller, clip);
     }
@@ -143,12 +143,13 @@ public class PilotController : MonoBehaviour
         {
             isAttached = true;
             this.grabber = grabber;
-            VibrationManager.SetControllerVibration(m_controller, 4, 2, 200);
+            VibrationManager.SetControllerVibration(m_controller, 10, 2, 200);
             transform.Find("AnchorPivot").localPosition = m_pivotOffset.localPosition;
             transform.Find("AnchorPivot").localRotation = m_pivotOffset.localRotation;
             m_ringObject.transform.localPosition = m_ringOffset.localPosition;
             m_ringObject.transform.localRotation = m_ringOffset.localRotation;
-            MoveGrabbedObject(grabber.transform.position, grabber.transform.rotation);
+            transform.SetParent(grabber.transform);
+            transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
     }
 
