@@ -7,14 +7,21 @@ public class Enemy_Roam : EnemyBase
     private GameObject Player;
     private int maxDistance = 10;
     private int minDistance = 5;
-    private int attackRange = 3;
+    private int chaseRange = 15;
+    private int attackRange = 5;//3;
     private int rotationSpeed = 5;
 
-    private float attackCooldown = 1.0f;
+    private float attackCooldown = 2.0f;
+    private float attackWindUp = 2.0f;
     private int leapSpeed;
+    private bool readyToAttack = true;
+    private Vector3 player_LastPosition;
 
-    [SerializeField]
+    private Rigidbody rb;
+
     private States currentState;
+
+    public ParticleSystem poof;
 
     // Start is called before the first frame update
     void Start()
@@ -24,13 +31,25 @@ public class Enemy_Roam : EnemyBase
         damage = 1;
         moveSpeed = 4;
         leapSpeed = 8;
-        currentState = States.CHASE;
+        currentState = States.IDLE;
         Player = GameObject.Find("Player");
+        rb = gameObject.GetComponent<Rigidbody>();
 
-        Debug.Log("Current Health = " + health);
-        Debug.Log("Current Max Health = " + maxHealth);
-        Debug.Log("Current dmg = " + damage);
+        //Debug.Log("Current Health = " + health);
+        //Debug.Log("Current Max Health = " + maxHealth);
+        //Debug.Log("Current dmg = " + damage);
     }
+
+    public void PlayerLastPosition()
+    {
+        player_LastPosition = Player.transform.position;
+    }
+
+    public Vector3 LastPosition()
+    {
+        return player_LastPosition;
+    }
+    
 
     // Update is called once per frame
     void Update()
@@ -40,19 +59,23 @@ public class Enemy_Roam : EnemyBase
         // Debugging distance
         float distance = Vector3.Distance(transform.position, Player.transform.position);
 
-        if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
+        if (currentState != States.WAIT && Vector3.Distance(transform.position, Player.transform.position) <= chaseRange)
         {
             currentState = States.CHASE;
-            Debug.Log(distance);
+            //Debug.Log(distance);
 
             if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange + 1)
             {
+                PlayerLastPosition();
+                //player_LastPosition = Player.transform.position;
                 currentState = States.ATTACK;
             }
         }
 
         switch (currentState)
         {
+            case States.IDLE:
+                break;
             case States.CHASE:
                 Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
                 transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
@@ -60,16 +83,35 @@ public class Enemy_Roam : EnemyBase
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 break;
             case States.ATTACK:
-                //transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
-                attackCooldown -= 1.0f * Time.deltaTime;
 
-                Vector3 StoredLocation = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                //Debug.Log("Attack Timer: " + pauseTimer);
+                //// Store player last position when target current state changed to ATTACK
+                //player_LastPosition = Player.transform.position;
+                //new Vector3(player_LastPosition.x, 0, player_LastPosition.z)
+                transform.LookAt(LastPosition());
+
+                // Homing charge
+                //transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
+
+                attackWindUp -= 1.0f * Time.deltaTime;
+
+                //Debug.Log("Attack Timer: " + attackCooldown);
+                if (attackWindUp <= 0.0f)
+                {
+                    transform.position += transform.forward * leapSpeed * Time.deltaTime;   
+                }
+                break;
+            case States.WAIT:
+                transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
+
+                attackCooldown -= 1.0f * Time.deltaTime;
                 if (attackCooldown <= 0.0f)
                 {
-                    transform.position += transform.up * moveSpeed * Time.deltaTime;
-                    //transform.position += transform.forward * leapSpeed * Time.deltaTime;     
+                    attackCooldown = 2.0f;
+                    attackWindUp = 2.0f;
+                    readyToAttack = true;
+                    currentState = States.CHASE;
                 }
+
                 break;
             default:
                 break;
@@ -82,7 +124,13 @@ public class Enemy_Roam : EnemyBase
     {
         if (collision.gameObject.tag == "Mech")
         {
-            attackCooldown = 1.0f;
+            currentState = States.WAIT;
+        }
+
+        if (collision.gameObject.tag == "Bullet")
+        {
+            takeDamage(1);
+            collision.gameObject.SetActive(false);
         }
     }
 }
