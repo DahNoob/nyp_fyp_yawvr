@@ -17,6 +17,7 @@ using UnityEngine;
 ** 3    FORGOT AGAIN            DahNoob   Started implementation of MechArmModule aka weapon system
 ** 4    09/12/2019, 11:39 AM    DahNoob   Minor changes and optimisations
 ** 5    09/12/2019, 1:07 PM     DahNoob   Implemented usage of MechArmModules
+** 6    09/12/2019, 5:30 PM     DahNoob   Refactored to accomodate for the overhauled MechArmModule system
 *******************************/
 public class PilotController : MonoBehaviour
 {
@@ -114,22 +115,31 @@ public class PilotController : MonoBehaviour
         m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
     }
 
-    public void AttachArmModules(MechArmModule[] _armModules)
+    public void AttachArmModules(GameObject[] _armModulePackages)
     {
-        foreach (MechArmModule armModule in _armModules)
+        foreach (GameObject armModulePackage in _armModulePackages)
         {
-            MechArmModule armModuleAgain = CustomUtility.IsObjectPrefab(armModule.gameObject) ? Instantiate(armModule, transform) : armModule;
-            modules.Add(armModuleAgain);
-            GameObject holoArm = armModuleAgain.InitController(m_controller).holoObject;
-            holoArm.transform.SetParent(m_holos);
-            holoArm.transform.localPosition = Vector3.zero;
-            holoArm.transform.localRotation = Quaternion.identity;
-            GameObject armObject = armModuleAgain.armObject;
-            armObject.transform.SetParent(m_armFollower.transform);
-            armObject.transform.localPosition = Vector3.zero;
-            armObject.transform.localRotation = Quaternion.identity;
+            Transform validFind = armModulePackage.transform.Find(m_controller == OVRInput.Controller.RTouch ? "Right" : "Left");
+            if (validFind != null)
+            {
+                MechArmModule armModuleAgain = (CustomUtility.IsObjectPrefab(validFind.gameObject) ? Instantiate(validFind.gameObject, transform) : validFind.gameObject).GetComponent<MechArmModule>();
+                modules.Add(armModuleAgain);
+                GameObject holoArm = armModuleAgain.holoObject;
+                holoArm.transform.SetParent(m_holos);
+                holoArm.transform.localPosition = Vector3.zero;
+                holoArm.transform.localRotation = Quaternion.identity;
+                GameObject armObject = armModuleAgain.armObject;
+                armObject.transform.SetParent(m_armFollower.transform);
+                armObject.transform.localPosition = Vector3.zero;
+                armObject.transform.localRotation = Quaternion.identity;
+                armModuleAgain.follower = m_armFollower;
+            }
+            else
+            {
+                throw new System.Exception("Error! ArmModulePackage could not find MechArmModule!");
+            }
         }
-        SetCurrentModule(1);
+        SetCurrentModule(0);
     }
 
     void VibrateCrescendo()

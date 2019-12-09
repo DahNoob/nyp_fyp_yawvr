@@ -17,6 +17,11 @@ using UnityEngine;
 *******************************/
 public class NormalArmModule : MechArmModule
 {
+    [Header("Normal Arm Configuration")]
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    protected float m_followerMaxSpeed = 0.2f;
+
     public override bool Activate(OVRInput.Controller _controller)
     {
         throw new System.NotImplementedException();

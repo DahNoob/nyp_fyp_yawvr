@@ -9,9 +9,9 @@ public class Game : MonoBehaviour
 
     [Header("Default Mech Loadouts")]
     [SerializeField]
-    private MechArmModule[] m_rightArmModules;
+    private GameObject[] m_rightArmModules;
     [SerializeField]
-    private MechArmModule[] m_leftArmModules;
+    private GameObject[] m_leftArmModules;
 
     void Awake()
     {
