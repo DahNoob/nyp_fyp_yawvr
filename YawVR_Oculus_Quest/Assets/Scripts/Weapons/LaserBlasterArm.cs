@@ -26,44 +26,43 @@ public class LaserBlasterArm : MechArmModule
     protected Transform m_projectileLeftOrigin;
     [SerializeField]
     protected float m_shootInterval = 0.1f;
-    [SerializeField]
-    protected OVRInput.Controller m_controller;
 
     //Local variables
     private float shootTick;
     private OVRHapticsClip vibeClip;//vibe check dawg
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         if (!CustomUtility.IsObjectPrefab(m_projectilePrefab))
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
         vibeClip = new OVRHapticsClip();
-        for (int i = 0;i<30;++i)
+        for (int i = 0; i < 30; ++i)
         {
             vibeClip.WriteSample(i % 3 == 0 ? (byte)((30 - i) * 80) : (byte)0);
         }
     }
 
-    public override bool Activate()
+    public override bool Activate(OVRInput.Controller _controller)
     {
         shootTick = 0;
         return true;
     }
 
-    public override bool Hold()
+    public override bool Hold(OVRInput.Controller _controller)
     {
         shootTick += Time.deltaTime;
         if (shootTick > m_shootInterval)
         {
             shootTick -= m_shootInterval;
-            Transform origin = m_controller == OVRInput.Controller.RTouch ? m_projectileRightOrigin : m_projectileLeftOrigin;
+            Transform origin = _controller == OVRInput.Controller.RTouch ? m_projectileRightOrigin : m_projectileLeftOrigin;
             Instantiate(m_projectilePrefab, origin.position, origin.rotation, Persistent.instance.GO_DYNAMIC.transform);
-            VibrationManager.SetControllerVibration(m_controller, vibeClip);
+            VibrationManager.SetControllerVibration(_controller, vibeClip);
         }
         return true;
     }
 
-    public override bool Stop()
+    public override bool Stop(OVRInput.Controller _controller)
     {
         return true;
     }

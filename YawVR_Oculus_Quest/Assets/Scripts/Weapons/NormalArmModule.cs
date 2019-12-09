@@ -17,17 +17,17 @@ using UnityEngine;
 *******************************/
 public class NormalArmModule : MechArmModule
 {
-    public override bool Activate()
+    public override bool Activate(OVRInput.Controller _controller)
     {
         throw new System.NotImplementedException();
     }
 
-    public override bool Hold()
+    public override bool Hold(OVRInput.Controller _controller)
     {
         throw new System.NotImplementedException();
     }
 
-    public override bool Stop()
+    public override bool Stop(OVRInput.Controller _controller)
     {
         throw new System.NotImplementedException();
     }

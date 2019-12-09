@@ -9,7 +9,7 @@ public class placeholderprojectile : MonoBehaviour
     private float selfDestructTimer = 2;
     void Start()
     {
-        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 100);
+        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 14000);
     }
 
     // Update is called once per frame

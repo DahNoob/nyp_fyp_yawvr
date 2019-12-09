@@ -44,7 +44,7 @@ abstract public class MechArmModule : BaseMechModule
     [HideInInspector]
     public MeshRenderer holoModel { get; private set; }
 
-    void Start()
+    protected void Start()
     {
         if (m_rightHoloObject && m_rightHoloObject.transform.Find("HandReference"))
         {

@@ -47,7 +47,6 @@ public class MechMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //rb = body.GetComponent<Rigidbody>();
         cc = GetComponent<CharacterController>();
     }
 
@@ -64,7 +63,7 @@ public class MechMovement : MonoBehaviour
         // Player Movement
         if (!primaryAxis.Equals(Vector2.zero))
         {
-            //speed += acceleration * Time.deltaTime;
+            speed += acceleration * Time.deltaTime;
             var moveDirGlobal = primaryAxis * speed;
             float rotY = Mathf.Deg2Rad * (transform.rotation.y - Camera.main.transform.localEulerAngles.y);
             var moveDirLocal = new Vector2(moveDirGlobal.x * Mathf.Cos(rotY) - moveDirGlobal.y * Mathf.Sin(rotY), moveDirGlobal.x * Mathf.Sin(rotY) + moveDirGlobal.y * Mathf.Cos(rotY));
@@ -75,6 +74,10 @@ public class MechMovement : MonoBehaviour
             cc.Move(derp * Time.deltaTime);           
             //rb.MovePosition(newPos);
         }
+        else
+        {
+            speed -= deceleration * Time.deltaTime;
+        }
 
         // Player Rotation
         if (secondaryAxis.x != 0.0f)
@@ -82,36 +85,4 @@ public class MechMovement : MonoBehaviour
             transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * secondaryAxis.x);
         }
     }
-
-
-    //    // Update is called once per frame
-    //    void FixedUpdate()
-    //    {
-    //        //Thumbstick movement
-    //        /* Primary thumbstick is left */
-    //        /* Secondary thumbstick is right*/
-    
-    //        //Vector3 direction = new Vector3(primaryAxis.x, 0, primaryAxis.y);
-    //        //rb.velocity = direction;
-    //        //velocity = Camera.main.transform.TransformDirection(velocity);
-
-    //        //transform.Translate(Vector3.forward * 0.1f * Time.deltaTime);
-
-    //        
-
-    //        else
-    //        {
-    //            speed -= deceleration;
-    //        }
-
-    //        //else
-    //        //{
-    //        //    speed -= deceleration * Time.deltaTime;
-    //        //    if (speed <= minSpeed)
-    //        //    {
-    //        //        speed = minSpeed;
-    //        //    }
-    //        //}
-    //    }
-    //}
 }

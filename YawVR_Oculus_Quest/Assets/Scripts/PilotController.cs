@@ -89,7 +89,7 @@ public class PilotController : MonoBehaviour
         }
 
         if(isHandTriggered && isIndexTriggered)
-            modules[currModuleIndex].Hold();
+            modules[currModuleIndex].Hold(m_controller);
     }
     void FixedUpdate()
     {
@@ -182,11 +182,11 @@ public class PilotController : MonoBehaviour
             if(isIndexTriggered)
             {
                 VibrationManager.SetControllerVibration(m_controller, 8, 2, 100);
-                modules[currModuleIndex].Activate();
+                modules[currModuleIndex].Activate(m_controller);
             }
             else
             {
-                modules[currModuleIndex].Stop();
+                modules[currModuleIndex].Stop(m_controller);
             }
             
         }
