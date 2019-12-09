@@ -60,6 +60,7 @@ public class PilotController : MonoBehaviour
     private GameObject currentArmObject;
     private List<MechArmModule> modules = new List<MechArmModule>();
     private int currModuleIndex = 0;
+    private float currCanvasUIRotation = 0.0f;
 
     //Constant variables
     private float ARM_MINSPEED;
@@ -125,12 +126,12 @@ public class PilotController : MonoBehaviour
 
         m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
 
-        float deg = (float)(currModuleIndex) / (float)(modules.Count) * 360.0f;
+        currCanvasUIRotation = Mathf.LerpAngle(currCanvasUIRotation, (float)(currModuleIndex) / (float)(modules.Count) * 360.0f + 90, 0.08f);
 
-        m_armModulesCanvas.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, deg);
+        m_armModulesCanvas.GetComponent<RectTransform>().localEulerAngles = new Vector3(270, 180, currCanvasUIRotation);
         for (int i = 0; i < modules.Count; ++i)
         {
-            m_armModulesCanvas.transform.GetChild(i).GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, -deg);
+            m_armModulesCanvas.transform.GetChild(i).GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, -currCanvasUIRotation);
         }
     }
 
@@ -185,9 +186,13 @@ public class PilotController : MonoBehaviour
 
     void SetCurrentModule(int _index)
     {
-        currModuleIndex = (int)Mathf.Repeat(_index, modules.Count - 1);
-        currentHoloArm = modules[_index].holoModel;
-        currentArmObject = modules[_index].armObject;
+        currModuleIndex = _index;
+        if (currModuleIndex >= modules.Count)
+            currModuleIndex = 0;
+        else if (currModuleIndex < 0)
+            currModuleIndex = modules.Count; //very shitty way of doin it rn but wuteva
+        currentHoloArm = modules[currModuleIndex].holoModel;
+        currentArmObject = modules[currModuleIndex].armObject;
         ResetArmModules();
     }
 
