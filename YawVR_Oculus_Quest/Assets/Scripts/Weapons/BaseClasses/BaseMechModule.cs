@@ -30,4 +30,9 @@ abstract public class BaseMechModule : MonoBehaviour
     abstract public bool Activate(OVRInput.Controller _controller);    // To be called when the module is first used/pressed/activated/derp
     abstract public bool Hold(OVRInput.Controller _controller);        // To be called while the module is activated/in usage
     abstract public bool Stop(OVRInput.Controller _controller);        // To be called once the module is deactivated
+
+    public Sprite GetIcon()
+    {
+        return m_moduleIcon;
+    }
 }

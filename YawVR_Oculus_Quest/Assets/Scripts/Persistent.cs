@@ -23,6 +23,8 @@ public class Persistent : MonoBehaviour
     public GameObject GO_STATIC { get; private set; }
     public GameObject GO_DYNAMIC { get; private set; }
 
+    public GameObject PREFAB_MODULE_ICON;
+
     private void Awake()
     {
         DontDestroyOnLoad(this);

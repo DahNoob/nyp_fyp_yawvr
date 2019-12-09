@@ -45,6 +45,8 @@ public class PilotController : MonoBehaviour
     GameObject m_ringObject;
     [SerializeField]
     Transform m_holos;
+    [SerializeField]
+    Canvas m_armModulesCanvas;
 
     [Header("Offsets")]
     [SerializeField]
@@ -89,7 +91,16 @@ public class PilotController : MonoBehaviour
                 VibrationManager.SetControllerVibration(m_controller, 8, 2, 100);
         }
 
-        if(isHandTriggered && isIndexTriggered)
+        if (OVRInput.GetDown(OVRInput.Button.One, m_controller))
+        {
+            SetCurrentModule(currModuleIndex + 1);
+        }
+        else if (OVRInput.GetDown(OVRInput.Button.Two, m_controller))
+        {
+            SetCurrentModule(currModuleIndex - 1);
+        }
+
+        if (isHandTriggered && isIndexTriggered)
             modules[currModuleIndex].Hold(m_controller);
     }
     void FixedUpdate()
@@ -113,6 +124,14 @@ public class PilotController : MonoBehaviour
         currentHoloArm.material.SetColor("_RimColor", newArmRimColor);
 
         m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
+
+        float deg = (float)(currModuleIndex) / (float)(modules.Count) * 360.0f;
+
+        m_armModulesCanvas.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, deg);
+        for (int i = 0; i < modules.Count; ++i)
+        {
+            m_armModulesCanvas.transform.GetChild(i).GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, -deg);
+        }
     }
 
     public void AttachArmModules(GameObject[] _armModulePackages)
@@ -139,6 +158,18 @@ public class PilotController : MonoBehaviour
                 throw new System.Exception("Error! ArmModulePackage could not find MechArmModule!");
             }
         }
+        foreach (Transform item in m_armModulesCanvas.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        for (int i = 0; i < modules.Count; ++i)
+        {
+            float rad = (float)(i) / (float)(modules.Count) * 360.0f * Mathf.Deg2Rad;
+            RectTransform modIcon = Instantiate(Persistent.instance.PREFAB_MODULE_ICON, m_armModulesCanvas.transform).GetComponent<RectTransform>();
+            modIcon.localPosition = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad)) * 50.0f;
+            modIcon.GetComponentInChildren<UnityEngine.UI.Image>().sprite = modules[i].GetIcon();
+            modIcon.GetComponentInChildren<UnityEngine.UI.Text>().text = modules[i].name;
+        }
         SetCurrentModule(0);
     }
 
@@ -154,7 +185,7 @@ public class PilotController : MonoBehaviour
 
     void SetCurrentModule(int _index)
     {
-        currModuleIndex = _index;
+        currModuleIndex = (int)Mathf.Repeat(_index, modules.Count - 1);
         currentHoloArm = modules[_index].holoModel;
         currentArmObject = modules[_index].armObject;
         ResetArmModules();
