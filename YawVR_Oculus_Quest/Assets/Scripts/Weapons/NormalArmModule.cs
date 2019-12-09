@@ -1,0 +1,34 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/******************************  
+** Name: Normal Arm Module
+** Desc: Mech's Normal Arm module
+** Author: DahNoob
+** Date: 06/12/2019, 2:47 PM
+**************************
+** Change History
+**************************
+** PR   Date                    Author    Description 
+** --   --------                -------   ------------------------------------
+** 1    06/12/2019, 2:47PM      DahNoob   Created
+** 2    09/12/2019, 11:58AM     DahNoob   Renamed it to Normal Arm Module
+*******************************/
+public class NormalArmModule : MechArmModule
+{
+    public override bool Activate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override bool Hold()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override bool Stop()
+    {
+        throw new System.NotImplementedException();
+    }
+}

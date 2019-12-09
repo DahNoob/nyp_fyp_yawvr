@@ -16,6 +16,11 @@ public class PlayerHandler : MonoBehaviour
     private PilotController m_rightController;
     [SerializeField]
     private PilotController m_leftController;
+    [Header("Configuration")]
+    [SerializeField]
+    private Color m_armInnerColor;
+    [SerializeField]
+    private Color m_armRimColor;
 
     void Awake()
     {
@@ -55,5 +60,13 @@ public class PlayerHandler : MonoBehaviour
     public PilotController GetLeftPilotController()
     {
         return m_leftController;
+    }
+    public Color GetArmInnerColor()
+    {
+        return m_armInnerColor;
+    }
+    public Color GetArmRimColor()
+    {
+        return m_armRimColor;
     }
 }

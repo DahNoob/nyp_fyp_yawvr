@@ -13,6 +13,7 @@ using UnityEngine;
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
 ** 1    06/12/2019, 2:30PM      DahNoob   Created
+** 2    09/12/2019, 11:12PM     DahNoob   Implemented abstract functions Activate, Hold and Stop
 *******************************/
 [System.Serializable]
 abstract public class BaseMechModule : MonoBehaviour
@@ -22,4 +23,8 @@ abstract public class BaseMechModule : MonoBehaviour
     protected string m_moduleName;
     [SerializeField]
     protected Sprite m_moduleIcon;
+
+    abstract public bool Activate();    // To be called when the module is first used/pressed/activated/derp
+    abstract public bool Hold();        // To be called while the module is activated/in usage
+    abstract public bool Stop();        // To be called once the module is deactivated
 }

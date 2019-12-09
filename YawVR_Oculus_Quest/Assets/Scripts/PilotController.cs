@@ -14,6 +14,9 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    27/11/2019, 5:05 PM     DahNoob   Created and implemented
 ** 2    02/12/2019, 2:01 PM     DahNoob   Made hologram material change depending on grab status
+** 3    FORGOT AGAIN            DahNoob   Started implementation of MechArmModule aka weapon system
+** 4    09/12/2019, 11:39 AM    DahNoob   Minor changes and optimisations
+** 5    09/12/2019, 1:07 PM     DahNoob   Implemented usage of MechArmModules
 *******************************/
 public class PilotController : MonoBehaviour
 {
@@ -36,8 +39,6 @@ public class PilotController : MonoBehaviour
 
     [Header("References")]
     [SerializeField]
-    MeshRenderer m_armObject;
-    [SerializeField]
     ControllerFollower m_armFollower;
     [SerializeField]
     GameObject m_ringObject;
@@ -51,36 +52,33 @@ public class PilotController : MonoBehaviour
     Transform m_ringOffset;
 
     //Local variables
-
-    //private OVRGrabber grabber;
-    private Color currArmInnerColor, currArmRimColor;
     private bool isAttached, isHandTriggered, isIndexTriggered = false;
     private MeshRenderer currentHoloArm;
+    private GameObject currentArmObject;
     private List<MechArmModule> modules = new List<MechArmModule>();
     private int currModuleIndex = 0;
 
-    private Color ORIG_ARM_INNER_COLOR;
-    private Color ORIG_ARM_RIM_COLOR;
-    private Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
+    //Constant variables
     private float ARM_MINSPEED;
-    
-    private void Start()
+
+    void Awake()
+    {
+        print("PilotController " + (m_controller == OVRInput.Controller.LTouch ? "L" : "R") + " awake!");
+    }
+    void Start()
     {
         ARM_MINSPEED = m_armFollower.m_followSpeed;
+        print("PilotController " + (m_controller == OVRInput.Controller.LTouch ? "L" : "R") + " started!");
     }
-    private void Update()
+    void Update()
     {
         if (!isAttached)
             return;
-
+        
         if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
             (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
         {
-            isHandTriggered = !isHandTriggered;
-            if (isHandTriggered)
-                VibrateCrescendo();
-            else
-                m_armFollower.m_followSpeed = ARM_MINSPEED;
+            HandStateChange(!isHandTriggered);
         }
         if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
             (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
@@ -89,15 +87,31 @@ public class PilotController : MonoBehaviour
             if (isIndexTriggered && isHandTriggered)
                 VibrationManager.SetControllerVibration(m_controller, 8, 2, 100);
         }
-        float deltaTime_xTwo = Time.deltaTime * 2.0f;
-        float deltaTime_xFour = Time.deltaTime * 4.0f;
 
-        m_armFollower.m_enabled = isHandTriggered;
-        currArmInnerColor = Color.Lerp(currArmInnerColor, isHandTriggered ? ORIG_ARM_INNER_COLOR : TRANSPARENT_COLOR, deltaTime_xFour);
-        currArmRimColor = Color.Lerp(currArmRimColor, isHandTriggered ? ORIG_ARM_RIM_COLOR : TRANSPARENT_COLOR, deltaTime_xFour);
-        m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, deltaTime_xTwo);
-        m_armObject.material.SetColor("_InnerColor", currArmInnerColor);
-        m_armObject.material.SetColor("_RimColor", currArmRimColor);
+        if(isHandTriggered && isIndexTriggered)
+            modules[currModuleIndex].Hold();
+    }
+    void FixedUpdate()
+    {
+        if (!isAttached)
+            return;
+        Color prevArmInnerColor = currentHoloArm.material.GetColor("_InnerColor");
+        Color prevArmRimColor = currentHoloArm.material.GetColor("_RimColor");
+        Color newArmInnerColor, newArmRimColor;
+        if (isHandTriggered)
+        {
+            newArmInnerColor = Color.Lerp(prevArmInnerColor, PlayerHandler.instance.GetArmInnerColor(), 0.1f);
+            newArmRimColor = Color.Lerp(prevArmRimColor, PlayerHandler.instance.GetArmRimColor(), 0.1f);
+        }
+        else
+        {
+            newArmInnerColor = Color.Lerp(prevArmInnerColor, Persistent.instance.COLOR_TRANSPARENT, 0.1f);
+            newArmRimColor = Color.Lerp(prevArmRimColor, Persistent.instance.COLOR_TRANSPARENT, 0.1f);
+        }
+        currentHoloArm.material.SetColor("_InnerColor", newArmInnerColor);
+        currentHoloArm.material.SetColor("_RimColor", newArmRimColor);
+
+        m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
     }
 
     public void AttachArmModules(MechArmModule[] _armModules)
@@ -110,11 +124,12 @@ public class PilotController : MonoBehaviour
             holoArm.transform.SetParent(m_holos);
             holoArm.transform.localPosition = Vector3.zero;
             holoArm.transform.localRotation = Quaternion.identity;
-            
+            GameObject armObject = armModuleAgain.armObject;
+            armObject.transform.SetParent(m_armFollower.transform);
+            armObject.transform.localPosition = Vector3.zero;
+            armObject.transform.localRotation = Quaternion.identity;
         }
-        currentHoloArm = modules[0].holoObject.transform.Find("Model").GetComponent<MeshRenderer>();
-        m_armObject = currentHoloArm;
-        ResetHoloArm();
+        SetCurrentModule(1);
     }
 
     void VibrateCrescendo()
@@ -127,13 +142,54 @@ public class PilotController : MonoBehaviour
         VibrationManager.SetControllerVibration(m_controller, clip);
     }
 
-    void ResetHoloArm()
+    void SetCurrentModule(int _index)
     {
-        ORIG_ARM_INNER_COLOR = m_armObject.material.GetColor("_InnerColor");
-        ORIG_ARM_RIM_COLOR = m_armObject.material.GetColor("_RimColor");
-        currArmInnerColor = currArmRimColor = TRANSPARENT_COLOR;
-        m_armObject.material.SetColor("_InnerColor", TRANSPARENT_COLOR);
-        m_armObject.material.SetColor("_RimColor", TRANSPARENT_COLOR);
+        currModuleIndex = _index;
+        currentHoloArm = modules[_index].holoModel;
+        currentArmObject = modules[_index].armObject;
+        ResetArmModules();
+    }
+
+    void ResetArmModules()
+    {
+        for (int i = 0; i < modules.Count; ++i)
+        {
+            modules[i].holoModel.material.SetColor("_InnerColor", Persistent.instance.COLOR_TRANSPARENT);
+            modules[i].holoModel.material.SetColor("_RimColor", Persistent.instance.COLOR_TRANSPARENT);
+            modules[i].armObject.SetActive(false);
+        }
+        currentArmObject.SetActive(true);
+    }
+
+    void HandStateChange(bool _isTriggered)
+    {
+        if (_isTriggered)
+        {
+            VibrateCrescendo();
+        }
+        else
+        {
+            m_armFollower.m_followSpeed = ARM_MINSPEED;
+        }
+        isHandTriggered = m_armFollower.m_enabled = _isTriggered;
+    }
+
+    void IndexStateChange(bool _isTriggered)
+    {
+        isIndexTriggered = _isTriggered;
+        if (isHandTriggered)
+        {
+            if(isIndexTriggered)
+            {
+                VibrationManager.SetControllerVibration(m_controller, 8, 2, 100);
+                modules[currModuleIndex].Activate();
+            }
+            else
+            {
+                modules[currModuleIndex].Stop();
+            }
+            
+        }
     }
 
     void OnTriggerEnter(Collider otherCollider)

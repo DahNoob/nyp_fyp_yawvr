@@ -19,6 +19,10 @@ public class Persistent : MonoBehaviour
 {
     public static Persistent instance { get; private set; }
 
+    public readonly Color COLOR_TRANSPARENT = new Color(0, 0, 0, 0);
+    public GameObject GO_STATIC { get; private set; }
+    public GameObject GO_DYNAMIC { get; private set; }
+
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -28,6 +32,8 @@ public class Persistent : MonoBehaviour
     }
     void Start()
     {
+        GO_STATIC = GameObject.Find("Static");
+        GO_DYNAMIC = GameObject.Find("Dynamic");
         print("Persistent started!");
     }
 }

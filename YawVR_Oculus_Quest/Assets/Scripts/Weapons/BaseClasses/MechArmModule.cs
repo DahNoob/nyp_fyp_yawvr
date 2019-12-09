@@ -39,6 +39,10 @@ abstract public class MechArmModule : BaseMechModule
     public GameObject armObject { get; private set; }
     [HideInInspector]
     public GameObject holoObject { get; private set; }
+    [HideInInspector]
+    public GameObject armModel { get; private set; }
+    [HideInInspector]
+    public MeshRenderer holoModel { get; private set; }
 
     void Start()
     {
@@ -71,6 +75,7 @@ abstract public class MechArmModule : BaseMechModule
         }
         name = m_moduleName;
         holoObject.name = name + "Holo";
+        holoModel = holoObject.transform.Find("Model").GetComponent<MeshRenderer>();
         //armObject.name = name + "Arm";
         return this;
     }
