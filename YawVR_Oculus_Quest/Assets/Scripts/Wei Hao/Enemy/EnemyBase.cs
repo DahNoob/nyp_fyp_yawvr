@@ -56,6 +56,7 @@ public class EnemyBase : MonoBehaviour
     public void Die()
     {
         gameObject.SetActive(false);
+        gameObject.GetComponent<ParticleSystem>().Play();
     }
 
     //public override void takeDamage(int damage)

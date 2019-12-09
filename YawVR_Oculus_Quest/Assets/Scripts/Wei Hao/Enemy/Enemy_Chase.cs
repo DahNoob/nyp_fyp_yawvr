@@ -22,9 +22,13 @@ public class Enemy_Chase : EnemyBase
     private int attackRange = 5;//3;
     private int rotationSpeed = 5;
 
-    private float attackCooldown = 1.0f;
+    private float attackCooldown = 2.0f;
+    private float attackWindUp = 2.0f;
     private int leapSpeed;
-    private bool readyToAttack = false;
+    private bool readyToAttack = true;
+    Vector3 lockPosition;
+
+    private Rigidbody rb;
 
     [SerializeField]
     private States currentState;
@@ -41,10 +45,11 @@ public class Enemy_Chase : EnemyBase
         leapSpeed = 8;
         currentState = States.CHASE;
         Player = GameObject.Find("Player");
+        rb = gameObject.GetComponent<Rigidbody>();
         
-        Debug.Log("Current Health = " + health);
-        Debug.Log("Current Max Health = " + maxHealth);
-        Debug.Log("Current dmg = " + damage);
+        //Debug.Log("Current Health = " + health);
+        //Debug.Log("Current Max Health = " + maxHealth);
+        //Debug.Log("Current dmg = " + damage);
     }
 
     // Update is called once per frame
@@ -55,10 +60,10 @@ public class Enemy_Chase : EnemyBase
         // Debugging distance
         float distance = Vector3.Distance(transform.position, Player.transform.position);
 
-        if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
+        if (currentState != States.WAIT && Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
         {
             currentState = States.CHASE;
-            Debug.Log(distance);
+            //Debug.Log(distance);
             
             if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange + 1)
             {
@@ -75,21 +80,33 @@ public class Enemy_Chase : EnemyBase
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 break;
             case States.ATTACK:
-                //transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
-                attackCooldown -= 1.0f * Time.deltaTime;
+                transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
+                attackWindUp -= 1.0f * Time.deltaTime;
 
-                //Vector3 StoredLocation = new Vector3(transform.position.x,transform.position.y,transform.position.z);
-                Debug.Log("Attack Timer: " + attackCooldown);
-                if (attackCooldown <= 0.0f)
+                //Debug.Log("Attack Timer: " + attackCooldown);
+                if (attackWindUp <= 0.0f)
                 {
-                    readyToAttack = true;
-                    transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
+                    //lockPosition = new Vector3(Player.transform.position.x, 0, Player.transform.position.z);
+                    //transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
 
+                    //rb.velocity = transform.forward * leapSpeed * Time.deltaTime;
+                    //rb.AddForce(transform.forward * leapSpeed * Time.deltaTime);
                     transform.position += transform.forward * leapSpeed * Time.deltaTime;
                     //transform.position += transform.forward * leapSpeed * Time.deltaTime;     
                 }
                 break;
             case States.WAIT:
+                //transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
+
+                attackCooldown -= 1.0f * Time.deltaTime;               
+                if(attackCooldown <= 0.0f)
+                {
+                    attackCooldown = 2.0f;
+                    attackWindUp = 2.0f;
+                    readyToAttack = true;
+                    currentState = States.CHASE;
+                }               
+
                 break;
             default:
                 break;
@@ -100,16 +117,15 @@ public class Enemy_Chase : EnemyBase
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Mech" && readyToAttack == true)
+        if (collision.gameObject.tag == "Mech")
         {
-            currentState = States.WAIT;
-            attackCooldown = 1.0f;
-            readyToAttack = false;
+            currentState = States.WAIT;          
         }
 
         if(collision.gameObject.tag == "Bullet")
         {
             takeDamage(1);
+            collision.gameObject.SetActive(false);
         }
     }
 }
