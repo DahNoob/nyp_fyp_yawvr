@@ -43,6 +43,7 @@ public class LaserBlasterArm : MechArmModule
     public override bool Activate(OVRInput.Controller _controller)
     {
         shootTick = 0;
+        follower.m_followSpeed = m_followerSpeed;
         return true;
     }
 

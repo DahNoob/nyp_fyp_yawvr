@@ -22,18 +22,32 @@ public class NormalArmModule : MechArmModule
     [Range(0.0f, 1.0f)]
     protected float m_followerMaxSpeed = 0.2f;
 
+    //Local variables
+    private OVRHapticsClip vibeClip;//vibe check dawg
+
+    void Start()
+    {
+        vibeClip = new OVRHapticsClip();
+        for (int i = 0; i < 100; ++i)
+        {
+            vibeClip.WriteSample(i % 3 == 0 ? (byte)((100 - i) * 10) : (byte)0);
+        }
+    }
+
     public override bool Activate(OVRInput.Controller _controller)
     {
-        throw new System.NotImplementedException();
+        follower.m_followSpeed = m_followerMaxSpeed;
+        return true;
     }
 
     public override bool Hold(OVRInput.Controller _controller)
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 
     public override bool Stop(OVRInput.Controller _controller)
     {
-        throw new System.NotImplementedException();
+        follower.m_followSpeed = m_followerSpeed;
+        return true;
     }
 }

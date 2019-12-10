@@ -18,6 +18,7 @@ using UnityEngine;
 ** 4    09/12/2019, 11:39 AM    DahNoob   Minor changes and optimisations
 ** 5    09/12/2019, 1:07 PM     DahNoob   Implemented usage of MechArmModules
 ** 6    09/12/2019, 5:30 PM     DahNoob   Refactored to accomodate for the overhauled MechArmModule system
+** 7    10/12/2019, 12:08 PM    DahNoob   Refactored to accomodate for HandPivot thing
 *******************************/
 public class PilotController : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class PilotController : MonoBehaviour
     private float currCanvasUIRotation = 0.0f;
 
     //Constant variables
-    private float ARM_MINSPEED;
+    //private float ARM_MINSPEED;
 
     void Awake()
     {
@@ -71,7 +72,7 @@ public class PilotController : MonoBehaviour
     }
     void Start()
     {
-        ARM_MINSPEED = m_armFollower.m_followSpeed;
+        //ARM_MINSPEED = m_armFollower.m_followSpeed;
         print("PilotController " + (m_controller == OVRInput.Controller.LTouch ? "L" : "R") + " started!");
     }
     void Update()
@@ -124,7 +125,7 @@ public class PilotController : MonoBehaviour
         currentHoloArm.material.SetColor("_InnerColor", newArmInnerColor);
         currentHoloArm.material.SetColor("_RimColor", newArmRimColor);
 
-        m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
+        //m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
 
         currCanvasUIRotation = Mathf.LerpAngle(currCanvasUIRotation, (float)(currModuleIndex) / (float)(modules.Count) * 360.0f + 90, 0.08f);
 
@@ -179,13 +180,14 @@ public class PilotController : MonoBehaviour
         OVRHapticsClip clip = new OVRHapticsClip();
         for (int i = 0; i < 80; ++i)
         {
-            clip.WriteSample(i % 3 == 0 ? (byte)(i * 2.5f) : (byte)0);
+            clip.WriteSample(i % 3 == 0 ? (byte)(i * 4.0f) : (byte)0);
         }
         VibrationManager.SetControllerVibration(m_controller, clip);
     }
 
     void SetCurrentModule(int _index)
     {
+        int prevModuleIndex = currModuleIndex;
         currModuleIndex = _index;
         if (currModuleIndex >= modules.Count)
             currModuleIndex = 0;
@@ -193,6 +195,11 @@ public class PilotController : MonoBehaviour
             currModuleIndex = modules.Count; //very shitty way of doin it rn but wuteva
         currentHoloArm = modules[currModuleIndex].holoModel;
         currentArmObject = modules[currModuleIndex].armObject;
+        if(isHandTriggered && isIndexTriggered)
+        {
+            modules[prevModuleIndex].Stop(m_controller);
+            modules[currModuleIndex].Activate(m_controller);
+        }
         ResetArmModules();
     }
 
@@ -209,14 +216,6 @@ public class PilotController : MonoBehaviour
 
     void HandStateChange(bool _isTriggered)
     {
-        if (_isTriggered)
-        {
-            VibrateCrescendo();
-        }
-        else
-        {
-            m_armFollower.m_followSpeed = ARM_MINSPEED;
-        }
         isHandTriggered = m_armFollower.m_enabled = _isTriggered;
     }
 
@@ -227,7 +226,7 @@ public class PilotController : MonoBehaviour
         {
             if(isIndexTriggered)
             {
-                VibrationManager.SetControllerVibration(m_controller, 8, 2, 100);
+                VibrationManager.SetControllerVibration(m_controller, 16, 2, 100);
                 modules[currModuleIndex].Activate(m_controller);
             }
             else
