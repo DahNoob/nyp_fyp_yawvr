@@ -21,22 +21,31 @@ public class NormalArmModule : MechArmModule
     [SerializeField]
     [Range(0.0f, 1.0f)]
     protected float m_followerMaxSpeed = 0.2f;
+    [SerializeField]
+    private GameObject m_activateHolos;
+    [SerializeField]
+    private GameObject m_activateParticles;
 
     //Local variables
     private OVRHapticsClip vibeClip;//vibe check dawg
 
     void Start()
     {
+        m_activateHolos.SetActive(false);
+        m_activateParticles.SetActive(false);
         vibeClip = new OVRHapticsClip();
         for (int i = 0; i < 100; ++i)
         {
-            vibeClip.WriteSample(i % 3 == 0 ? (byte)((100 - i) * 10) : (byte)0);
+            vibeClip.WriteSample(i % 3 == 0 ? (byte)Mathf.Min((100 - i) * 10, 255) : (byte)0);
         }
     }
 
     public override bool Activate(OVRInput.Controller _controller)
     {
+        m_activateHolos.SetActive(true);
+        m_activateParticles.SetActive(true);
         follower.m_followSpeed = m_followerMaxSpeed;
+        VibrationManager.SetControllerVibration(m_controller, vibeClip);
         return true;
     }
 
@@ -47,6 +56,8 @@ public class NormalArmModule : MechArmModule
 
     public override bool Stop(OVRInput.Controller _controller)
     {
+        m_activateHolos.SetActive(false);
+        m_activateParticles.SetActive(false);
         follower.m_followSpeed = m_followerSpeed;
         return true;
     }

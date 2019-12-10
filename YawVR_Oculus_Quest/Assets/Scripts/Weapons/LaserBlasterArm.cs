@@ -36,7 +36,7 @@ public class LaserBlasterArm : MechArmModule
         vibeClip = new OVRHapticsClip();
         for (int i = 0; i < 30; ++i)
         {
-            vibeClip.WriteSample(i % 3 == 0 ? (byte)((30 - i) * 120) : (byte)0);
+            vibeClip.WriteSample(i % 3 == 0 ? (byte)Mathf.Min((30 - i) * 120, 255) : (byte)0);
         }
     }
 
@@ -56,7 +56,7 @@ public class LaserBlasterArm : MechArmModule
             if (PlayerHandler.instance.DecreaseEnergy(m_energyReduction))
             {
                 Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform);
-                VibrationManager.SetControllerVibration(_controller, vibeClip);
+                VibrationManager.SetControllerVibration(m_controller, vibeClip);
                 return true;
             }
         }
