@@ -27,17 +27,21 @@ public class NormalArmModule : MechArmModule
     private GameObject m_activateParticles;
 
     //Local variables
-    private OVRHapticsClip vibeClip;//vibe check dawg
+    private OVRHapticsClip vibeClip = new OVRHapticsClip();//vibe check dawg
+
+    new void Awake()
+    {
+        base.Awake();
+        for (int i = 0; i < 100; ++i)
+        {
+            vibeClip.WriteSample(i % 3 == 0 ? (byte)(Mathf.Min((100 - i) * 10, 254)) : (byte)0);
+        }
+    }
 
     void Start()
     {
         m_activateHolos.SetActive(false);
         m_activateParticles.SetActive(false);
-        vibeClip = new OVRHapticsClip();
-        for (int i = 0; i < 100; ++i)
-        {
-            vibeClip.WriteSample(i % 3 == 0 ? (byte)Mathf.Min((100 - i) * 10, 255) : (byte)0);
-        }
     }
 
     public override bool Activate(OVRInput.Controller _controller)

@@ -88,9 +88,7 @@ public class PilotController : MonoBehaviour
         if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
             (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
         {
-            isIndexTriggered = !isIndexTriggered;
-            if (isIndexTriggered && isHandTriggered)
-                VibrationManager.SetControllerVibration(m_controller, 8, 2, 100);
+            IndexStateChange(!isIndexTriggered);
         }
 
         if (OVRInput.GetDown(OVRInput.Button.One, m_controller))
@@ -180,7 +178,7 @@ public class PilotController : MonoBehaviour
         OVRHapticsClip clip = new OVRHapticsClip();
         for (int i = 0; i < 80; ++i)
         {
-            clip.WriteSample(i % 3 == 0 ? (byte)(i * 4.0f) : (byte)0);
+            clip.WriteSample(i % 3 == 0 ? (byte)Mathf.Min(i * 4.0f, 255) : (byte)0);
         }
         VibrationManager.SetControllerVibration(m_controller, clip);
     }
@@ -226,7 +224,7 @@ public class PilotController : MonoBehaviour
         {
             if(isIndexTriggered)
             {
-                VibrationManager.SetControllerVibration(m_controller, 16, 2, 100);
+                //VibrationManager.SetControllerVibration(m_controller, 16, 2, 100);
                 modules[currModuleIndex].Activate(m_controller);
             }
             else
@@ -248,7 +246,7 @@ public class PilotController : MonoBehaviour
         {
             isAttached = true;
             //this.grabber = grabber;
-            VibrationManager.SetControllerVibration(m_controller, 10, 2, 200);
+            VibrationManager.SetControllerVibration(m_controller, 20, 2, 200);
             transform.Find("AnchorPivot").localPosition = m_pivotOffset.localPosition;
             transform.Find("AnchorPivot").localRotation = m_pivotOffset.localRotation;
             m_ringObject.transform.localPosition = m_ringOffset.localPosition;
