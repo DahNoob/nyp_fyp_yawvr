@@ -56,15 +56,15 @@ public class VibrationManager : MonoBehaviour
         if (_controller == OVRInput.Controller.RTouch)
             OVRHaptics.RightChannel.Mix(clip);
         else if (_controller == OVRInput.Controller.LTouch)
-            OVRHaptics.LeftChannel.Preempt(clip);
+            OVRHaptics.LeftChannel.Mix(clip);
     }
 
     public static void SetControllerVibration(OVRInput.Controller _controller, OVRHapticsClip _clip)
     {
         if (_controller == OVRInput.Controller.RTouch)
-            OVRHaptics.RightChannel.Preempt(_clip);
+            OVRHaptics.RightChannel.Mix(_clip);
         else if (_controller == OVRInput.Controller.LTouch)
-            OVRHaptics.LeftChannel.Preempt(_clip);
+            OVRHaptics.LeftChannel.Mix(_clip);
     }
 
     //public static void SetControllerVibration(OVRInput.Controller _controller, )
