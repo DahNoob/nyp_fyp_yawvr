@@ -84,5 +84,18 @@ public class MechMovement : MonoBehaviour
         {
             transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * secondaryAxis.x);
         }
+
+        ////Reset the MoveVector
+        //gravityVector = Vector3.zero;
+
+        ////Check if cjharacter is grounded
+        //if (cc.isGrounded == false)
+        //{
+        //    //Add our gravity Vecotr
+        //    gravityVector += Physics.gravity;
+        //}
+
+        ////Apply our move Vector , remeber to multiply by Time.delta
+        //cc.Move(gravityVector * Time.deltaTime);
     }
 }

@@ -7,7 +7,7 @@ public class Enemy_Roam : EnemyBase
     private GameObject Player;
     private int maxDistance = 10;
     private int minDistance = 5;
-    private int chaseRange = 15;
+    private int chaseRange = 25;
     private int attackRange = 5;//3;
     private int rotationSpeed = 5;
 
@@ -16,6 +16,9 @@ public class Enemy_Roam : EnemyBase
     private int leapSpeed;
     private bool readyToAttack = true;
     private Vector3 player_LastPosition;
+    private Vector3 _targetDestination;
+    private Quaternion desiredRotation;
+    private Vector3 _direction;
 
     private Rigidbody rb;
 
@@ -75,6 +78,13 @@ public class Enemy_Roam : EnemyBase
         switch (currentState)
         {
             case States.IDLE:
+                Vector3 newPosition = (transform.position + (transform.forward * moveSpeed)) + new Vector3(Random.Range(-4.5f, 4.5f), 0.0f, Random.Range(-4.5f, 4.5f));
+
+                _targetDestination = new Vector3(newPosition.x, 0, newPosition.z);
+                _direction = Vector3.Normalize(_targetDestination - transform.position);
+                _direction = new Vector3(_direction.x, 0.0f, _direction.z);
+                desiredRotation = Quaternion.LookRotation(_direction);
+
                 break;
             case States.CHASE:
                 Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
