@@ -214,6 +214,8 @@ public class PilotController : MonoBehaviour
 
     void HandStateChange(bool _isTriggered)
     {
+        if (!_isTriggered && IsModuleActivated())
+            modules[currModuleIndex].Stop(m_controller);
         isHandTriggered = m_armFollower.m_enabled = _isTriggered;
     }
 
