@@ -59,12 +59,12 @@ public class NormalArmModule : MechArmModule
         if(!isPunching && followerCurrentSpeed > m_punchSpeedEnter)
         {
             isPunching = true;
-            m_punchingParticles.Play();
+            //m_punchingParticles.Play();
         }
         else if (isPunching && followerCurrentSpeed < m_punchSpeedExit)
         {
             isPunching = false;
-            m_punchingParticles.Stop();
+            //m_punchingParticles.Stop();
         }
         return true;
     }
@@ -74,7 +74,7 @@ public class NormalArmModule : MechArmModule
         m_activateHolos.SetActive(false);
         m_activateParticles.SetActive(false);
         isPunching = false;
-        m_punchingParticles.Stop();
+        //m_punchingParticles.Stop();
         follower.m_followSpeed = m_followerSpeed;
         return true;
     }
