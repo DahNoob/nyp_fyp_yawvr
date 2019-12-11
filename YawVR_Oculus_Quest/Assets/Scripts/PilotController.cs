@@ -252,7 +252,7 @@ public class PilotController : MonoBehaviour
             isAttached = true;
             //this.grabber = grabber;
             //VibrationManager.SetControllerVibration(m_controller, 20, 2, 200);
-            VibrationManager.SetControllerVibration(m_controller, 0.03f, 0.4f);
+            VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
             transform.Find("AnchorPivot").localPosition = m_pivotOffset.localPosition;
             transform.Find("AnchorPivot").localRotation = m_pivotOffset.localRotation;
             m_ringObject.transform.localPosition = m_ringOffset.localPosition;

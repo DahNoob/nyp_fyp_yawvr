@@ -111,7 +111,7 @@ public class ControllerFollower : MonoBehaviour
     {
         if (prevPosition != gameObject.transform.localPosition)
         {
-            float magnitude = (prevPosition - gameObject.transform.localPosition).sqrMagnitude;
+            float magnitude = (prevPosition - gameObject.transform.localPosition).sqrMagnitude * 4;
             float shakeStrength = Mathf.Lerp(0.0f, 1.0f, magnitude);
             //print("shakeStrength : " + shakeStrength);
             //VibrationManager.SetControllerVibration(m_controller, 8, 4, shakeStrength);

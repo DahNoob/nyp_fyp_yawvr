@@ -72,7 +72,7 @@ public class VibrationManager : MonoBehaviour
             OVRHaptics.LeftChannel.Preempt(_clip);
     }
 
-    public static void SetControllerVibration(OVRInput.Controller _controller, float totalDuration, float intensity, bool isContinuous = false, float pulseDuration = 0.1f, float intervalDuration = 0.1f)
+    public static void SetControllerVibration(OVRInput.Controller _controller, float totalDuration, float intensity, bool isContinuous = false, float pulseDuration = 0.01f, float intervalDuration = 0.01f)
     {
         instance.StartCoroutine(instance.HapticPulse( _controller,totalDuration, intensity, isContinuous, pulseDuration, intervalDuration));
     }
