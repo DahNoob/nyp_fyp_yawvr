@@ -1434,11 +1434,11 @@ MonoBehaviour:
   virtualGreenScreenBottomY: -10
   virtualGreenScreenApplyDepthCulling: 0
   virtualGreenScreenDepthTolerance: 0.2
-  _trackingOriginType: 0
+  _trackingOriginType: 1
   usePositionTracking: 1
   useRotationTracking: 1
   useIPDInPositionTracking: 1
-  resetTrackerOnLoad: 0
+  resetTrackerOnLoad: 1
   AllowRecenter: 1
   _reorientHMDOnControllerRecenter: 1
 --- !u!1 &756605537899774209
@@ -2797,8 +2797,11 @@ MonoBehaviour:
   leftHand: {fileID: 756605537899774793}
   m_rightController: {fileID: 0}
   m_leftController: {fileID: 0}
+  m_energySlider: {fileID: 0}
   m_armInnerColor: {r: 0.32941177, g: 0.44313726, b: 0.4627451, a: 0}
   m_armRimColor: {r: 0.2627451, g: 0.6117647, b: 0.5686275, a: 0}
+  m_maxEnergy: 100
+  m_energyRegenRate: 8
 --- !u!114 &756605538046042339
 MonoBehaviour:
   m_ObjectHideFlags: 0

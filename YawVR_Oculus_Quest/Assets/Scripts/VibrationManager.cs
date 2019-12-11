@@ -31,6 +31,11 @@ public class VibrationManager : MonoBehaviour
 
     private static VibrationManager instance;
 
+    //Local variables
+    protected IEnumerator asyncHapticPulse;
+    protected bool keepAlive = false;
+
+
     void Awake()
     {
         if (instance == null)
@@ -67,9 +72,33 @@ public class VibrationManager : MonoBehaviour
             OVRHaptics.LeftChannel.Preempt(_clip);
     }
 
-    void AddClip(OVRInput.Controller _controller, OVRHapticsClip _clip)
+    public static void SetControllerVibration(OVRInput.Controller _controller, float totalDuration, float intensity, bool isContinuous = false, float pulseDuration = 0.1f, float intervalDuration = 0.1f)
     {
-        OVRHaptics.OVRHapticsChannel channel = _controller == OVRInput.Controller.RTouch ? OVRHaptics.RightChannel : OVRHaptics.LeftChannel;
+        instance.StartCoroutine(instance.HapticPulse( _controller,totalDuration, intensity, isContinuous, pulseDuration, intervalDuration));
+    }
+
+    //Basic haptic pulse function
+    protected IEnumerator HapticPulse(OVRInput.Controller _controller, float totalDuration, float intensity, bool isContinuous = false, float pulseDuration = 0.1f, float intervalDuration = 0.1f)
+    {
+        keepAlive = isContinuous;
+
+        while (totalDuration > 0 || keepAlive)
+        {
+            OVRInput.SetControllerVibration(.1f, intensity, _controller);
+            yield return new WaitForSeconds(pulseDuration);
+
+            OVRInput.SetControllerVibration(0, 0, _controller);
+            yield return new WaitForSeconds(intervalDuration);
+
+            if (!keepAlive) totalDuration -= pulseDuration + intervalDuration;
+        }
+
+        asyncHapticPulse = null;
+    }
+
+    protected void StopHapticPulse()
+    {
+        keepAlive = false;
     }
 
     //public static void SetControllerVibration(OVRInput.Controller _controller, )

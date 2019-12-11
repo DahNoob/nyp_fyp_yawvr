@@ -55,7 +55,8 @@ public class LaserBlasterArm : MechArmModule
             if (PlayerHandler.instance.DecreaseEnergy(m_energyReduction))
             {
                 Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform);
-                VibrationManager.SetControllerVibration(m_controller, vibeClip);
+                //VibrationManager.SetControllerVibration(m_controller, vibeClip);
+                VibrationManager.SetControllerVibration(m_controller, 0.0f, 0.5f);
                 return true;
             }
         }
