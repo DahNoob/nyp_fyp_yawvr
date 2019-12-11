@@ -56,8 +56,7 @@ public class ControllerFollower : MonoBehaviour
         Vector3 controllerPos = OVRInput.GetLocalControllerPosition(m_controller);
         //Vector3 objectPosGoal;
         //Quaternion objectRotGoal;
-        prevPosition = transform.localPosition;
-        prevRotation = transform.localRotation;
+        
 
         if (m_enabled)
         {
@@ -101,6 +100,9 @@ public class ControllerFollower : MonoBehaviour
 
     void FixedUpdate()
     {
+        prevPosition = currPosition;
+        prevRotation = currRotation;
+
         currPosition = Vector3.LerpUnclamped(currPosition, goalPosition, m_followSpeed);
         currRotation = Quaternion.SlerpUnclamped(currRotation, goalRotation, m_followSpeed);
 
@@ -129,7 +131,7 @@ public class ControllerFollower : MonoBehaviour
     {
         if (prevPosition != gameObject.transform.localPosition)
         {
-            float magnitude = (prevPosition - gameObject.transform.localPosition).sqrMagnitude * 4;
+            float magnitude = CalculateFollowerSpeed();
             float shakeStrength = Mathf.Lerp(0.0f, 1.0f, magnitude);
             //print("shakeStrength : " + shakeStrength);
             //VibrationManager.SetControllerVibration(m_controller, 8, 4, shakeStrength);
