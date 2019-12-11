@@ -61,6 +61,8 @@ public class MechMovement : MonoBehaviour
         speed = Mathf.Clamp(speed, minSpeed, maxSpeed);
 
         // Player Movement
+        Vector3 movementDelta = Vector3.zero;
+
         if (!primaryAxis.Equals(Vector2.zero))
         {
             speed += acceleration * Time.deltaTime;
@@ -71,12 +73,19 @@ public class MechMovement : MonoBehaviour
             Vector3 newPos = transform.position + derp * Time.deltaTime;
             //transform.Translate(derp * Time.deltaTime);
             derp = transform.rotation * derp;
-            cc.Move(derp * Time.deltaTime);           
+            //cc.Move(derp * Time.deltaTime);
+            movementDelta = derp;
             //rb.MovePosition(newPos);
         }
         else
         {
             speed -= deceleration * Time.deltaTime;
+        }
+
+        cc.SimpleMove(movementDelta);
+        if(OVRInput.Get(OVRInput.Button.One, OVRInput.Controller.RTouch))
+        {
+            cc.Move(new Vector3(0, 5.0f * Time.deltaTime, 0));
         }
 
         // Player Rotation

@@ -73,6 +73,7 @@ public class PilotController : MonoBehaviour
     void Start()
     {
         //ARM_MINSPEED = m_armFollower.m_followSpeed;
+        Attach();
         print("PilotController " + (m_controller == OVRInput.Controller.LTouch ? "L" : "R") + " started!");
     }
     void Update()
@@ -266,4 +267,23 @@ public class PilotController : MonoBehaviour
         }
     }
 
+    void Attach()
+    {
+        if (isAttached)
+            return;
+        {
+            isAttached = true;
+            //this.grabber = grabber;
+            //VibrationManager.SetControllerVibration(m_controller, 20, 2, 200);
+            VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
+            transform.Find("AnchorPivot").localPosition = m_pivotOffset.localPosition;
+            transform.Find("AnchorPivot").localRotation = m_pivotOffset.localRotation;
+            m_ringObject.transform.localPosition = m_ringOffset.localPosition;
+            m_ringObject.transform.localRotation = m_ringOffset.localRotation;
+            transform.SetParent(m_controller == OVRInput.Controller.RTouch ? PlayerHandler.instance.rightHand.transform : PlayerHandler.instance.leftHand.transform);
+            //transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+        }
+    }
 }
