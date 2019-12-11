@@ -14,6 +14,7 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    06/12/2019, 2:47PM      DahNoob   Created
 ** 2    09/12/2019, 11:58AM     DahNoob   Renamed it to Normal Arm Module
+** 3    11/12/2019, 3:34PM      DahNoob   Did abit of punching particles
 *******************************/
 public class NormalArmModule : MechArmModule
 {
@@ -22,26 +23,24 @@ public class NormalArmModule : MechArmModule
     [Range(0.0f, 1.0f)]
     protected float m_followerMaxSpeed = 0.2f;
     [SerializeField]
+    protected float m_punchSpeedEnter = 0.08f;
+    [SerializeField]
+    protected float m_punchSpeedExit = 0.045f;
+    [SerializeField]
     private GameObject m_activateHolos;
     [SerializeField]
     private GameObject m_activateParticles;
+    [SerializeField]
+    private ParticleSystem m_punchingParticles;
 
     //Local variables
-    private OVRHapticsClip vibeClip = new OVRHapticsClip();//vibe check dawg
-
-    new void Awake()
-    {
-        base.Awake();
-        for (int i = 0; i < 100; ++i)
-        {
-            vibeClip.WriteSample(i % 3 == 0 ? (byte)(Mathf.Min((100 - i) * 10, 254)) : (byte)0);
-        }
-    }
+    private bool isPunching = false;
 
     void Start()
     {
         m_activateHolos.SetActive(false);
         m_activateParticles.SetActive(false);
+        m_punchingParticles.Stop();
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -56,6 +55,17 @@ public class NormalArmModule : MechArmModule
 
     public override bool Hold(OVRInput.Controller _controller)
     {
+        float followerCurrentSpeed = follower.CalculateFollowerSpeed();
+        if(!isPunching && followerCurrentSpeed > m_punchSpeedEnter)
+        {
+            isPunching = true;
+            m_punchingParticles.Play();
+        }
+        else if (isPunching && followerCurrentSpeed < m_punchSpeedExit)
+        {
+            isPunching = false;
+            m_punchingParticles.Stop();
+        }
         return true;
     }
 
@@ -63,6 +73,8 @@ public class NormalArmModule : MechArmModule
     {
         m_activateHolos.SetActive(false);
         m_activateParticles.SetActive(false);
+        isPunching = false;
+        m_punchingParticles.Stop();
         follower.m_followSpeed = m_followerSpeed;
         return true;
     }

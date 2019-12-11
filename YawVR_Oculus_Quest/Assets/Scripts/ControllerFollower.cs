@@ -122,7 +122,7 @@ public class ControllerFollower : MonoBehaviour
         transform.localRotation = m_playerTransform.localRotation * currRotation;//Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
     }
 
-    float CalculateFollowerSpeed()
+    public float CalculateFollowerSpeed()
     {
         return (currPosition - prevPosition).sqrMagnitude;
     }
