@@ -37,6 +37,10 @@ public class ControllerFollower : MonoBehaviour
     [Header("Debug")]
     [SerializeField]
     private UnityEngine.UI.Text m_shakeStrengthText;
+    [SerializeField]
+    private UnityEngine.UI.Text m_currArmSpeedText;
+    [SerializeField]
+    private UnityEngine.UI.Text m_maxArmSpeedText;
 
     //Local variables
     private Vector3 prevPosition, goalPosition, currPosition;
@@ -99,12 +103,26 @@ public class ControllerFollower : MonoBehaviour
     {
         currPosition = Vector3.LerpUnclamped(currPosition, goalPosition, m_followSpeed);
         currRotation = Quaternion.SlerpUnclamped(currRotation, goalRotation, m_followSpeed);
+
+        if(m_controller == OVRInput.Controller.RTouch)
+        {
+            float speed = CalculateFollowerSpeed();
+            m_currArmSpeedText.text = speed.ToString();
+            float derp = float.Parse(m_maxArmSpeedText.text);
+            m_maxArmSpeedText.text = speed > derp ? speed.ToString() : m_maxArmSpeedText.text;
+        }
+        
     }
 
     void LateUpdate()
     {
         transform.localPosition = m_playerTransform.localPosition + currPosition;//Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
         transform.localRotation = m_playerTransform.localRotation * currRotation;//Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
+    }
+
+    float CalculateFollowerSpeed()
+    {
+        return (currPosition - prevPosition).sqrMagnitude;
     }
 
     private void OnCollisionEnter(Collision collision)
