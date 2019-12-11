@@ -78,7 +78,7 @@ public class VibrationManager : MonoBehaviour
     }
 
     //Basic haptic pulse function
-    protected IEnumerator HapticPulse(OVRInput.Controller _controller, float totalDuration, float intensity, bool isContinuous = false, float pulseDuration = 0.1f, float intervalDuration = 0.1f)
+    protected IEnumerator HapticPulse(OVRInput.Controller _controller, float totalDuration, float intensity, bool isContinuous = false, float pulseDuration = 0.01f, float intervalDuration = 0.01f)
     {
         keepAlive = isContinuous;
 

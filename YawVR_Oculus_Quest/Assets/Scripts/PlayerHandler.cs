@@ -45,9 +45,6 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField]
     private float m_energyRegenRate = 8.0f;
 
-    //Local variables
-    private bool isEnergyDecreasing = false;
-
     //Hidden variables
     private float _energy;
 
@@ -76,9 +73,7 @@ public class PlayerHandler : MonoBehaviour
     
     void Update()
     {
-        if (isEnergyDecreasing)
-            isEnergyDecreasing = false;
-        else
+        if (!(m_leftController.IsModuleActivated() || m_rightController.IsModuleActivated()))
             currEnergy += m_energyRegenRate * Time.deltaTime;
         m_energySlider.value = currEnergy;
     }
@@ -88,7 +83,6 @@ public class PlayerHandler : MonoBehaviour
         if (currEnergy - _decrement > 0)
         {
             currEnergy -= _decrement;
-            isEnergyDecreasing = true;
             return true;
         }
         return false;

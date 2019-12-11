@@ -100,7 +100,7 @@ public class PilotController : MonoBehaviour
             SetCurrentModule(currModuleIndex - 1);
         }
 
-        if (isHandTriggered && isIndexTriggered)
+        if (IsModuleActivated())
             modules[currModuleIndex].Hold(m_controller);
     }
     void FixedUpdate()
@@ -193,7 +193,7 @@ public class PilotController : MonoBehaviour
             currModuleIndex = modules.Count; //very shitty way of doin it rn but wuteva
         currentHoloArm = modules[currModuleIndex].holoModel;
         currentArmObject = modules[currModuleIndex].armObject;
-        if(isHandTriggered && isIndexTriggered)
+        if(IsModuleActivated())
         {
             modules[prevModuleIndex].Stop(m_controller);
             modules[currModuleIndex].Activate(m_controller);
@@ -235,6 +235,11 @@ public class PilotController : MonoBehaviour
         }
     }
 
+    public bool IsModuleActivated()
+    {
+        return isHandTriggered && isIndexTriggered;
+    }
+
     void OnTriggerEnter(Collider otherCollider)
     {
         // Get the grab trigger
@@ -246,7 +251,8 @@ public class PilotController : MonoBehaviour
         {
             isAttached = true;
             //this.grabber = grabber;
-            VibrationManager.SetControllerVibration(m_controller, 20, 2, 200);
+            //VibrationManager.SetControllerVibration(m_controller, 20, 2, 200);
+            VibrationManager.SetControllerVibration(m_controller, 0.03f, 0.4f);
             transform.Find("AnchorPivot").localPosition = m_pivotOffset.localPosition;
             transform.Find("AnchorPivot").localRotation = m_pivotOffset.localRotation;
             m_ringObject.transform.localPosition = m_ringOffset.localPosition;

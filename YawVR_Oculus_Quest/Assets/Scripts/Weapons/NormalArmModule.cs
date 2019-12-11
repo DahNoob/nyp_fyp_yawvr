@@ -50,7 +50,7 @@ public class NormalArmModule : MechArmModule
         m_activateParticles.SetActive(true);
         follower.m_followSpeed = m_followerMaxSpeed;
         //VibrationManager.SetControllerVibration(m_controller, vibeClip);
-        VibrationManager.SetControllerVibration(m_controller, 0.2f, 0.5f, false);
+        VibrationManager.SetControllerVibration(m_controller, 0.1f, 0.65f, false);
         return true;
     }
 
