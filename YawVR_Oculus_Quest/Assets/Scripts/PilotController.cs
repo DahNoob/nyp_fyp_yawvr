@@ -125,7 +125,7 @@ public class PilotController : MonoBehaviour
 
         //m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
 
-        currCanvasUIRotation = Mathf.LerpAngle(currCanvasUIRotation, (float)(currModuleIndex) / (float)(modules.Count) * 360.0f + (m_controller == OVRInput.Controller.RTouch ? 90 : -90), 0.08f);
+        currCanvasUIRotation = Mathf.LerpAngle(currCanvasUIRotation, (float)(currModuleIndex) / (float)(modules.Count) * 360.0f + (m_controller == OVRInput.Controller.RTouch ? 90 : 90), 0.08f);
 
         m_armModulesCanvas.GetComponent<RectTransform>().localEulerAngles = new Vector3(270, 180, currCanvasUIRotation);
         for (int i = 0; i < modules.Count; ++i)
