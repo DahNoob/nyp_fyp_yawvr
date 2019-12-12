@@ -3146,7 +3146,7 @@ MonoBehaviour:
   maxSpeed: 20
   acceleration: 2
   deceleration: 2
-  rotationSpeed: 50
+  rotationSpeed: 75
   rStickDelta: {x: 0, y: 0}
   lStickDelta: {x: 0, y: 0}
 --- !u!143 &2490811769729633238
@@ -3160,13 +3160,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 6.75
+  m_Radius: 1.59
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.96, z: 0}
 --- !u!1 &757645498658516463
 GameObject:
   m_ObjectHideFlags: 0
@@ -7386,7 +7386,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -0.05899986}
   m_LocalScale: {x: 0.00049999985, y: 0.0005000002, z: 0.0005000001}
   m_Children:
-  - {fileID: 8502461188603959023}
+  - {fileID: 4379430867077920703}
   - {fileID: 4547718503056272108}
   m_Father: {fileID: 1534060754794942738}
   m_RootOrder: 3
@@ -8486,7 +8486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2e05259599470f47a1a7df2a0964bd2, type: 3}
---- !u!224 &8502461188603959023 stripped
+--- !u!224 &4379430867077920703 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5275987084074000982, guid: a2e05259599470f47a1a7df2a0964bd2,
     type: 3}

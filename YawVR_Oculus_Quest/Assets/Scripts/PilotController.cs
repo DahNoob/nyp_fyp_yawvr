@@ -56,7 +56,7 @@ public class PilotController : MonoBehaviour
     Transform m_ringOffset;
 
     //Local variables
-    private bool isAttached, isHandTriggered, isIndexTriggered = false;
+    private bool isAttached = false, isHandTriggered = false, isIndexTriggered = false;
     private MeshRenderer currentHoloArm;
     private GameObject currentArmObject;
     private List<MechArmModule> modules = new List<MechArmModule>();

@@ -26,6 +26,10 @@ public class LaserBlasterArm : MechArmModule
     protected float m_shootInterval = 0.1f;
     [SerializeField]
     protected ParticleSystem m_shootParticle;
+    [SerializeField]
+    protected AudioSource m_shootAudioSource;
+    [SerializeField]
+    protected AudioClip[] m_shootAudioClips;
 
     //Local variables
     private float shootTick;
@@ -56,6 +60,8 @@ public class LaserBlasterArm : MechArmModule
                 //VibrationManager.SetControllerVibration(m_controller, vibeClip);
                 VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
                 m_shootParticle.Emit(6);
+                m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
+                m_shootAudioSource.Play();
                 return true;
             }
         }

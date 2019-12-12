@@ -17,6 +17,16 @@ public class GUIManager : MonoBehaviour
     [SerializeField]
     private GameObject m_dumbCubes;
 
+    [Header("Debug Resources")]
+    [SerializeField]
+    private UnityEngine.UI.Text m_fpsValue;
+
+    //Local variables
+    int frameCount = 0;
+    float dt = 0.0f;
+    float fps = 0.0f;
+    float updateRate = 4.0f;  // 4 updates per sec.
+
     void Start()
     {
         transform.position = m_cameraTransform.position;
@@ -24,10 +34,23 @@ public class GUIManager : MonoBehaviour
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
     }
 
+    void Update()
+    {
+        frameCount++;
+        dt += Time.deltaTime;
+        if (dt > 1.0 / updateRate)
+        {
+            fps = frameCount / dt;
+            frameCount = 0;
+            dt -= 1.0f / updateRate;
+        }
+    }
+
     void LateUpdate()
     {
         transform.position = m_cameraTransform.position;
         transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
+        m_fpsValue.text = fps.ToString();
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
     }
 
