@@ -51,7 +51,8 @@ public class LaserBlasterArm : MechArmModule
             shootTick -= m_shootInterval;
             if (PlayerHandler.instance.DecreaseEnergy(m_energyReduction))
             {
-                Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform);
+                BaseProjectile derp = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+                derp.Init(m_projectileOrigin);
                 //VibrationManager.SetControllerVibration(m_controller, vibeClip);
                 VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
                 m_shootParticle.Emit(6);

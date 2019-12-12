@@ -9,11 +9,7 @@ abstract public class BaseProjectile : MonoBehaviour
     [Header("Base Configuration")]
     [SerializeField]
     protected string m_projectileName;
-    public BaseProjectile(Transform _transform)
-    {
-        Init(_transform);
-    }
 
-    abstract protected void Init(Transform _transform);
+    abstract public void Init(Transform _transform);
     abstract protected void OnCollisionEnter(Collision collision);
 }

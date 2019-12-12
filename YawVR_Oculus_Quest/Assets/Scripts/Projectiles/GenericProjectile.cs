@@ -12,11 +12,7 @@ public class GenericProjectile : BaseProjectile
     [SerializeField]
     protected GameObject m_projectileImpactEffect;
 
-    GenericProjectile(Transform _transform) : base(_transform)
-    {
-
-    }
-    protected override void Init(Transform _transform)
+    public override void Init(Transform _transform)
     {
         transform.SetPositionAndRotation(_transform.position, _transform.rotation);
         GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * m_projectileSpeed);

@@ -121,8 +121,7 @@ public class PilotController : MonoBehaviour
             newArmInnerColor = Color.Lerp(prevArmInnerColor, Persistent.instance.COLOR_TRANSPARENT, 0.1f);
             newArmRimColor = Color.Lerp(prevArmRimColor, Persistent.instance.COLOR_TRANSPARENT, 0.1f);
         }
-        currentHoloArm.material.SetColor("_InnerColor", newArmInnerColor);
-        currentHoloArm.material.SetColor("_RimColor", newArmRimColor);
+        SetHoloArmMaterialColor(newArmInnerColor, newArmRimColor);
 
         //m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
 
@@ -184,6 +183,16 @@ public class PilotController : MonoBehaviour
         VibrationManager.SetControllerVibration(m_controller, clip);
     }
 
+    void SetHoloArmMaterialColor(Color _newInnerColor, Color _newRimColor)
+    {
+        for (int i = 0; i < currentHoloArm.materials.Length; ++i)
+        {
+            currentHoloArm.materials[i].SetColor("_InnerColor", _newInnerColor);
+            currentHoloArm.materials[i].SetColor("_RimColor", _newRimColor);
+
+        }
+    }
+
     void SetCurrentModule(int _index)
     {
         int prevModuleIndex = currModuleIndex;
@@ -208,6 +217,11 @@ public class PilotController : MonoBehaviour
         {
             modules[i].holoModel.material.SetColor("_InnerColor", Persistent.instance.COLOR_TRANSPARENT);
             modules[i].holoModel.material.SetColor("_RimColor", Persistent.instance.COLOR_TRANSPARENT);
+            for (int j = 0; j < modules[i].holoModel.materials.Length; ++j)
+            {
+                modules[i].holoModel.materials[j].SetColor("_InnerColor", Persistent.instance.COLOR_TRANSPARENT);
+                modules[i].holoModel.materials[j].SetColor("_RimColor", Persistent.instance.COLOR_TRANSPARENT);
+            }
             modules[i].armObject.SetActive(false);
         }
         currentArmObject.SetActive(true);
