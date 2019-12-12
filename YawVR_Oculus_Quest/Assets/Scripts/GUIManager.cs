@@ -68,5 +68,7 @@ public class GUIManager : MonoBehaviour
     public void RecenterPose()
     {
         OVRManager.display.RecenterPose();
+        PlayerHandler.instance.ResetPose();
+
     }
 }

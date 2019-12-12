@@ -127,6 +127,12 @@ public class ControllerFollower : MonoBehaviour
         return (currPosition - prevPosition).sqrMagnitude;
     }
 
+    public void Bump(Vector3 _posOffset, Vector3 _rotOffset = new Vector3())
+    {
+        currPosition += _posOffset;
+        currRotation *= Quaternion.Euler(_rotOffset);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (prevPosition != gameObject.transform.localPosition)

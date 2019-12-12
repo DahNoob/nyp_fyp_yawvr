@@ -45,6 +45,10 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField]
     private float m_energyRegenRate = 8.0f;
 
+    //Local variables
+    private Vector3 origPos;
+    private Quaternion origRot;
+
     //Hidden variables
     private float _energy;
 
@@ -66,6 +70,8 @@ public class PlayerHandler : MonoBehaviour
 
     void Start()
     {
+        origPos = transform.position;
+        origRot = transform.rotation;
         currEnergy = m_maxEnergy;
         m_energySlider.maxValue = m_maxEnergy;
         print("PlayerHandler started!");
@@ -86,6 +92,13 @@ public class PlayerHandler : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void ResetPose()
+    {
+        GetComponent<CharacterController>().enabled = false;
+        transform.SetPositionAndRotation(origPos, origRot);
+        GetComponent<CharacterController>().enabled = true;
     }
 
     public PilotController GetRightPilotController()

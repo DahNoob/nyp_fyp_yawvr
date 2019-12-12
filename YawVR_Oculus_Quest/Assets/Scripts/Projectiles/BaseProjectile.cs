@@ -10,6 +10,6 @@ abstract public class BaseProjectile : MonoBehaviour
     [SerializeField]
     protected string m_projectileName;
 
-    abstract public void Init(Transform _transform);
+    abstract public void Init(Transform _transform = null);
     abstract protected void OnCollisionEnter(Collision collision);
 }
