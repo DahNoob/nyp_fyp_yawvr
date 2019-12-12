@@ -8,6 +8,7 @@
 		LOD 100
 
 		Pass{
+		Name "UNLIT"
 		CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag

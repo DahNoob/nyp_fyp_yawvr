@@ -24,19 +24,16 @@ public class LaserBlasterArm : MechArmModule
     protected Transform m_projectileOrigin;
     [SerializeField]
     protected float m_shootInterval = 0.1f;
+    [SerializeField]
+    protected ParticleSystem m_shootParticle;
 
     //Local variables
     private float shootTick;
-    private OVRHapticsClip vibeClip = new OVRHapticsClip();//vibe check dawg
 
     void Start()
     {
         if (!CustomUtility.IsObjectPrefab(m_projectilePrefab))
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
-        for (int i = 0; i < 30; ++i)
-        {
-            vibeClip.WriteSample(i % 3 == 0 ? (byte)(Mathf.Min((30 - i) * 120, 254)) : (byte)0);
-        }
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -57,6 +54,7 @@ public class LaserBlasterArm : MechArmModule
                 Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform);
                 //VibrationManager.SetControllerVibration(m_controller, vibeClip);
                 VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
+                m_shootParticle.Emit(6);
                 return true;
             }
         }
