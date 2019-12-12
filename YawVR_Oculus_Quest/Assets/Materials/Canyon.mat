@@ -23,6 +23,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 64633c4f8ad1a124f9de440cd3eef576, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainOcclusionMap:
+        m_Texture: {fileID: 2800000, guid: e8991bae43c27614282b9c8a4be9a1e4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainSpecularMap:
+        m_Texture: {fileID: 2800000, guid: 4088c110ed8a1624c87fa31f9e44c5aa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 25862ba50c10b5c49b92b8ec59582e2e, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -36,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: 727babd9f1ef0be468453f0751e57c13, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
@@ -55,16 +63,31 @@ Material:
         m_Texture: {fileID: 2800000, guid: b6ffb6bed4206f14f91ba29943f4f38b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SideOcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 39bcf2f89599213428935a0d9d7e7125, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SideSpecularMap:
+        m_Texture: {fileID: 2800000, guid: 6f5fba441cc0e0342991ae0b56f1fa19, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - _EdgeWidth: 0.095
+    - _FinalResultBrightness: 1
     - _Glossiness: 0.5
-    - _MainTexScale: 1
-    - _MainTexSideScale: 0.025
+    - _MainNormalMapScale: 0.2
+    - _MainOcculusionMapScale: 0.2
+    - _MainSpecularMapScale: 0.2
+    - _MainTexScale: 0.2
+    - _MainTexSideScale: 0.2
     - _Metallic: 0
     - _NoiseScale: 1
     - _RimPower: 20
     - _Scale: 1
+    - _SideNormalMapScale: 1
+    - _SideOcculusionMapScale: 0.2
     - _SideScale: 1
+    - _SideSpecularMapScale: 0.2
     - _TopSpread: 1.8
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

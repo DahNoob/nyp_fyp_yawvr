@@ -16,7 +16,7 @@
 		{
 			// No culling or depth
 			Cull Off ZWrite Off ZTest Always
-			
+
 			Pass
 			{
 				CGPROGRAM
@@ -118,9 +118,8 @@
 						float s = sobel(_MainTex, i.uv) * _EdgeDetectionStrength;
 						//Get the final result of sobel * edgeTint.
 						half4 resultSobel = half4(s * _EdgeTint.r, s * _EdgeTint.g, s * _EdgeTint.b, 1);
-
 						//Add the sobel result to the scan color such that it only shows the sobel in the scan
-						scannerColor += resultSobel;			
+						scannerColor += resultSobel;
 					}
 
 					if (distanceToOrigin < _ScanDistance)
@@ -132,7 +131,6 @@
 						return col;
 					else
 						return col * 0.1f;
-
 					}
 
 
