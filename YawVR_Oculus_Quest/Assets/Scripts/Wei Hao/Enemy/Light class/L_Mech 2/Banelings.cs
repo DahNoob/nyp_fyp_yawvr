@@ -15,10 +15,10 @@ using UnityEngine;
 ** 1    10/12/2019, 1:06 PM     Wei Hao   Created & Implemented
 ** 1    13/12/2019, 1:33 PM     Wei Hao   Updated basic animation
 *******************************/
-public class Banelings : EnemyBase
+public class LightMech2 : EnemyBase
 {
     // Banelings states
-    private enum _Banelings
+    private enum _GameStates
     {
         WALK,
         CHASE,
@@ -42,7 +42,7 @@ public class Banelings : EnemyBase
     Animator m_Animator;
 
     [SerializeField]
-    private _Banelings currentState;
+    private _GameStates currentState;
 
     [Header("Explosion")]
     private float speed = 1.0f; //how fast it shakes
@@ -60,7 +60,7 @@ public class Banelings : EnemyBase
         health = maxHealth;
         damage = 10;
         moveSpeed = 6;
-        currentState = _Banelings.CHASE;
+        currentState = _GameStates.CHASE;
         Player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
@@ -82,7 +82,7 @@ public class Banelings : EnemyBase
         float distance = Vector3.Distance(transform.position, Player.transform.position);
         //if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
         //{
-            //currentState = _Banelings.CHASE;
+            //currentState = _GameStates.CHASE;
             //m_Animator.SetBool("Chase", true);
 
             Debug.Log("Current State: " + currentState);
@@ -96,13 +96,13 @@ public class Banelings : EnemyBase
 
         switch (currentState)
         {
-            case _Banelings.CHASE:
+            case _GameStates.CHASE:
                 Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
                 transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 break;
-            case _Banelings.EXPLODE:
+            case _GameStates.EXPLODE:
                 attackWindUp -= 1.0f * Time.deltaTime;
 
                 transformX.x = Mathf.Sin(Time.time * speed) * amount;
@@ -145,7 +145,8 @@ public class Banelings : EnemyBase
         {
             Debug.Log("Hit");
             transformX = transform.position;
-            currentState = _Banelings.EXPLODE;
+            currentState = _GameStates.EXPLODE;
+            m_Animator.SetBool("Chase", false);
             m_Animator.SetBool("Explode", true);
         }
 

@@ -8,6 +8,7 @@ public class Light_Enemy_1 : EnemyBase
     {
         CHASE,
         SHOOT,
+        AVOID,
         DIE,
     }
 
@@ -22,22 +23,28 @@ public class Light_Enemy_1 : EnemyBase
     // Time taken before attack is activated
     private float attackWindUp = 2.0f;
 
-    private Rigidbody rb;
+    private float maximumRange = 10.0f;
+    private float minimumRange = 5.0f;
 
     //Fetch the Animator
     Animator m_Animator;
+    private Rigidbody rb;   
 
     [SerializeField]
     private _EnemyState currentState;
 
-    [Header("Explosion")]
-    private float speed = 1.0f; //how fast it shakes
+    private float projectileSpeed;
     private float amount = 1.0f; //how much it shakes
     private Vector3 transformX;
 
     // Particle effect when baneling explodes
     public ParticleSystem poof;
     float explodeDuration = 1.0f;
+
+    // Light Mech Shooting
+    private float shotInterval = 0.5f;
+    private float shotTime = 0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,7 +53,7 @@ public class Light_Enemy_1 : EnemyBase
         health = maxHealth;
         damage = 5;
         moveSpeed = 6;
-        currentState = _EnemyState.CHASE;
+        currentState = _EnemyState.SHOOT;
         Player = GameObject.Find("Player");
         target = Player.GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
@@ -63,25 +70,25 @@ public class Light_Enemy_1 : EnemyBase
     // Update is called once per frame
     void Update()
     {
-        Vector3 relativePos = Player.transform.position - transform.position;
+        Vector3 relativePos = target.position - transform.position;
 
         // Debugging distance
-        float distance = Vector3.Distance(transform.position, Player.transform.position);
-        if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
+        float distance = Vector3.Distance(transform.position, target.position);
+        if (Vector3.Distance(transform.position, target.position) >= minimumRange)
         {
             currentState = _EnemyState.CHASE;
             //m_Animator.SetBool("Chase", true);
 
             Debug.Log("Current State: " + currentState);
             Debug.Log("Distance: " + distance);
-            if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange)
+            if (Vector3.Distance(transform.position, target.position) <= maximumRange)
             {
+                Debug.Log("Within Range");
                 currentState = _EnemyState.SHOOT;
-                transformX = transform.position;
-                m_Animator.SetBool("Explode", true);
+                //transformX = transform.position;
+                //m_Animator.SetBool("Explode", true);
             }
         }
-    
 
         switch (currentState)
         {
@@ -92,8 +99,21 @@ public class Light_Enemy_1 : EnemyBase
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 break;
             case _EnemyState.SHOOT:
+                toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+                transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-                Instantiate(projectile,transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position));
+                Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position));
+                //if (Vector3.Distance(target.position, transform.position <= maximumLookDistance)
+                //{
+                //    LookAtTarget();
+
+                //    //Check distance and time
+                //    if (distance <= maximumAttackDistance && (Time.time - shotTime) > shotInterval)
+                //    {
+                //        Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position));
+                //    }
+                //}
+
                 //attackWindUp -= 1.0f * Time.deltaTime;
                 //if(attackWindUp <= 0.0f)
                 //{
@@ -116,7 +136,17 @@ public class Light_Enemy_1 : EnemyBase
                 //gameObject.SetActive(false);
                 //}
                 break;
+            case _EnemyState.AVOID:
+                break;
             case _EnemyState.DIE:
+                Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+                for (int i = 0; i < hitColliders.Length; i++)
+                {
+                    if (hitColliders[i].gameObject.tag == "Player")
+                    {
+                        Debug.Log("B00M !!");
+                    }
+                }
                 break;
         }
     }
