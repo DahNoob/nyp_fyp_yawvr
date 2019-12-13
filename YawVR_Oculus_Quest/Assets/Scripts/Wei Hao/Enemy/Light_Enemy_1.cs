@@ -14,8 +14,11 @@ public class Light_Enemy_1 : EnemyBase
 
     public Transform projectile;
     private Transform target;
-
     private GameObject Player;
+
+    public GameObject leftBlaster;
+    public GameObject rightBlaster;
+
     // Attack range
     private int attackRange = 10;
     // Baneling rotation speed
@@ -28,6 +31,7 @@ public class Light_Enemy_1 : EnemyBase
 
     //Fetch the Animator
     Animator m_Animator;
+
     private Rigidbody rb;   
 
     [SerializeField]
@@ -102,7 +106,17 @@ public class Light_Enemy_1 : EnemyBase
                 toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
                 transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-                Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position));
+                attackWindUp -= 1.0f * Time.deltaTime;
+                if (attackWindUp <= 0.0f)
+                {
+                    Instantiate(projectile, transform.position + (target.position - leftBlaster.transform.position).normalized, Quaternion.LookRotation(target.position - leftBlaster.transform.position));
+                    if (shotInterval <= 0.0f)
+                    {
+                        Instantiate(projectile, transform.position + (target.position - rightBlaster.transform.position).normalized, Quaternion.LookRotation(target.position - rightBlaster.transform.position));
+                    }
+                }
+
+                //Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position));
                 //if (Vector3.Distance(target.position, transform.position <= maximumLookDistance)
                 //{
                 //    LookAtTarget();
@@ -114,11 +128,7 @@ public class Light_Enemy_1 : EnemyBase
                 //    }
                 //}
 
-                //attackWindUp -= 1.0f * Time.deltaTime;
-                //if(attackWindUp <= 0.0f)
-                //{
 
-                //}
 
 
                 //transformX.x = Mathf.Sin(Time.time * speed) * amount;
