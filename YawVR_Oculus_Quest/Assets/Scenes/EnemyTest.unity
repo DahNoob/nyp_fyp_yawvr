@@ -263,10 +263,10 @@ MonoBehaviour:
   m_indexTriggerBegin: 0.55
   m_indexTriggerEnd: 0.35
   m_armMaxSpeed: 14
-  m_armObject: {fileID: 196562083259328429}
   m_armFollower: {fileID: 1464588749}
   m_ringObject: {fileID: 29485214}
   m_holos: {fileID: 0}
+  m_armModulesCanvas: {fileID: 0}
   m_pivotOffset: {fileID: 1076334764}
   m_ringOffset: {fileID: 1208036004}
 --- !u!54 &40234098
@@ -809,10 +809,10 @@ MonoBehaviour:
   m_indexTriggerBegin: 0.55
   m_indexTriggerEnd: 0.35
   m_armMaxSpeed: 14
-  m_armObject: {fileID: 6154545220488015180}
   m_armFollower: {fileID: 1149056837}
   m_ringObject: {fileID: 789229867}
   m_holos: {fileID: 0}
+  m_armModulesCanvas: {fileID: 0}
   m_pivotOffset: {fileID: 254351467}
   m_ringOffset: {fileID: 1246375138}
 --- !u!54 &771264300
@@ -1339,6 +1339,8 @@ MonoBehaviour:
   m_origin: {fileID: 1389467201}
   m_playerTransform: {fileID: 1485395536}
   m_shakeStrengthText: {fileID: 0}
+  m_currArmSpeedText: {fileID: 0}
+  m_maxArmSpeedText: {fileID: 0}
 --- !u!136 &1149056838
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1579,6 +1581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dbb50cff17966140b56dad6bc06cd9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PREFAB_MODULE_ICON: {fileID: 0}
 --- !u!4 &1378206817
 Transform:
   m_ObjectHideFlags: 0
@@ -1715,6 +1718,8 @@ MonoBehaviour:
   m_origin: {fileID: 572415643}
   m_playerTransform: {fileID: 1485395536}
   m_shakeStrengthText: {fileID: 0}
+  m_currArmSpeedText: {fileID: 0}
+  m_maxArmSpeedText: {fileID: 0}
 --- !u!136 &1464588750
 CapsuleCollider:
   m_ObjectHideFlags: 0

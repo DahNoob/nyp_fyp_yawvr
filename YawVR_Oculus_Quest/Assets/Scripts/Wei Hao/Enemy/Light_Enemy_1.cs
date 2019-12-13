@@ -2,28 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/******************************  
-** Name: Banelings
-** Desc: Baneling's beheviour
-** Author: Wei Hao
-** Date: 10/12/2019, 1:06 AM
-**************************
-** Change History
-**************************
-** PR   Date                    Author    Description 
-** --   --------                -------   ------------------------------------
-** 1    10/12/2019, 1:06 PM     Wei Hao   Created & Implemented
-** 1    13/12/2019, 1:33 PM     Wei Hao   Updated basic animation
-*******************************/
-public class Banelings : EnemyBase
+public class Light_Enemy_1 : EnemyBase
 {
-    // Banelings states
-    private enum _Banelings
+    public enum _EnemyState
     {
-        WALK,
         CHASE,
-        EXPLODE,
-        ATTACK
+        SHOOT,
+        DIE,
     }
 
     private GameObject Player;
@@ -42,7 +27,7 @@ public class Banelings : EnemyBase
     Animator m_Animator;
 
     [SerializeField]
-    private _Banelings currentState;
+    private _EnemyState currentState;
 
     [Header("Explosion")]
     private float speed = 1.0f; //how fast it shakes
@@ -56,11 +41,11 @@ public class Banelings : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 10;
+        maxHealth = 1;
         health = maxHealth;
         damage = 10;
         moveSpeed = 6;
-        currentState = _Banelings.CHASE;
+        currentState = _EnemyState.CHASE;
         Player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
@@ -80,29 +65,31 @@ public class Banelings : EnemyBase
 
         // Debugging distance
         float distance = Vector3.Distance(transform.position, Player.transform.position);
-        //if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
-        //{
-            //currentState = _Banelings.CHASE;
-            //m_Animator.SetBool("Chase", true);
+        if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
+        {
+            currentState = _EnemyState.CHASE;
+            m_Animator.SetBool("Chase", true);
 
             Debug.Log("Current State: " + currentState);
             Debug.Log("Distance: " + distance);
-            //if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange)
-            //{
-            //    transformX = transform.position;
-            //    m_Animator.SetBool("Explode", true);
-            //}
-       // }
+            if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange)
+            {
+                currentState = _EnemyState.SHOOT;
+                transformX = transform.position;
+                m_Animator.SetBool("Explode", true);
+            }
+        }
+    
 
         switch (currentState)
         {
-            case _Banelings.CHASE:
+            case _EnemyState.WALK:
                 Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
                 transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 break;
-            case _Banelings.EXPLODE:
+            case _EnemyState.SHOOT:
                 attackWindUp -= 1.0f * Time.deltaTime;
 
                 transformX.x = Mathf.Sin(Time.time * speed) * amount;
@@ -128,6 +115,8 @@ public class Banelings : EnemyBase
                     gameObject.SetActive(false);
                 }
                 break;
+            case _EnemyState.DIE:
+                break;
         }
     }
 
@@ -145,14 +134,14 @@ public class Banelings : EnemyBase
         {
             Debug.Log("Hit");
             transformX = transform.position;
-            currentState = _Banelings.EXPLODE;
-            m_Animator.SetBool("Explode", true);
+            currentState = _EnemyState.DIE;
+            //m_Animator.SetBool("Explode", true);
         }
 
         if (collision.gameObject.tag == "Bullet")
         {
             takeDamage(1);
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
         }
     }
 }

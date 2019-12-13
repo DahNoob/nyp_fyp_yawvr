@@ -32,8 +32,8 @@ public class ImpactReceiver : MonoBehaviour
         {
             // reflect down force on the ground
             //direction.x = -direction.x;
-            direction.z = -direction.z;
-            //direction.y = -direction.y;
+            //direction.z = -direction.z;
+            direction.y = -direction.y;
             impact += direction.normalized * force / mass;
         }
     }
