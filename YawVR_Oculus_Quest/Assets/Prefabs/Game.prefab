@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 2245854119441048551}
   - component: {fileID: 2285741538413811715}
   - component: {fileID: 6152799309331828111}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MechArmLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 5367843038036139380}
   - component: {fileID: 5149090290641359687}
   - component: {fileID: 2528341043952191715}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MechArmRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1180,7 +1180,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5854042772982385154}
+  - {fileID: 870356838873983929}
   m_Father: {fileID: 3198803091135731427}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2330,16 +2330,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8602080149038066884}
     m_Modifications:
-    - target: {fileID: 756605538046042366, guid: 143acbe0941cf0347897b1a551349d3b,
+    - target: {fileID: 5682009806463883072, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 756605538046042366, guid: 143acbe0941cf0347897b1a551349d3b,
+      propertyPath: m_pivotOffset
+      value: 
+      objectReference: {fileID: 2253641587282179392}
+    - target: {fileID: 5682009806463883072, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
+      propertyPath: m_ringOffset
+      value: 
+      objectReference: {fileID: 4679539750728316394}
+    - target: {fileID: 5682009806463883072, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_armFollower
+      value: 
+      objectReference: {fileID: 5149090290641359687}
     - target: {fileID: 756605538046042364, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_RootOrder
@@ -2390,6 +2395,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 432.2
       objectReference: {fileID: 0}
+    - target: {fileID: 756605538046042366, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 756605538046042366, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 756605538046042365, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_rightController
@@ -2405,21 +2420,6 @@ PrefabInstance:
       propertyPath: m_energySlider
       value: 
       objectReference: {fileID: 2443239225704420962}
-    - target: {fileID: 5682009806463883072, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_pivotOffset
-      value: 
-      objectReference: {fileID: 2253641587282179392}
-    - target: {fileID: 5682009806463883072, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_ringOffset
-      value: 
-      objectReference: {fileID: 4679539750728316394}
-    - target: {fileID: 5682009806463883072, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_armFollower
-      value: 
-      objectReference: {fileID: 5149090290641359687}
     - target: {fileID: 3352581431113299909, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_pivotOffset
@@ -2579,7 +2579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8a6d94bc6a9f8c46a761b928695003a, type: 3}
---- !u!4 &5854042772982385154 stripped
+--- !u!4 &870356838873983929 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6713068302700422120, guid: f8a6d94bc6a9f8c46a761b928695003a,
     type: 3}
@@ -2592,11 +2592,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8145388762151500780}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 0aec77e721a3aeb4f8075d76c7126f51,
-        type: 3}
-      propertyPath: m_Name
-      value: Arena1Test
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 0aec77e721a3aeb4f8075d76c7126f51,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2651,6 +2646,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 0aec77e721a3aeb4f8075d76c7126f51,
+        type: 3}
+      propertyPath: m_Name
+      value: Arena1Test
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0aec77e721a3aeb4f8075d76c7126f51, type: 3}
