@@ -13,6 +13,8 @@ public class ArmIKHandler : MonoBehaviour
     private OVRInput.Controller m_controller;
     [SerializeField]
     private UnityEngine.UI.Text m_armLengthText;
+    [SerializeField]
+    private float m_armLength = 3.6f;
 
     [Header("Debugs")]
     [SerializeField]
@@ -31,7 +33,7 @@ public class ArmIKHandler : MonoBehaviour
         float dist = (transform.position - m_handTransform.position).magnitude;
         if (m_armLengthText)
             m_armLengthText.text = dist.ToString();
-        m_armStretch = dist / 2.55f;
+        m_armStretch = dist / m_armLength;
         m_armModel.SetFloat("Blend", m_armStretch);
         transform.LookAt(m_handTransform);
     }
