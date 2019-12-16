@@ -136,6 +136,10 @@ public class PilotController : MonoBehaviour
 
     public void AttachArmModules(GameObject[] _armModulePackages)
     {
+        foreach (Transform child in m_armFollower.transform)
+        {
+            Destroy(child.gameObject);
+        }
         foreach (GameObject armModulePackage in _armModulePackages)
         {
             Transform validFind = armModulePackage.transform.Find(m_controller == OVRInput.Controller.RTouch ? "Right" : "Left");
