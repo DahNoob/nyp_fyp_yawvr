@@ -46,10 +46,11 @@ public class Light_Enemy_1 : EnemyBase
     float explodeDuration = 1.0f;
 
     // Light Mech Shooting
-    private float shotInterval = 0.5f;
-    private float shotTime = 0f;
+    public Transform m_projectileOriginL;
+    public Transform m_projectileOriginR;
 
-    public Transform m_projectileOrigin;
+    // Dodge Check
+    private float dodgeCheck = 2.0f;
 
 
     // Start is called before the first frame update
@@ -96,6 +97,20 @@ public class Light_Enemy_1 : EnemyBase
             }
         }
 
+        dodgeCheck -= 1.0f * Time.deltaTime;
+        if (dodgeCheck <= 0.0f)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+            for (int i = 0; i < hitColliders.Length; i++)
+            {
+                if (hitColliders[i].gameObject.tag == "Player Projectile")
+                {
+                    Debug.Log("Projectile detected");
+                    currentState = _EnemyState.AVOID;
+                }
+            }
+        }
+
         switch (currentState)
         {
             case _EnemyState.CHASE:
@@ -111,30 +126,9 @@ public class Light_Enemy_1 : EnemyBase
                 attackWindUp -= 1.0f * Time.deltaTime;
                 if (attackWindUp <= 0.0f)
                 {
-                    BaseProjectile _projectile = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-                    _projectile.Init(m_projectileOrigin);
-                    //projectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * m_projectileSpeed);
-                    //if (shotInterval <= 0.0f)
-                    //{
-                    //    Instantiate(projectile, transform.position + (target.position - rightBlaster.transform.position).normalized, Quaternion.LookRotation(target.position - rightBlaster.transform.position));
-                    //}
+                    StartCoroutine(EnemyShoot());
                     attackWindUp = 2.0f;
                 }
-
-                //Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position));
-                //if (Vector3.Distance(target.position, transform.position <= maximumLookDistance)
-                //{
-                //    LookAtTarget();
-
-                //    //Check distance and time
-                //    if (distance <= maximumAttackDistance && (Time.time - shotTime) > shotInterval)
-                //    {
-                //        Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position));
-                //    }
-                //}
-
-
-
 
                 //transformX.x = Mathf.Sin(Time.time * speed) * amount;
 
@@ -152,18 +146,30 @@ public class Light_Enemy_1 : EnemyBase
                 //}
                 break;
             case _EnemyState.AVOID:
+
                 break;
             case _EnemyState.DIE:
-                Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
-                for (int i = 0; i < hitColliders.Length; i++)
-                {
-                    if (hitColliders[i].gameObject.tag == "Player")
-                    {
-                        Debug.Log("B00M !!");
-                    }
-                }
+                //Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+                //for (int i = 0; i < hitColliders.Length; i++)
+                //{
+                //    if (hitColliders[i].gameObject.tag == "Player")
+                //    {
+                //        Debug.Log("B00M !!");
+                //    }
+                //}
                 break;
         }
+    }
+
+    IEnumerator EnemyShoot()
+    {
+        BaseProjectile _projectileL = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        _projectileL.Init(m_projectileOriginL);
+
+        yield return new WaitForSeconds(0.2f);
+
+        BaseProjectile _projectileR = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        _projectileR.Init(m_projectileOriginR);
     }
 
     void PlayDeathParticle()
