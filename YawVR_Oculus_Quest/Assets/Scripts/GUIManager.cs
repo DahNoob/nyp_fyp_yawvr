@@ -20,6 +20,8 @@ public class GUIManager : MonoBehaviour
     [Header("Debug Resources")]
     [SerializeField]
     private UnityEngine.UI.Text m_fpsValue;
+    [SerializeField]
+    private UnityEngine.UI.Text m_armRotationValue;
 
     //Local variables
     int frameCount = 0;
@@ -51,6 +53,7 @@ public class GUIManager : MonoBehaviour
         transform.position = m_cameraTransform.position;
         transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         m_fpsValue.text = fps.ToString();
+        m_armRotationValue.text = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch).eulerAngles.ToString();
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
     }
 
