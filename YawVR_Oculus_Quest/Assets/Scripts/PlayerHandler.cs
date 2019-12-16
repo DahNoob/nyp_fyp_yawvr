@@ -37,8 +37,10 @@ public class PlayerHandler : MonoBehaviour
 
     [Header("Configuration")]
     [SerializeField]
+    [ColorUsage(true,true)]
     private Color m_armInnerColor;
     [SerializeField]
+    [ColorUsage(true, true)]
     private Color m_armRimColor;
     [SerializeField]
     private float m_maxEnergy = 100.0f;
