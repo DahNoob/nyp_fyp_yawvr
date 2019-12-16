@@ -59,7 +59,7 @@ public class LightMech2 : EnemyBase
         maxHealth = 10;
         health = maxHealth;
         damage = 10;
-        moveSpeed = 6;
+        moveSpeed = 15;
         currentState = _GameStates.CHASE;
         Player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody>();

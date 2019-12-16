@@ -26,7 +26,7 @@ public class Light_Enemy_1 : EnemyBase
     // Time taken before attack is activated
     private float attackWindUp = 2.0f;
 
-    private float maximumRange = 10.0f;
+    private float maximumRange = 15.0f;
     private float minimumRange = 5.0f;
 
     //Fetch the Animator
@@ -48,6 +48,8 @@ public class Light_Enemy_1 : EnemyBase
     // Light Mech Shooting
     private float shotInterval = 0.5f;
     private float shotTime = 0f;
+
+    public Transform m_projectileOrigin;
 
 
     // Start is called before the first frame update
@@ -84,7 +86,7 @@ public class Light_Enemy_1 : EnemyBase
             //m_Animator.SetBool("Chase", true);
 
             Debug.Log("Current State: " + currentState);
-            Debug.Log("Distance: " + distance);
+            //Debug.Log("Distance: " + distance);
             if (Vector3.Distance(transform.position, target.position) <= maximumRange)
             {
                 Debug.Log("Within Range");
@@ -109,11 +111,14 @@ public class Light_Enemy_1 : EnemyBase
                 attackWindUp -= 1.0f * Time.deltaTime;
                 if (attackWindUp <= 0.0f)
                 {
-                    Instantiate(projectile, transform.position + (target.position - leftBlaster.transform.position).normalized, Quaternion.LookRotation(target.position - leftBlaster.transform.position));
-                    if (shotInterval <= 0.0f)
-                    {
-                        Instantiate(projectile, transform.position + (target.position - rightBlaster.transform.position).normalized, Quaternion.LookRotation(target.position - rightBlaster.transform.position));
-                    }
+                    BaseProjectile _projectile = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+                    _projectile.Init(m_projectileOrigin);
+                    //projectile.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * m_projectileSpeed);
+                    //if (shotInterval <= 0.0f)
+                    //{
+                    //    Instantiate(projectile, transform.position + (target.position - rightBlaster.transform.position).normalized, Quaternion.LookRotation(target.position - rightBlaster.transform.position));
+                    //}
+                    attackWindUp = 2.0f;
                 }
 
                 //Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position));
