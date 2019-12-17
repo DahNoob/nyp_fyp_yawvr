@@ -44,6 +44,8 @@ public class LaserGunArm : MechArmModule
 
         //Set the fill amount to be the normalized value of the ammo left
         weaponFill.fillAmount = ammoModule.ReturnNormalized();
+        weaponAmmoText.text = ammoModule.currentAmmo.ToString();
+        Debug.Log(ammoModule.currentAmmo.ToString());
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -59,7 +61,7 @@ public class LaserGunArm : MechArmModule
         if (ammoModule.m_isReloading == false)
         {
             shootTick += Time.deltaTime;
-            if (shootTick > m_shootInterval)
+            if (shootTick >= m_shootInterval)
             {
                 shootTick -= m_shootInterval;
                 //if (PlayerHandler.instance.DecreaseEnergy(m_energyReduction))
@@ -68,6 +70,8 @@ public class LaserGunArm : MechArmModule
                 {
                     //Set the fill amount to be the normalized value of the ammo left
                     weaponFill.fillAmount = ammoModule.ReturnNormalized();
+                    //Set the current ammo count
+                    weaponAmmoText.text = ammoModule.currentAmmo.ToString();
 
                     BaseProjectile derp = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
                     derp.Init(m_projectileOrigin);
@@ -84,7 +88,6 @@ public class LaserGunArm : MechArmModule
                     //Try to reload? I mean it's a test.
                     StartCoroutine(ammoModule.Reload());
                 }
-                //    }
             }
         }
         return false;
@@ -99,5 +102,7 @@ public class LaserGunArm : MechArmModule
     {
         //Some test for now, will finish tommorow
         weaponReloading.enabled = ammoModule.m_isReloading;
+        //If it's reloading, then don't show?
+        weaponAmmoText.enabled = !ammoModule.m_isReloading;
     }
 }
