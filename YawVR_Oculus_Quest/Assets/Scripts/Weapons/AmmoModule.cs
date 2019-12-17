@@ -25,7 +25,8 @@ public class AmmoModule
     //Reload timer that determines whether the reload has finished
     private float m_reloadTick;
     //Is this gun already reloading
-    private bool isReloading = false;
+    [HideInInspector]
+    public bool m_isReloading = false;
 
     [Header("Behaviour changes")]
     [SerializeField]
@@ -63,7 +64,7 @@ public class AmmoModule
         get { return m_currentClips; }
         private set { m_currentClips = Mathf.Clamp(value, 0, m_maxClips); }
     }
-
+  
     //Inits values, for now can just not call if you want?
     public void Init()
     {
@@ -91,16 +92,16 @@ public class AmmoModule
     //Reload function
     public IEnumerator Reload()
     {
-        if (!isReloading)
+        if (!m_isReloading)
         {
-            isReloading = true;
+            m_isReloading = true;
             while (true)
             {
                 yield return new WaitForSeconds(m_reloadTime);
                 Debug.Log("reloaded");
-                isReloading = false;
+                m_isReloading = false;
+                m_currentAmmo = m_maxAmmo;
                 break;
-                // _currentAmmo = _maxAmmo;
             }
         }
     }
@@ -113,7 +114,7 @@ public class AmmoModule
 
     public float ReturnNormalized()
     {
-        return m_currentAmmo / m_maxAmmo;
+        return (float)m_currentAmmo / (float)m_maxAmmo;
     }
 
 }
