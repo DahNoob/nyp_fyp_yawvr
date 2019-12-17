@@ -60,7 +60,7 @@ public class Light_Enemy_1 : EnemyBase
         health = maxHealth;
         damage = 5;
         moveSpeed = 6;
-        currentState = _EnemyState.SHOOT;
+        currentState = _EnemyState.AVOID;
         Player = GameObject.Find("Player");
         target = Player.GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
@@ -147,6 +147,10 @@ public class Light_Enemy_1 : EnemyBase
                 break;
             case _EnemyState.AVOID:
 
+                StartCoroutine(EnemyDodge());               
+                //currentState = _EnemyState.CHASE;
+                //transform.position += transform.right * -moveSpeed * Time.deltaTime;
+
                 break;
             case _EnemyState.DIE:
                 //Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
@@ -170,6 +174,25 @@ public class Light_Enemy_1 : EnemyBase
 
         BaseProjectile _projectileR = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
         _projectileR.Init(m_projectileOriginR);
+    }
+
+    IEnumerator EnemyDodge()
+    {
+        float random = Random.Range(1, 10);
+
+        if (random > 5)
+        {
+            transform.position += transform.right * (moveSpeed * 1.5f) * Time.deltaTime;
+        }
+        else
+        {
+            transform.position += transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        //BaseProjectile _projectileR = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        //_projectileR.Init(m_projectileOriginR);
     }
 
     void PlayDeathParticle()
