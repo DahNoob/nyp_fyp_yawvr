@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LaserGunArm : MechArmModule
 {
@@ -18,6 +19,14 @@ public class LaserGunArm : MechArmModule
     [SerializeField]
     protected AudioClip[] m_shootAudioClips;
 
+    [Header("Ammo Configuration")]
+    [SerializeField]
+    protected AmmoModule ammoModule;
+
+    [Header("UI Configuration")]
+    [SerializeField]
+    private Image weaponAmmo;
+
     //Local variables
     private float shootTick;
 
@@ -25,6 +34,8 @@ public class LaserGunArm : MechArmModule
     {
         if (!CustomUtility.IsObjectPrefab(m_projectilePrefab))
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
+
+
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -40,8 +51,13 @@ public class LaserGunArm : MechArmModule
         if (shootTick > m_shootInterval)
         {
             shootTick -= m_shootInterval;
-            if (PlayerHandler.instance.DecreaseEnergy(m_energyReduction))
+            //if (PlayerHandler.instance.DecreaseEnergy(m_energyReduction))
+            //{
+            if (ammoModule.DecreaseAmmo(1))
             {
+                //Set the fill amount to be the normalized value of the ammo left
+                weaponAmmo.fillAmount = ammoModule.ReturnNormalized();
+
                 BaseProjectile derp = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
                 derp.Init(m_projectileOrigin);
                 follower.Bump(new Vector3(0, 0.02f, 0.05f), new Vector3(-2, 0, 0));
@@ -52,6 +68,11 @@ public class LaserGunArm : MechArmModule
                 m_shootAudioSource.Play();
                 return true;
             }
+            else
+            {
+                //Try to reload? I mean it's a test.
+            }
+        //    }
         }
         return false;
     }
