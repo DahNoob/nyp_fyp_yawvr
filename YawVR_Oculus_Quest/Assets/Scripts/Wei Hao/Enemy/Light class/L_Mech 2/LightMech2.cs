@@ -21,10 +21,8 @@ public class LightMech2 : EnemyBase
     // Banelings states
     private enum _GameStates
     {
-        WALK,
         CHASE,
         EXPLODE,
-        ATTACK
     }
 
     private GameObject Player;
@@ -63,12 +61,6 @@ public class LightMech2 : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        // Stats
-        maxHealth = 10;
-        health = maxHealth;
-        damage = 10;
-        moveSpeed = 15;
-
         // Current State
         currentState = _GameStates.CHASE;
 
