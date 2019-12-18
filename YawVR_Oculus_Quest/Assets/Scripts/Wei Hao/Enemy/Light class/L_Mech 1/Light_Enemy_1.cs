@@ -97,39 +97,39 @@ public class Light_Enemy_1 : EnemyBase
     // Update is called once per frame
     void Update()
     {
-        Vector3 relativePos = target.position - transform.position;
+        //Vector3 relativePos = target.position - transform.position;
 
-        // Debugging distance
-        float distance = Vector3.Distance(transform.position, target.position);
-        if (Vector3.Distance(transform.position, target.position) >= minimumRange)
-        {
-            currentState = _EnemyState.CHASE;
-            //m_Animator.SetBool("Chase", true);
+        //// Debugging distance
+        //float distance = Vector3.Distance(transform.position, target.position);
+        //if (Vector3.Distance(transform.position, target.position) >= minimumRange)
+        //{
+        //    currentState = _EnemyState.CHASE;
+        //    //m_Animator.SetBool("Chase", true);
 
-            Debug.Log("Current State: " + currentState);
-            //Debug.Log("Distance: " + distance);
-            if (Vector3.Distance(transform.position, target.position) <= maximumRange)
-            {
-                Debug.Log("Within Range");
-                currentState = _EnemyState.SHOOT;
-                //transformX = transform.position;
-                //m_Animator.SetBool("Explode", true);
-            }
-        }
+        //    Debug.Log("Current State: " + currentState);
+        //    //Debug.Log("Distance: " + distance);
+        //    if (Vector3.Distance(transform.position, target.position) <= maximumRange)
+        //    {
+        //        Debug.Log("Within Range");
+        //        currentState = _EnemyState.SHOOT;
+        //        //transformX = transform.position;
+        //        //m_Animator.SetBool("Explode", true);
+        //    }
+        //}
 
-        dodgeCheck -= 1.0f * Time.deltaTime;
-        if (dodgeCheck <= 0.0f)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
-            for (int i = 0; i < hitColliders.Length; i++)
-            {
-                if (hitColliders[i].gameObject.tag == "Bullet")
-                {
-                    Debug.Log("Projectile detected");
-                    currentState = _EnemyState.AVOID;
-                }
-            }
-        }
+        //dodgeCheck -= 1.0f * Time.deltaTime;
+        //if (dodgeCheck <= 0.0f)
+        //{
+        //    Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+        //    for (int i = 0; i < hitColliders.Length; i++)
+        //    {
+        //        if (hitColliders[i].gameObject.tag == "Bullet")
+        //        {
+        //            Debug.Log("Projectile detected");
+        //            currentState = _EnemyState.AVOID;
+        //        }
+        //    }
+        //}
 
         switch (currentState)
         {
@@ -214,7 +214,7 @@ public class Light_Enemy_1 : EnemyBase
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
             transformX = transform.position;
             currentState = _EnemyState.DIE;
             //m_Animator.SetBool("Explode", true);

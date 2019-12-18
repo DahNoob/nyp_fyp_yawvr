@@ -81,13 +81,13 @@ public class LM1_Chase : StateMachineBehaviour
 
     IEnumerator EnemyShoot(Animator animator)
     {
-        Debug.Log("Fire start");
+        //Debug.Log("Fire start");
         BaseProjectile _projectileL = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
         _projectileL.Init(m_projectileOriginL);
 
         yield return new WaitForSeconds(0.2f);
 
-        Debug.Log("2nd Fire start");
+        //Debug.Log("2nd Fire start");
         BaseProjectile _projectileR = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
         _projectileR.Init(m_projectileOriginR);
     }
