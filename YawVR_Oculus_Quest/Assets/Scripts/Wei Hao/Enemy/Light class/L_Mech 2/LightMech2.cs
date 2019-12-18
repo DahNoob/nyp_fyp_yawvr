@@ -56,7 +56,7 @@ public class LightMech2 : EnemyBase
     [Header("Rarity")]
     [SerializeField]
     private _Rarity rarity;
-    public GameObject weightedRandom;
+    private GameObject weightedRandom;
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +68,7 @@ public class LightMech2 : EnemyBase
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         poof = gameObject.GetComponent<ParticleSystem>();
+        weightedRandom = GameObject.Find("WeightedRNG");
 
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();

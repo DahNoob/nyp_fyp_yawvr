@@ -57,7 +57,7 @@ public class Light_Enemy_1 : EnemyBase
     [Header("Rarity")]
     [SerializeField]
     private _Rarity rarity;
-    public GameObject weightedRandom;
+    private GameObject weightedRandom;
 
     private float projectileSpeed;
     private float amount = 1.0f; //how much it shakes
@@ -82,6 +82,7 @@ public class Light_Enemy_1 : EnemyBase
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         poof = gameObject.GetComponent<ParticleSystem>();
+        weightedRandom = GameObject.Find("WeightedRNG");
 
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
