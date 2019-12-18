@@ -29,8 +29,8 @@ public class Light_Enemy_1 : EnemyBase
     private Transform target;
     private GameObject Player;
 
-    public GameObject leftBlaster;
-    public GameObject rightBlaster;
+    //public GameObject leftBlaster;
+    //public GameObject rightBlaster;
 
     // Attack range
     private int attackRange = 10;

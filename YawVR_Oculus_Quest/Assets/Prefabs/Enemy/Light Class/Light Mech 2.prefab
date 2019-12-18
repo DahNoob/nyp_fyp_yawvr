@@ -10,8 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4718279393008517854}
   - component: {fileID: 7500185956312968260}
+  - component: {fileID: 7526891250943170794}
+  - component: {fileID: 7526891250943170792}
+  - component: {fileID: 7526891250943170793}
   m_Layer: 0
-  m_Name: Main
+  m_Name: Light Mech 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27831753820589055}
   m_LocalRotation: {x: -1.8309377e-16, y: -1.1275406e-32, z: 6.1582683e-17, w: 1}
-  m_LocalPosition: {x: -0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2687288028909706805}
@@ -43,8 +46,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27831753820589055}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d1249a4b0cda10f43b1715a42fbfacef, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1dd4026e301bd90459fbc24d74a1d362, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 2a1755ba9ebad1b4b82467ef1cc1e983, type: 3}
+  m_Controller: {fileID: 9100000, guid: bd0766935af278b4d9ed3feb59e5259a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -53,6 +56,55 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!54 &7526891250943170794
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27831753820589055}
+  serializedVersion: 2
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!135 &7526891250943170792
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27831753820589055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5637512
+  m_Center: {x: 8.968e-42, y: 1.6155871e-26, z: -0.005554199}
+--- !u!114 &7526891250943170793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27831753820589055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84ae30f53d0d1b41a51661350ce5901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  maxHealth: 10
+  damage: 10
+  moveSpeed: 15
+  poof: {fileID: 0}
+  currentState: 1
+  rarity: 0
+  weightedRandom: {fileID: 0}
 --- !u!1 &697270431324766861
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,8 +146,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3273192983858075798}
   - component: {fileID: 7500185955795592902}
-  - component: {fileID: 7500185955795592901}
   - component: {fileID: 7500185955795592900}
+  - component: {fileID: 8296172668935928222}
   m_Layer: 0
   m_Name: Light Mech 2
   m_TagString: Untagged
@@ -132,21 +184,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &7500185955795592901
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1961298352574278277}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5385475
-  m_Center: {x: 0, y: 1.5047417, z: 0}
 --- !u!114 &7500185955795592900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,15 +193,38 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1961298352574278277}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f84ae30f53d0d1b41a51661350ce5901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 10
+  maxHealth: 10
+  damage: 10
+  moveSpeed: 15
   poof: {fileID: 0}
   currentState: 1
   rarity: 0
   weightedRandom: {fileID: 0}
+--- !u!95 &8296172668935928222
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961298352574278277}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2266667661472160660
 GameObject:
   m_ObjectHideFlags: 0
