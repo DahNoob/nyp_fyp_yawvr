@@ -30,7 +30,7 @@ abstract public class SMB_BaseEnemyState : StateMachineBehaviour
         if (enemy == null)
             enemy = animator.GetComponent<EnemyBase>();
         checkTimer = 0;
-
+        Enter(animator, animatorStateInfo, layerIndex);
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -42,6 +42,11 @@ abstract public class SMB_BaseEnemyState : StateMachineBehaviour
             checkTimer -= m_checkIntervals;
             Check(animator, animatorStateInfo, layerIndex);
         }
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+        Exit(animator, animatorStateInfo, layerIndex);
     }
 
     abstract public void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Logic check for setting it to the next state

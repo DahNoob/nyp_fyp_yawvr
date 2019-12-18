@@ -36,6 +36,14 @@ public class HeavyMech2 : EnemyBase
     protected float m_attackWindUp = 2.0f;
     [SerializeField]
     protected Rigidbody m_rigidBody;
+    [SerializeField]
+    protected Transform m_rightSide;
+    [SerializeField]
+    protected Transform m_leftSide;
+    [SerializeField]
+    protected Vector3 m_rightOpenPosition;
+    [SerializeField]
+    protected Vector3 m_leftOpenPosition;
 
     protected _GameStates m_currentState = _GameStates.WALK;
 
@@ -114,6 +122,21 @@ public class HeavyMech2 : EnemyBase
         //}
     }
 
+    void FixedUpdate()
+    {
+        if(m_currentState == _GameStates.SPAWN)
+        {
+            m_rightSide.localPosition = Vector3.Lerp(m_rightSide.localPosition, m_rightOpenPosition, 0.05f);
+            m_leftSide.localPosition = Vector3.Lerp(m_leftSide.localPosition, m_leftOpenPosition, 0.05f);
+
+        }
+        else
+        {
+            m_rightSide.localPosition = Vector3.Lerp(m_rightSide.localPosition, Vector3.zero, 0.05f);
+            m_leftSide.localPosition = Vector3.Lerp(m_leftSide.localPosition, Vector3.zero, 0.05f);
+        }
+    }
+
     void PlayDeathParticle()
     {
         ////Instantiate and store in a temporary variable
@@ -138,5 +161,15 @@ public class HeavyMech2 : EnemyBase
         //    takeDamage(1);
         //    collision.gameObject.SetActive(false);
         //}
+    }
+
+    //shite implementation but wutever
+    public void EnterSpawn()
+    {
+        m_currentState = _GameStates.SPAWN;
+    }
+    public void ExitSpawn()
+    {
+        m_currentState = _GameStates.CHASE;
     }
 }

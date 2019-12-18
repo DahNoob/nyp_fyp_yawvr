@@ -23,8 +23,12 @@ public class CustomUtility
     {
         return _object.scene.rootCount == 0;
     }
-    public static bool HitCheckRadius(Vector3 _pos1, Vector3 _pos2, float _radius)
+    public static bool IsHitRadius(Vector3 _pos1, Vector3 _pos2, float _radius)
     {
-        return (_pos1 - _pos2).sqrMagnitude <= (_radius * _radius);
+        return HitCheckRadius(_pos1, _pos2) <= (_radius * _radius);
+    }
+    public static float HitCheckRadius(Vector3 _pos1, Vector3 _pos2)
+    {
+        return (_pos1 - _pos2).sqrMagnitude;
     }
 }
