@@ -76,7 +76,7 @@ public class Light_Enemy_1 : EnemyBase
     void Start()
     {
         // Current State
-        currentState = _EnemyState.AVOID;
+        //currentState = _EnemyState.AVOID;
         Player = GameObject.Find("Player");
         target = Player.GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
@@ -97,92 +97,92 @@ public class Light_Enemy_1 : EnemyBase
     // Update is called once per frame
     void Update()
     {
-        Vector3 relativePos = target.position - transform.position;
+        //Vector3 relativePos = target.position - transform.position;
 
-        // Debugging distance
-        float distance = Vector3.Distance(transform.position, target.position);
-        if (Vector3.Distance(transform.position, target.position) >= minimumRange)
-        {
-            currentState = _EnemyState.CHASE;
-            //m_Animator.SetBool("Chase", true);
+        //// Debugging distance
+        //float distance = Vector3.Distance(transform.position, target.position);
+        //if (Vector3.Distance(transform.position, target.position) >= minimumRange)
+        //{
+        //    currentState = _EnemyState.CHASE;
+        //    //m_Animator.SetBool("Chase", true);
 
-            Debug.Log("Current State: " + currentState);
-            //Debug.Log("Distance: " + distance);
-            if (Vector3.Distance(transform.position, target.position) <= maximumRange)
-            {
-                Debug.Log("Within Range");
-                currentState = _EnemyState.SHOOT;
-                //transformX = transform.position;
-                //m_Animator.SetBool("Explode", true);
-            }
-        }
+        //    Debug.Log("Current State: " + currentState);
+        //    //Debug.Log("Distance: " + distance);
+        //    if (Vector3.Distance(transform.position, target.position) <= maximumRange)
+        //    {
+        //        Debug.Log("Within Range");
+        //        currentState = _EnemyState.SHOOT;
+        //        //transformX = transform.position;
+        //        //m_Animator.SetBool("Explode", true);
+        //    }
+        //}
 
-        dodgeCheck -= 1.0f * Time.deltaTime;
-        if (dodgeCheck <= 0.0f)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
-            for (int i = 0; i < hitColliders.Length; i++)
-            {
-                if (hitColliders[i].gameObject.tag == "Bullet")
-                {
-                    Debug.Log("Projectile detected");
-                    currentState = _EnemyState.AVOID;
-                }
-            }
-        }
+        //dodgeCheck -= 1.0f * Time.deltaTime;
+        //if (dodgeCheck <= 0.0f)
+        //{
+        //    Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+        //    for (int i = 0; i < hitColliders.Length; i++)
+        //    {
+        //        if (hitColliders[i].gameObject.tag == "Bullet")
+        //        {
+        //            Debug.Log("Projectile detected");
+        //            currentState = _EnemyState.AVOID;
+        //        }
+        //    }
+        //}
 
         switch (currentState)
         {
-            case _EnemyState.CHASE:
-                Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-                transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            //case _EnemyState.CHASE:
+            //    Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+            //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
 
-                attackWindUp -= 1.0f * Time.deltaTime;
-                if (attackWindUp <= 0.0f)
-                {
-                    StartCoroutine(EnemyShoot());
-                    attackWindUp = 2.0f;
-                }
+            //    attackWindUp -= 1.0f * Time.deltaTime;
+            //    if (attackWindUp <= 0.0f)
+            //    {
+            //        //StartCoroutine(EnemyShoot());
+            //        attackWindUp = 2.0f;
+            //    }
 
-                break;
-            case _EnemyState.SHOOT:
-                toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-                transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            //    break;
+            //case _EnemyState.SHOOT:
+            //    toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+            //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-                attackWindUp -= 1.0f * Time.deltaTime;
-                if (attackWindUp <= 0.0f)
-                {
-                    StartCoroutine(EnemyShoot());
-                    attackWindUp = 2.0f;
-                }
+            //    attackWindUp -= 1.0f * Time.deltaTime;
+            //    if (attackWindUp <= 0.0f)
+            //    {
+            //        StartCoroutine(EnemyShoot());
+            //        attackWindUp = 2.0f;
+            //    }
 
-                //transformX.x = Mathf.Sin(Time.time * speed) * amount;
+            //    //transformX.x = Mathf.Sin(Time.time * speed) * amount;
 
-                break;
-            case _EnemyState.AVOID:
+            //    break;
+            //case _EnemyState.AVOID:
 
-                StartCoroutine(EnemyDodge());               
-                //currentState = _EnemyState.CHASE;
-                //transform.position += transform.right * -moveSpeed * Time.deltaTime;
+            //    StartCoroutine(EnemyDodge());               
+            //    //currentState = _EnemyState.CHASE;
+            //    //transform.position += transform.right * -moveSpeed * Time.deltaTime;
 
-                break;
-            case _EnemyState.DIE:
-                break;
+            //    break;
+            //case _EnemyState.DIE:
+            //    break;
         }
     }
 
-    IEnumerator EnemyShoot()
-    {
-        BaseProjectile _projectileL = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        _projectileL.Init(m_projectileOriginL);
+    //IEnumerator EnemyShoot()
+    //{
+    //    BaseProjectile _projectileL = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+    //    _projectileL.Init(m_projectileOriginL);
 
-        yield return new WaitForSeconds(0.2f);
+    //    yield return new WaitForSeconds(0.2f);
 
-        BaseProjectile _projectileR = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        _projectileR.Init(m_projectileOriginR);
-    }
+    //    BaseProjectile _projectileR = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+    //    _projectileR.Init(m_projectileOriginR);
+    //}
 
     IEnumerator EnemyDodge()
     {
@@ -214,7 +214,7 @@ public class Light_Enemy_1 : EnemyBase
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
             transformX = transform.position;
             currentState = _EnemyState.DIE;
             //m_Animator.SetBool("Explode", true);
@@ -225,5 +225,14 @@ public class Light_Enemy_1 : EnemyBase
             takeDamage(1);
             collision.gameObject.SetActive(false);
         }
+    }
+
+    public float GetMoveSpeed()
+    {
+        return moveSpeed;
+    }
+    public float GetRotationSpeed()
+    {
+        return rotationSpeed;
     }
 }

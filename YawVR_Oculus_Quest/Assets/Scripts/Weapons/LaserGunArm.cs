@@ -45,7 +45,7 @@ public class LaserGunArm : MechArmModule
         //Set the fill amount to be the normalized value of the ammo left
         weaponFill.fillAmount = ammoModule.ReturnNormalized();
         weaponAmmoText.text = ammoModule.currentAmmo.ToString();
-        Debug.Log(ammoModule.currentAmmo.ToString());
+        //Debug.Log(ammoModule.currentAmmo.ToString());
     }
 
     public override bool Activate(OVRInput.Controller _controller)
