@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/******************************  
+** Name: Light Enemy 1
+** Desc: Light Enemy 1 behaviours and stats
+** Author: Wei Hao
+** Date: 10/12/2019, 1:06 AM
+**************************
+** Change History
+**************************
+** PR   Date                    Author    Description 
+** --   --------                -------   ------------------------------------
+** 1    10/12/2019, 1:06 PM     Wei Hao   Created & Implemented
+** 2    13/12/2019, 1:33 PM     Wei Hao   Updated basic animation
+** 3    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
+*******************************/
 public class Light_Enemy_1 : EnemyBase
 {
     public enum _EnemyState
@@ -32,19 +46,25 @@ public class Light_Enemy_1 : EnemyBase
     //Fetch the Animator
     Animator m_Animator;
 
-    private Rigidbody rb;   
-
-    [SerializeField]
-    private _EnemyState currentState;
-
-    private float projectileSpeed;
-    private float amount = 1.0f; //how much it shakes
-    private Vector3 transformX;
+    private Rigidbody rb;
 
     // Particle effect when baneling explodes
     public ParticleSystem poof;
     float explodeDuration = 1.0f;
 
+    [SerializeField]
+    private _EnemyState currentState;
+
+    [Header("Rarity")]
+    [SerializeField]
+    private _Rarity rarity;
+    public GameObject weightedRandom;
+
+    private float projectileSpeed;
+    private float amount = 1.0f; //how much it shakes
+    private Vector3 transformX;
+
+    [Header("Projectile Origin")]
     // Light Mech Shooting
     public Transform m_projectileOriginL;
     public Transform m_projectileOriginR;
@@ -56,16 +76,22 @@ public class Light_Enemy_1 : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
+        // Stats
         maxHealth = 50;
         health = maxHealth;
         damage = 5;
         moveSpeed = 6;
+
+        // Current State
         currentState = _EnemyState.AVOID;
         Player = GameObject.Find("Player");
         target = Player.GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         poof = gameObject.GetComponent<ParticleSystem>();
+
+        // Get rarity
+        rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
 
         transformX = transform.position;
 
@@ -103,7 +129,7 @@ public class Light_Enemy_1 : EnemyBase
             Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
             for (int i = 0; i < hitColliders.Length; i++)
             {
-                if (hitColliders[i].gameObject.tag == "Player Projectile")
+                if (hitColliders[i].gameObject.tag == "Bullet")
                 {
                     Debug.Log("Projectile detected");
                     currentState = _EnemyState.AVOID;
@@ -118,6 +144,14 @@ public class Light_Enemy_1 : EnemyBase
                 transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
                 transform.position += transform.forward * moveSpeed * Time.deltaTime;
+
+                attackWindUp -= 1.0f * Time.deltaTime;
+                if (attackWindUp <= 0.0f)
+                {
+                    StartCoroutine(EnemyShoot());
+                    attackWindUp = 2.0f;
+                }
+
                 break;
             case _EnemyState.SHOOT:
                 toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
@@ -132,18 +166,6 @@ public class Light_Enemy_1 : EnemyBase
 
                 //transformX.x = Mathf.Sin(Time.time * speed) * amount;
 
-                //if (attackWindUp <= 0.0f)
-                //{
-                //    Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
-                //    for (int i = 0; i < hitColliders.Length; i++)
-                //    {
-                //        if (hitColliders[i].gameObject.tag == "Player")
-                //        {
-                //            Debug.Log("B00M !!");
-                //        }
-                //    }
-                //gameObject.SetActive(false);
-                //}
                 break;
             case _EnemyState.AVOID:
 
@@ -153,26 +175,18 @@ public class Light_Enemy_1 : EnemyBase
 
                 break;
             case _EnemyState.DIE:
-                //Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
-                //for (int i = 0; i < hitColliders.Length; i++)
-                //{
-                //    if (hitColliders[i].gameObject.tag == "Player")
-                //    {
-                //        Debug.Log("B00M !!");
-                //    }
-                //}
                 break;
         }
     }
 
     IEnumerator EnemyShoot()
     {
-        BaseProjectile _projectileL = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        BaseProjectile _projectileL = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
         _projectileL.Init(m_projectileOriginL);
 
         yield return new WaitForSeconds(0.2f);
 
-        BaseProjectile _projectileR = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        BaseProjectile _projectileR = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
         _projectileR.Init(m_projectileOriginR);
     }
 
@@ -191,8 +205,7 @@ public class Light_Enemy_1 : EnemyBase
 
         yield return new WaitForSeconds(1.5f);
 
-        //BaseProjectile _projectileR = Instantiate(projectile, transform.position + /*new Vector3(0, 0, 1) + */(target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        //_projectileR.Init(m_projectileOriginR);
+        //currentState = _EnemyState.CHASE;
     }
 
     void PlayDeathParticle()

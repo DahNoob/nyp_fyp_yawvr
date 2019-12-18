@@ -13,7 +13,8 @@ using UnityEngine;
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
 ** 1    10/12/2019, 1:06 PM     Wei Hao   Created & Implemented
-** 1    13/12/2019, 1:33 PM     Wei Hao   Updated basic animation
+** 2    13/12/2019, 1:33 PM     Wei Hao   Updated basic animation
+** 3    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
 *******************************/
 public class LightMech2 : EnemyBase
 {
@@ -41,6 +42,11 @@ public class LightMech2 : EnemyBase
     //Fetch the Animator
     Animator m_Animator;
 
+    // Particle effect when baneling explodes
+    public ParticleSystem poof;
+    float explodeDuration = 1.0f;
+
+    [Header("Current State")]
     [SerializeField]
     private _GameStates currentState;
 
@@ -49,23 +55,31 @@ public class LightMech2 : EnemyBase
     private float amount = 1.0f; //how much it shakes
     private Vector3 transformX;
 
-    // Particle effect when baneling explodes
-    public ParticleSystem poof;
-    float explodeDuration = 1.0f;
+    [Header("Rarity")]
+    [SerializeField]
+    private _Rarity rarity;
+    public GameObject weightedRandom;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Stats
         maxHealth = 10;
         health = maxHealth;
         damage = 10;
         moveSpeed = 15;
+
+        // Current State
         currentState = _GameStates.CHASE;
+
         Player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         poof = gameObject.GetComponent<ParticleSystem>();
 
+        // Get rarity
+        rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
+        
         transformX = transform.position;
 
         //Debug.Log("Current Health = " + health);
@@ -86,7 +100,7 @@ public class LightMech2 : EnemyBase
             //m_Animator.SetBool("Chase", true);
 
             Debug.Log("Current State: " + currentState);
-            Debug.Log("Distance: " + distance);
+            //Debug.Log("Distance: " + distance);
             //if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange)
             //{
             //    transformX = transform.position;
