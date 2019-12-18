@@ -13,8 +13,7 @@ using UnityEngine;
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
 ** 1    10/12/2019, 1:06 PM     Wei Hao   Created & Implemented
-** 2    13/12/2019, 1:33 PM     Wei Hao   Updated basic animation
-** 3    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
+** 2    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
 *******************************/
 public class Light_Enemy_1 : EnemyBase
 {
@@ -76,12 +75,6 @@ public class Light_Enemy_1 : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        // Stats
-        maxHealth = 50;
-        health = maxHealth;
-        damage = 5;
-        moveSpeed = 6;
-
         // Current State
         currentState = _EnemyState.AVOID;
         Player = GameObject.Find("Player");

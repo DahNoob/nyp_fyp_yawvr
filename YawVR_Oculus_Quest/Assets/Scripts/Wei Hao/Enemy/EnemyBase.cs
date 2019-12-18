@@ -18,13 +18,18 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    [Header("Enemy Stats")]
     // Enemy Current Health
+    [SerializeField]
     protected int health;
     // Enemy Max Health
+    [SerializeField]
     protected int maxHealth;
     // The amount of Damage the enemy deals
+    [SerializeField]
     protected int damage;
     // The speed the enemy moves
+    [SerializeField]
     protected int moveSpeed;
 
     public enum States
