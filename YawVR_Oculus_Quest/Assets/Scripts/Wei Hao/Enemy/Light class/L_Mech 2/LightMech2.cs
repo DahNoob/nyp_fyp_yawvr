@@ -56,18 +56,19 @@ public class LightMech2 : EnemyBase
     [Header("Rarity")]
     [SerializeField]
     private _Rarity rarity;
-    public GameObject weightedRandom;
+    private GameObject weightedRandom;
 
     // Start is called before the first frame update
     void Start()
     {
         // Current State
-        currentState = _GameStates.CHASE;
+        //currentState = _GameStates.CHASE;
 
         Player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         poof = gameObject.GetComponent<ParticleSystem>();
+        weightedRandom = GameObject.Find("WeightedRNG");
 
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
@@ -100,41 +101,43 @@ public class LightMech2 : EnemyBase
             //}
        // }
 
-        switch (currentState)
-        {
-            case _GameStates.CHASE:
-                Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-                transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        //switch (currentState)
+        //{
+        //    case _GameStates.CHASE:
+        //        //Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+        //        //transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                break;
-            case _GameStates.EXPLODE:
-                attackWindUp -= 1.0f * Time.deltaTime;
+        //        //transform.position += transform.forward * moveSpeed * Time.deltaTime;
 
-                transformX.x = Mathf.Sin(Time.time * speed) * amount;
+        //        //m_Animator.SetBool("Chase", true);
+        //        break;
+        //    case _GameStates.EXPLODE:
+        //        attackWindUp -= 1.0f * Time.deltaTime;
 
-                if (attackWindUp <= 0.0f)
-                {
-                    Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
-                    for (int i = 0; i < hitColliders.Length; i++)
-                    {
-                        if (hitColliders[i].gameObject.tag == "Player")
-                        {
-                            //ImpactReceiver IR = hitColliders[i].transform.GetComponent<ImpactReceiver>();
-                            //Vector3 dir = hitColliders[i].transform.position - transform.position;
-                            //float force = Mathf.Clamp(/*explosion force*/ 50 / 3, 0, 15); 
-                            //IR.AddImpact(dir, force);
-                            //Player.gameObject.GetComponent<Player>().takeDamage(damage);  
-                            //poof.Play();
-                            Debug.Log("B00M !!");
-                            //Debug.Log("Player health = " + Player.GetComponent<Player>().GetHealth());
-                        }
-                    }
-                    //PlayDeathParticle();
-                    gameObject.SetActive(false);
-                }
-                break;
-        }
+        //        //transformX.x = Mathf.Sin(Time.time * speed) * amount;
+
+        //        if (attackWindUp <= 0.0f)
+        //        {
+        //            Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+        //            for (int i = 0; i < hitColliders.Length; i++)
+        //            {
+        //                if (hitColliders[i].gameObject.tag == "Player")
+        //                {
+        //                    //ImpactReceiver IR = hitColliders[i].transform.GetComponent<ImpactReceiver>();
+        //                    //Vector3 dir = hitColliders[i].transform.position - transform.position;
+        //                    //float force = Mathf.Clamp(/*explosion force*/ 50 / 3, 0, 15); 
+        //                    //IR.AddImpact(dir, force);
+        //                    //Player.gameObject.GetComponent<Player>().takeDamage(damage);  
+        //                    //poof.Play();
+        //                    Debug.Log("B00M !!");
+        //                    //Debug.Log("Player health = " + Player.GetComponent<Player>().GetHealth());
+        //                }
+        //            }
+        //            //PlayDeathParticle();
+        //            gameObject.SetActive(false);
+        //        }
+        //        break;
+        //}
     }
 
     void PlayDeathParticle()
