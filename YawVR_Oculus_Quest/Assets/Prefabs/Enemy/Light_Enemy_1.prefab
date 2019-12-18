@@ -227,8 +227,8 @@ GameObject:
   - component: {fileID: 765782467189145654}
   - component: {fileID: 765782467189145651}
   - component: {fileID: 765782467189145653}
-  - component: {fileID: 6746926230351766574}
   - component: {fileID: 7415880730859294260}
+  - component: {fileID: 6746926230351766574}
   m_Layer: 0
   m_Name: Light_Enemy_1
   m_TagString: Untagged
@@ -272,26 +272,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.0646257}
   m_Center: {x: 0, y: 0, z: -0.025368191}
---- !u!114 &6746926230351766574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 765782467189145657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1c4c85ceedf43041af42ec32aa08144, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 9208457272521591480, guid: 84b6b4ca99af4ff40906caea5d12bde5,
-    type: 3}
-  leftBlaster: {fileID: 1673990734}
-  rightBlaster: {fileID: 341746683}
-  currentState: 0
-  poof: {fileID: 0}
-  m_projectileOriginL: {fileID: 29427026}
-  m_projectileOriginR: {fileID: 364013527}
 --- !u!54 &7415880730859294260
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -308,6 +288,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &6746926230351766574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765782467189145657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1c4c85ceedf43041af42ec32aa08144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 9208457272521591480, guid: 84b6b4ca99af4ff40906caea5d12bde5,
+    type: 3}
+  leftBlaster: {fileID: 1673990734}
+  rightBlaster: {fileID: 341746683}
+  poof: {fileID: 0}
+  currentState: 0
+  rarity: 0
+  weightedRandom: {fileID: 0}
+  m_projectileOriginL: {fileID: 29427026}
+  m_projectileOriginR: {fileID: 364013527}
 --- !u!1 &765782468241326242
 GameObject:
   m_ObjectHideFlags: 0
