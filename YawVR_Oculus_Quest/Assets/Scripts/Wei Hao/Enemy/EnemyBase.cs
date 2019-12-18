@@ -13,7 +13,7 @@ using UnityEngine;
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
 ** 1    27/11/2019, 5:05 PM     Wei Hao   Created and implemented
-** 2    18/12/2019, 10:31 PM     Wei Hao   Added rarity enum
+** 2    18/12/2019, 10:31 PM    Wei Hao   Added rarity enum
 *******************************/
 
 public class EnemyBase : MonoBehaviour
