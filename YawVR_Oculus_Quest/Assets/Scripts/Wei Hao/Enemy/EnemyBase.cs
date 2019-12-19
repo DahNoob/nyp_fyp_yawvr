@@ -16,7 +16,7 @@ using UnityEngine;
 ** 2    18/12/2019, 10:31 PM    Wei Hao   Added rarity enum
 *******************************/
 
-public class EnemyBase : MonoBehaviour
+abstract public class EnemyBase : MonoBehaviour
 {
     [Header("Enemy Stats")]
     // Enemy Current Health
@@ -89,4 +89,6 @@ public class EnemyBase : MonoBehaviour
     {
         return moveSpeed;
     }
+
+    abstract public void SetDestination(Vector3 _destination);
 }
