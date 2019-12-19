@@ -31,6 +31,8 @@ abstract public class EnemyBase : MonoBehaviour
     // The speed the enemy moves
     [SerializeField]
     protected int moveSpeed;
+    [SerializeField]
+    protected GameObject m_dieEffect;
 
     public enum States
     {
@@ -88,5 +90,10 @@ abstract public class EnemyBase : MonoBehaviour
     public float GetSpeed()
     {
         return moveSpeed;
+    }
+
+    void OnDisable()
+    {
+        Instantiate(m_dieEffect, transform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
     }
 }

@@ -24,6 +24,14 @@ public class GenericProjectile : BaseProjectile
         GameObject efx = Instantiate(m_projectileImpactEffect, Persistent.instance.GO_DYNAMIC.transform);
         efx.transform.position = collision.GetContact(0).point;
         efx.GetComponent<ParticleSystem>().Emit(6);
+        if (collision.collider)
+        {
+            EnemyBase eb = collision.collider.GetComponent<EnemyBase>() ?? collision.collider.GetComponentInChildren<EnemyBase>();
+            if(eb)
+            {
+                eb.takeDamage(5);
+            }
+        }
         Destroy(gameObject);
     }
 }
