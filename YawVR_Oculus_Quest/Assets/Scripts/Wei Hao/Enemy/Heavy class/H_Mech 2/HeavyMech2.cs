@@ -38,15 +38,16 @@ public class HeavyMech2 : EnemyBase
     [SerializeField]
     protected Rigidbody m_rigidBody;
     [SerializeField]
-    protected Transform m_rightSide;
+    protected Transform m_coreTransform;
     [SerializeField]
-    protected Transform m_leftSide;
+    protected Vector3 m_coreRightPosition;
     [SerializeField]
-    protected Vector3 m_rightOpenPosition;
+    protected Vector3 m_coreLeftPosition;
     [SerializeField]
-    protected Vector3 m_leftOpenPosition;
+    protected GameObject m_lesserEnemy;
 
     protected _GameStates m_currentState = _GameStates.WALK;
+    protected bool coreIsRightSide = false;
 
     // Start is called before the first frame update
     void Start()
@@ -125,16 +126,15 @@ public class HeavyMech2 : EnemyBase
 
     void FixedUpdate()
     {
-        if(m_currentState == _GameStates.SPAWN)
+        if (m_currentState == _GameStates.SPAWN)
         {
-            m_rightSide.localPosition = Vector3.Lerp(m_rightSide.localPosition, m_rightOpenPosition, 0.05f);
-            m_leftSide.localPosition = Vector3.Lerp(m_leftSide.localPosition, m_leftOpenPosition, 0.05f);
-
+            m_coreTransform.localPosition = Vector3.Lerp(m_coreTransform.localPosition, coreIsRightSide ? m_coreRightPosition : m_coreLeftPosition, 0.05f);
         }
         else
         {
-            m_rightSide.localPosition = Vector3.Lerp(m_rightSide.localPosition, Vector3.zero, 0.05f);
-            m_leftSide.localPosition = Vector3.Lerp(m_leftSide.localPosition, Vector3.zero, 0.05f);
+            //m_rightSide.localPosition = Vector3.Lerp(m_rightSide.localPosition, Vector3.zero, 0.05f);
+            //m_leftSide.localPosition = Vector3.Lerp(m_leftSide.localPosition, Vector3.zero, 0.05f);
+            m_coreTransform.localPosition = Vector3.Lerp(m_coreTransform.localPosition, Vector3.zero, 0.075f);
         }
     }
 
@@ -172,5 +172,10 @@ public class HeavyMech2 : EnemyBase
     public void ExitSpawn()
     {
         m_currentState = _GameStates.CHASE;
+    }
+    public void SpawnEnemy()
+    {
+        coreIsRightSide = !coreIsRightSide;
+        Instantiate(m_lesserEnemy, m_coreTransform.position, m_coreTransform.rotation, Persistent.instance.GO_DYNAMIC.transform);
     }
 }

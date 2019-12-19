@@ -31,6 +31,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
+        enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
         if (distanceSqr < inRangeSqr)
             animator.SetBool("Chase_InRange", true);
         else if (distanceSqr > outRangeSqr)
@@ -43,7 +44,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
         animator.SetBool("Chase_OutRange", false);
         inRangeSqr = m_inRange * m_inRange;
         outRangeSqr = m_outRange * m_outRange;
-
+        enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -51,9 +52,11 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
         relativePos = PlayerHandler.instance.transform.position - animator.transform.position;
 
         Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-        animator.transform.rotation = Quaternion.Lerp(animator.transform.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
+        //animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
 
-        animator.transform.position += animator.transform.forward * enemy.GetSpeed() * Time.deltaTime;
+        //animator.transform.position += animator.transform.forward * enemy.GetSpeed() * Time.deltaTime;
+        //enemy.GetComponent<NavMeshAgent>().Move(enemy.transform.forward * enemy.GetSpeed() * Time.deltaTime);
+
     }
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

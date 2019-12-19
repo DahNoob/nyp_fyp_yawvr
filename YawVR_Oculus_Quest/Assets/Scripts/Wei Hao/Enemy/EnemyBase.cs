@@ -89,6 +89,4 @@ abstract public class EnemyBase : MonoBehaviour
     {
         return moveSpeed;
     }
-
-    abstract public void SetDestination(Vector3 _destination);
 }

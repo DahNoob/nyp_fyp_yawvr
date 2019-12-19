@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /******************************  
 ** Name: StateMachineBehaviour HeavyMech2 Spawn
@@ -32,6 +33,7 @@ public class SMB_HM2_Spawn : SMB_BaseEnemyState
         else
         {
             m_currentIteration += 1;
+            enemy.GetComponent<HeavyMech2>().SpawnEnemy();
         }
         
     }
@@ -41,6 +43,8 @@ public class SMB_HM2_Spawn : SMB_BaseEnemyState
         m_currentIteration = 0;
         animator.SetBool("Spawn_Done", false);
         enemy.GetComponent<HeavyMech2>().EnterSpawn();
+
+        enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
