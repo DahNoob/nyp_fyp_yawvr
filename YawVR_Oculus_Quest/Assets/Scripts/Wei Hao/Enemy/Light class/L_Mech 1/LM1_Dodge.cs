@@ -2,35 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LM1_Dodge : StateMachineBehaviour
+public class LM1_Dodge : SMB_BaseEnemyState
 {
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    [SerializeField]
+    // Dodge Check
+    private float dodgeCheck = 2.0f;
+    [SerializeField]
+    private float rotationSpeed;
+    [SerializeField]
+    private float moveSpeed;
 
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
+    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+        animator.SetBool("Chase", false);
+        animator.GetComponent<Light_Enemy_1>().StartCoroutine(EnemyDodge(animator));
+    }
 
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
+    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+        
+    }
+
+    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+
+    }
+
+    IEnumerator EnemyDodge(Animator animator)
+    {
+        float random = Random.Range(1, 10);
+
+        if (random > 5)
+        {
+            animator.transform.position += animator.transform.forward * /*moveSpeed*/ animator.GetComponent<Light_Enemy_1>().GetMoveSpeed() * Time.deltaTime;
+            //animator.transform.position += animator.transform.right * (moveSpeed * 1.5f) * Time.deltaTime;
+        }
+        else
+        {
+            animator.transform.position += animator.transform.forward * /*moveSpeed*/ animator.GetComponent<Light_Enemy_1>().GetMoveSpeed() * Time.deltaTime;
+            //animator.transform.position += animator.transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
+        }
+
+        yield return new WaitForSeconds(2.0f);
+        animator.SetBool("DodgeEnd", true);
+    }
 }

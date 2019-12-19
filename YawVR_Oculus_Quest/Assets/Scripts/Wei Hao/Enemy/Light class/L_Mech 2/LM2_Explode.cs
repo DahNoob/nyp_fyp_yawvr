@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LM2_Explode : StateMachineBehaviour
+public class LM2_Explode : SMB_BaseEnemyState
 {
     private Transform Player;
 
     // Time taken before attack is activated
-    private float attackWindUp = 2.0f;
+    private float attackWindUp = 1.0f;
 
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+
+    }
+
+    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         animator.GetComponent<Rigidbody>().velocity = Vector3.zero;
         animator.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
     }
 
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         attackWindUp -= 1.0f * Time.deltaTime;
 
@@ -35,8 +40,8 @@ public class LM2_Explode : StateMachineBehaviour
         }
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-
     }
+
 }

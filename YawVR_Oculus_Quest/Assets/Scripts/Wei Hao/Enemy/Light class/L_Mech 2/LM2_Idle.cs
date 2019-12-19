@@ -2,31 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LM2_Idle : StateMachineBehaviour
+public class LM2_Idle : SMB_EnemyWalk
 {
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+        //PlayerHandler player = PlayerHandler.instance;
+        //animator.SetBool("Walk_HasDetected", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        
-    }
-
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void Enter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("Chase", true);
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+
+    }
+
+    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
 
     }

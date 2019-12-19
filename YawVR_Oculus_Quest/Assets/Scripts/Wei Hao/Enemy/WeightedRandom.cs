@@ -68,11 +68,11 @@ public class WeightedRandom : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("First value is: " + random());
-        Debug.Log("Second value is: " + random());
-        Debug.Log("Third value is: " + random());
-        Debug.Log("Fourth value is: " + random());
-        Debug.Log("Fifth value is: " + random());
+        //Debug.Log("First value is: " + random());
+        //Debug.Log("Second value is: " + random());
+        //Debug.Log("Third value is: " + random());
+        //Debug.Log("Fourth value is: " + random());
+        //Debug.Log("Fifth value is: " + random());
     }
 
     // Update is called once per frame
