@@ -26,32 +26,39 @@ public class LightMech2 : EnemyBase
     }
 
     private GameObject Player;
+    [Header("Light Mech 2 Configuration")]
+    [SerializeField]
     // Chase range
-    private int chaseRange = 10;
+    protected int chaseRange = 10;
+    [SerializeField]
     // Attack range
-    private int attackRange = 4;
-    // Baneling rotation speed
-    private int rotationSpeed = 5;
+    protected int attackRange = 4;
+    [SerializeField]
+    // LM2 rotation speed
+    protected int rotationSpeed = 5;
+    [SerializeField]
     // Time taken before attack is activated
-    private float attackWindUp = 2.0f;
+    protected float attackWindUp = 2.0f;
+
+    [Header("Current State")]
+    [SerializeField]
+    private _GameStates currentState = _GameStates.CHASE;
 
     private Rigidbody rb;
 
     //Fetch the Animator
     Animator m_Animator;
 
-    // Particle effect when baneling explodes
-    public ParticleSystem poof;
-    float explodeDuration = 1.0f;
+    //// Particle effect when baneling explodes
+    //public ParticleSystem poof;
+    //float explodeDuration = 1.0f;
 
-    [Header("Current State")]
-    [SerializeField]
-    private _GameStates currentState;
+    
 
-    [Header("Explosion")]
-    private float speed = 1.0f; //how fast it shakes
-    private float amount = 1.0f; //how much it shakes
-    private Vector3 transformX;
+    //[Header("Explosion")]
+    //private float speed = 1.0f; //how fast it shakes
+    //private float amount = 1.0f; //how much it shakes
+    //private Vector3 transformX;
 
     [Header("Rarity")]
     [SerializeField]
@@ -67,13 +74,13 @@ public class LightMech2 : EnemyBase
         Player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
-        poof = gameObject.GetComponent<ParticleSystem>();
+        //poof = gameObject.GetComponent<ParticleSystem>();
         weightedRandom = GameObject.Find("WeightedRNG");
 
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
         
-        transformX = transform.position;
+        //transformX = transform.position;
 
         //Debug.Log("Current Health = " + health);
         //Debug.Log("Current Max Health = " + maxHealth);
@@ -92,7 +99,7 @@ public class LightMech2 : EnemyBase
             //currentState = _GameStates.CHASE;
             //m_Animator.SetBool("Chase", true);
 
-            Debug.Log("Current State: " + currentState);
+            //Debug.Log("Current State: " + currentState);
             //Debug.Log("Distance: " + distance);
             //if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange)
             //{
@@ -142,10 +149,10 @@ public class LightMech2 : EnemyBase
 
     void PlayDeathParticle()
     {
-        //Instantiate and store in a temporary variable
-        ParticleSystem explode = Instantiate(poof);
-        //Destroy the Instantiated ParticleSystem                    
-        Destroy(explode, explodeDuration);
+        ////Instantiate and store in a temporary variable
+        //ParticleSystem explode = Instantiate(poof);
+        ////Destroy the Instantiated ParticleSystem                    
+        //Destroy(explode, explodeDuration);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -153,8 +160,8 @@ public class LightMech2 : EnemyBase
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
             Debug.Log("Hit");
-            transformX = transform.position;
-            currentState = _GameStates.EXPLODE;
+            //transformX = transform.position;
+            //currentState = _GameStates.EXPLODE;
             m_Animator.SetBool("Chase", false);
             m_Animator.SetBool("Explode", true);
         }

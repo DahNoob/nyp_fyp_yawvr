@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07cffd1ed7e6144c8dce70e0ceeaa87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_checkIntervals: 1.5
+  m_detectRange: 50
+  m_fieldOfViewAngle: 60
 --- !u!1102 &-5024034383085078834
 AnimatorState:
   serializedVersion: 5
@@ -104,13 +107,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -3096703187919042868}
-    m_Position: {x: 30, y: 150, z: 0}
+    m_Position: {x: 30, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5024034383085078834}
-    m_Position: {x: 30, y: 230, z: 0}
+    m_Position: {x: 40, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6538664597363788227}
-    m_Position: {x: 30, y: 320, z: 0}
+    m_Position: {x: 40, y: 330, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -133,8 +136,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d988a875084cf64dad772a4b88ce7ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_checkIntervals: 1.5
+  m_inRange: 50
+  m_outRange: 150
+  m_rotationSpeed: 6
   rotationSpeed: 6
   moveSpeed: 15
+  m_detectRange: 10
+  navMeshAgent: {fileID: 0}
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -181,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a67f71ef9e976a445b10dbd7a4b2fdf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_checkIntervals: 1.5
 --- !u!1102 &6538664597363788227
 AnimatorState:
   serializedVersion: 5

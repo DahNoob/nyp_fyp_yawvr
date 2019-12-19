@@ -184,23 +184,23 @@ public class Light_Enemy_1 : EnemyBase
     //    _projectileR.Init(m_projectileOriginR);
     //}
 
-    IEnumerator EnemyDodge()
-    {
-        float random = Random.Range(1, 10);
+    //IEnumerator EnemyDodge()
+    //{
+    //    float random = Random.Range(1, 10);
 
-        if (random > 5)
-        {
-            transform.position += transform.right * (moveSpeed * 1.5f) * Time.deltaTime;
-        }
-        else
-        {
-            transform.position += transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
-        }
+    //    if (random > 5)
+    //    {
+    //        transform.position += transform.right * (moveSpeed * 1.5f) * Time.deltaTime;
+    //    }
+    //    else
+    //    {
+    //        transform.position += transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
+    //    }
 
-        yield return new WaitForSeconds(1.5f);
+    //    yield return new WaitForSeconds(1.5f);
 
-        //currentState = _EnemyState.CHASE;
-    }
+    //    //currentState = _EnemyState.CHASE;
+    //}
 
     void PlayDeathParticle()
     {

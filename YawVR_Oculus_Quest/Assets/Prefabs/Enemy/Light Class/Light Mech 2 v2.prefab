@@ -121,14 +121,14 @@ GameObject:
   - component: {fileID: 4365341723221442509}
   - component: {fileID: 4365341723221442511}
   - component: {fileID: 4365341723221442510}
-  - component: {fileID: 8236230040206534481}
+  - component: {fileID: 1912319236}
   m_Layer: 0
   m_Name: Light Mech 2 v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1556730900378101241
 Transform:
   m_ObjectHideFlags: 0
@@ -210,10 +210,13 @@ MonoBehaviour:
   maxHealth: 10
   damage: 10
   moveSpeed: 15
-  poof: {fileID: 0}
+  chaseRange: 10
+  attackRange: 4
+  rotationSpeed: 5
+  attackWindUp: 2
   currentState: 1
   rarity: 0
---- !u!195 &8236230040206534481
+--- !u!195 &1912319236
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,19 +225,19 @@ NavMeshAgent:
   m_GameObject: {fileID: 6089654258507672792}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.5
-  m_Speed: 3.5
+  m_Radius: 1.56
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 300
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 3
-  m_BaseOffset: 0
+  m_Height: 3.09
+  m_BaseOffset: 1.47
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &6723064310941590954
 GameObject:
   m_ObjectHideFlags: 0
