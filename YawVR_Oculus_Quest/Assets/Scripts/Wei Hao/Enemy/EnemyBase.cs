@@ -92,7 +92,7 @@ abstract public class EnemyBase : MonoBehaviour
         return moveSpeed;
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         Instantiate(m_dieEffect, transform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
     }
