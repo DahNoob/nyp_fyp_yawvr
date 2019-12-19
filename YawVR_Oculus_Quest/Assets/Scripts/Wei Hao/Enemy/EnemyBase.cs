@@ -84,4 +84,9 @@ public class EnemyBase : MonoBehaviour
     //public override void Die()
     //{
     //}
+
+    public float GetSpeed()
+    {
+        return moveSpeed;
+    }
 }
