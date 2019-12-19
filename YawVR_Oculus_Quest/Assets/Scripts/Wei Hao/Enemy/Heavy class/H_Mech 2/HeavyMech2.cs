@@ -45,6 +45,8 @@ public class HeavyMech2 : EnemyBase
     protected Vector3 m_coreLeftPosition;
     [SerializeField]
     protected GameObject m_lesserEnemy;
+    [SerializeField]
+    protected GameObject m_dieEffect;
 
     protected _GameStates m_currentState = _GameStates.WALK;
     protected bool coreIsRightSide = false;
@@ -177,5 +179,10 @@ public class HeavyMech2 : EnemyBase
     {
         coreIsRightSide = !coreIsRightSide;
         Instantiate(m_lesserEnemy, m_coreTransform.position, m_coreTransform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+    }
+
+    void OnDestroy()
+    {
+        Instantiate(m_dieEffect, transform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
     }
 }
