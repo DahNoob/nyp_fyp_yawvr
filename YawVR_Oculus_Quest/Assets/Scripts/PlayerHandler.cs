@@ -21,6 +21,12 @@ public class PlayerHandler : MonoBehaviour
 {
     public static PlayerHandler instance { get; private set; }
 
+    public enum STATE
+    {
+        IDLE,
+        WALK
+    }
+
     [Header("Hands")]
     public GameObject rightHand;
     public GameObject leftHand;
@@ -49,10 +55,18 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField]
     [Tooltip("The cut-off point to automatically activate the recenter pose (in world position y-coord)")]
     private int m_fallThreshold = -20;
+    [SerializeField]
+    private Transform m_camPivot;
+    [SerializeField]
+    [Tooltip("Unable to be set, but serialized for debugging viewing purposes.")]
+    private Vector3 m_cameraOffset;
+    [SerializeField]
+    private PlayerHandler.STATE state = STATE.IDLE;
 
     //Local variables
     private Vector3 origPos;
     private Quaternion origRot;
+    private bool isResettingPose = false;
 
     //Hidden variables
     private float _energy;
@@ -75,6 +89,7 @@ public class PlayerHandler : MonoBehaviour
 
     void Start()
     {
+        GetComponent<OVRScreenFade>().FadeIn();
         origPos = transform.position;
         origRot = transform.rotation;
         currEnergy = m_maxEnergy;
@@ -89,6 +104,20 @@ public class PlayerHandler : MonoBehaviour
         if (!(m_leftController.IsModuleActivated() || m_rightController.IsModuleActivated()))
             currEnergy += m_energyRegenRate * Time.deltaTime;
         m_energySlider.value = currEnergy;
+        if(state == STATE.IDLE)
+        {
+            m_cameraOffset = Vector3.zero;
+        }
+        else if(state == STATE.WALK)
+        {
+            float time_mult = Time.time * 8;
+            m_cameraOffset.Set(Mathf.Cos(time_mult) * 0.2f, Mathf.Sin(time_mult * 2) * 0.2f, 0);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        m_camPivot.localPosition = Vector3.SlerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f);
     }
 
     public bool DecreaseEnergy(float _decrement)
@@ -103,10 +132,26 @@ public class PlayerHandler : MonoBehaviour
 
     public void ResetPose()
     {
-        GetComponent<OVRScreenFade>().FadeIn();
+        if(!isResettingPose)
+        {
+            StartCoroutine(ResetPoseThread());
+        }
+        //GetComponent<OVRScreenFade>().FadeIn();
+        //GetComponent<CharacterController>().enabled = false;
+        //transform.SetPositionAndRotation(origPos, origRot);
+        //GetComponent<CharacterController>().enabled = true;
+    }
+
+    public IEnumerator ResetPoseThread()
+    {
+        isResettingPose = true;
+        GetComponent<OVRScreenFade>().FadeOut();
+        yield return new WaitForSeconds(GetComponent<OVRScreenFade>().fadeTime + 0.1f);
         GetComponent<CharacterController>().enabled = false;
         transform.SetPositionAndRotation(origPos, origRot);
         GetComponent<CharacterController>().enabled = true;
+        GetComponent<OVRScreenFade>().FadeIn();
+        isResettingPose = false;
     }
 
     public PilotController GetRightPilotController()
@@ -124,5 +169,9 @@ public class PlayerHandler : MonoBehaviour
     public Color GetArmRimColor()
     {
         return m_armRimColor;
+    }
+    public void SetState(PlayerHandler.STATE _newState)
+    {
+        state = _newState;
     }
 }

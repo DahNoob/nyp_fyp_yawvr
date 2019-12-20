@@ -75,11 +75,13 @@ public class MechMovement : MonoBehaviour
             derp = transform.rotation * derp;
             //cc.Move(derp * Time.deltaTime);
             movementDelta = derp;
+            PlayerHandler.instance.SetState(PlayerHandler.STATE.WALK);
             //rb.MovePosition(newPos);
         }
         else
         {
             speed -= deceleration * Time.deltaTime;
+            PlayerHandler.instance.SetState(PlayerHandler.STATE.IDLE);
         }
 
         cc.SimpleMove(movementDelta);

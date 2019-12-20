@@ -38,15 +38,15 @@ public class NormalArmModule : MechArmModule
 
     void Start()
     {
-        m_activateHolos.SetActive(false);
-        m_activateParticles.SetActive(false);
-        m_punchingParticles.Stop();
+        //m_activateHolos.SetActive(false);
+        //m_activateParticles.SetActive(false);
+        //m_punchingParticles.Stop();
     }
 
     public override bool Activate(OVRInput.Controller _controller)
     {
-        m_activateHolos.SetActive(true);
-        m_activateParticles.SetActive(true);
+        //m_activateHolos.SetActive(true);
+        //m_activateParticles.SetActive(true);
         follower.m_followSpeed = m_followerMaxSpeed;
         //VibrationManager.SetControllerVibration(m_controller, vibeClip);
         VibrationManager.SetControllerVibration(m_controller, 0.1f, 0.65f, false);
@@ -71,8 +71,8 @@ public class NormalArmModule : MechArmModule
 
     public override bool Stop(OVRInput.Controller _controller)
     {
-        m_activateHolos.SetActive(false);
-        m_activateParticles.SetActive(false);
+        //m_activateHolos.SetActive(false);
+        //m_activateParticles.SetActive(false);
         isPunching = false;
         //m_punchingParticles.Stop();
         follower.m_followSpeed = m_followerSpeed;
