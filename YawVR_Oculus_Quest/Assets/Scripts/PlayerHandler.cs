@@ -58,6 +58,8 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField]
     private Transform m_camPivot;
     [SerializeField]
+    private OVRScreenFade m_camScreenFade;
+    [SerializeField]
     [Tooltip("Unable to be set, but serialized for debugging viewing purposes.")]
     private Vector3 m_cameraOffset;
     [SerializeField]
@@ -89,7 +91,7 @@ public class PlayerHandler : MonoBehaviour
 
     void Start()
     {
-        GetComponent<OVRScreenFade>().FadeIn();
+        m_camScreenFade.FadeIn();
         origPos = transform.position;
         origRot = transform.rotation;
         currEnergy = m_maxEnergy;
@@ -145,12 +147,12 @@ public class PlayerHandler : MonoBehaviour
     public IEnumerator ResetPoseThread()
     {
         isResettingPose = true;
-        GetComponent<OVRScreenFade>().FadeOut();
-        yield return new WaitForSeconds(GetComponent<OVRScreenFade>().fadeTime + 0.1f);
+        m_camScreenFade.FadeOut();
+        yield return new WaitForSeconds(m_camScreenFade.fadeTime + 0.1f);
         GetComponent<CharacterController>().enabled = false;
         transform.SetPositionAndRotation(origPos, origRot);
         GetComponent<CharacterController>().enabled = true;
-        GetComponent<OVRScreenFade>().FadeIn();
+        m_camScreenFade.FadeIn();
         isResettingPose = false;
     }
 
