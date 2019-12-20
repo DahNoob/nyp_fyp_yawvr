@@ -38,7 +38,6 @@ public class QuadTree
         this.m_bounds = m_bounds;
         this.maxCapacity = maxCapacity;
         this.isDivided = false;
-
         m_objectList = new List<GameObject>();
     }
 
@@ -47,7 +46,6 @@ public class QuadTree
         this.m_bounds = m_bounds;
         this.maxCapacity = maxCapacity;
         this.isDivided = false;
-        // m_objectList = new List<T>();
         m_objectList = new List<GameObject>();
     }
 
@@ -80,6 +78,26 @@ public class QuadTree
                 return true;
         }
         return false;
+    }
+
+    public void Clear()
+    {        
+        //Else if its not null, we just clear
+        if (m_objectList != null)
+              m_objectList.Clear();
+
+        if(isDivided)
+        {
+            //Clear the rest of the stuff.
+            topLeft.Clear();
+            topLeft = null;
+            topRight.Clear();
+            topRight = null;
+            botLeft.Clear();
+            botLeft = null;
+            botRight.Clear();
+            botRight = null;
+        }
     }
 
     void SubDivide()
@@ -116,6 +134,7 @@ public class QuadTree
 
         //Set divided to be true
         isDivided = true;
+
     }
     public List<GameObject> Query(QuadRect range)
     {
@@ -126,6 +145,7 @@ public class QuadTree
 
     void QueryRange(QuadRect range, ref List<GameObject> objectsInRange)
     {
+        
         if (!m_bounds.Intersects(range))
             return;
         else
@@ -140,10 +160,14 @@ public class QuadTree
             }
             if (isDivided)
             {
-                topRight.QueryRange(range, ref objectsInRange);
-                topLeft.QueryRange(range, ref objectsInRange);
-                botRight.QueryRange(range, ref objectsInRange);
-                botLeft.QueryRange(range, ref objectsInRange);
+                if(topRight != null)
+                     topRight.QueryRange(range, ref objectsInRange);
+                if (topLeft != null)
+                    topLeft.QueryRange(range, ref objectsInRange);
+                if (botRight != null)
+                    botRight.QueryRange(range, ref objectsInRange);
+                if (botLeft != null)
+                    botLeft.QueryRange(range, ref objectsInRange);
             }
         }
     }
@@ -168,6 +192,37 @@ public class QuadTree
                 if (botRight != null)
                     botRight.Render(offset);
             }
+        }
+    }
+
+    public void GetSubDivisions(ref int here)
+    {
+        if(isDivided)
+        {
+            if (topLeft != null)
+            {
+                here += 1;
+                topLeft.GetSubDivisions(ref here);
+            }
+
+            if (botLeft != null)
+            {
+                here += 1;
+                botLeft.GetSubDivisions(ref here);
+            }
+  
+            if (botRight != null)
+            {
+                here += 1;
+                botRight.GetSubDivisions(ref here);
+            }
+
+            if (topRight != null)
+            {
+                here += 1;
+                topRight.GetSubDivisions(ref here);
+            }
+
         }
     }
 }

@@ -73,4 +73,9 @@ public class QuadRect
             || other.m_position.z + other.m_height < m_position.z - m_height);
     }
 
+    public Vector3 GetWidth()
+    {
+        return new Vector3(width, 0, height);
+    }
+
 }

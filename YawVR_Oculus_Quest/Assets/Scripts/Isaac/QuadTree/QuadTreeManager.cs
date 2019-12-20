@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /******************************  
 ** Name: QuadTree Manager
@@ -67,6 +68,21 @@ public class QuadTreeManager : MonoBehaviour
 
     public GameObject poggers;
 
+    //Test variables
+    public QuadRect queryBounds;
+    public List<GameObject> staticList;
+    public List<GameObject> dynamicList;
+    public Material[] materialArray;
+
+    public Text quadTreeCheck;
+    public Text staticsubDivisions;
+    public Text dynamicsubDivisions;
+
+    public int checkCounter;
+    public int staticsubDiv;
+    public int dynamicsubDiv;
+    
+
     void Awake()
     {
         if (instance == null)
@@ -87,6 +103,49 @@ public class QuadTreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            //SpawnDynamic();
+            ResetQuadTree();
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        Debug.DrawRay(ray.origin, ray.direction * 10000);
+
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, LayerMask.GetMask("PlaneTest")))
+        {
+            queryBounds.position = hit.point;
+            if (Input.GetMouseButton(0))
+            {
+                GameObject newObject = Instantiate(poggers, Vector3.zero, Quaternion.identity);
+                newObject.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                if (selectedTree == SELECTEDTREE.STATIC)
+                {
+                    staticQuadTree.Insert(newObject);
+                    staticList.Add(newObject);
+                }
+                else if(selectedTree == SELECTEDTREE.DYNAMIC)
+                {
+                    dynamicQuadTree.Insert(newObject);
+                    dynamicList.Add(newObject);
+                }
+
+            }
+        }
+        checkCounter = 0;
+        RangeStuff();
+        quadTreeCheck.text = "Quadtree checks : " + checkCounter.ToString();
+
+        staticsubDiv = 0;
+        dynamicsubDiv = 0;
+
+        staticQuadTree.GetSubDivisions(ref staticsubDiv);
+        dynamicQuadTree.GetSubDivisions(ref dynamicsubDiv);
+
+        staticsubDivisions.text = "Static div : " + staticsubDiv.ToString();
+        dynamicsubDivisions.text = "Dynamic div : " + dynamicsubDiv.ToString();
 
     }
 
@@ -97,12 +156,25 @@ public class QuadTreeManager : MonoBehaviour
             GameObject newObject = Instantiate(poggers, Vector3.zero, Quaternion.identity);
             newObject.transform.position = new Vector3(Random.Range(-90, 90), 2, Random.Range(-90, 90));
             staticQuadTree.Insert(newObject);
+            staticList.Add(newObject);
         }
-        for (int i = 0; i < 50; ++i)
+        for (int i = 0; i <10; ++i)
         {
             GameObject newObject = Instantiate(poggers, Vector3.zero, Quaternion.identity);
             newObject.transform.position = new Vector3(Random.Range(-90, 90), 2, Random.Range(-90, 90));
             dynamicQuadTree.Insert(newObject);
+            dynamicList.Add(newObject);
+        }
+    }
+
+    public void SpawnDynamic()
+    {
+        for (int i = 0; i < 10; ++i)
+        {
+            GameObject newObject = Instantiate(poggers, Vector3.zero, Quaternion.identity);
+            newObject.transform.position = new Vector3(Random.Range(-90, 90), 2, Random.Range(-90, 90));
+            dynamicQuadTree.Insert(newObject);
+            dynamicList.Add(newObject);
         }
     }
 
@@ -128,6 +200,10 @@ public class QuadTreeManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(queryBounds.position,
+            queryBounds.GetWidth() * 2);
+
         if (gizmoModes != GIZMOMODES.SHOW)
             return;
         DrawGrid();
@@ -135,6 +211,10 @@ public class QuadTreeManager : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(queryBounds.position,
+            queryBounds.GetWidth() * 2);
+
         if (gizmoModes != GIZMOMODES.SHOWSELECTED)
             return;
         DrawGrid();
@@ -157,6 +237,72 @@ public class QuadTreeManager : MonoBehaviour
     {
         //IMPLEMENT LATER
         return false;
+    }
+
+    public bool ResetQuadTree()
+    {
+        if (staticQuadTree != null)
+            staticQuadTree.Clear();
+
+        if (dynamicQuadTree != null)
+            dynamicQuadTree.Clear();
+
+        //Make new ones
+        staticQuadTree = new QuadTree(quadTreeBounds, maxCapacity);
+        dynamicQuadTree = new QuadTree(quadTreeBounds, maxCapacity);
+
+        Debug.Log("Quadtree reset.");
+        return true;
+    }
+
+    //TEST FUNCTIONS
+    void RangeStuff()
+    {
+        foreach (GameObject testObject in staticList)
+        {
+            if(selectedTree != SELECTEDTREE.STATIC)
+            {
+                testObject.SetActive(false);
+                continue;
+            }
+            else
+            {
+                testObject.SetActive(true);
+            }
+
+            //Get access to their mesh renderers
+            MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
+            meshRenderer.sharedMaterial = materialArray[1];
+            //Set active also
+            
+        }
+        foreach (GameObject testObject in dynamicList)
+        {
+            if (selectedTree != SELECTEDTREE.DYNAMIC)
+            {
+                testObject.SetActive(false);
+                continue;
+            }
+            else
+            {
+                testObject.SetActive(true);
+            }
+            //Get access to their mesh renderers
+            MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
+            meshRenderer.sharedMaterial = materialArray[1];
+            //Set active also
+
+        }
+
+        List<GameObject> testObjectList = new List<GameObject>();
+        testObjectList = selectedTree == SELECTEDTREE.STATIC ? staticQuadTree.Query(queryBounds) : dynamicQuadTree.Query(queryBounds);
+        foreach (GameObject testObject in testObjectList)
+        {
+            //Get access to their mesh renderers
+            MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
+            meshRenderer.sharedMaterial = materialArray[0];
+        }
+
     }
 
 }
