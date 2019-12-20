@@ -16,20 +16,16 @@ using UnityEngine;
 *******************************/
 public class QuadTree
 {
+    //Should be 4.
+    static int QUADTREE_COUNT = 4;
     //Bounds of the quad tree
     private QuadRect m_bounds;
     //Capacity of each node
     private int maxCapacity;
-
     //Quadtree regions
-    private QuadTree topLeft;
-    private QuadTree topRight;
-    private QuadTree botLeft;
-    private QuadTree botRight;
-
+    private QuadTree[] regions;
     //Has this point been divided
     bool isDivided;
-
     //What's inside each object
     private List<GameObject> m_objectList;
 
@@ -39,6 +35,7 @@ public class QuadTree
         this.maxCapacity = maxCapacity;
         this.isDivided = false;
         m_objectList = new List<GameObject>();
+        regions = new QuadTree[QUADTREE_COUNT];
     }
 
     public void Init(QuadRect m_bounds, int maxCapacity)
@@ -47,14 +44,17 @@ public class QuadTree
         this.maxCapacity = maxCapacity;
         this.isDivided = false;
         m_objectList = new List<GameObject>();
+        regions = new QuadTree[QUADTREE_COUNT];
     }
 
     // public bool Insert(TquadTreeObject)
     public bool Insert(GameObject quadTreeObject)
     {
+        //Do not insert if the object is null
         if (quadTreeObject == null)
             return false;
 
+        //If the bounds does not contain, don't bother searching further.
         if (!m_bounds.Contains(quadTreeObject.transform.position))
             return false;
 
@@ -68,70 +68,108 @@ public class QuadTree
             if (!isDivided)
                 SubDivide();
 
-            if (topRight.Insert(quadTreeObject))
-                return true;
-            else if (topLeft.Insert(quadTreeObject))
-                return true;
-            else if (botRight.Insert(quadTreeObject))
-                return true;
-            else if (botLeft.Insert(quadTreeObject))
-                return true;
+            if (regions[0] != null)
+            {
+                for (int i = 0; i < QUADTREE_COUNT; i++)
+                {
+                    if (regions[i].Insert(quadTreeObject))
+                        return true;
+                }
+            }
         }
         return false;
     }
 
+    public bool Remove(GameObject quadTreeObject)
+    {
+        if (quadTreeObject == null)
+            return false;
+
+        //This is given the fact that every object is confined in the quadtree bounds
+        if (!m_bounds.Contains(quadTreeObject.transform.position))
+            return false;
+
+        if (m_objectList.Contains(quadTreeObject))
+        {
+            Debug.Log("Removed : " + quadTreeObject.name + " from the tree");
+            m_objectList.Remove(quadTreeObject);
+            return true;
+        }
+        else
+        {
+            if (isDivided)
+            {
+                for (int i = 0; i < QUADTREE_COUNT; i++)
+                {
+                    if (regions[i].Remove(quadTreeObject))
+                    {
+                        Debug.Log("Removed : " + quadTreeObject.name + " from the tree from sub");
+                        return true;
+                    }
+
+                }
+            }
+
+            Debug.Log("Failed to remove the object");
+            return false;
+
+        }
+    }
+
     public void Clear()
-    {        
+    {
         //Else if its not null, we just clear
         if (m_objectList != null)
-              m_objectList.Clear();
+            m_objectList.Clear();
 
-        if(isDivided)
+        if (isDivided)
         {
-            //Clear the rest of the stuff.
-            topLeft.Clear();
-            topLeft = null;
-            topRight.Clear();
-            topRight = null;
-            botLeft.Clear();
-            botLeft = null;
-            botRight.Clear();
-            botRight = null;
+            for (int i = 0; i < QUADTREE_COUNT; i++)
+            {
+                if (regions[i] != null)
+                {
+                    regions[i].Clear();
+                    regions[i] = null;
+                }
+            }
+            isDivided = false;
         }
     }
 
     void SubDivide()
     {
         float x = m_bounds.position.x; // in this case x is... x?s
-        float z = m_bounds.position.z; // in this case y is z.
+        float z = m_bounds.position.z; // in this case z is z.
         float w = m_bounds.width;
         float h = m_bounds.height;
 
-        QuadRect topRightRect = new QuadRect(
+        QuadRect[] rectArray = new QuadRect[QUADTREE_COUNT];
+
+        rectArray[0] = new QuadRect(
             new Vector3(x + w * 0.5f, 0, z - h * 0.5f)
             , w * 0.5f
             , h * 0.5f);
 
-        QuadRect topLeftRect = new QuadRect(
+        rectArray[1] = new QuadRect(
             new Vector3(x - w * 0.5f, 0, z - h * 0.5f)
             , w * 0.5f
             , h * 0.5f);
 
-        QuadRect botRightRect = new QuadRect(
+        rectArray[2] = new QuadRect(
             new Vector3(x + w * 0.5f, 0, z + h * 0.5f)
             , w * 0.5f
             , h * 0.5f);
 
-        QuadRect botLeftRect = new QuadRect(
+        rectArray[3] = new QuadRect(
             new Vector3(x - w * 0.5f, 0, z + h * 0.5f)
             , w * 0.5f
             , h * 0.5f);
 
-        topLeft = new QuadTree(topLeftRect, maxCapacity);
-        topRight = new QuadTree(topRightRect, maxCapacity);
-        botLeft = new QuadTree(botLeftRect, maxCapacity);
-        botRight = new QuadTree(botRightRect, maxCapacity);
-
+        //Make the new regions array
+        for (int i = 0; i < QUADTREE_COUNT; i++)
+        {
+            regions[i] = new QuadTree(rectArray[i], maxCapacity);
+        }
         //Set divided to be true
         isDivided = true;
 
@@ -145,7 +183,6 @@ public class QuadTree
 
     void QueryRange(QuadRect range, ref List<GameObject> objectsInRange)
     {
-        
         if (!m_bounds.Intersects(range))
             return;
         else
@@ -153,6 +190,9 @@ public class QuadTree
             //Add all objects in this tree first
             foreach (GameObject quadObject in m_objectList)
             {
+                if (quadObject == null)
+                    continue;
+
                 if (range.Contains(quadObject.transform.position))
                 {
                     objectsInRange.Add(quadObject);
@@ -160,14 +200,14 @@ public class QuadTree
             }
             if (isDivided)
             {
-                if(topRight != null)
-                     topRight.QueryRange(range, ref objectsInRange);
-                if (topLeft != null)
-                    topLeft.QueryRange(range, ref objectsInRange);
-                if (botRight != null)
-                    botRight.QueryRange(range, ref objectsInRange);
-                if (botLeft != null)
-                    botLeft.QueryRange(range, ref objectsInRange);
+                if (regions[0] != null)
+                {
+                    for (int i = 0; i < QUADTREE_COUNT; i++)
+                    {
+                        regions[i].QueryRange(range, ref objectsInRange);
+                    }
+                }
+
             }
         }
     }
@@ -175,52 +215,35 @@ public class QuadTree
     public void Render(Vector3 offset = new Vector3())
     {
         //Prevent some error in the editor.
-        if (this != null)
-        {
-            Gizmos.DrawWireCube(
-            new Vector3(m_bounds.position.x + offset.x, offset.y, m_bounds.position.z + offset.z),
-            new Vector3(m_bounds.width * 2, 0.01f, m_bounds.height * 2));
 
-            if (isDivided)
+        Gizmos.DrawWireCube(
+        new Vector3(m_bounds.position.x + offset.x, offset.y, m_bounds.position.z + offset.z),
+        new Vector3(m_bounds.width * 2, 0.01f, m_bounds.height * 2));
+
+        if (isDivided)
+        {
+            if (regions[0] != null)
             {
-                if (topLeft != null)
-                    topLeft.Render(offset);
-                if (topRight != null)
-                    topRight.Render(offset);
-                if (botLeft != null)
-                    botLeft.Render(offset);
-                if (botRight != null)
-                    botRight.Render(offset);
+                for (int i = 0; i < QUADTREE_COUNT; i++)
+                {
+                    regions[i].Render(offset);
+                }
             }
         }
     }
 
+
     public void GetSubDivisions(ref int here)
     {
-        if(isDivided)
+        if (isDivided)
         {
-            if (topLeft != null)
+            if (regions[0] != null)
             {
-                here += 1;
-                topLeft.GetSubDivisions(ref here);
-            }
-
-            if (botLeft != null)
-            {
-                here += 1;
-                botLeft.GetSubDivisions(ref here);
-            }
-  
-            if (botRight != null)
-            {
-                here += 1;
-                botRight.GetSubDivisions(ref here);
-            }
-
-            if (topRight != null)
-            {
-                here += 1;
-                topRight.GetSubDivisions(ref here);
+                for (int i = 0; i < QUADTREE_COUNT; i++)
+                {
+                    here += 1;
+                    regions[i].GetSubDivisions(ref here);
+                }
             }
 
         }
