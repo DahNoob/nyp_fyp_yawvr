@@ -46,6 +46,9 @@ public class PlayerHandler : MonoBehaviour
     private float m_maxEnergy = 100.0f;
     [SerializeField]
     private float m_energyRegenRate = 8.0f;
+    [SerializeField]
+    [Tooltip("The cut-off point to automatically activate the recenter pose (in world position y-coord)")]
+    private int m_fallThreshold = -20;
 
     //Local variables
     private Vector3 origPos;
@@ -81,6 +84,8 @@ public class PlayerHandler : MonoBehaviour
     
     void Update()
     {
+        if (transform.position.y < m_fallThreshold)
+            ResetPose();
         if (!(m_leftController.IsModuleActivated() || m_rightController.IsModuleActivated()))
             currEnergy += m_energyRegenRate * Time.deltaTime;
         m_energySlider.value = currEnergy;
@@ -98,6 +103,7 @@ public class PlayerHandler : MonoBehaviour
 
     public void ResetPose()
     {
+        GetComponent<OVRScreenFade>().FadeIn();
         GetComponent<CharacterController>().enabled = false;
         transform.SetPositionAndRotation(origPos, origRot);
         GetComponent<CharacterController>().enabled = true;
