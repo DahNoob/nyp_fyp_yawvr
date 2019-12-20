@@ -20,6 +20,7 @@ public class LM1_Dodge : SMB_BaseEnemyState
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         animator.SetBool("Chase", false);
+        animator.SetBool("Shoot", false);
         animator.GetComponent<Light_Enemy_1>().StartCoroutine(EnemyDodge(animator));
     }
 
@@ -48,7 +49,7 @@ public class LM1_Dodge : SMB_BaseEnemyState
             //animator.transform.position += animator.transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
         }
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.5f);
         animator.SetBool("DodgeEnd", true);
     }
 }

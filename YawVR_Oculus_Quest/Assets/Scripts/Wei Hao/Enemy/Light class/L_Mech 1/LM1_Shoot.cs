@@ -23,15 +23,16 @@ public class LM1_Shoot : SMB_BaseEnemyState
     [SerializeField]
     protected float m_DodgeDetectRange = 10.0f;
     [SerializeField]
-    protected float m_detectRange = 12.0f;
+    protected float m_detectRange = 15.0f;
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         PlayerHandler player = PlayerHandler.instance;
         //animator.SetBool("Dodge", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_DodgeDetectRange));
         //Debug.Log("Is it time to dodge? " + animator.GetBool("Dodge"));
-        animator.SetBool("ShootEnd", IsOutsideHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
-        Debug.Log("Player ran away from you? " + animator.GetBool("ShootEnd"));
+        animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
+        //Debug.Log("Hit Check Radius: " + HitCheckRadius(player.transform.position, enemy.transform.position));
+        Debug.Log("Is Player still near you? " + animator.GetBool("Shoot"));
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -83,7 +84,7 @@ public class LM1_Shoot : SMB_BaseEnemyState
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        
+        //navMeshAgent.isStopped = true;
     }
 
     IEnumerator EnemyShoot(Animator animator)
@@ -99,13 +100,13 @@ public class LM1_Shoot : SMB_BaseEnemyState
         _projectileR.Init(m_projectileOriginR);
     }
 
-    public static bool IsOutsideHitRadius(Vector3 _pos1, Vector3 _pos2, float _radius)
-    {
-        return HitCheckRadius(_pos1, _pos2) > (_radius * _radius);
-    }
+    //public static bool IsOutsideHitRadius(Vector3 _pos1, Vector3 _pos2, float _radius)
+    //{
+    //    return HitCheckRadius(_pos1, _pos2) > (_radius * _radius);
+    //}
 
-    public static float HitCheckRadius(Vector3 _pos1, Vector3 _pos2)
-    {
-        return (_pos1 - _pos2).sqrMagnitude;
-    }
+    //public static float HitCheckRadius(Vector3 _pos1, Vector3 _pos2)
+    //{
+    //    return (_pos1 - _pos2).sqrMagnitude;
+    //}
 }

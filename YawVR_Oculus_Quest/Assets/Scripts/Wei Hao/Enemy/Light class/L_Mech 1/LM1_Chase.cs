@@ -29,7 +29,19 @@ public class LM1_Chase : SMB_BaseEnemyState
     [SerializeField]
     protected float m_DodgeDetectRange = 10.0f;
     [SerializeField]
-    protected float m_detectRange = 12.0f;
+    protected float m_detectRange = 15.0f;
+
+
+
+    [Header("Enemy Chase State Configuration")]
+    [SerializeField]
+    protected float m_inRange = 50.0f;
+    [SerializeField]
+    protected float m_outRange = 150.0f;
+    [SerializeField]
+    protected float m_rotationSpeed = 6.0f;
+
+    protected float inRangeSqr, outRangeSqr;
 
     public NavMeshAgent navMeshAgent;
 
@@ -38,26 +50,44 @@ public class LM1_Chase : SMB_BaseEnemyState
         PlayerHandler player = PlayerHandler.instance;
         //animator.SetBool("Dodge", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_DodgeDetectRange));
         //Debug.Log("Is it time to dodge? " + animator.GetBool("Dodge"));
-        //animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
-        //Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
+        animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
+        Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
         Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(player.transform.position, enemy.transform.position));
-        if(CustomUtility.HitCheckRadius(player.transform.position,enemy.transform.position) < m_detectRange * m_detectRange)
-        {
-            navMeshAgent.isStopped = true;
-        }
-        else
-        {
-            navMeshAgent.isStopped = false;
-        }
+        //if (CustomUtility.HitCheckRadius(player.transform.position,enemy.transform.position) < m_detectRange * m_detectRange)
+        //{
+        //    navMeshAgent.isStopped = true;
+        //    animator.SetBool("Shoot", true);
+        //    //navMeshAgent.isStopped = false;
+        //}
+
+        //float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
+        ////animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
+        ////Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
+        ////enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
+        //if (distanceSqr < inRangeSqr)
+        //    animator.SetBool("Shoot", true);
+        //else if (distanceSqr > outRangeSqr)
+        //    animator.SetBool("Shoot", false);
+
+        //Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        //animator.SetBool("Chase_InRange", false);
+        //animator.SetBool("Chase_OutRange", false);
+        //inRangeSqr = m_inRange * m_inRange;
+        //outRangeSqr = m_outRange * m_outRange;
+       
+
         PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         m_projectileOriginL = animator.transform.Find("LBlaster Projectile Origin");
         m_projectileOriginR = animator.transform.Find("RBlaster Projectile Origin");
         navMeshAgent = animator.GetComponent<NavMeshAgent>();
+        navMeshAgent.isStopped = false;
+        navMeshAgent.SetDestination(PlayerHandler.instance.transform.position);
         animator.SetBool("DodgeEnd", false);
+        
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -69,6 +99,10 @@ public class LM1_Chase : SMB_BaseEnemyState
         //animator.transform.rotation = Quaternion.Lerp(animator.transform.rotation, toRotation, /*rotationSpeed */ animator.GetComponent<Light_Enemy_1>().GetRotationSpeed() * Time.deltaTime);
 
         //animator.transform.position += animator.transform.forward * /*moveSpeed*/ animator.GetComponent<Light_Enemy_1>().GetMoveSpeed() * Time.deltaTime;
+
+        //relativePos = PlayerHandler.instance.transform.position - animator.transform.position;
+
+        //Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
 
         attackWindUp -= 1.0f * Time.deltaTime;
         if (attackWindUp <= 0.0f)
@@ -87,13 +121,13 @@ public class LM1_Chase : SMB_BaseEnemyState
         {
             Check(animator, animatorStateInfo, layerIndex);
             dodgeCheck = 2.0f;
-            //Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
+            //Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, 5.0f);
             //for (int i = 0; i < hitColliders.Length; i++)
             //{
             //    if (hitColliders[i].gameObject.tag == "Bullet")
             //    {
             //        Debug.Log("Projectile detected");
-            //        currentState = _EnemyState.AVOID;
+            //        animator.SetBool("Dodge", true);
             //    }
             //}
         }
