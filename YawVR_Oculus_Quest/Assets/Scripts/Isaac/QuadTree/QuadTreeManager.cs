@@ -45,9 +45,11 @@ public class QuadTreeManager : MonoBehaviour
     [Tooltip("Which tree to render")]
     private SELECTEDTREE selectedTree;
     [SerializeField]
+    [ColorUsage(true,true)]
     [Tooltip("Color for the gizmos grid")]
     private Color staticTreeColor;
     [SerializeField]
+    [ColorUsage(true, true)]
     [Tooltip("Color for the quadtree bounds")]
     private Color dynamicTreeColor;
     [SerializeField]
@@ -83,21 +85,21 @@ public class QuadTreeManager : MonoBehaviour
     private List<GameObject> dynamicList;
 
     ////Test variables
-    public QuadRect queryBounds;
-    public GameObject poggers;
-    public Material[] materialArray;
+    //private QuadRect queryBounds;
+    ////public GameObject poggers;
+    //private Material[] materialArray;
 
-    public Text quadTreeCheck;
-    public Text staticsubDivisions;
-    public Text dynamicsubDivisions;
-    public Text staticObjectsText;
-    public Text dynamicObjectsText;
+    //public Text quadTreeCheck;
+    //public Text staticsubDivisions;
+    //public Text dynamicsubDivisions;
+    //public Text staticObjectsText;
+    //public Text dynamicObjectsText;
 
-    public int checkCounter;
-    public int staticsubDiv;
-    public int dynamicsubDiv;
-    public int staticObjects;
-    public int dynamicObjects;
+    //public int checkCounter;
+    //public int staticsubDiv;
+    //public int dynamicsubDiv;
+    //public int staticObjects;
+    //public int dynamicObjects;
 
     void Awake()
     {
@@ -121,7 +123,6 @@ public class QuadTreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     //Adds an object to the static list, shouldn't be called at all, other than by quadtreeobjects.
@@ -263,103 +264,104 @@ public class QuadTreeManager : MonoBehaviour
 
 
     ////TEST FUNCTIONS
-    void RangeStuff()
-    {
-        foreach (GameObject testObject in staticList)
-        {
-            if (testObject == null)
-                continue;
+    //void RangeStuff()
+    //{
+    //    foreach (GameObject testObject in staticList)
+    //    {
+    //        if (testObject == null)
+    //            continue;
 
-            if (selectedTree != SELECTEDTREE.STATIC)
-            {
-                testObject.SetActive(false);
-                continue;
-            }
-            else
-            {
-                testObject.SetActive(true);
-            }
+    //        if (selectedTree != SELECTEDTREE.STATIC)
+    //        {
+    //            testObject.SetActive(false);
+    //            continue;
+    //        }
+    //        else
+    //        {
+    //            testObject.SetActive(true);
+    //        }
 
-            //Get access to their mesh renderers
-            MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
-            meshRenderer.sharedMaterial = materialArray[1];
-            //Set active also
+    //        //Get access to their mesh renderers
+    //        MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
+    //        meshRenderer.sharedMaterial = materialArray[1];
+    //        //Set active also
 
-        }
-        foreach (GameObject testObject in dynamicList)
-        {
-            if (selectedTree != SELECTEDTREE.DYNAMIC)
-            {
-                testObject.SetActive(false);
-                continue;
-            }
-            else
-            {
-                testObject.SetActive(true);
-            }
-            //Get access to their mesh renderers
-            MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
-            meshRenderer.sharedMaterial = materialArray[1];
-            //Set active also
+    //    }
+    //    foreach (GameObject testObject in dynamicList)
+    //    {
+    //        if (selectedTree != SELECTEDTREE.DYNAMIC)
+    //        {
+    //            testObject.SetActive(false);
+    //            continue;
+    //        }
+    //        else
+    //        {
+    //            testObject.SetActive(true);
+    //        }
+    //        //Get access to their mesh renderers
+    //        MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
+    //        meshRenderer.sharedMaterial = materialArray[1];
+    //        //Set active also
 
-        }
+    //    }
 
-        List<GameObject> testObjectList = new List<GameObject>();
-        testObjectList = selectedTree == SELECTEDTREE.STATIC ? staticQuadTree.Query(queryBounds) : dynamicQuadTree.Query(queryBounds);
-        foreach (GameObject testObject in testObjectList)
-        {
-            //Get access to their mesh renderers
-            MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
-            meshRenderer.sharedMaterial = materialArray[0];
-        }
+    //    List<GameObject> testObjectList = new List<GameObject>();
+    //    testObjectList = selectedTree == SELECTEDTREE.STATIC ? staticQuadTree.Query(queryBounds) : dynamicQuadTree.Query(queryBounds);
+    //    foreach (GameObject testObject in testObjectList)
+    //    {
+    //        //Get access to their mesh renderers
+    //        MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
+    //        meshRenderer.sharedMaterial = materialArray[0];
+    //    }
 
-    }
+    //}
 
-    void DrawNodes()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+    //void DrawNodes()
+    //{
+    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+    //    RaycastHit hit;
 
-        Debug.DrawRay(ray.origin, ray.direction * 10000);
+    //    Debug.DrawRay(ray.origin, ray.direction * 10000);
 
-        if (Physics.Raycast(ray.origin, ray.direction, out hit, LayerMask.GetMask("PlaneTest")))
-        {
-            queryBounds.position = hit.point;
-            if (Input.GetMouseButton(0))
-            {
-                GameObject newObject = Instantiate(poggers, Vector3.zero, Quaternion.identity);
+    //    if (Physics.Raycast(ray.origin, ray.direction, out hit, LayerMask.GetMask("PlaneTest")))
+    //    {
+    //        queryBounds.position = hit.point;
+    //        //if (Input.GetMouseButton(0))
+    //        //{
+    //        //    GameObject newObject = Instantiate(poggers, Vector3.zero, Quaternion.identity);
 
-                newObject.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-                if (selectedTree == SELECTEDTREE.STATIC)
-                {
-                    newObject.AddComponent<StaticClass>();
-                    //staticQuadTree.Insert(newObject);
-                    //staticList.Add(newObject);
-                }
-                else if (selectedTree == SELECTEDTREE.DYNAMIC)
-                {
-                    newObject.AddComponent<DynamicClass>();
-                    //dynamicQuadTree.Insert(newObject);
-                    //dynamicList.Add(newObject);
-                }
+    //        //    newObject.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+    //        //    if (selectedTree == SELECTEDTREE.STATIC)
+    //        //    {
+    //        //        newObject.AddComponent<StaticClass>();
+    //        //        //staticQuadTree.Insert(newObject);
+    //        //        //staticList.Add(newObject);
+    //        //    }
+    //        //    else if (selectedTree == SELECTEDTREE.DYNAMIC)
+    //        //    {
+    //        //        newObject.AddComponent<DynamicClass>();
+    //        //        //dynamicQuadTree.Insert(newObject);
+    //        //        //dynamicList.Add(newObject);
+    //        //    }
 
-            }
-        }
-        checkCounter = 0;
-        RangeStuff();
-        quadTreeCheck.text = "Quadtree checks : " + checkCounter.ToString();
+    //        //}
+    //    }
+    //    RangeStuff();
+    //    //checkCounter = 0;
 
-        staticsubDiv = 0;
-        dynamicsubDiv = 0;
+    //    //quadTreeCheck.text = "Quadtree checks : " + checkCounter.ToString();
 
-        staticQuadTree.GetSubDivisions(ref staticsubDiv);
-        dynamicQuadTree.GetSubDivisions(ref dynamicsubDiv);
+    //    //staticsubDiv = 0;
+    //    //dynamicsubDiv = 0;
 
-        staticsubDivisions.text = "Static div : " + staticsubDiv.ToString();
-        dynamicsubDivisions.text = "Dynamic div : " + dynamicsubDiv.ToString();
+    //    //staticQuadTree.GetSubDivisions(ref staticsubDiv);
+    //    //dynamicQuadTree.GetSubDivisions(ref dynamicsubDiv);
 
-        dynamicObjects = dynamicList.Count;
-        dynamicObjectsText.text = "Dynamic Objects: " + dynamicObjects.ToString();
-    }
+    //    //staticsubDivisions.text = "Static div : " + staticsubDiv.ToString();
+    //    //dynamicsubDivisions.text = "Dynamic div : " + dynamicsubDiv.ToString();
+
+    //    //dynamicObjects = dynamicList.Count;
+    //    //dynamicObjectsText.text = "Dynamic Objects: " + dynamicObjects.ToString();
+    //}
 
 }
