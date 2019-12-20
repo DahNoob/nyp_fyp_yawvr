@@ -33,6 +33,8 @@ abstract public class EnemyBase : MonoBehaviour
     protected int moveSpeed;
     [SerializeField]
     protected GameObject m_dieEffect;
+    [SerializeField]
+    protected Transform m_bodyTransform;
 
     public enum States
     {
@@ -92,8 +94,8 @@ abstract public class EnemyBase : MonoBehaviour
         return moveSpeed;
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
-        Instantiate(m_dieEffect, transform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
+        Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
     }
 }

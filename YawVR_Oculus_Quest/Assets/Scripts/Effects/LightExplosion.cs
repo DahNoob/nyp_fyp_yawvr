@@ -16,19 +16,19 @@ public class LightExplosion : MonoBehaviour
     [SerializeField]
     private float m_explosionForceMax = 200.0f;
 
-    void Start()
-    {
-        ParticleSystem ps = GetComponent<ParticleSystem>();
-        for (int i = 0; i < m_debrisMeshes.Length; ++i)
-        {
-            GameObject debris = Instantiate(m_debrisPrefab, transform);
-            Vector3 asd = new Vector3(Random.Range(-m_debrisPositionVariances.x, m_debrisPositionVariances.x),
-                                                         Random.Range(0.0f, m_debrisPositionVariances.y),
-                                                         Random.Range(-m_debrisPositionVariances.z, m_debrisPositionVariances.z));
-            debris.transform.localPosition = asd;
-            debris.GetComponent<MeshFilter>().mesh = m_debrisMeshes[i];
-            debris.GetComponent<Rigidbody>().AddExplosionForce(Mathf.Lerp(m_explosionForceMin, m_explosionForceMax, (float)i / m_debrisMeshes.Length), transform.position, 1000.0f);
-            debris.GetComponent<Rigidbody>().AddTorque(asd * 10.0f);
-        }
-    }
+    //void Start()
+    //{
+    //    ParticleSystem ps = GetComponent<ParticleSystem>();
+    //    for (int i = 0; i < m_debrisMeshes.Length; ++i)
+    //    {
+    //        GameObject debris = Instantiate(m_debrisPrefab, transform);
+    //        Vector3 asd = new Vector3(Random.Range(-m_debrisPositionVariances.x, m_debrisPositionVariances.x),
+    //                                                     Random.Range(0.0f, m_debrisPositionVariances.y),
+    //                                                     Random.Range(-m_debrisPositionVariances.z, m_debrisPositionVariances.z));
+    //        debris.transform.localPosition = asd;
+    //        debris.GetComponent<MeshFilter>().mesh = m_debrisMeshes[i];
+    //        debris.GetComponent<Rigidbody>().AddExplosionForce(Mathf.Lerp(m_explosionForceMin, m_explosionForceMax, (float)i / m_debrisMeshes.Length), transform.position, 10000.0f, 5.0f, ForceMode.VelocityChange);
+    //        debris.GetComponent<Rigidbody>().AddTorque(asd * 100.0f);
+    //    }
+    //}
 }

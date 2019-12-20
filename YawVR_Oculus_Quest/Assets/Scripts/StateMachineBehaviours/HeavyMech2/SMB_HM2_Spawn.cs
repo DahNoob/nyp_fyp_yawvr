@@ -43,8 +43,6 @@ public class SMB_HM2_Spawn : SMB_BaseEnemyState
         m_currentIteration = 0;
         animator.SetBool("Spawn_Done", false);
         enemy.GetComponent<HeavyMech2>().EnterSpawn();
-
-        enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

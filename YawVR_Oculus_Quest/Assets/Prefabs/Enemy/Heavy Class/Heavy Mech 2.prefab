@@ -251,17 +251,18 @@ MonoBehaviour:
   maxHealth: 100
   damage: 10
   moveSpeed: 15
+  m_dieEffect: {fileID: 8652372094639433693, guid: 37f31e52f7fdbb04799acd20327e7957,
+    type: 3}
+  m_bodyTransform: {fileID: 303549922058565681}
   m_chaseRange: 10
   m_attackRange: 4
   m_rotationSpeed: 5
   m_attackWindUp: 2
   m_rigidBody: {fileID: 9132567093671381444}
   m_coreTransform: {fileID: 6460773364572207210}
-  m_coreRightPosition: {x: 5.4, y: 0, z: 0}
-  m_coreLeftPosition: {x: -5.4, y: 0, z: 0}
+  m_rightSide: {fileID: 5166317202759432076}
+  m_leftSide: {fileID: 4169425836651350650}
   m_lesserEnemy: {fileID: 6089654258507672792, guid: c5149578cf4385e428f65c56265f518d,
-    type: 3}
-  m_dieEffect: {fileID: 8652372094639433693, guid: 37f31e52f7fdbb04799acd20327e7957,
     type: 3}
 --- !u!95 &2244760435168840456
 Animator:
@@ -1396,7 +1397,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3047757302091345898, guid: f5cd21b5387eb9b43be5668df8c09ac3, type: 3}
+  - {fileID: 2100000, guid: 2f1254b7277ad244a8963408738e7f76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
