@@ -59,7 +59,7 @@ public class NormalArmModule : MechArmModule
 
     public override bool Hold(OVRInput.Controller _controller)
     {
-        m_handAnimator.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
+        //m_handAnimator.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
         float followerCurrentSpeed = follower.CalculateFollowerSpeed();
         if(!isPunching && followerCurrentSpeed > m_punchSpeedEnter)
         {
@@ -78,10 +78,17 @@ public class NormalArmModule : MechArmModule
     {
         //m_activateHolos.SetActive(false);
         //m_activateParticles.SetActive(false);
-        m_handAnimator.SetFloat("Blend", 0);
+        //m_handAnimator.SetFloat("Blend", 0);
         isPunching = false;
         //m_punchingParticles.Stop();
         follower.m_followSpeed = m_followerSpeed;
         return true;
+    }
+
+
+    //VERY TEMPRORARY
+    void Update()
+    {
+        m_handAnimator.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
     }
 }
