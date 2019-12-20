@@ -96,6 +96,6 @@ abstract public class EnemyBase : MonoBehaviour
 
     void OnDisable()
     {
-        Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
+        Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);        
     }
 }
