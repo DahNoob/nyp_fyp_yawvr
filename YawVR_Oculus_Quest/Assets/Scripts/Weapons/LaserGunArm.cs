@@ -18,6 +18,8 @@ public class LaserGunArm : MechArmModule
     protected AudioSource m_shootAudioSource;
     [SerializeField]
     protected AudioClip[] m_shootAudioClips;
+    [SerializeField]
+    protected Animator m_gatlingAnimator;
 
     [Header("Ammo Configuration")]
     [SerializeField]
@@ -52,6 +54,7 @@ public class LaserGunArm : MechArmModule
     {
         shootTick = 0;
         follower.m_followSpeed = m_followerSpeed;
+        m_gatlingAnimator.SetFloat("Blend", 1);
         return true;
     }
 
@@ -95,6 +98,7 @@ public class LaserGunArm : MechArmModule
 
     public override bool Stop(OVRInput.Controller _controller)
     {
+        m_gatlingAnimator.SetFloat("Blend", 0);
         return true;
     }
 
