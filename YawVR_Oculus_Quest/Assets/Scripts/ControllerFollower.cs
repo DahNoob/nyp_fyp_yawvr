@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /******************************  
-** Name: Controller Follower behaviour
-** Desc: Follows the movement of Oculus Controllers in the world
+** Name: ControllerFollower monobehaviour
+** Desc: Just follows the controller's position and rotation
 ** Author: DahNoob
-** Date: 02/12/2019, 2:05 PM
+** Date: 23/12/2019, 11:48PM
 **************************
 ** Change History
 **************************
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
-** 1    02/12/2019, 2:05PM      DahNoob   Created
-** 2    02/12/2019, 2:43PM      DahNoob   Implemented Version 1
-** 3    03/12/2019, 3:41PM      DahNoob   Implemented Version 2 (One-time attach, HandTrigger to control)
+** 1    23/12/2019, 11:48PM     DahNoob   Created (ish), actually duplicated from MechHandHandler
 *******************************/
 public class ControllerFollower : MonoBehaviour
 {
     [Header("Settings")]
-    public bool m_enabled = true;
-    public bool m_followCameraRotation = false;
+    public bool m_enabled = false;
+    public bool m_followCameraRotation = true;
 
     [Header("Configuration")]
     public OVRInput.Controller m_controller;
@@ -30,18 +28,6 @@ public class ControllerFollower : MonoBehaviour
     public float m_followSpeed = 0.05f;
     public Transform m_origin;
 
-    [Header("References")]
-    [SerializeField]
-    private Transform m_playerTransform;
-
-    [Header("Debug")]
-    [SerializeField]
-    private UnityEngine.UI.Text m_shakeStrengthText;
-    [SerializeField]
-    private UnityEngine.UI.Text m_currArmSpeedText;
-    [SerializeField]
-    private UnityEngine.UI.Text m_maxArmSpeedText;
-
     //Local variables
     private Vector3 prevPosition, goalPosition, currPosition;
     private Quaternion prevRotation, goalRotation, currRotation;
@@ -49,53 +35,26 @@ public class ControllerFollower : MonoBehaviour
     void Start()
     {
         prevPosition = gameObject.transform.localPosition;
+        print(m_origin.localEulerAngles);
     }
 
     void Update()
     {
         Vector3 controllerPos = OVRInput.GetLocalControllerPosition(m_controller);
-        //Vector3 objectPosGoal;
-        //Quaternion objectRotGoal;
-        
 
         if (m_enabled)
         {
-            //float camRot = (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0.0f);
             Transform t = GetComponent<Transform>();           
-            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
-            goalRotation = OVRInput.GetLocalControllerRotation(m_controller);// * Quaternion.AngleAxis(camRot, Vector3.up);
-            //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
-            //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
-            //currPosition = objectPosGoal;
-            //currRotation = objectRotGoal;
+            goalPosition = /*Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * */(Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
+            goalRotation = OVRInput.GetLocalControllerRotation(m_controller);
         }
         else if(m_origin)
         {
             float camRot = (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0.0f);
             Transform t = GetComponent<Transform>();
-            goalPosition = Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * m_origin.localPosition;
-            goalRotation = m_origin.localRotation;// * Quaternion.AngleAxis(camRot, Vector3.up);
-            //t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
-            //t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
-            //currPosition = objectPosGoal;
-            //currRotation = objectRotGoal;
+            goalPosition = /*Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * */m_origin.localPosition;
+            goalRotation = m_origin.localRotation;
         }
-        
-        //if (m_enabled)
-        //{
-        //    float follow_speed = m_followSpeed * Time.deltaTime;
-        //    Transform t = GetComponent<Transform>();
-        //    //Rigidbody rb = GetComponent<Rigidbody>();
-        //    //Vector3 controllerPos = OVRInput.GetLocalControllerPosition(m_controller);
-        //    //Vector3 objectPosGoal = new Vector3(controllerPos.x * m_offsetScale.x, controllerPos.y * m_offsetScale.y, controllerPos.z * m_offsetScale.z) + m_offsetPosition;
-        //    //Quaternion objectRotGoal = OVRInput.GetLocalControllerRotation(m_controller);
-        //    t.localPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
-        //    //currPosition = Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed);
-        //    //rb.MovePosition(Vector3.Lerp(t.localPosition, objectPosGoal, follow_speed));
-        //    t.localRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
-        //    //currRotation = Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed);
-        //    //rb.MoveRotation(Quaternion.Slerp(t.localRotation, objectRotGoal, follow_speed));
-        //}
     }
 
     void FixedUpdate()
@@ -105,21 +64,12 @@ public class ControllerFollower : MonoBehaviour
 
         currPosition = Vector3.LerpUnclamped(currPosition, goalPosition, m_followSpeed);
         currRotation = Quaternion.SlerpUnclamped(currRotation, goalRotation, m_followSpeed);
-
-        if(m_controller == OVRInput.Controller.RTouch)
-        {
-            float speed = CalculateFollowerSpeed();
-            m_currArmSpeedText.text = speed.ToString();
-            float derp = float.Parse(m_maxArmSpeedText.text);
-            m_maxArmSpeedText.text = speed > derp ? speed.ToString() : m_maxArmSpeedText.text;
-        }
-        
     }
 
     void LateUpdate()
     {
-        transform.localPosition = m_playerTransform.localPosition + currPosition;//Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
-        transform.localRotation = m_playerTransform.localRotation * currRotation;//Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
+        transform.localPosition =/* m_playerTransform.localPosition + */currPosition;//Vector3.LerpUnclamped(transform.localPosition, currPosition, m_followSpeed);
+        transform.localRotation = /*m_playerTransform.localRotation * */currRotation;//Quaternion.SlerpUnclamped(transform.localRotation, currRotation, m_followSpeed);
     }
 
     public float CalculateFollowerSpeed()
@@ -142,8 +92,6 @@ public class ControllerFollower : MonoBehaviour
             //print("shakeStrength : " + shakeStrength);
             //VibrationManager.SetControllerVibration(m_controller, 8, 4, shakeStrength);
             VibrationManager.SetControllerVibration(m_controller, 0.01f, magnitude);
-            if (m_shakeStrengthText)
-                m_shakeStrengthText.text = shakeStrength.ToString();
         }
     }
 }

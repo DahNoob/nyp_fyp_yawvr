@@ -27,15 +27,36 @@ public class PlayerHandler : MonoBehaviour
         WALK
     }
 
+    [Tooltip("The player's hands itself.")]
     [Header("Hands")]
     public GameObject rightHand;
     public GameObject leftHand;
 
+    [Tooltip("The MonoBehaviour of the PilotControllers.")]
     [Header("Pilot Controllers")]
     [SerializeField]
     private PilotController m_rightController;
     [SerializeField]
     private PilotController m_leftController;
+
+    [Tooltip("The ControllerFollowers.")]
+    [Header("Controller Followers")]
+    [SerializeField]
+    private ControllerFollower m_rightFollower;
+    [SerializeField]
+    private ControllerFollower m_leftFollower;
+
+    [Tooltip("The Mech hands.")]
+    [Header("Mech Hands")]
+    [SerializeField]
+    private MechHandHandler m_rightMechHand;
+    [SerializeField]
+    private MechHandHandler m_leftMechHand;
+
+    [Tooltip("legs bruh")]
+    [Header("Mech Legs")]
+    [SerializeField]
+    private Animator m_mechLegs;
 
     [Header("UIs")]
     [SerializeField]
@@ -156,14 +177,11 @@ public class PlayerHandler : MonoBehaviour
         isResettingPose = false;
     }
 
-    public PilotController GetRightPilotController()
-    {
-        return m_rightController;
-    }
-    public PilotController GetLeftPilotController()
-    {
-        return m_leftController;
-    }
+    public PilotController GetRightPilotController() { return m_rightController; }
+    public PilotController GetLeftPilotController() { return m_leftController; }
+    public ControllerFollower GetRightFollower() { return m_rightFollower; }
+    public ControllerFollower GetLeftFollower() { return m_leftFollower; }
+
     public Color GetArmInnerColor()
     {
         return m_armInnerColor;
