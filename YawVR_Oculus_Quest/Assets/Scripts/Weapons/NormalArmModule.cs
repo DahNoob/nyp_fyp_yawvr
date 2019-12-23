@@ -33,10 +33,6 @@ public class NormalArmModule : MechArmModule
     [SerializeField]
     private ParticleSystem m_punchingParticles;
 
-    [Header("Temporary configs")]
-    [SerializeField]
-    private Animator m_handAnimator;
-
     //Local variables
     private bool isPunching = false;
 
@@ -83,12 +79,5 @@ public class NormalArmModule : MechArmModule
         //m_punchingParticles.Stop();
         follower.m_followSpeed = m_followerSpeed;
         return true;
-    }
-
-
-    //VERY TEMPRORARY
-    void Update()
-    {
-        m_handAnimator.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
     }
 }

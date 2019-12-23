@@ -139,10 +139,6 @@ public class PilotController : MonoBehaviour
 
     public void AttachArmModules(GameObject[] _armModulePackages)
     {
-        foreach (Transform child in mechHand.transform)
-        {
-            Destroy(child.gameObject);
-        }
         foreach (GameObject armModulePackage in _armModulePackages)
         {
             Transform validFind = armModulePackage.transform.Find(m_controller == OVRInput.Controller.RTouch ? "Right" : "Left");
@@ -155,7 +151,7 @@ public class PilotController : MonoBehaviour
                 holoArm.transform.localPosition = Vector3.zero;
                 holoArm.transform.localRotation = Quaternion.identity;
                 GameObject armObject = armModuleAgain.armObject;
-                armObject.transform.SetParent(mechHand.transform);
+                armObject.transform.SetParent(mechHand.weaponsTransform);
                 armObject.transform.localPosition = Vector3.zero;
                 armObject.transform.localRotation = Quaternion.identity;
                 armModuleAgain.follower = follower;

@@ -36,6 +36,9 @@ public class MechMovement : MonoBehaviour
     private Vector3 gravityVector;
     private float FallSpeed = 0.0f;
 
+    [Header("Visible variables")]
+    public Vector2 movementDelta;
+
     [Header("Debug")]
     [SerializeField]
     Vector2 rStickDelta;
@@ -58,16 +61,16 @@ public class MechMovement : MonoBehaviour
         lStickDelta = primaryAxis;
         rStickDelta = secondaryAxis;
 
-        speed = Mathf.Clamp(speed, minSpeed, maxSpeed);
+        //speed = Mathf.Clamp(speed, minSpeed, maxSpeed);
 
         // Player Movement
-        Vector3 movementDelta = Vector3.zero;
-
-        if (!primaryAxis.Equals(Vector2.zero))
+        movementDelta = Vector3.zero;
+        
+        if (!CustomUtility.IsZero(primaryAxis))
         {
-            speed += acceleration * Time.deltaTime;
+            speed = Mathf.Min(maxSpeed, acceleration * Time.deltaTime);
             var moveDirGlobal = primaryAxis * speed;
-            float rotY = Mathf.Deg2Rad * (transform.rotation.y - Camera.main.transform.localEulerAngles.y);
+            float rotY = Mathf.Deg2Rad * (transform.rotation.y/* - Camera.main.transform.localEulerAngles.y*/);
             var moveDirLocal = new Vector2(moveDirGlobal.x * Mathf.Cos(rotY) - moveDirGlobal.y * Mathf.Sin(rotY), moveDirGlobal.x * Mathf.Sin(rotY) + moveDirGlobal.y * Mathf.Cos(rotY));
             Vector3 derp = new Vector3(moveDirLocal.x, 0, moveDirLocal.y);
             Vector3 newPos = transform.position + derp * Time.deltaTime;
@@ -80,7 +83,7 @@ public class MechMovement : MonoBehaviour
         }
         else
         {
-            speed -= deceleration * Time.deltaTime;
+            speed = Mathf.Max(minSpeed, deceleration * Time.deltaTime);
             PlayerHandler.instance.SetState(PlayerHandler.STATE.IDLE);
         }
 
@@ -108,5 +111,10 @@ public class MechMovement : MonoBehaviour
 
         ////Apply our move Vector , remeber to multiply by Time.delta
         //cc.Move(gravityVector * Time.deltaTime);
+    }
+
+    public float GetMovementAlpha()
+    {
+        return (speed - minSpeed) / (maxSpeed - minSpeed);
     }
 }

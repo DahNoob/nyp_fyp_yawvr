@@ -130,11 +130,14 @@ public class PlayerHandler : MonoBehaviour
         if(state == STATE.IDLE)
         {
             m_cameraOffset = Vector3.zero;
+            m_mechLegs.SetFloat("Blend", 0);
         }
         else if(state == STATE.WALK)
         {
-            float time_mult = Time.time * 8;
+            float walkMultiplier = GetComponent<MechMovement>().GetMovementAlpha();
+            float time_mult = Time.time * 8 * walkMultiplier;
             m_cameraOffset.Set(Mathf.Cos(time_mult) * 0.2f, Mathf.Sin(time_mult * 2) * 0.2f, 0);
+            m_mechLegs.SetFloat("Blend", walkMultiplier);
         }
     }
 

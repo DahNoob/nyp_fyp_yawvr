@@ -27,21 +27,24 @@ public class MechHandHandler : MonoBehaviour
     private Transform m_handPivot;
     [SerializeField]
     private Animator m_handModel;
+    [SerializeField]
+    private Transform m_weaponsTransform;
 
     //[Header("References")]
     //[SerializeField]
     //private Transform m_playerTransform;
 
-    public ControllerFollower m_follower { private set; get; }
+    public ControllerFollower follower { private set; get; }
+    public Transform weaponsTransform { get { return m_weaponsTransform; } private set { m_weaponsTransform = value; } }
 
     void Start()
     {
-        m_follower = m_controller == OVRInput.Controller.RTouch ? PlayerHandler.instance.GetRightFollower() : PlayerHandler.instance.GetLeftFollower();
+        follower = m_controller == OVRInput.Controller.RTouch ? PlayerHandler.instance.GetRightFollower() : PlayerHandler.instance.GetLeftFollower();
     }
 
     public float CalculateFollowerSpeed()
     {
-        return m_follower.CalculateFollowerSpeed();
+        return follower.CalculateFollowerSpeed();
     }
 
     void Update()
@@ -49,14 +52,14 @@ public class MechHandHandler : MonoBehaviour
         if(m_enabled)
         {
             Quaternion controllerRot = OVRInput.GetLocalControllerRotation(m_controller);
-            m_handPivot.localRotation = controllerRot;
+            //m_handPivot.localRotation = controllerRot;
             m_handModel.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
         }
     }
 
     public void Bump(Vector3 _posOffset, Vector3 _rotOffset = new Vector3())
     {
-        m_follower.Bump(_posOffset, _rotOffset);
+        follower.Bump(_posOffset, _rotOffset);
     }
 
     public void SetEnabled(bool _enabled)

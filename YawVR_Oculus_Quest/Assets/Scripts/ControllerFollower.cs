@@ -35,7 +35,6 @@ public class ControllerFollower : MonoBehaviour
     void Start()
     {
         prevPosition = gameObject.transform.localPosition;
-        print(m_origin.localEulerAngles);
     }
 
     void Update()

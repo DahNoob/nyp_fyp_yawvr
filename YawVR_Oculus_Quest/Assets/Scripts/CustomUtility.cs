@@ -31,4 +31,9 @@ public class CustomUtility
     {
         return (_pos1 - _pos2).sqrMagnitude;
     }
+    public static bool IsZero(Vector2 _val, float _EPSILON = 0.005f)
+    {
+        return _val.x < _EPSILON && _val.x > -_EPSILON &&
+               _val.y < _EPSILON && _val.y > -_EPSILON;
+    }
 }
