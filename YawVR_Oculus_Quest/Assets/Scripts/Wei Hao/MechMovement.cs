@@ -37,7 +37,8 @@ public class MechMovement : MonoBehaviour
     private float FallSpeed = 0.0f;
 
     [Header("Visible variables")]
-    public Vector2 movementDelta;
+    public Vector3 movementDelta;
+    public float movementAlpha;
 
     [Header("Debug")]
     [SerializeField]
@@ -55,7 +56,7 @@ public class MechMovement : MonoBehaviour
 
     void Update()
     {
-        Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.LTouch);//OVRInput.Get(OVRInput.RawAxis2D.LThumbstick); 
+        Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.LTouch) + new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));//OVRInput.Get(OVRInput.RawAxis2D.LThumbstick); 
         Vector2 secondaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.RTouch);
 
         lStickDelta = primaryAxis;
@@ -75,9 +76,9 @@ public class MechMovement : MonoBehaviour
             Vector3 derp = new Vector3(moveDirLocal.x, 0, moveDirLocal.y);
             Vector3 newPos = transform.position + derp * Time.deltaTime;
             //transform.Translate(derp * Time.deltaTime);
-            movementDelta = derp;
             derp = transform.rotation * derp;
             //cc.Move(derp * Time.deltaTime);
+            movementDelta = derp;
             PlayerHandler.instance.SetState(PlayerHandler.STATE.WALK);
             //rb.MovePosition(newPos);
         }
@@ -99,6 +100,8 @@ public class MechMovement : MonoBehaviour
             transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * secondaryAxis.x);
         }
 
+        movementAlpha = GetMovementAlpha();
+
         ////Reset the MoveVector
         //gravityVector = Vector3.zero;
 
@@ -115,6 +118,6 @@ public class MechMovement : MonoBehaviour
 
     public float GetMovementAlpha()
     {
-        return (speed - minSpeed) / (maxSpeed - minSpeed);
+        return lStickDelta.magnitude;
     }
 }

@@ -52,7 +52,7 @@ public class MechHandHandler : MonoBehaviour
         if(m_enabled)
         {
             Quaternion controllerRot = OVRInput.GetLocalControllerRotation(m_controller);
-            //m_handPivot.localRotation = controllerRot;
+            m_handPivot.localRotation = follower.transform.localRotation;
             m_handModel.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
         }
     }
