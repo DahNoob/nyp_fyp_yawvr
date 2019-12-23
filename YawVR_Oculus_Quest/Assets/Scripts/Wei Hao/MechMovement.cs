@@ -68,7 +68,7 @@ public class MechMovement : MonoBehaviour
         
         if (!CustomUtility.IsZero(primaryAxis))
         {
-            speed = Mathf.Min(maxSpeed, acceleration * Time.deltaTime);
+            speed = Mathf.Min(maxSpeed, speed + acceleration * Time.deltaTime);
             var moveDirGlobal = primaryAxis * speed;
             float rotY = Mathf.Deg2Rad * (transform.rotation.y/* - Camera.main.transform.localEulerAngles.y*/);
             var moveDirLocal = new Vector2(moveDirGlobal.x * Mathf.Cos(rotY) - moveDirGlobal.y * Mathf.Sin(rotY), moveDirGlobal.x * Mathf.Sin(rotY) + moveDirGlobal.y * Mathf.Cos(rotY));
@@ -83,7 +83,7 @@ public class MechMovement : MonoBehaviour
         }
         else
         {
-            speed = Mathf.Max(minSpeed, deceleration * Time.deltaTime);
+            speed = Mathf.Max(minSpeed, speed - deceleration * Time.deltaTime);
             PlayerHandler.instance.SetState(PlayerHandler.STATE.IDLE);
         }
 

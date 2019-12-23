@@ -50,6 +50,8 @@ abstract public class MechArmModule : BaseMechModule
     {
         if (m_holoObject.transform.Find("HandReference"))
             Destroy(m_holoObject.transform.Find("HandReference").gameObject);
+        if (m_armObject.transform.Find("HandReference"))
+            Destroy(m_armObject.transform.Find("HandReference").gameObject);
         name = m_moduleName;
         holoObject.name = name + "Holo";
         holoModel = holoObject.transform.Find("Model").GetComponent<MeshRenderer>();
