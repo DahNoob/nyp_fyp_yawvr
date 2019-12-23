@@ -22,6 +22,8 @@ public class MechHandHandler : MonoBehaviour
     [Header("Configuration")]
     public OVRInput.Controller m_controller;
     [SerializeField]
+    private bool m_enabled = false;
+    [SerializeField]
     private Transform m_handPivot;
     [SerializeField]
     private Animator m_handModel;
@@ -44,13 +46,26 @@ public class MechHandHandler : MonoBehaviour
 
     void Update()
     {
-        Quaternion controllerRot = OVRInput.GetLocalControllerRotation(m_controller);
-        m_handPivot.localRotation = controllerRot;
-        m_handModel.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
+        if(m_enabled)
+        {
+            Quaternion controllerRot = OVRInput.GetLocalControllerRotation(m_controller);
+            m_handPivot.localRotation = controllerRot;
+            m_handModel.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
+        }
     }
 
     public void Bump(Vector3 _posOffset, Vector3 _rotOffset = new Vector3())
     {
         m_follower.Bump(_posOffset, _rotOffset);
+    }
+
+    public void SetEnabled(bool _enabled)
+    {
+        m_enabled = _enabled;
+        if(!_enabled)
+        {
+            m_handPivot.localRotation = Quaternion.identity;
+            m_handModel.SetFloat("Blend", 0);
+        }
     }
 }

@@ -41,8 +41,6 @@ public class PilotController : MonoBehaviour
 
     [Header("References")]
     [SerializeField]
-    ControllerFollower m_armFollower;
-    [SerializeField]
     GameObject m_ringObject;
     [SerializeField]
     Transform m_holos;
@@ -56,6 +54,9 @@ public class PilotController : MonoBehaviour
     Transform m_ringOffset;
 
     //Local variables
+    private ControllerFollower follower;
+    private MechHandHandler mechHand;
+
     private bool isAttached = false, isHandTriggered = false, isIndexTriggered = false;
     private MeshRenderer currentHoloArm;
     private GameObject currentArmObject;
@@ -73,6 +74,8 @@ public class PilotController : MonoBehaviour
     void Start()
     {
         //ARM_MINSPEED = m_armFollower.m_followSpeed;
+        follower = m_controller == OVRInput.Controller.RTouch ? PlayerHandler.instance.GetRightFollower() : PlayerHandler.instance.GetLeftFollower();
+        mechHand = m_controller == OVRInput.Controller.RTouch ? PlayerHandler.instance.GetRightMechHand() : PlayerHandler.instance.GetLeftMechHand();
         Attach();
         print("PilotController " + (m_controller == OVRInput.Controller.LTouch ? "L" : "R") + " started!");
     }
@@ -136,7 +139,7 @@ public class PilotController : MonoBehaviour
 
     public void AttachArmModules(GameObject[] _armModulePackages)
     {
-        foreach (Transform child in m_armFollower.transform)
+        foreach (Transform child in mechHand.transform)
         {
             Destroy(child.gameObject);
         }
@@ -152,10 +155,10 @@ public class PilotController : MonoBehaviour
                 holoArm.transform.localPosition = Vector3.zero;
                 holoArm.transform.localRotation = Quaternion.identity;
                 GameObject armObject = armModuleAgain.armObject;
-                armObject.transform.SetParent(m_armFollower.transform);
+                armObject.transform.SetParent(mechHand.transform);
                 armObject.transform.localPosition = Vector3.zero;
                 armObject.transform.localRotation = Quaternion.identity;
-                armModuleAgain.follower = m_armFollower;
+                armModuleAgain.follower = follower;
             }
             else
             {
@@ -235,7 +238,8 @@ public class PilotController : MonoBehaviour
     {
         if (!_isTriggered && IsModuleActivated())
             modules[currModuleIndex].Stop(m_controller);
-        isHandTriggered = m_armFollower.m_enabled = _isTriggered;
+        isHandTriggered = follower.m_enabled = _isTriggered;
+        mechHand.SetEnabled(_isTriggered);
     }
 
     void IndexStateChange(bool _isTriggered)

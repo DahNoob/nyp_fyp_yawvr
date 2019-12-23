@@ -21,6 +21,9 @@ public class ArmIKHandler : MonoBehaviour
     [Range(0.0f, 1.0f)]
     private float m_armStretch = 0.0f;
 
+    //Local variables
+
+
     void Start()
     {
         

@@ -48,7 +48,7 @@ public class ControllerFollower : MonoBehaviour
             goalPosition = /*Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * */(Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
             goalRotation = OVRInput.GetLocalControllerRotation(m_controller);
         }
-        else if(m_origin)
+        else
         {
             float camRot = (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0.0f);
             Transform t = GetComponent<Transform>();
@@ -83,15 +83,15 @@ public class ControllerFollower : MonoBehaviour
         currRotation *= Quaternion.Euler(_rotOffset);
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (prevPosition != gameObject.transform.localPosition)
-        {
-            float magnitude = CalculateFollowerSpeed();
-            float shakeStrength = Mathf.Lerp(0.0f, 1.0f, magnitude);
-            //print("shakeStrength : " + shakeStrength);
-            //VibrationManager.SetControllerVibration(m_controller, 8, 4, shakeStrength);
-            VibrationManager.SetControllerVibration(m_controller, 0.01f, magnitude);
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (prevPosition != gameObject.transform.localPosition)
+    //    {
+    //        float magnitude = CalculateFollowerSpeed();
+    //        float shakeStrength = Mathf.Lerp(0.0f, 1.0f, magnitude);
+    //        //print("shakeStrength : " + shakeStrength);
+    //        //VibrationManager.SetControllerVibration(m_controller, 8, 4, shakeStrength);
+    //        VibrationManager.SetControllerVibration(m_controller, 0.01f, magnitude);
+    //    }
+    //}
 }

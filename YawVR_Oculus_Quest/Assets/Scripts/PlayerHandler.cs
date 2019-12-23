@@ -181,6 +181,8 @@ public class PlayerHandler : MonoBehaviour
     public PilotController GetLeftPilotController() { return m_leftController; }
     public ControllerFollower GetRightFollower() { return m_rightFollower; }
     public ControllerFollower GetLeftFollower() { return m_leftFollower; }
+    public MechHandHandler GetRightMechHand() { return m_rightMechHand; }
+    public MechHandHandler GetLeftMechHand() { return m_leftMechHand; }
 
     public Color GetArmInnerColor()
     {
