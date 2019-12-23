@@ -171,10 +171,8 @@ public class ShieldController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.tag == "Bullet")
         {
-            Debug.Log(other.gameObject.name);
             AddHit(other.gameObject.transform.position);
         }
     }
