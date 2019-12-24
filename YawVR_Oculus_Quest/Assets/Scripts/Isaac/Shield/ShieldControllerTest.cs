@@ -20,7 +20,7 @@ public class ShieldControllerTest : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("PlaneTest")))
+            if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Debris")))
             {
                 hit.collider.gameObject.GetComponent<ShieldController>().AddHit(hit.point);
             }
