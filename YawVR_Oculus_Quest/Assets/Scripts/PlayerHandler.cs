@@ -85,6 +85,9 @@ public class PlayerHandler : MonoBehaviour
     private Vector3 m_cameraOffset;
     [SerializeField]
     private PlayerHandler.STATE state = STATE.IDLE;
+    [SerializeField]
+    [Range(0.0f,0.2f)]
+    private float m_camSwayIntensity = 0.1f;
 
     //Local variables
     private Vector3 origPos;
@@ -136,9 +139,11 @@ public class PlayerHandler : MonoBehaviour
         {
             float walkMultiplier = GetComponent<MechMovement>().movementAlpha;
             float time_mult = Time.time * 8;
-            m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * 0.2f, Mathf.Sin(time_mult * 2) * 0.2f, 0), walkMultiplier);
+            m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * m_camSwayIntensity, Mathf.Sin(time_mult * 2) * m_camSwayIntensity, 0), walkMultiplier);
             m_mechLegs.SetFloat("Blend", walkMultiplier);
         }
+        rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
+        leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }
 
     private void FixedUpdate()
@@ -195,8 +200,16 @@ public class PlayerHandler : MonoBehaviour
     {
         return m_armRimColor;
     }
+    public Vector3 GetCameraOffset()
+    {
+        return m_camPivot.localPosition;
+    }
     public void SetState(PlayerHandler.STATE _newState)
     {
         state = _newState;
+    }
+    public void SetLegsAngle(float _x, float _y)
+    {
+        m_mechLegs.transform.localEulerAngles = new Vector3(0, Mathf.Atan2(_y, _x) * Mathf.Rad2Deg, 0);
     }
 }

@@ -376,4 +376,9 @@ public class OVRGrabber : MonoBehaviour
     {
         return m_controller;
     }
+
+    public void SetAnchorOffsetPosition(Vector3 _newPos)
+    {
+        m_anchorOffsetPosition = _newPos;
+    }
 }
