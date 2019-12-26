@@ -53,12 +53,14 @@ public class LightMech2 : EnemyBase
     //public ParticleSystem poof;
     //float explodeDuration = 1.0f;
 
-    
+
 
     //[Header("Explosion")]
     //private float speed = 1.0f; //how fast it shakes
     //private float amount = 1.0f; //how much it shakes
     //private Vector3 transformX;
+
+    //private GameObject passiveBuffs;
 
     [Header("Rarity")]
     [SerializeField]
@@ -79,12 +81,23 @@ public class LightMech2 : EnemyBase
 
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
-        
+
         //transformX = transform.position;
 
         //Debug.Log("Current Health = " + health);
         //Debug.Log("Current Max Health = " + maxHealth);
         //Debug.Log("Current dmg = " + damage);
+        //Debug.Log("Current moveSpeed = " + moveSpeed);
+
+        weightedRandom.GetComponent<PassiveBuffs>().ApplyBuff(health, damage, moveSpeed/*, rarity*/);
+        health = weightedRandom.GetComponent<PassiveBuffs>().GetHealth();
+        damage = weightedRandom.GetComponent<PassiveBuffs>().GetDamage();
+        moveSpeed = weightedRandom.GetComponent<PassiveBuffs>().GetMoveSpeed();
+
+        //Debug.Log("Current Health = " + health);
+        //Debug.Log("Current Max Health = " + maxHealth);
+        //Debug.Log("Current dmg = " + damage);
+        //Debug.Log("Current moveSpeed = " + moveSpeed);
     }
 
     // Update is called once per frame
@@ -145,6 +158,11 @@ public class LightMech2 : EnemyBase
         //        }
         //        break;
         //}
+        switch(rarity)
+        {
+            case _Rarity.DELTA:
+                break;
+        }
     }
 
     void PlayDeathParticle()
