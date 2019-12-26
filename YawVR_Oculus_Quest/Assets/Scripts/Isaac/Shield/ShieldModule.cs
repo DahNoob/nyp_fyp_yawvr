@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldController : MonoBehaviour
+public class ShieldModule : MonoBehaviour
 {
     [Header("Shield Configurations")]
     [SerializeField]
@@ -26,6 +26,9 @@ public class ShieldController : MonoBehaviour
     private float m_shieldMinHP = 0;
     [SerializeField]
     private float crackedStrength;
+
+    [SerializeField]
+    private float maxCrackedStrength;
 
     //Local variables.
     const int MAX_HIT_COUNT = 10;
@@ -64,7 +67,7 @@ public class ShieldController : MonoBehaviour
     private void Update()
     {
         //Update cracked strength, if not can use colors i guess
-        crackedStrength = 1 - (m_shieldHP - m_shieldMinHP) / (m_shieldMaxHP - m_shieldMinHP);
+        crackedStrength = (1 - (m_shieldHP - m_shieldMinHP) / (m_shieldMaxHP - m_shieldMinHP)) * maxCrackedStrength;
 
         //Still not sure how this works, need more visualization
         for (int i = 0; i < m_hitCount;)
@@ -175,6 +178,13 @@ public class ShieldController : MonoBehaviour
         {
             AddHit(other.gameObject.transform.position);
         }
+    }
+
+    //Simple take damage function for now
+    public void TakeDamage(int damage)
+    {
+        m_shieldHP -= damage;
+      //  m_shieldHP = Mathf.Max(0, m_shieldHP - damage);
     }
 
 

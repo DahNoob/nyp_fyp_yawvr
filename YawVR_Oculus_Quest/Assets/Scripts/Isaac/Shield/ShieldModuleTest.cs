@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldControllerTest : MonoBehaviour
+public class ShieldModuleTest : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -20,9 +20,16 @@ public class ShieldControllerTest : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Debris")))
+         
+            if (Physics.Raycast(ray, out hit, float.MaxValue,LayerMask.GetMask("PlaneTest")))
             {
-                hit.collider.gameObject.GetComponent<ShieldController>().AddHit(hit.point);
+                ShieldModule shieldModule = hit.collider.gameObject.GetComponent<ShieldModule>();
+                if(shieldModule != null)
+                {
+                    shieldModule.AddHit(hit.point);
+                    shieldModule.TakeDamage(1);
+                }
+
             }
         }
     }
