@@ -9,6 +9,14 @@ public class GUIManager : MonoBehaviour
     //[Range(0.0f, 1.0f)]
     //private float m_uiRotationAlpha = 0.5f;
 
+    public static GUIManager instance { private set; get; }
+
+    [Header("Configuration")]
+    [SerializeField]
+    private UnityEngine.UI.Image m_rightReticle;
+    [SerializeField]
+    private UnityEngine.UI.Image m_leftReticle;
+
     [Header("Resources")]
     [SerializeField]
     private Transform m_cameraTransform;
@@ -28,6 +36,13 @@ public class GUIManager : MonoBehaviour
     float dt = 0.0f;
     float fps = 0.0f;
     float updateRate = 4.0f;  // 4 updates per sec.
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        print("GUIManager awake!");
+    }
 
     void Start()
     {
@@ -73,5 +88,10 @@ public class GUIManager : MonoBehaviour
         OVRManager.display.RecenterPose();
         PlayerHandler.instance.ResetPose();
 
+    }
+    public void SetReticlePosition(OVRInput.Controller _controller, Vector3 _worldPosition)
+    {
+        UnityEngine.UI.Image reticle = _controller == OVRInput.Controller.RTouch ? m_rightReticle : m_leftReticle;
+        reticle.rectTransform.position = Camera.main.WorldToScreenPoint(_worldPosition, Camera.MonoOrStereoscopicEye.Mono);
     }
 }

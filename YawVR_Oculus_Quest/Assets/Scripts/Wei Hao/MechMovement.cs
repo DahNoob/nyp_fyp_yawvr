@@ -77,7 +77,7 @@ public class MechMovement : MonoBehaviour
             Vector3 newPos = transform.position + derp * Time.deltaTime;
             //transform.Translate(derp * Time.deltaTime);
             derp = transform.rotation * derp;
-            PlayerHandler.instance.SetLegsAngle(derp.x, derp.y);
+            PlayerHandler.instance.SetLegsAngle(primaryAxis.x, primaryAxis.y);
             //cc.Move(derp * Time.deltaTime);
             movementDelta = derp;
             PlayerHandler.instance.SetState(PlayerHandler.STATE.WALK);
