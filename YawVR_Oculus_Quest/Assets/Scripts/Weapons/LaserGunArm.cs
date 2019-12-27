@@ -22,6 +22,10 @@ public class LaserGunArm : MechArmModule
     protected Animator m_gatlingAnimator;
     [SerializeField]
     protected MechLaserPointer m_laserPointer;
+    [SerializeField]
+    protected Vector3 m_recoilPosition = new Vector3(0, 0.02f, 0.05f);
+    [SerializeField]
+    protected Vector3 m_recoilRotation = new Vector3(-2, 0, 0);
 
     [Header("Ammo Configuration")]
     [SerializeField]
@@ -82,7 +86,7 @@ public class LaserGunArm : MechArmModule
 
                     BaseProjectile derp = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
                     derp.Init(m_projectileOrigin);
-                    follower.Bump(new Vector3(0, 0.02f, 0.05f), new Vector3(-2, 0, 0));
+                    follower.Bump(m_recoilPosition, m_recoilRotation);
                     //VibrationManager.SetControllerVibration(m_controller, vibeClip);
                     VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
                     m_shootParticle.Emit(2);
