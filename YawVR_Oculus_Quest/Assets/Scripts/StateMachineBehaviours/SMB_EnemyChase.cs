@@ -37,6 +37,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        enemy.GetComponent<NavMeshAgent>().isStopped = false;
         animator.SetBool("Chase_InRange", false);
         animator.SetBool("Chase_OutRange", false);
         inRangeSqr = m_inRange * m_inRange;
@@ -58,5 +59,6 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }
 }

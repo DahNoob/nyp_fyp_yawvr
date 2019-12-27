@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /******************************  
 ** Name: StateMachineBehaviour Enemy Flee
@@ -25,14 +26,18 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
-        if (distanceSqr > m_fleeRange)
+        if (distanceSqr > fleeRangeSqr)
             animator.SetBool("Flee_Done", true);
+        else
+            CalculateFlee();
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        enemy.GetComponent<NavMeshAgent>().isStopped = false;
         fleeRangeSqr = m_fleeRange * m_fleeRange;
         animator.SetBool("Flee_Done", false);
+        CalculateFlee();
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -42,6 +47,12 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        enemy.GetComponent<NavMeshAgent>().isStopped = true;
+    }
 
+    protected void CalculateFlee()
+    {
+        Vector3 playerToEnemyPos = PlayerHandler.instance.transform.position + (enemy.transform.position - PlayerHandler.instance.transform.position).normalized * m_fleeRange;
+        enemy.GetComponent<NavMeshAgent>().SetDestination(MapPointsHandler.instance.GetClosestPoint(playerToEnemyPos));
     }
 }
