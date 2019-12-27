@@ -120,10 +120,10 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 840938823601552680}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.16425908, y: 0.73469305, z: 0.20092428}
-  m_Size: 4.0113845
+  m_LocalReferencePoint: {x: -0.16425908, y: 0.7346926, z: 0.20092416}
+  m_Size: 4.0113826
   m_FadeMode: 1
-  m_AnimateCrossFading: 0
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
   - screenRelativeHeight: 0.49662632
@@ -306,6 +306,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7405225135967832261}
+  - component: {fileID: 8615917775713598929}
   m_Layer: 0
   m_Name: PLOD_Rocks2
   m_TagString: Untagged
@@ -328,6 +329,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8615917775713598929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5809640075293555414}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lodMats:
+  - {fileID: 2100000, guid: bf46624bb893cbb4c93177efe182235b, type: 2}
+  - {fileID: 2100000, guid: b8925d7212b86254eab21132244e36d9, type: 2}
+  - {fileID: 2100000, guid: c827f1f923ef21b4586b28d3b2331ba5, type: 2}
+  - {fileID: 2100000, guid: 081908fd5dec4954cac5631563b2c28f, type: 2}
+  target: {fileID: 0}
 --- !u!1 &6252073461141125275
 GameObject:
   m_ObjectHideFlags: 0

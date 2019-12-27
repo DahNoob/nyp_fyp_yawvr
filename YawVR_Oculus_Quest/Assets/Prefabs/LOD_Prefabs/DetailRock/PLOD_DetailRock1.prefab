@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3910697929529674573}
+  - component: {fileID: 240385549481031264}
   m_Layer: 0
   m_Name: PLOD_DetailRock1
   m_TagString: Untagged
@@ -31,6 +32,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &240385549481031264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8671663506733406}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lodMats:
+  - {fileID: 2100000, guid: bf46624bb893cbb4c93177efe182235b, type: 2}
+  - {fileID: 2100000, guid: b8925d7212b86254eab21132244e36d9, type: 2}
+  - {fileID: 2100000, guid: c827f1f923ef21b4586b28d3b2331ba5, type: 2}
+  - {fileID: 2100000, guid: 081908fd5dec4954cac5631563b2c28f, type: 2}
+  target: {fileID: 0}
 --- !u!1 &1939168544915155145
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,14 +404,14 @@ LODGroup:
   m_LocalReferencePoint: {x: 0.03771925, y: 0.20134923, z: 0.13447624}
   m_Size: 2.562554
   m_FadeMode: 1
-  m_AnimateCrossFading: 0
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.14923136
+  - screenRelativeHeight: 0.25487062
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 5048460799855496793}
-  - screenRelativeHeight: 0.095148064
+  - screenRelativeHeight: 0.15040274
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8740877069635234614}

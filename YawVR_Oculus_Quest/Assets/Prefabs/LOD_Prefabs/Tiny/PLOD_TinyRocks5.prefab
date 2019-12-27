@@ -200,18 +200,18 @@ LODGroup:
   m_LocalReferencePoint: {x: -0.18380395, y: 0.008307517, z: -0.01125136}
   m_Size: 1.1250212
   m_FadeMode: 1
-  m_AnimateCrossFading: 0
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.50210977
+  - screenRelativeHeight: 0.2509493
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 4825975492020333247}
-  - screenRelativeHeight: 0.25681204
+  - screenRelativeHeight: 0.14738983
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 6333628451445393028}
-  - screenRelativeHeight: 0.10249438
+  - screenRelativeHeight: 0.046479903
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 6954839532440546849}
@@ -229,6 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6004407326764971751}
+  - component: {fileID: 8645887081195796479}
   m_Layer: 0
   m_Name: Offset
   m_TagString: Untagged
@@ -251,6 +252,24 @@ Transform:
   m_Father: {fileID: 6806524889255062337}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8645887081195796479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6070248693217477642}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lodMats:
+  - {fileID: 2100000, guid: bf46624bb893cbb4c93177efe182235b, type: 2}
+  - {fileID: 2100000, guid: b8925d7212b86254eab21132244e36d9, type: 2}
+  - {fileID: 2100000, guid: c827f1f923ef21b4586b28d3b2331ba5, type: 2}
+  - {fileID: 2100000, guid: 081908fd5dec4954cac5631563b2c28f, type: 2}
+  target: {fileID: 0}
 --- !u!1 &7409569033674930931
 GameObject:
   m_ObjectHideFlags: 0

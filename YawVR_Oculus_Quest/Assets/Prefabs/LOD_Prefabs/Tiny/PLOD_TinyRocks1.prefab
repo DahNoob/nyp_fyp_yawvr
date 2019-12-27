@@ -123,18 +123,18 @@ LODGroup:
   m_LocalReferencePoint: {x: -0.18011564, y: -0.012538299, z: -0.001891166}
   m_Size: 1.5415285
   m_FadeMode: 1
-  m_AnimateCrossFading: 0
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.49662632
+  - screenRelativeHeight: 0.2509493
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7760358813320556711}
-  - screenRelativeHeight: 0.249
+  - screenRelativeHeight: 0.15040274
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3798715769199057393}
-  - screenRelativeHeight: 0.09756679
+  - screenRelativeHeight: 0.048190754
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 5811166096834094873}
@@ -383,6 +383,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4702031483839404637}
+  - component: {fileID: -160080114105029373}
   m_Layer: 0
   m_Name: PLOD_TinyRocks1
   m_TagString: Untagged
@@ -405,3 +406,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-160080114105029373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8582630949435844686}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lodMats:
+  - {fileID: 2100000, guid: bf46624bb893cbb4c93177efe182235b, type: 2}
+  - {fileID: 2100000, guid: b8925d7212b86254eab21132244e36d9, type: 2}
+  - {fileID: 2100000, guid: c827f1f923ef21b4586b28d3b2331ba5, type: 2}
+  - {fileID: 2100000, guid: 081908fd5dec4954cac5631563b2c28f, type: 2}
+  target: {fileID: 0}
