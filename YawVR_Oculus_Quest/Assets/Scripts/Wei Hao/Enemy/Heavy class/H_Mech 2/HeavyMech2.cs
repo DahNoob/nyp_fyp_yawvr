@@ -87,6 +87,7 @@ public class HeavyMech2 : EnemyBase
     {
         m_currentState = _GameStates.CHASE;
         spawnRechargeTimer = Time.time + m_spawnRechargeTime;
+        GetComponent<NavMeshAgent>().isStopped = false;
     }
     public void SpawnEnemy()
     {
