@@ -210,6 +210,6 @@ public class PlayerHandler : MonoBehaviour
     }
     public void SetLegsAngle(float _x, float _y)
     {
-        m_mechLegs.transform.localEulerAngles = new Vector3(0, Mathf.Atan2(_y, _x) * Mathf.Rad2Deg, 0);
+        m_mechLegs.transform.localEulerAngles = new Vector3(0, Mathf.Atan2(-_y, _x) * Mathf.Rad2Deg + 90, 0);
     }
 }

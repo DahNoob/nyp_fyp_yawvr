@@ -16,6 +16,8 @@ public class GUIManager : MonoBehaviour
     private UnityEngine.UI.Image m_rightReticle;
     [SerializeField]
     private UnityEngine.UI.Image m_leftReticle;
+    [SerializeField]
+    private Canvas m_reticleCanvas;
 
     [Header("Resources")]
     [SerializeField]
@@ -92,6 +94,8 @@ public class GUIManager : MonoBehaviour
     public void SetReticlePosition(OVRInput.Controller _controller, Vector3 _worldPosition)
     {
         UnityEngine.UI.Image reticle = _controller == OVRInput.Controller.RTouch ? m_rightReticle : m_leftReticle;
-        reticle.rectTransform.position = Camera.main.WorldToScreenPoint(_worldPosition, Camera.MonoOrStereoscopicEye.Mono);
+        //Vector3 derp = Camera.main.WorldToViewportPoint(_worldPosition).Scale(m_reticleCanvas.)
+        reticle.rectTransform.anchoredPosition = Camera.main.WorldToScreenPoint(_worldPosition);
+        //print(Camera.main.WorldToScreenPoint(_worldPosition));
     }
 }

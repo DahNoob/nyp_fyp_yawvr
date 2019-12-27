@@ -22,11 +22,8 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
     protected float m_inRange = 50.0f;
     [SerializeField]
     protected float m_outRange = 150.0f;
-    [SerializeField]
-    protected float m_rotationSpeed = 6.0f;
 
     protected float inRangeSqr, outRangeSqr;
-    private Vector3 relativePos;
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
@@ -49,13 +46,13 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        relativePos = PlayerHandler.instance.transform.position - animator.transform.position;
+        //relativePos = PlayerHandler.instance.transform.position - animator.transform.position;
 
-        Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-        //animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
+        //Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+        ////animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, toRotation, m_rotationSpeed * Time.deltaTime);
 
-        //animator.transform.position += animator.transform.forward * enemy.GetSpeed() * Time.deltaTime;
-        //enemy.GetComponent<NavMeshAgent>().Move(enemy.transform.forward * enemy.GetSpeed() * Time.deltaTime);
+        ////animator.transform.position += animator.transform.forward * enemy.GetSpeed() * Time.deltaTime;
+        ////enemy.GetComponent<NavMeshAgent>().Move(enemy.transform.forward * enemy.GetSpeed() * Time.deltaTime);
 
     }
 

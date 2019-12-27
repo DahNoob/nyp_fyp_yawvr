@@ -14,6 +14,7 @@ using UnityEngine.AI;
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
 ** 1    18/12/2019, 11:10 AM    DahNoob   Created
+** 2    27/12/2019, 11:47 AM    DahNoob   Implemented spawning recharge time
 *******************************/
 [RequireComponent(typeof(Rigidbody))]
 public class HeavyMech2 : EnemyBase
@@ -28,13 +29,7 @@ public class HeavyMech2 : EnemyBase
 
     [Header("Heavy Mech 2 Configuration")]
     [SerializeField]
-    protected int m_chaseRange = 10;
-    [SerializeField]
-    protected int m_attackRange = 4;
-    [SerializeField]
-    protected int m_rotationSpeed = 5;
-    [SerializeField]
-    protected float m_attackWindUp = 2.0f;
+    protected float m_spawnRechargeTime = 10.0f;
     [SerializeField]
     protected Rigidbody m_rigidBody;
     [SerializeField]
@@ -46,13 +41,21 @@ public class HeavyMech2 : EnemyBase
     [SerializeField]
     protected GameObject m_lesserEnemy;
 
+    //Local variables
     protected _GameStates m_currentState = _GameStates.WALK;
     protected bool activeSideIsRight = false;
+    protected float spawnRechargeTimer;
 
     // Start is called before the first frame update
     void Start()
     {
         health = maxHealth;
+        spawnRechargeTimer = Time.time;
+    }
+
+    void Update()
+    {
+        GetComponent<Animator>().SetBool("Walk_DoFlee", Time.time < spawnRechargeTimer);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -83,6 +86,7 @@ public class HeavyMech2 : EnemyBase
     public void ExitSpawn()
     {
         m_currentState = _GameStates.CHASE;
+        spawnRechargeTimer = Time.time + m_spawnRechargeTime;
     }
     public void SpawnEnemy()
     {

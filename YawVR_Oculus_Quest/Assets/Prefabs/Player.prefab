@@ -6855,6 +6855,7 @@ MonoBehaviour:
   m_camScreenFade: {fileID: 3142384501232067448}
   m_cameraOffset: {x: 0, y: 0, z: 0}
   state: 0
+  m_camSwayIntensity: 0.075
 --- !u!114 &756605538046042339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6873,7 +6874,8 @@ MonoBehaviour:
   acceleration: 2
   deceleration: 2
   rotationSpeed: 75
-  movementDelta: {x: 0, y: 0}
+  movementDelta: {x: 0, y: 0, z: 0}
+  movementAlpha: 0
   rStickDelta: {x: 0, y: 0}
   lStickDelta: {x: 0, y: 0}
 --- !u!143 &2490811769729633238
