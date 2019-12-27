@@ -30,13 +30,23 @@ public class MechLaserPointer : MonoBehaviour
         //if(m_enabled)
         {
             RaycastHit hit;
-            Physics.Raycast(transform.position, transform.forward, out hit, m_maxDistance);
             LineRenderer lr = GetComponent<LineRenderer>();
-            hitPoint = hit.point;
+            //LayerMask projectileMask;
+            //Ignore layer player projectile layer
+            LayerMask projectileMask = ~LayerMask.GetMask("PlayerProjectile");
+            if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDistance, projectileMask))
+            {               
+                hitPoint = hit.point;
+                GUIManager.instance.SetHitObjectName(m_controller, hit.collider.gameObject.name);
+            }
+            else
+            {
+                hitPoint = transform.position + transform.forward * m_maxDistance;
+                GUIManager.instance.SetHitObjectName(m_controller, "monkaS");
+            }
+            ApplyToReticle();
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, hitPoint);
-            ApplyToReticle();
-            GUIManager.instance.SetHitObjectName(OVRInput.Controller.LTouch, hit.collider.gameObject.name);
         }
     }
 

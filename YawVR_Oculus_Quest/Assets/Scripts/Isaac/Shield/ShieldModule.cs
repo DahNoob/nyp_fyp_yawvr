@@ -177,6 +177,11 @@ public class ShieldModule : MonoBehaviour
         if (other.tag == "Bullet")
         {
             AddHit(other.gameObject.transform.position);
+            //shield test so to speak
+            Destroy(other.gameObject);
+            TakeDamage(1);
+            if (m_shieldHP <= 0)
+                Destroy(this.gameObject);
         }
     }
 

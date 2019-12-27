@@ -97,4 +97,9 @@ public class MapPointsHandler : MonoBehaviour
         }
         return point;
     }
+
+    private void OnGUI()
+    {
+        
+    }
 }

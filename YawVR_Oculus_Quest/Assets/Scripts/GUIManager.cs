@@ -63,11 +63,12 @@ public class GUIManager : MonoBehaviour
         //RaycastHit hit;
         //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         //Debug.DrawRay(ray.origin, ray.direction * 1000);
-        //if (Physics.Raycast(ray.origin, ray.direction, out hit, 300))
+        //LayerMask projectileMask = ~LayerMask.GetMask("PlayerProjectile");
+        //if (Physics.Raycast(ray.origin, ray.direction, out hit, 300/*,projectileMask)*/)
         //{
         //    Debug.Log(hit.collider.gameObject.name);
-        //    SetReticlePosition(OVRInput.Controller.LTouch, hit.point);
-        //    SetHitObjectName(OVRInput.Controller.LTouch, hit.collider.gameObject.name);
+        //    //SetReticlePosition(OVRInput.Controller.LTouch, hit.point);
+        //    //SetHitObjectName(OVRInput.Controller.LTouch, hit.collider.gameObject.name);
         //}
 
         ScaleReticle(OVRInput.Controller.LTouch);
@@ -110,6 +111,8 @@ public class GUIManager : MonoBehaviour
         reticleConfig.m_reticleReference.transform.position = _worldPosition;
         reticleConfig.m_reticleReference.transform.LookAt(Camera.main.transform);
         reticleConfig.m_reticleReference.transform.Rotate(0, 180, 0);
+
+        ScaleReticle(_controller);
     }
 
     public void SetHitObjectName(OVRInput.Controller _controller, string name)
@@ -127,7 +130,7 @@ public class GUIManager : MonoBehaviour
         GUIReticleModule.GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
 
         //Distance between camera and the reticle
-        float pos = Vector3.Distance(transform.position, reticleConfig.m_reticleReference.transform.position);
+        float pos = Vector3.Distance(Camera.main.transform.position, reticleConfig.m_reticleReference.transform.position);
 
         //Some scaling formula from my other fill stuff
         float h = Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad * 0.5f) * pos * 2f;

@@ -54,7 +54,6 @@ public class LaserGunArm : MechArmModule
         weaponFill.fillAmount = ammoModule.ReturnNormalized();
         weaponAmmoText.text = ammoModule.currentAmmo.ToString();
         m_laserPointer.gameObject.SetActive(true);
-        //Debug.Log(ammoModule.currentAmmo.ToString());
     }
 
     public override bool Activate(OVRInput.Controller _controller)
