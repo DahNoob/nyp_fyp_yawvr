@@ -49,7 +49,7 @@ public class LaserGunArm : MechArmModule
         //Set the fill amount to be the normalized value of the ammo left
         weaponFill.fillAmount = ammoModule.ReturnNormalized();
         weaponAmmoText.text = ammoModule.currentAmmo.ToString();
-        m_laserPointer.gameObject.SetActive(false);
+        m_laserPointer.gameObject.SetActive(true);
         //Debug.Log(ammoModule.currentAmmo.ToString());
     }
 
@@ -58,7 +58,7 @@ public class LaserGunArm : MechArmModule
         shootTick = 0;
         follower.m_followSpeed = m_followerSpeed;
         m_gatlingAnimator.SetFloat("Blend", 1);
-        m_laserPointer.gameObject.SetActive(true);
+        //m_laserPointer.gameObject.SetActive(true);
         return true;
     }
 
@@ -103,7 +103,7 @@ public class LaserGunArm : MechArmModule
     public override bool Stop(OVRInput.Controller _controller)
     {
         m_gatlingAnimator.SetFloat("Blend", 0);
-        m_laserPointer.gameObject.SetActive(false);
+       // m_laserPointer.gameObject.SetActive(false);
         return true;
     }
 

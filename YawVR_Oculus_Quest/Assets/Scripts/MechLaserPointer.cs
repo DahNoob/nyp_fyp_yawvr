@@ -36,6 +36,7 @@ public class MechLaserPointer : MonoBehaviour
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, hitPoint);
             ApplyToReticle();
+            GUIManager.instance.SetHitObjectName(OVRInput.Controller.LTouch, hit.collider.gameObject.name);
         }
     }
 

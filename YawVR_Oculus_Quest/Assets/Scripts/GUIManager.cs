@@ -13,11 +13,7 @@ public class GUIManager : MonoBehaviour
 
     [Header("Configuration")]
     [SerializeField]
-    private UnityEngine.UI.Image m_rightReticle;
-    [SerializeField]
-    private UnityEngine.UI.Image m_leftReticle;
-    [SerializeField]
-    private Canvas m_reticleCanvas;
+    private GUIReticleModule reticleModule;
 
     [Header("Resources")]
     [SerializeField]
@@ -51,6 +47,7 @@ public class GUIManager : MonoBehaviour
         transform.position = m_cameraTransform.position;
         transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
+        reticleModule.SetupReticleModule();
     }
 
     void Update()
@@ -63,6 +60,18 @@ public class GUIManager : MonoBehaviour
             frameCount = 0;
             dt -= 1.0f / updateRate;
         }
+        //RaycastHit hit;
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Debug.DrawRay(ray.origin, ray.direction * 1000);
+        //if (Physics.Raycast(ray.origin, ray.direction, out hit, 300))
+        //{
+        //    Debug.Log(hit.collider.gameObject.name);
+        //    SetReticlePosition(OVRInput.Controller.LTouch, hit.point);
+        //    SetHitObjectName(OVRInput.Controller.LTouch, hit.collider.gameObject.name);
+        //}
+
+        ScaleReticle(OVRInput.Controller.LTouch);
+        ScaleReticle(OVRInput.Controller.RTouch);
     }
 
     void LateUpdate()
@@ -72,6 +81,7 @@ public class GUIManager : MonoBehaviour
         m_fpsValue.text = fps.ToString();
         m_armRotationValue.text = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch).eulerAngles.ToString();
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
+
     }
 
     public void SpawnCubes()
@@ -91,11 +101,37 @@ public class GUIManager : MonoBehaviour
         PlayerHandler.instance.ResetPose();
 
     }
+
     public void SetReticlePosition(OVRInput.Controller _controller, Vector3 _worldPosition)
     {
-        UnityEngine.UI.Image reticle = _controller == OVRInput.Controller.RTouch ? m_rightReticle : m_leftReticle;
-        //Vector3 derp = Camera.main.WorldToViewportPoint(_worldPosition).Scale(m_reticleCanvas.)
-        reticle.rectTransform.anchoredPosition = Camera.main.WorldToScreenPoint(_worldPosition);
-        //print(Camera.main.WorldToScreenPoint(_worldPosition));
+        //Get config I suppose.
+        GUIReticleModule.GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+
+        reticleConfig.m_reticleReference.transform.position = _worldPosition;
+        reticleConfig.m_reticleReference.transform.LookAt(Camera.main.transform);
+        reticleConfig.m_reticleReference.transform.Rotate(0, 180, 0);
     }
+
+    public void SetHitObjectName(OVRInput.Controller _controller, string name)
+    {
+        GUIReticleModule.GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+
+        reticleConfig.m_reticleText.text = name;
+
+    }
+
+    //Scaling the reticle to make its same size no matter what
+    public void ScaleReticle(OVRInput.Controller _controller)
+    {      
+        //Get config I suppose.
+        GUIReticleModule.GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+
+        //Distance between camera and the reticle
+        float pos = Vector3.Distance(transform.position, reticleConfig.m_reticleReference.transform.position);
+
+        //Some scaling formula from my other fill stuff
+        float h = Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad * 0.5f) * pos * 2f;
+        reticleConfig.m_reticleReference.transform.localScale = new Vector3(h, h, h) * (reticleConfig.reticleSize * 0.01f);
+    }
+
 }

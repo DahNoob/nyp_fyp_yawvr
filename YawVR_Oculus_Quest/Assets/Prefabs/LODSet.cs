@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class LODSet : MonoBehaviour
 {
-    public Material[] lodMats;
-    public GameObject target;
+    [SerializeField]
+    private Material[] lodMats;
+
+    private GameObject target;
     // Start is called before the first frame update
     void Start()
     {
+        //Not really the best way I suppose but okay.
         target = transform.GetChild(0).gameObject;
         for(int i =0; i < target.transform.childCount; i++)
         {
