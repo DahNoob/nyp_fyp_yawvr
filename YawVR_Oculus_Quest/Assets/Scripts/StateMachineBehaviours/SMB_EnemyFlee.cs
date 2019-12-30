@@ -19,14 +19,16 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
 {
     [Header("Enemy Flee State Configuration")]
     [SerializeField]
-    protected float m_fleeRange = 75.0f;
+    protected float m_fleeDetectRange = 150.0f;
+    [SerializeField]
+    protected float m_fleeMovementRange = 75.0f;
 
-    protected float fleeRangeSqr;
+    protected float fleeDetectRSqr;
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
-        if (distanceSqr > fleeRangeSqr)
+        if (distanceSqr > fleeDetectRSqr)
             animator.SetBool("Flee_Done", true);
         else
             CalculateFlee();
@@ -35,7 +37,7 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = false;
-        fleeRangeSqr = m_fleeRange * m_fleeRange;
+        fleeDetectRSqr = m_fleeDetectRange * m_fleeDetectRange;
         animator.SetBool("Flee_Done", false);
         CalculateFlee();
     }
@@ -52,7 +54,7 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
 
     protected void CalculateFlee()
     {
-        Vector3 playerToEnemyPos = PlayerHandler.instance.transform.position + (enemy.transform.position - PlayerHandler.instance.transform.position).normalized * m_fleeRange;
+        Vector3 playerToEnemyPos = PlayerHandler.instance.transform.position + (enemy.transform.position - PlayerHandler.instance.transform.position).normalized * m_fleeMovementRange;
         enemy.GetComponent<NavMeshAgent>().SetDestination(MapPointsHandler.instance.GetClosestPoint(playerToEnemyPos));
     }
 }
