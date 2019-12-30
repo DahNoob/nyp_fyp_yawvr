@@ -25,6 +25,11 @@ public class MechLaserPointer : MonoBehaviour
     //Local variables
     public Vector3 hitPoint { private set; get; }
 
+    void Start()
+    {
+        //GetComponent<LineRenderer>().positionCount = m_points;
+    }
+
     void Update()
     {
         //if(m_enabled)
@@ -50,10 +55,15 @@ public class MechLaserPointer : MonoBehaviour
             GUIManager.instance.SetReticleInformation(m_controller, hitPoint, null, true);
         }
 
-        Vector3[] points = new Vector3[3];
-        points[0] = transform.position;
-        //points[1] = Vector3.Lerp(transform.position, hitPoint, 0.5f);
-        points[1] = hitPoint;
+        //for (int i = 0; i < m_points; ++i)
+        //{
+        //    lr.SetPosition(i, Vector3.LerpUnclamped(transform.position, hitPoint, (float)i / m_points));
+        //}
+
+        //Vector3[] points = new Vector3[3];
+        //points[0] = transform.position;
+        ////points[1] = Vector3.Lerp(transform.position, hitPoint, 0.5f);
+        //points[1] = hitPoint;
 
         //lr.SetPositions(points);
         //}
