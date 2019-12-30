@@ -28,6 +28,7 @@ public class LM2_Chase : SMB_BaseEnemyState
         navMeshAgent = animator.GetComponent<NavMeshAgent>();
         animator.SetBool("Chase", false);
         navMeshAgent.isStopped = false;
+        navMeshAgent.speed = enemy.GetSpeed();
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
