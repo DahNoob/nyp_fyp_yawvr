@@ -28,36 +28,35 @@ public class MechLaserPointer : MonoBehaviour
     void Update()
     {
         //if(m_enabled)
+        //{
+        RaycastHit hit;
+        LineRenderer lr = GetComponent<LineRenderer>();
+        //LayerMask projectileMask;
+        //Ignore layer player projectile layer
+        LayerMask projectileMask = ~LayerMask.GetMask("PlayerProjectile");
+
+        //if the raycast retursn true, set point to be hit, else its the max point
+        //Conditional operator doesn't work?
+        if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDistance, projectileMask))
         {
-            RaycastHit hit;
-            LineRenderer lr = GetComponent<LineRenderer>();
-            //LayerMask projectileMask;
-            //Ignore layer player projectile layer
-            LayerMask projectileMask = ~LayerMask.GetMask("PlayerProjectile");
-            if (Physics.Raycast(transform.position, transform.forward, out hit, m_maxDistance, projectileMask))
-            {               
-                hitPoint = hit.point;
-                GUIManager.instance.SetHitObjectName(m_controller, hit.collider.gameObject.name);
-            }
-            else
-            {
-                hitPoint = transform.position + transform.forward * m_maxDistance;
-                GUIManager.instance.SetHitObjectName(m_controller, "monkaS");
-            }
-            ApplyToReticle();
-            lr.SetPosition(0, transform.position);
-            lr.SetPosition(1, hitPoint);
+            hitPoint = hit.point;
+            //Apply it to the instance
+            GUIManager.instance.SetReticleInformation(m_controller, hitPoint, hit.collider.gameObject, true);
         }
-    }
+        else
+        {
+            hitPoint = transform.position + transform.forward * m_maxDistance;
+            //Apply it to the instance
+            GUIManager.instance.SetReticleInformation(m_controller, hitPoint, null, true);
+        }
 
-    //void ApplyToReticle(OVRInput.Controller _controller)
-    //{
-    //    GUIManager.instance.SetReticlePosition(_controller, hitPoint);
-    //}
+        Vector3[] points = new Vector3[3];
+        points[0] = transform.position;
+        //points[1] = Vector3.Lerp(transform.position, hitPoint, 0.5f);
+        points[1] = hitPoint;
 
-    void ApplyToReticle()
-    {
-        GUIManager.instance.SetReticlePosition(m_controller, hitPoint);
+        //lr.SetPositions(points);
+        //}
     }
 
     //void OnEnable()

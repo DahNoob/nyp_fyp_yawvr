@@ -55,6 +55,7 @@ public class PilotController : MonoBehaviour
 
     //Local variables
     private ControllerFollower follower;
+    [SerializeField]
     private MechHandHandler mechHand;
 
     private bool isAttached = false, isHandTriggered = false, isIndexTriggered = false;

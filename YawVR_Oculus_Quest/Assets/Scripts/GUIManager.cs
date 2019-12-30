@@ -48,6 +48,7 @@ public class GUIManager : MonoBehaviour
         transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
         reticleModule.SetupReticleModule();
+        reticleModule.SetupReticleColors();
     }
 
     void Update()
@@ -71,8 +72,6 @@ public class GUIManager : MonoBehaviour
         //    //SetHitObjectName(OVRInput.Controller.LTouch, hit.collider.gameObject.name);
         //}
 
-        ScaleReticle(OVRInput.Controller.LTouch);
-        ScaleReticle(OVRInput.Controller.RTouch);
     }
 
     void LateUpdate()
@@ -103,23 +102,66 @@ public class GUIManager : MonoBehaviour
 
     }
 
+    public void SetReticleInformation(OVRInput.Controller _controller, Vector3 hitPoint, GameObject hitObject, bool useTag = true)
+    {
+        //Set the reticle position based on raycasted position
+        SetReticlePosition(_controller, hitPoint);
+        //Set hit object name by accessing the object
+        SetHitObjectName(_controller, hitObject);
+        //Set the hit color by accessing the layer of the object
+        SetReticleColor(_controller, hitObject, useTag);
+        //Scale the reticle to be correct scale
+        ScaleReticle(_controller);
+    }
+
     public void SetReticlePosition(OVRInput.Controller _controller, Vector3 _worldPosition)
     {
         //Get config I suppose.
-        GUIReticleModule.GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
 
-        reticleConfig.m_reticleReference.transform.position = _worldPosition;
-        reticleConfig.m_reticleReference.transform.LookAt(Camera.main.transform);
-        reticleConfig.m_reticleReference.transform.Rotate(0, 180, 0);
+        reticleConfig.reticleReference.transform.position = _worldPosition;
+        reticleConfig.reticleReference.transform.LookAt(Camera.main.transform);
+        reticleConfig.reticleReference.transform.Rotate(0, 180, 0);
 
         ScaleReticle(_controller);
     }
 
-    public void SetHitObjectName(OVRInput.Controller _controller, string name)
+    public void SetHitObjectName(OVRInput.Controller _controller, GameObject hitObject)
     {
-        GUIReticleModule.GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
 
-        reticleConfig.m_reticleText.text = name;
+        reticleConfig.reticleText.text = hitObject == null ? "N/A" : hitObject.name;
+    }
+
+    public void SetReticleColor(OVRInput.Controller _controller, GameObject hitObject, bool useTag)
+    {
+
+
+        //Access the reticle
+        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+
+        if (hitObject == null)
+        {
+            reticleConfig.SetReticleDefaultColor();
+            return;
+        }
+
+        //Access the color config
+        GUIReticleColorConfig colorConfig = reticleModule.ReticleColors;
+
+        //If the existing result is contained
+        bool containsResult = useTag ? colorConfig.ContainsTag(hitObject.tag) : colorConfig.ContainsLayer(hitObject.layer);
+
+        if (containsResult)
+        {
+            //If the result is contained
+            Color resultantColor = useTag ? colorConfig.QueryTagColor(hitObject.tag) : colorConfig.QueryLayerColor(hitObject.layer);
+            reticleConfig.SetReticleColor(resultantColor);
+        }
+        else
+        {
+            reticleConfig.SetReticleDefaultColor();
+        }
 
     }
 
@@ -127,14 +169,14 @@ public class GUIManager : MonoBehaviour
     public void ScaleReticle(OVRInput.Controller _controller)
     {      
         //Get config I suppose.
-        GUIReticleModule.GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
 
         //Distance between camera and the reticle
-        float pos = Vector3.Distance(Camera.main.transform.position, reticleConfig.m_reticleReference.transform.position);
+        float pos = Vector3.Distance(Camera.main.transform.position, reticleConfig.reticleReference.transform.position);
 
         //Some scaling formula from my other fill stuff
         float h = Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad * 0.5f) * pos * 2f;
-        reticleConfig.m_reticleReference.transform.localScale = new Vector3(h, h, h) * (reticleConfig.reticleSize * 0.01f);
+        reticleConfig.reticleReference.transform.localScale = new Vector3(h, h, h) * (reticleConfig.reticleSize * 0.01f);
     }
 
 }
