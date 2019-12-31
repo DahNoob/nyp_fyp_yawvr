@@ -63,10 +63,10 @@ public class Light_Enemy_1 : EnemyBase
     private float amount = 1.0f; //how much it shakes
     private Vector3 transformX;
 
-    [Header("Projectile Origin")]
-    // Light Mech Shooting
-    public Transform m_projectileOriginL;
-    public Transform m_projectileOriginR;
+    //[Header("Projectile Origin")]
+    //// Light Mech Shooting
+    //public Transform m_projectileOriginL;
+    //public Transform m_projectileOriginR;
 
     // Dodge Check
     private float dodgeCheck = 2.0f;

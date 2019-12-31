@@ -2,22 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LM1_Idle : StateMachineBehaviour
+public class LM1_Idle : SMB_BaseEnemyState
 {
+    [Header("Enemy Walk State Configuration")]
+    [SerializeField]
+    protected float m_detectRange = 70.0f;
+    //[SerializeField]
+    //protected float m_fieldOfViewAngle = 60.0f;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void Check(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        PlayerHandler player = PlayerHandler.instance;
+        animator.SetBool("Alert", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
+        Debug.Log("Is there a player nearby? " + animator.GetBool("Alert"));
+    }
+
+    public override void Enter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void Update(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetBool("Walk", true);
+        //animator.SetBool("Walk", true);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void Exit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
     }
