@@ -62,6 +62,9 @@ public class OVRGrabber : MonoBehaviour
 	protected Dictionary<OVRGrabbable, int> m_grabCandidates = new Dictionary<OVRGrabbable, int>();
 	protected bool operatingWithoutOVRCameraRig = true;
 
+    public delegate void OnQueryOffset(OVRGrabber _obj);
+    public event OnQueryOffset QueryOffset;
+
     /// <summary>
     /// The currently grabbed object.
     /// </summary>
@@ -132,6 +135,7 @@ public class OVRGrabber : MonoBehaviour
     {
         Vector3 handPos = OVRInput.GetLocalControllerPosition(m_controller);
         Quaternion handRot = OVRInput.GetLocalControllerRotation(m_controller);
+        QueryOffset?.Invoke(this);
         Vector3 destPos = m_parentTransform.TransformPoint(m_anchorOffsetPosition + handPos);
         Quaternion destRot = m_parentTransform.rotation * handRot * m_anchorOffsetRotation;
         GetComponent<Rigidbody>().MovePosition(destPos);

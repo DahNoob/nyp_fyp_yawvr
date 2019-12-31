@@ -2202,7 +2202,7 @@ GameObject:
   - component: {fileID: 6558094311626471560}
   - component: {fileID: 6558094311626471561}
   m_Layer: 5
-  m_Name: ClearCubes
+  m_Name: SpawnHM2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2309,7 +2309,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6558094311634985189}
-        m_MethodName: ClearCubes
+        m_MethodName: SpawnHeavyMech2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2369,12 +2369,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a01a69fe3a9654ca7201851fc003e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rightReticle: {fileID: 3339669044868831985}
-  m_leftReticle: {fileID: 2731631051049430945}
-  m_reticleCanvas: {fileID: 0}
+  reticleModule:
+    m_leftReticle:
+      m_reticleReference: {fileID: 0}
+      m_reticleText: {fileID: 0}
+      m_reticleString: 
+      m_reticleColor: {r: 0, g: 0, b: 0, a: 0}
+      m_reticleTextColor: {r: 0, g: 0, b: 0, a: 0}
+      m_reticleSize: 0
+    m_rightReticle:
+      m_reticleReference: {fileID: 0}
+      m_reticleText: {fileID: 0}
+      m_reticleString: 
+      m_reticleColor: {r: 0, g: 0, b: 0, a: 0}
+      m_reticleTextColor: {r: 0, g: 0, b: 0, a: 0}
+      m_reticleSize: 0
+    m_reticleColors:
+      m_reticleLayerColors: []
+      m_reticleTagColors: []
   m_cameraTransform: {fileID: 0}
   m_dumbCubes: {fileID: 6713068302700422119, guid: f8a6d94bc6a9f8c46a761b928695003a,
     type: 3}
+  m_heavyMech2Prefab: {fileID: 0}
+  m_lightMech1Prefab: {fileID: 0}
   m_fpsValue: {fileID: 3739799353873809227}
   m_armRotationValue: {fileID: 3594595610407106701}
 --- !u!1 &6558094311738991680
@@ -2455,7 +2472,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: spawn cubes
+  m_Text: spawn LM1
 --- !u!1 &6558094311965522243
 GameObject:
   m_ObjectHideFlags: 0
@@ -2534,7 +2551,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: clear cubes
+  m_Text: spawn HM2
 --- !u!1 &6558094312449277658
 GameObject:
   m_ObjectHideFlags: 0
@@ -2680,7 +2697,7 @@ GameObject:
   - component: {fileID: 6558094312672732064}
   - component: {fileID: 6558094312672732065}
   m_Layer: 5
-  m_Name: SpawnCubes
+  m_Name: SpawnLM1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2787,7 +2804,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6558094311634985189}
-        m_MethodName: SpawnCubes
+        m_MethodName: SpawnLightMech1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

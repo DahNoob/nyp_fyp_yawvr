@@ -22,6 +22,10 @@ public class GUIManager : MonoBehaviour
     [Header("Experimental Resources")]
     [SerializeField]
     private GameObject m_dumbCubes;
+    [SerializeField]
+    private GameObject m_heavyMech2Prefab;
+    [SerializeField]
+    private GameObject m_lightMech1Prefab;
 
     [Header("Debug Resources")]
     [SerializeField]
@@ -94,6 +98,14 @@ public class GUIManager : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
+    }
+    public void SpawnLightMech1()
+    {
+        Instantiate(m_lightMech1Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+    }
+    public void SpawnHeavyMech2()
+    {
+        Instantiate(m_heavyMech2Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
     }
     public void RecenterPose()
     {

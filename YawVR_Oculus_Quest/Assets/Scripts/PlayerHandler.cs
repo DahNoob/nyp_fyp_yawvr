@@ -93,6 +93,7 @@ public class PlayerHandler : MonoBehaviour
     private Vector3 origPos;
     private Quaternion origRot;
     private bool isResettingPose = false;
+    private Vector3 finalCamOffset;
 
     //Hidden variables
     private float _energy;
@@ -120,6 +121,8 @@ public class PlayerHandler : MonoBehaviour
         origRot = transform.rotation;
         currEnergy = m_maxEnergy;
         m_energySlider.maxValue = m_maxEnergy;
+        rightHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
+        leftHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
         print("PlayerHandler started!");
     }
     
@@ -142,13 +145,14 @@ public class PlayerHandler : MonoBehaviour
             m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * m_camSwayIntensity, Mathf.Sin(time_mult * 2) * m_camSwayIntensity, 0), walkMultiplier);
             m_mechLegs.SetFloat("Blend", walkMultiplier);
         }
-        rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
-        leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
+        
     }
 
     private void FixedUpdate()
     {
-        m_camPivot.localPosition = Vector3.SlerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f);
+        m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f);
+        //rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
+        //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }
 
     public bool DecreaseEnergy(float _decrement)
@@ -211,5 +215,15 @@ public class PlayerHandler : MonoBehaviour
     public void SetLegsAngle(float _x, float _y)
     {
         m_mechLegs.transform.localEulerAngles = new Vector3(0, Mathf.Atan2(-_y, _x) * Mathf.Rad2Deg + 90, 0);
+    }
+    public void OnGrabberQueryOffset(OVRGrabber _obj)
+    {
+        _obj.SetAnchorOffsetPosition(-finalCamOffset);
+    }
+    void OnDestroy()
+    {
+        rightHand.GetComponent<OVRGrabber>().QueryOffset -= OnGrabberQueryOffset;
+        leftHand.GetComponent<OVRGrabber>().QueryOffset -= OnGrabberQueryOffset;
+
     }
 }

@@ -55,7 +55,18 @@ public class HeavyMech2 : EnemyBase
 
     void Update()
     {
-        GetComponent<Animator>().SetBool("Walk_DoFlee", Time.time < spawnRechargeTimer);
+        bool spawnRecharged = Time.time > spawnRechargeTimer;
+        Animator anim = GetComponent<Animator>();
+        NavMeshAgent nav = GetComponent<NavMeshAgent>();
+        anim.SetBool("Flee_Done", spawnRecharged);
+        anim.SetBool("Walk_DoFlee", !spawnRecharged);
+        if (nav.velocity == Vector3.zero)
+        {
+            anim.SetFloat("AnimSpeed", 0);
+            return;
+        }
+        anim.SetFloat("AnimSpeed", GetComponent<NavMeshAgent>().velocity.magnitude / GetComponent<NavMeshAgent>().speed);
+        
     }
 
     void OnCollisionEnter(Collision collision)
