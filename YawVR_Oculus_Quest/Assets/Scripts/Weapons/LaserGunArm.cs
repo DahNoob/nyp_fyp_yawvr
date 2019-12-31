@@ -91,6 +91,11 @@ public class LaserGunArm : MechArmModule
                     m_shootParticle.Emit(2);
                     m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
                     m_shootAudioSource.Play();
+
+                    //Triggered
+                    GUIManager.instance.Triggered(_controller);
+
+
                     return true;
                 }
                 else
