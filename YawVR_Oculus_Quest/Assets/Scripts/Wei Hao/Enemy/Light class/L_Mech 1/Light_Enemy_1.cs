@@ -63,10 +63,10 @@ public class Light_Enemy_1 : EnemyBase
     private float amount = 1.0f; //how much it shakes
     private Vector3 transformX;
 
-    [Header("Projectile Origin")]
-    // Light Mech Shooting
-    public Transform m_projectileOriginL;
-    public Transform m_projectileOriginR;
+    //[Header("Projectile Origin")]
+    //// Light Mech Shooting
+    //public Transform m_projectileOriginL;
+    //public Transform m_projectileOriginR;
 
     // Dodge Check
     private float dodgeCheck = 2.0f;
@@ -215,14 +215,14 @@ public class Light_Enemy_1 : EnemyBase
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
             //Debug.Log("Hit");
-            transformX = transform.position;
-            currentState = _EnemyState.DIE;
+            //transformX = transform.position;
+            //currentState = _EnemyState.DIE;
             //m_Animator.SetBool("Explode", true);
         }
 
         if (collision.gameObject.tag == "Bullet")
         {
-            takeDamage(1);
+            takeDamage(1000);
             collision.gameObject.SetActive(false);
         }
     }

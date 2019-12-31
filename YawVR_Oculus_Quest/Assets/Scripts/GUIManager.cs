@@ -69,13 +69,17 @@ public class GUIManager : MonoBehaviour
         //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         //Debug.DrawRay(ray.origin, ray.direction * 1000);
         //LayerMask projectileMask = ~LayerMask.GetMask("PlayerProjectile");
-        //if (Physics.Raycast(ray.origin, ray.direction, out hit, 300/*,projectileMask)*/)
+        //if (Physics.Raycast(ray.origin, ray.direction, out hit, 300, projectileMask))
         //{
-        //    Debug.Log(hit.collider.gameObject.name);
-        //    //SetReticlePosition(OVRInput.Controller.LTouch, hit.point);
-        //    //SetHitObjectName(OVRInput.Controller.LTouch, hit.collider.gameObject.name);
+        //    SetReticleInformation(OVRInput.Controller.LTouch, hit.point, hit.collider.gameObject, true);
         //}
 
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    Triggered(OVRInput.Controller.LTouch);
+        //}
+
+        reticleModule.UpdateScale();
     }
 
     void LateUpdate()
@@ -87,6 +91,7 @@ public class GUIManager : MonoBehaviour
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
 
     }
+
 
     public void SpawnCubes()
     {
@@ -124,6 +129,14 @@ public class GUIManager : MonoBehaviour
         SetReticleColor(_controller, hitObject, useTag);
         //Scale the reticle to be correct scale
         ScaleReticle(_controller);
+
+        if (hitObject != null)
+        {
+            GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+            //Temporary code
+
+            reticleConfig.ObjectOfInterest(hitObject.tag == "Enemy");
+        }
     }
 
     public void SetReticlePosition(OVRInput.Controller _controller, Vector3 _worldPosition)
@@ -147,8 +160,6 @@ public class GUIManager : MonoBehaviour
 
     public void SetReticleColor(OVRInput.Controller _controller, GameObject hitObject, bool useTag)
     {
-
-
         //Access the reticle
         GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
 
@@ -174,7 +185,6 @@ public class GUIManager : MonoBehaviour
         {
             reticleConfig.SetReticleDefaultColor();
         }
-
     }
 
     //Scaling the reticle to make its same size no matter what
@@ -189,6 +199,13 @@ public class GUIManager : MonoBehaviour
         //Some scaling formula from my other fill stuff
         float h = Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad * 0.5f) * pos * 2f;
         reticleConfig.reticleReference.transform.localScale = new Vector3(h, h, h) * (reticleConfig.reticleSize * 0.01f);
+    }
+
+    public void Triggered(OVRInput.Controller _controller)
+    {
+        //Get config I suppose.
+        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+        reticleConfig.Triggered();
     }
 
 }
