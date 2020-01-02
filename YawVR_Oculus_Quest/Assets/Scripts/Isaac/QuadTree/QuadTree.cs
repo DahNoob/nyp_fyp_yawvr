@@ -106,7 +106,6 @@ public class QuadTree
                         Debug.Log("Removed : " + quadTreeObject.name + " from the tree from sub");
                         return true;
                     }
-
                 }
             }
 

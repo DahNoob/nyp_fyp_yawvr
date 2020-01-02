@@ -8,4 +8,9 @@ public class DynamicQuadTreeObject : QuadTreeObject
     {
         QuadTreeManager.instance.AddToDynamicQuadTree(referenceObject);
     }
+
+    public override void RemoveFromQuadTree(GameObject referenceObject)
+    {
+        QuadTreeManager.instance.Remove(referenceObject, false);
+    }
 }
