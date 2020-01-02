@@ -72,4 +72,9 @@ public class MechHandHandler : MonoBehaviour
             m_handModel.SetFloat("Blend", 0);
         }
     }
+
+    public void SetPose(string _poseName, bool _value)
+    {
+        m_handModel.SetBool(_poseName, _value);
+    }
 }

@@ -45,6 +45,8 @@ abstract public class MechArmModule : BaseMechModule
     public MeshRenderer holoModel { get; private set; }
     [HideInInspector]
     public ControllerFollower follower { protected get; set; }
+    [HideInInspector]
+    public MechHandHandler mechHand { protected get; set; }
 
     protected void Awake()
     {

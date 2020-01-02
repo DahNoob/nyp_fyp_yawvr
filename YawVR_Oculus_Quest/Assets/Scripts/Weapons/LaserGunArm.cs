@@ -49,11 +49,15 @@ public class LaserGunArm : MechArmModule
     {
         if (!CustomUtility.IsObjectPrefab(m_projectilePrefab))
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
-
         //Set the fill amount to be the normalized value of the ammo left
         weaponFill.fillAmount = ammoModule.ReturnNormalized();
         weaponAmmoText.text = ammoModule.currentAmmo.ToString();
         m_laserPointer.gameObject.SetActive(true);
+    }
+
+    void OnEnable()
+    {
+        mechHand.SetPose("HoldGun", true);
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -111,8 +115,14 @@ public class LaserGunArm : MechArmModule
     public override bool Stop(OVRInput.Controller _controller)
     {
         m_gatlingAnimator.SetFloat("Blend", 0);
-       // m_laserPointer.gameObject.SetActive(false);
+        // m_laserPointer.gameObject.SetActive(false);
+        mechHand.SetPose("HoldGun", true);
         return true;
+    }
+
+    void OnDisable()
+    {
+        mechHand.SetPose("HoldGun", false);
     }
 
     private void Update()

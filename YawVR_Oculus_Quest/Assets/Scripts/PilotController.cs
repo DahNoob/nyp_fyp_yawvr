@@ -156,6 +156,7 @@ public class PilotController : MonoBehaviour
                 armObject.transform.localPosition = Vector3.zero;
                 armObject.transform.localRotation = Quaternion.identity;
                 armModuleAgain.follower = follower;
+                armModuleAgain.mechHand = mechHand;
             }
             else
             {
@@ -227,8 +228,10 @@ public class PilotController : MonoBehaviour
                 modules[i].holoModel.materials[j].SetColor("_RimColor", Persistent.instance.COLOR_TRANSPARENT);
             }
             modules[i].armObject.SetActive(false);
+            modules[i].gameObject.SetActive(false);
         }
         currentArmObject.SetActive(true);
+        modules[currModuleIndex].gameObject.SetActive(true);
     }
 
     void HandStateChange(bool _isTriggered)
