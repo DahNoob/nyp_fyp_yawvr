@@ -59,11 +59,10 @@ public class PilotController : MonoBehaviour
     private MechHandHandler mechHand;
 
     private bool isAttached = false, isHandTriggered = false, isIndexTriggered = false;
-    private MeshRenderer currentHoloArm;
-    private GameObject currentArmObject;
     private List<MechArmModule> modules = new List<MechArmModule>();
     private int currModuleIndex = 0;
     private float currCanvasUIRotation = 0.0f;
+    private Color currHoloInnerColor, currHoloRimColor;
 
     //Constant variables
     //private float ARM_MINSPEED;
@@ -112,20 +111,17 @@ public class PilotController : MonoBehaviour
     {
         if (!isAttached)
             return;
-        Color prevArmInnerColor = currentHoloArm.material.GetColor("_InnerColor");
-        Color prevArmRimColor = currentHoloArm.material.GetColor("_RimColor");
-        Color newArmInnerColor, newArmRimColor;
         if (isHandTriggered)
         {
-            newArmInnerColor = Color.Lerp(prevArmInnerColor, PlayerHandler.instance.GetArmInnerColor(), 0.1f);
-            newArmRimColor = Color.Lerp(prevArmRimColor, PlayerHandler.instance.GetArmRimColor(), 0.1f);
+            currHoloInnerColor = Color.Lerp(currHoloInnerColor, PlayerHandler.instance.GetArmInnerColor(), 0.1f);
+            currHoloRimColor = Color.Lerp(currHoloRimColor, PlayerHandler.instance.GetArmRimColor(), 0.1f);
         }
         else
         {
-            newArmInnerColor = Color.Lerp(prevArmInnerColor, Persistent.instance.COLOR_TRANSPARENT, 0.1f);
-            newArmRimColor = Color.Lerp(prevArmRimColor, Persistent.instance.COLOR_TRANSPARENT, 0.1f);
+            currHoloInnerColor = Color.Lerp(currHoloInnerColor, Persistent.instance.COLOR_TRANSPARENT, 0.1f);
+            currHoloRimColor = Color.Lerp(currHoloRimColor, Persistent.instance.COLOR_TRANSPARENT, 0.1f);
         }
-        SetHoloArmMaterialColor(newArmInnerColor, newArmRimColor);
+        SetHoloArmMaterialColor(currModuleIndex, currHoloInnerColor, currHoloRimColor);
 
         //m_armFollower.m_followSpeed = Mathf.Lerp(m_armFollower.m_followSpeed, isIndexTriggered ? m_armMaxSpeed : ARM_MINSPEED, 0.15f);
 
@@ -188,13 +184,16 @@ public class PilotController : MonoBehaviour
         VibrationManager.SetControllerVibration(m_controller, clip);
     }
 
-    void SetHoloArmMaterialColor(Color _newInnerColor, Color _newRimColor)
+    void SetHoloArmMaterialColor(int _index, Color _newInnerColor, Color _newRimColor)
     {
-        for (int i = 0; i < currentHoloArm.materials.Length; ++i)
+        MeshRenderer[] holoMeshes = modules[_index].m_holoMeshes;
+        for (int i = 0; i < holoMeshes.Length; ++i)
         {
-            currentHoloArm.materials[i].SetColor("_InnerColor", _newInnerColor);
-            currentHoloArm.materials[i].SetColor("_RimColor", _newRimColor);
-
+            for (int j = 0; j < holoMeshes[i].materials.Length; ++j)
+            {
+                holoMeshes[i].materials[j].SetColor("_InnerColor", _newInnerColor);
+                holoMeshes[i].materials[j].SetColor("_RimColor", _newRimColor);
+            }
         }
     }
 
@@ -206,8 +205,6 @@ public class PilotController : MonoBehaviour
             currModuleIndex = 0;
         else if (currModuleIndex < 0)
             currModuleIndex = modules.Count - 1; //very shitty way of doin it rn but wuteva
-        currentHoloArm = modules[currModuleIndex].holoModel;
-        currentArmObject = modules[currModuleIndex].armObject;
         if(IsModuleActivated())
         {
             modules[prevModuleIndex].Stop(m_controller);
@@ -220,17 +217,18 @@ public class PilotController : MonoBehaviour
     {
         for (int i = 0; i < modules.Count; ++i)
         {
-            modules[i].holoModel.material.SetColor("_InnerColor", Persistent.instance.COLOR_TRANSPARENT);
-            modules[i].holoModel.material.SetColor("_RimColor", Persistent.instance.COLOR_TRANSPARENT);
-            for (int j = 0; j < modules[i].holoModel.materials.Length; ++j)
-            {
-                modules[i].holoModel.materials[j].SetColor("_InnerColor", Persistent.instance.COLOR_TRANSPARENT);
-                modules[i].holoModel.materials[j].SetColor("_RimColor", Persistent.instance.COLOR_TRANSPARENT);
-            }
+            //for (int j = 0; j < modules[i].holoModel.materials.Length; ++j)
+            //{
+            //    modules[i].holoModel.materials[j].SetColor("_InnerColor", Persistent.instance.COLOR_TRANSPARENT);
+            //    modules[i].holoModel.materials[j].SetColor("_RimColor", Persistent.instance.COLOR_TRANSPARENT);
+            //}
+            SetHoloArmMaterialColor(i, Persistent.instance.COLOR_TRANSPARENT, Persistent.instance.COLOR_TRANSPARENT);
             modules[i].armObject.SetActive(false);
+            modules[i].holoObject.SetActive(false);
             modules[i].gameObject.SetActive(false);
         }
-        currentArmObject.SetActive(true);
+        modules[currModuleIndex].armObject.SetActive(true);
+        modules[currModuleIndex].holoObject.SetActive(true);
         modules[currModuleIndex].gameObject.SetActive(true);
     }
 

@@ -116,7 +116,6 @@ public class LaserGunArm : MechArmModule
     {
         m_gatlingAnimator.SetFloat("Blend", 0);
         // m_laserPointer.gameObject.SetActive(false);
-        mechHand.SetPose("HoldGun", true);
         return true;
     }
 
