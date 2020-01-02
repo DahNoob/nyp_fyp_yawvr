@@ -39,11 +39,13 @@ public class MapPointsHandler : MonoBehaviour
     }
     private void OnSetPointsHeight()
     {
+        print("test");
         foreach (Transform t in transform)
         {
             RaycastHit hit;
             if (Physics.Raycast(t.position, -t.up, out hit))
             {
+                print("lol");
                 t.position = hit.point;
                 t.Translate(0, m_pointHeight, 0);
             }
