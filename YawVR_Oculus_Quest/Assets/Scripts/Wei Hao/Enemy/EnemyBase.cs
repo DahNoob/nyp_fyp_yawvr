@@ -22,16 +22,16 @@ abstract public class EnemyBase : MonoBehaviour
     [Header("Enemy Stats")]
     // Enemy Current Health
     [SerializeField]
-    protected int health;
+    protected float health;
     // Enemy Max Health
     [SerializeField]
-    protected int maxHealth;
+    protected float maxHealth;
     // The amount of Damage the enemy deals
     [SerializeField]
-    protected int damage;
+    protected float damage;
     // The speed the enemy moves
     [SerializeField]
-    protected int moveSpeed;
+    protected float moveSpeed;
     [SerializeField]
     protected GameObject m_dieEffect;
     [SerializeField]
@@ -95,8 +95,33 @@ abstract public class EnemyBase : MonoBehaviour
         return moveSpeed;
     }
 
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public float GetDamage()
+    {
+        return damage;
+    }
+
+    public void SetHealth(float new_HP)
+    {
+        health = new_HP;
+    }
+
+    public void SetDamage(float new_Damage)
+    {
+        damage = new_Damage;
+    }
+
+    public void SetMoveSpeed(float new_MoveSpeed)
+    {
+        moveSpeed = new_MoveSpeed;
+    }
+
     void OnDisable()
     {
-        Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);        
+        Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
     }
 }
