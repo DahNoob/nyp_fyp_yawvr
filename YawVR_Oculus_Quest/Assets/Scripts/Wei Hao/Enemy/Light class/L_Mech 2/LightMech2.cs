@@ -256,7 +256,7 @@ public class LightMech2 : EnemyBase
 
     public void PlayDeathParticle()
     {
-        explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
+        //explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
     }
 
     public string StartBuff()

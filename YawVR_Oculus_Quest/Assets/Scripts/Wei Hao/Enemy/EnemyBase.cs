@@ -75,7 +75,8 @@ abstract public class EnemyBase : MonoBehaviour
 
     public void Die()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
         gameObject.GetComponent<ParticleSystem>().Play();
     }
 
