@@ -90,7 +90,9 @@ public class MapPointsHandler : MonoBehaviour
         {
             Gizmos.DrawWireCube(t.position, m_cubeSizeUnconfirmed);
             //Gizmos.DrawIcon(t.position, t.name);
+#if UNITY_EDITOR
             UnityEditor.Handles.Label(t.position, t.name, m_textStyle);
+#endif
         }
         Gizmos.color = m_colorConfirmed;
         for (int i = 0; i < m_mapPoints.Count; ++i)

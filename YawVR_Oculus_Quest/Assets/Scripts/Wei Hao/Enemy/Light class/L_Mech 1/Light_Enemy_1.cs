@@ -15,6 +15,7 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    10/12/2019, 1:06 PM     Wei Hao   Created & Implemented
 ** 2    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
+** 3    2/1/2020, 4:31 PM       Wei Hao   Added passive buffs depending on rarity
 *******************************/
 public class Light_Enemy_1 : EnemyBase
 {
@@ -32,6 +33,7 @@ public class Light_Enemy_1 : EnemyBase
         DMG,
         MS
     }
+    List<string> buffs = new List<string> { "HP", "DMG", "MS" };
 
     public Transform projectile;
     private Transform target;
@@ -89,8 +91,15 @@ public class Light_Enemy_1 : EnemyBase
     public GameObject HP_Buff_Prefab;
     public GameObject DMG_Buff_Prefab;
     public GameObject MS_Buff_Prefab;
-    private _Buffs buffs;
+    //private _Buffs buffs;
 
+    [Header("Active Buff")]
+    [SerializeField]
+    private bool HP;
+    [SerializeField]
+    private bool DMG;
+    [SerializeField]
+    private bool MS;
 
     // Start is called before the first frame update
     void Start()
@@ -112,26 +121,88 @@ public class Light_Enemy_1 : EnemyBase
 
         transformX = transform.position;
 
+        string currBuff = StartBuff();
         if (rarity == _Rarity.DELTA)
         {
-            GiveBuff();
+            if (currBuff == "HP")
+            {
+                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                HP = true;
+            }
+            if (currBuff == "DMG")
+            {
+                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                DMG = true;
+            }
+            if (currBuff == "MS")
+            {
+                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                MS = true;
+            }
         }
         else if (rarity == _Rarity.BETA)
         {
+            string secondBuff = StartBuff();
 
+            if (currBuff == "HP" || secondBuff == "HP")
+            {
+                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                HP = true;
+            }
+            if (currBuff == "DMG" || secondBuff == "DMG")
+            {
+                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                DMG = true;
+            }
+            if (currBuff == "MS" || secondBuff == "MS")
+            {
+                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                MS = true;
+            }
         }
         else if (rarity == _Rarity.ALPHA)
         {
+            string secondBuff = StartBuff();
+            string thirdBuff = StartBuff();
 
+            if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
+            {
+                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                HP = true;
+            }
+            if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+            {
+                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                DMG = true;
+            }
+            if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+            {
+                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                MS = true;
+            }
         }
         else if (rarity == _Rarity.OMEGA)
         {
+            //string secondBuff = StartBuff();
+            //string thirdBuff = StartBuff();
+            //string fourthBuff = StartBuff();
 
+            //if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
+            //{
+            //    GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+            //    HP = true;
+            //}
+            //if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+            //{
+            //    GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+            //    DMG = true;
+            //}
+            //if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+            //{
+            //    GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+            //    MS = true;
+            //}
         }
-
-        //Debug.Log("Current Health = " + health);
-        //Debug.Log("Current Max Health = " + maxHealth);
-        //Debug.Log("Current dmg = " + damage);
     }
 
     // Update is called once per frame
@@ -171,8 +242,8 @@ public class Light_Enemy_1 : EnemyBase
         //    }
         //}
 
-        switch (currentState)
-        {
+        //switch (currentState)
+        //{
             //case _EnemyState.CHASE:
             //    Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
             //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
@@ -210,65 +281,21 @@ public class Light_Enemy_1 : EnemyBase
             //    break;
             //case _EnemyState.DIE:
             //    break;
-        }
+        //}
     }
-
-    //IEnumerator EnemyShoot()
-    //{
-    //    BaseProjectile _projectileL = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-    //    _projectileL.Init(m_projectileOriginL);
-
-    //    yield return new WaitForSeconds(0.2f);
-
-    //    BaseProjectile _projectileR = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-    //    _projectileR.Init(m_projectileOriginR);
-    //}
-
-    //IEnumerator EnemyDodge()
-    //{
-    //    float random = Random.Range(1, 10);
-
-    //    if (random > 5)
-    //    {
-    //        transform.position += transform.right * (moveSpeed * 1.5f) * Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        transform.position += transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
-    //    }
-
-    //    yield return new WaitForSeconds(1.5f);
-
-    //    //currentState = _EnemyState.CHASE;
-    //}
 
     void PlayDeathParticle()
     {
-        //Instantiate and store in a temporary variable
-        //ParticleSystem explode = Instantiate(poof);
-        //Destroy the Instantiated ParticleSystem                    
-        //Destroy(explode, explodeDuration);
         explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
     }
 
-    public void GiveBuff()
+    public string StartBuff()
     {
-        Array values = Enum.GetValues(typeof(_Buffs));
         System.Random random = new System.Random();
-        buffs = (_Buffs)values.GetValue(random.Next(values.Length));
-
-        if (buffs == _Buffs.DMG)
-        {
-            GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
-        }
-        else if (buffs == _Buffs.HP)
-        {
-            GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
-        }
-        else if (buffs == _Buffs.MS)
-        {
-            GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
-        }
+        int index = random.Next(buffs.Count);
+        var selectedBuff = buffs[index];
+        buffs.RemoveAt(index);
+        return selectedBuff;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -283,7 +310,7 @@ public class Light_Enemy_1 : EnemyBase
 
         if (collision.gameObject.tag == "Bullet")
         {
-            takeDamage(1000);
+            takeDamage(10);
             collision.gameObject.SetActive(false);
         }
     }

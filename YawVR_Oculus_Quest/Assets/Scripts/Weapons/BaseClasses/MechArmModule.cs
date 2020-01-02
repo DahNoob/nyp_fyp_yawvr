@@ -34,15 +34,13 @@ abstract public class MechArmModule : BaseMechModule
     [Header("Holo Object")]
     [SerializeField]
     protected GameObject m_holoObject;
+    [SerializeField]
+    public MeshRenderer[] m_holoMeshes;
 
     [HideInInspector]
     public GameObject armObject { get { return m_armObject; } private set { m_armObject = value; } }
     [HideInInspector]
     public GameObject holoObject { get { return m_holoObject; } private set { m_holoObject = value; } }
-    //[HideInInspector]
-    //public GameObject armModel { get; private set; }
-    [HideInInspector]
-    public MeshRenderer holoModel { get; private set; }
     [HideInInspector]
     public ControllerFollower follower { protected get; set; }
     [HideInInspector]
@@ -56,7 +54,6 @@ abstract public class MechArmModule : BaseMechModule
             Destroy(m_armObject.transform.Find("HandReference").gameObject);
         name = m_moduleName;
         holoObject.name = name + "Holo";
-        holoModel = m_holoObject.transform.Find("Model").GetComponentInChildren<MeshRenderer>();
         armObject.name = name + "Arm";
     }
 

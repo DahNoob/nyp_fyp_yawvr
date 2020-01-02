@@ -16,12 +16,6 @@ using UnityEngine;
 *******************************/
 public class SMB_EnemyStart : SMB_BaseEnemyState
 {
-    [Header("Enemy Walk State Configuration")]
-    [SerializeField]
-    protected float m_detectRange = 50.0f;
-    [SerializeField]
-    protected float m_fieldOfViewAngle = 60.0f;
-
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         animator.SetBool("Start_Ready", true);
