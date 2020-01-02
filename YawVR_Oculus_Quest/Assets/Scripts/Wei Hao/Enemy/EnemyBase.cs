@@ -17,7 +17,7 @@ using UnityEngine;
 ** 2    18/12/2019, 10:31 PM    Wei Hao   Added rarity enum
 *******************************/
 
-abstract public class EnemyBase : MonoBehaviour
+abstract public class EnemyBase : DynamicQuadTreeObject
 {
     [Header("Enemy Stats")]
     // Enemy Current Health

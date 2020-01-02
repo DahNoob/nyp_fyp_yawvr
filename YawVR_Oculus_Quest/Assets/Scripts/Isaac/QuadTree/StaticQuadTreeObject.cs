@@ -8,4 +8,9 @@ public class StaticQuadTreeObject : QuadTreeObject
     {
         QuadTreeManager.instance.AddToStaticQuadTree(referenceObject);
     }
+
+    public override void RemoveFromQuadTree(GameObject referenceObject)
+    {
+        QuadTreeManager.instance.Remove(referenceObject, true);
+    }
 }

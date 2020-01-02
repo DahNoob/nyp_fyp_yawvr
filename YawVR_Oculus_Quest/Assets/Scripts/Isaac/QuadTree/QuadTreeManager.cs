@@ -84,22 +84,15 @@ public class QuadTreeManager : MonoBehaviour
     [SerializeField] //serialize added for visualization in inspector.
     private List<GameObject> dynamicList;
 
-    ////Test variables
-    //private QuadRect queryBounds;
-    ////public GameObject poggers;
-    //private Material[] materialArray;
+    //Test variables
+    [SerializeField]
+    private QuadRect queryBounds;
+    [SerializeField]
+    private Transform playerTransform;
+    [SerializeField]
+    private Material[] materialArray;
 
-    //public Text quadTreeCheck;
-    //public Text staticsubDivisions;
-    //public Text dynamicsubDivisions;
-    //public Text staticObjectsText;
-    //public Text dynamicObjectsText;
-
-    //public int checkCounter;
-    //public int staticsubDiv;
-    //public int dynamicsubDiv;
-    //public int staticObjects;
-    //public int dynamicObjects;
+    public bool showBoundaries = false;
 
     void Awake()
     {
@@ -123,6 +116,8 @@ public class QuadTreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(showBoundaries)
+            DrawNodes();
     }
 
     //Adds an object to the static list, shouldn't be called at all, other than by quadtreeobjects.
@@ -244,8 +239,8 @@ public class QuadTreeManager : MonoBehaviour
             return;
 
         Gizmos.color = Color.red;
-        //Gizmos.DrawWireCube(queryBounds.position,
-        //    queryBounds.GetWidth() * 2);
+        Gizmos.DrawWireCube(queryBounds.position,
+            queryBounds.GetWidth() * 2);
 
         DrawGrid();
     }
@@ -256,112 +251,37 @@ public class QuadTreeManager : MonoBehaviour
             return;
 
         Gizmos.color = Color.red;
-        //Gizmos.DrawWireCube(queryBounds.position,
-        //    queryBounds.GetWidth() * 2);
+        Gizmos.DrawWireCube(queryBounds.position,
+            queryBounds.GetWidth() * 2);
 
         DrawGrid();
     }
 
+    public List<GameObject> surroundingObjects;
+    void DrawNodes()
+    {
+        queryBounds.position = playerTransform.position;
+       surroundingObjects = Query(queryBounds, true);
 
-    ////TEST FUNCTIONS
-    //void RangeStuff()
-    //{
-    //    foreach (GameObject testObject in staticList)
-    //    {
-    //        if (testObject == null)
-    //            continue;
+        foreach(GameObject statics in staticList)
+        {
+            MeshRenderer[] renderers = statics.GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer meshR in renderers)
+            {
+                meshR.material = materialArray[0];
+            }
+        }
 
-    //        if (selectedTree != SELECTEDTREE.STATIC)
-    //        {
-    //            testObject.SetActive(false);
-    //            continue;
-    //        }
-    //        else
-    //        {
-    //            testObject.SetActive(true);
-    //        }
+        foreach(GameObject surrounds in surroundingObjects)
+        {
+            MeshRenderer[] renderers = surrounds.GetComponentsInChildren<MeshRenderer>();
+            foreach(MeshRenderer meshR  in renderers)
+            {
+                meshR.material = materialArray[1];
+            }
+        }
 
-    //        //Get access to their mesh renderers
-    //        MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
-    //        meshRenderer.sharedMaterial = materialArray[1];
-    //        //Set active also
 
-    //    }
-    //    foreach (GameObject testObject in dynamicList)
-    //    {
-    //        if (selectedTree != SELECTEDTREE.DYNAMIC)
-    //        {
-    //            testObject.SetActive(false);
-    //            continue;
-    //        }
-    //        else
-    //        {
-    //            testObject.SetActive(true);
-    //        }
-    //        //Get access to their mesh renderers
-    //        MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
-    //        meshRenderer.sharedMaterial = materialArray[1];
-    //        //Set active also
-
-    //    }
-
-    //    List<GameObject> testObjectList = new List<GameObject>();
-    //    testObjectList = selectedTree == SELECTEDTREE.STATIC ? staticQuadTree.Query(queryBounds) : dynamicQuadTree.Query(queryBounds);
-    //    foreach (GameObject testObject in testObjectList)
-    //    {
-    //        //Get access to their mesh renderers
-    //        MeshRenderer meshRenderer = testObject.GetComponent<MeshRenderer>();
-    //        meshRenderer.sharedMaterial = materialArray[0];
-    //    }
-
-    //}
-
-    //void DrawNodes()
-    //{
-    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //    RaycastHit hit;
-
-    //    Debug.DrawRay(ray.origin, ray.direction * 10000);
-
-    //    if (Physics.Raycast(ray.origin, ray.direction, out hit, LayerMask.GetMask("PlaneTest")))
-    //    {
-    //        queryBounds.position = hit.point;
-    //        //if (Input.GetMouseButton(0))
-    //        //{
-    //        //    GameObject newObject = Instantiate(poggers, Vector3.zero, Quaternion.identity);
-
-    //        //    newObject.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
-    //        //    if (selectedTree == SELECTEDTREE.STATIC)
-    //        //    {
-    //        //        newObject.AddComponent<StaticClass>();
-    //        //        //staticQuadTree.Insert(newObject);
-    //        //        //staticList.Add(newObject);
-    //        //    }
-    //        //    else if (selectedTree == SELECTEDTREE.DYNAMIC)
-    //        //    {
-    //        //        newObject.AddComponent<DynamicClass>();
-    //        //        //dynamicQuadTree.Insert(newObject);
-    //        //        //dynamicList.Add(newObject);
-    //        //    }
-
-    //        //}
-    //    }
-    //    RangeStuff();
-    //    //checkCounter = 0;
-
-    //    //quadTreeCheck.text = "Quadtree checks : " + checkCounter.ToString();
-
-    //    //staticsubDiv = 0;
-    //    //dynamicsubDiv = 0;
-
-    //    //staticQuadTree.GetSubDivisions(ref staticsubDiv);
-    //    //dynamicQuadTree.GetSubDivisions(ref dynamicsubDiv);
-
-    //    //staticsubDivisions.text = "Static div : " + staticsubDiv.ToString();
-    //    //dynamicsubDivisions.text = "Dynamic div : " + dynamicsubDiv.ToString();
-
-    //    //dynamicObjects = dynamicList.Count;
-    //    //dynamicObjectsText.text = "Dynamic Objects: " + dynamicObjects.ToString();
-    //}
+    }
 
 }
