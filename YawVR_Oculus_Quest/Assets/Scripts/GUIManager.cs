@@ -54,6 +54,7 @@ public class GUIManager : MonoBehaviour
         reticleModule.SetupReticleModule();
         reticleModule.SetupReticleColors();
 
+        //Disable both reticles
         EnableReticle(OVRInput.Controller.LTouch, false);
         EnableReticle(OVRInput.Controller.RTouch, false);
     }
