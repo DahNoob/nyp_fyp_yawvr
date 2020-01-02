@@ -96,11 +96,10 @@ public class GUIReticleModule
         m_reticleColors.SetupLayerColors();
     }
 
-    public void UpdateScale()
+    public void UpdateEase()
     {
-        //Update scale function
-        m_leftReticle.UpdateScale();
-        m_rightReticle.UpdateScale();
+        m_leftReticle.UpdateEase();
+        m_rightReticle.UpdateEase();
     }
 
 
