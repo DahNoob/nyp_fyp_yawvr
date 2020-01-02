@@ -19,7 +19,14 @@ public class LM2_Chase : SMB_BaseEnemyState
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-
+        Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, 5.0f);
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            if (hitColliders[i].gameObject.tag == "Player")
+            {
+                animator.SetBool("Explode", true);
+            }
+        }
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

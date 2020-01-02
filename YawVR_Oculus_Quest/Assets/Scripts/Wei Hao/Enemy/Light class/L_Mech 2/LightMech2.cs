@@ -32,6 +32,7 @@ public class LightMech2 : EnemyBase
         DMG,
         MS
     }
+    List<string> buffs = new List<string> { "HP", "DMG", "MS" };
 
     private GameObject Player;
     [Header("Light Mech 2 Configuration")]
@@ -85,7 +86,14 @@ public class LightMech2 : EnemyBase
     public GameObject HP_Buff_Prefab;
     public GameObject DMG_Buff_Prefab;
     public GameObject MS_Buff_Prefab;
-    private _Buffs buffs;
+
+    [Header("Active Buff")]
+    [SerializeField]
+    private bool HP;
+    [SerializeField]
+    private bool DMG;
+    [SerializeField]
+    private bool MS;
 
     // Start is called before the first frame update
     void Start()
@@ -102,41 +110,88 @@ public class LightMech2 : EnemyBase
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
 
-        //transformX = transform.position;
-
-        //Debug.Log("Current Health = " + health);
-        //Debug.Log("Current Max Health = " + maxHealth);
-        //Debug.Log("Current dmg = " + damage);
-        //Debug.Log("Current moveSpeed = " + moveSpeed);
-
-
+        string currBuff = StartBuff();
         if (rarity == _Rarity.DELTA)
         {
-            GiveBuff();
+            if (currBuff == "HP")
+            {
+                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                HP = true;
+            }
+            if (currBuff == "DMG")
+            {
+                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                DMG = true;
+            }
+            if (currBuff == "MS")
+            {
+                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                MS = true;
+            }
         }
         else if (rarity == _Rarity.BETA)
         {
+            string secondBuff = StartBuff();
 
+            if (currBuff == "HP" || secondBuff == "HP")
+            {
+                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                HP = true;
+            }
+            if (currBuff == "DMG" || secondBuff == "DMG")
+            {
+                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                DMG = true;
+            }
+            if (currBuff == "MS" || secondBuff == "MS")
+            {
+                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                MS = true;
+            }
         }
         else if (rarity == _Rarity.ALPHA)
         {
+            string secondBuff = StartBuff();
+            string thirdBuff = StartBuff();
 
+            if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
+            {
+                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                HP = true;
+            }
+            if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+            {
+                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                DMG = true;
+            }
+            if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+            {
+                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                MS = true;
+            }
         }
         else if (rarity == _Rarity.OMEGA)
         {
+            //string secondBuff = StartBuff();
+            //string thirdBuff = StartBuff();
+            //string fourthBuff = StartBuff();
 
-        }       
-
-        /**/
-        weightedRandom.GetComponent<PassiveBuffs>().ApplyBuff(health, damage, moveSpeed, rarity);
-        //health = weightedRandom.GetComponent<PassiveBuffs>().GetHealth();
-        //damage = weightedRandom.GetComponent<PassiveBuffs>().GetDamage();
-        //moveSpeed = weightedRandom.GetComponent<PassiveBuffs>().GetMoveSpeed();
-
-        //Debug.Log("Current Health = " + health);
-        //Debug.Log("Current Max Health = " + maxHealth);
-        //Debug.Log("Current dmg = " + damage);
-        //Debug.Log("Current moveSpeed = " + moveSpeed);
+            //if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
+            //{
+            //    GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+            //    HP = true;
+            //}
+            //if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+            //{
+            //    GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+            //    DMG = true;
+            //}
+            //if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+            //{
+            //    GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+            //    MS = true;
+            //}
+        }
     }
 
     // Update is called once per frame
@@ -197,42 +252,20 @@ public class LightMech2 : EnemyBase
         //        }
         //        break;
         //}
-        switch(rarity)
-        {
-            case _Rarity.DELTA:
-                break;
-        }
     }
 
     public void PlayDeathParticle()
     {
-        ////Instantiate and store in a temporary variable
-        //ParticleSystem explode = Instantiate(poof);
-        ////Destroy the Instantiated ParticleSystem                    
-        //Destroy(explode, explodeDuration);
-        //explosionPrefab = Resources.Load<GameObject>("VFX/Explosion/BoomBooms/BoomBooms");
         explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
-
     }
 
-    public void GiveBuff()
+    public string StartBuff()
     {
-        Array values = Enum.GetValues(typeof(_Buffs));
         System.Random random = new System.Random();
-        buffs = (_Buffs)values.GetValue(random.Next(values.Length));
-
-        if(buffs == _Buffs.DMG)
-        {
-            GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
-        }
-        else if (buffs == _Buffs.HP)
-        {
-            GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
-        }
-        else if (buffs == _Buffs.MS)
-        {
-            GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
-        }
+        int index = random.Next(buffs.Count);
+        var selectedBuff = buffs[index];
+        buffs.RemoveAt(index);
+        return selectedBuff;
     }
 
     void OnCollisionEnter(Collision collision)
