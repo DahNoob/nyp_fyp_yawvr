@@ -307,7 +307,7 @@ public class Light_Enemy_1 : EnemyBase
 
         if (collision.gameObject.tag == "Bullet")
         {
-            takeDamage(1000);
+            takeDamage(10);
             collision.gameObject.SetActive(false);
         }
     }
