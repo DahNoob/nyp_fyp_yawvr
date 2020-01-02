@@ -91,7 +91,7 @@ public class QuadTree
 
         if (m_objectList.Contains(quadTreeObject))
         {
-            Debug.Log("Removed : " + quadTreeObject.name + " from the tree");
+            //Debug.Log("Removed : " + quadTreeObject.name + " from the tree");
             m_objectList.Remove(quadTreeObject);
             return true;
         }
@@ -103,7 +103,7 @@ public class QuadTree
                 {
                     if (regions[i].Remove(quadTreeObject))
                     {
-                        Debug.Log("Removed : " + quadTreeObject.name + " from the tree from sub");
+                        //Debug.Log("Removed : " + quadTreeObject.name + " from the tree from sub");
                         return true;
                     }
                 }

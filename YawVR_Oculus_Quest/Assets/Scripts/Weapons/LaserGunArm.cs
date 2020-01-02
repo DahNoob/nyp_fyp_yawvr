@@ -71,6 +71,9 @@ public class LaserGunArm : MechArmModule
 
     public override bool Hold(OVRInput.Controller _controller)
     {
+        //Enable the reticle when holding
+        GUIManager.instance.EnableReticle(_controller, true);
+
         //If the ammo module is not reloading?
         if (ammoModule.m_isReloading == false)
         {
@@ -114,6 +117,7 @@ public class LaserGunArm : MechArmModule
 
     public override bool Stop(OVRInput.Controller _controller)
     {
+        GUIManager.instance.EnableReticle(_controller, false);
         m_gatlingAnimator.SetFloat("Blend", 0);
         // m_laserPointer.gameObject.SetActive(false);
         return true;

@@ -53,6 +53,9 @@ public class GUIManager : MonoBehaviour
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
         reticleModule.SetupReticleModule();
         reticleModule.SetupReticleColors();
+
+        EnableReticle(OVRInput.Controller.LTouch, false);
+        EnableReticle(OVRInput.Controller.RTouch, false);
     }
 
     void Update()
@@ -89,7 +92,6 @@ public class GUIManager : MonoBehaviour
         m_fpsValue.text = fps.ToString();
         m_armRotationValue.text = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch).eulerAngles.ToString();
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
-
     }
 
 
@@ -116,7 +118,6 @@ public class GUIManager : MonoBehaviour
     {
         OVRManager.display.RecenterPose();
         PlayerHandler.instance.ResetPose();
-
     }
 
     public void SetReticleInformation(OVRInput.Controller _controller, Vector3 hitPoint, GameObject hitObject, bool useTag = true)
@@ -205,6 +206,13 @@ public class GUIManager : MonoBehaviour
         //Get config I suppose.
         GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
         //reticleConfig.Triggered();
+    }
+
+    public void EnableReticle(OVRInput.Controller _controller, bool enabled)
+    {
+        //Get config I suppose.
+        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+        reticleConfig.reticleReference.SetActive(enabled);
     }
 
 }
