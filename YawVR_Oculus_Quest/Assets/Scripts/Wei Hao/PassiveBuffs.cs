@@ -33,7 +33,7 @@ public class PassiveBuffs : MonoBehaviour
         //Random();
     }
 
-    public void ApplyBuff(int health, int damage, int moveSpeed/*, EnemyBase._Rarity rarity*/)
+    public void ApplyBuff(int health, int damage, int moveSpeed, EnemyBase._Rarity rarity)
     {
         healthCopy = health;
         damageCopy = damage;
@@ -43,10 +43,7 @@ public class PassiveBuffs : MonoBehaviour
         System.Random random = new System.Random();
         buffs = (_Buffs)values.GetValue(random.Next(values.Length));
 
-        //if(rarity == EnemyBase._Rarity.DELTA)
-        //{
 
-        //}
 
         switch (buffs)
         {

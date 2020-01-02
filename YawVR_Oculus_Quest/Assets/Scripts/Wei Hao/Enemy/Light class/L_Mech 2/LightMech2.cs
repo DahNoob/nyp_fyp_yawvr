@@ -67,6 +67,11 @@ public class LightMech2 : EnemyBase
     private _Rarity rarity;
     private GameObject weightedRandom;
 
+    [Header("Death Particle Effect")]
+    [SerializeField]
+    public GameObject explosionPrefab;
+    private GameObject explosion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -89,10 +94,11 @@ public class LightMech2 : EnemyBase
         //Debug.Log("Current dmg = " + damage);
         //Debug.Log("Current moveSpeed = " + moveSpeed);
 
-        weightedRandom.GetComponent<PassiveBuffs>().ApplyBuff(health, damage, moveSpeed/*, rarity*/);
-        health = weightedRandom.GetComponent<PassiveBuffs>().GetHealth();
-        damage = weightedRandom.GetComponent<PassiveBuffs>().GetDamage();
-        moveSpeed = weightedRandom.GetComponent<PassiveBuffs>().GetMoveSpeed();
+        /**/
+        //weightedRandom.GetComponent<PassiveBuffs>().ApplyBuff(health, damage, moveSpeed/*, rarity*/);
+        //health = weightedRandom.GetComponent<PassiveBuffs>().GetHealth();
+        //damage = weightedRandom.GetComponent<PassiveBuffs>().GetDamage();
+        //moveSpeed = weightedRandom.GetComponent<PassiveBuffs>().GetMoveSpeed();
 
         //Debug.Log("Current Health = " + health);
         //Debug.Log("Current Max Health = " + maxHealth);
@@ -165,12 +171,15 @@ public class LightMech2 : EnemyBase
         }
     }
 
-    void PlayDeathParticle()
+    public void PlayDeathParticle()
     {
         ////Instantiate and store in a temporary variable
         //ParticleSystem explode = Instantiate(poof);
         ////Destroy the Instantiated ParticleSystem                    
         //Destroy(explode, explodeDuration);
+        //explosionPrefab = Resources.Load<GameObject>("VFX/Explosion/BoomBooms/BoomBooms");
+        explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
+
     }
 
     void OnCollisionEnter(Collision collision)
