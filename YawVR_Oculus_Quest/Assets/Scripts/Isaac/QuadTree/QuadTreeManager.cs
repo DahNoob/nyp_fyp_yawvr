@@ -116,8 +116,13 @@ public class QuadTreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(showBoundaries)
-            DrawNodes();
+        //if (showBoundaries)
+        //{
+        //    DrawNodes();
+        //    //DrawNodesLessOptimized();
+        //}
+        ////DistanceCheck();
+        //DistanceCheckLessOptimized();
     }
 
     //Adds an object to the static list, shouldn't be called at all, other than by quadtreeobjects.
@@ -284,4 +289,55 @@ public class QuadTreeManager : MonoBehaviour
 
     }
 
+    void DrawNodesLessOptimized()
+    {
+        foreach (GameObject statics in staticList)
+        {
+            MeshRenderer[] renderers = statics.GetComponentsInChildren<MeshRenderer>();
+
+            if(queryBounds.Contains(statics.transform.position))
+            {
+                foreach (MeshRenderer meshR in renderers)
+                {
+                    meshR.material = materialArray[1];
+                }
+            }
+            else
+            {
+                foreach (MeshRenderer meshR in renderers)
+                {
+                    meshR.material = materialArray[0];
+                }
+            }
+        }
+    }
+
+
+    void DistanceCheck()
+    {
+        for(int i =0; i < staticList.Count; ++i)
+        {
+            QuadRect bounds = new QuadRect(staticList[i].transform.position, 50, 50);
+            List<GameObject> surrounds = Query(bounds, true);
+
+            foreach(GameObject surround in surrounds)
+            {
+                float distance = Vector3.Distance(staticList[i].transform.position, surround.transform.position);
+            }
+        }
+    }
+
+    void DistanceCheckLessOptimized()
+    {
+        for (int i = 0; i < staticList.Count; ++i)
+        {
+            for(int x = 0; x < staticList.Count; ++x)
+            {
+                if (i == x)
+                    continue;
+
+                float distance = Vector3.Distance(staticList[i].transform.position, staticList[x].transform.position);                         
+            }
+        }
+    }
 }
