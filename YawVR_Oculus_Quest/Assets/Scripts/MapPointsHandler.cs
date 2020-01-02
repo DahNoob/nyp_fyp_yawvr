@@ -16,6 +16,8 @@ public class MapPointsHandler : MonoBehaviour
     private Vector3 m_cubeSizeConfirmed = new Vector3(0.75f, 6, 0.75f);
     [SerializeField]
     private Color m_colorConfirmed = new Color(0.8f, 0.8f, 0.3f, 0.75f);
+    [SerializeField]
+    private GUIStyle m_textStyle = new GUIStyle();
 
     [Header("Map Points Configuration")]
     [SerializeField]
@@ -29,6 +31,9 @@ public class MapPointsHandler : MonoBehaviour
     [InspectorButton("OnSetPointsHeight", 150.0f)]
     public bool setPointsHeight;
 
+    [InspectorButton("OnResetLabeling", 150.0f)]
+    public bool resetLabeling;
+
     private void OnResetSavedMapPoints()
     {
         m_mapPoints.Clear();
@@ -39,27 +44,35 @@ public class MapPointsHandler : MonoBehaviour
     }
     private void OnSetPointsHeight()
     {
-        print("test");
         foreach (Transform t in transform)
         {
             RaycastHit hit;
             if (Physics.Raycast(t.position, -t.up, out hit))
             {
-                print("lol");
                 t.position = hit.point;
                 t.Translate(0, m_pointHeight, 0);
             }
         }
     }
 
-    private void Awake()
+    private void OnResetLabeling()
+    {
+        int index = 0;
+        foreach (Transform t in transform)
+        {
+            t.name = string.Format("{0}{1}{2}", "(", index.ToString(), ")");
+            ++index;
+        }
+    }
+
+    void Awake()
     {
         if (instance == null)
             instance = this;
         print("MapPointsHandler Awake!");
     }
 
-    private void Start()
+    void Start()
     {
 #if !UNITY_EDITOR
         foreach (Transform t in transform)
@@ -70,12 +83,14 @@ public class MapPointsHandler : MonoBehaviour
         print("MapPointsHandler Start!");
     }
 
-    private void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         Gizmos.color = m_colorUnconfirmed;
         foreach (Transform t in transform)
         {
             Gizmos.DrawWireCube(t.position, m_cubeSizeUnconfirmed);
+            //Gizmos.DrawIcon(t.position, t.name);
+            UnityEditor.Handles.Label(t.position, t.name, m_textStyle);
         }
         Gizmos.color = m_colorConfirmed;
         for (int i = 0; i < m_mapPoints.Count; ++i)
@@ -98,10 +113,5 @@ public class MapPointsHandler : MonoBehaviour
             }
         }
         return point;
-    }
-
-    private void OnGUI()
-    {
-        
     }
 }
