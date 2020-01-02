@@ -670,6 +670,7 @@ GameObject:
   - component: {fileID: 3296302320629394681}
   - component: {fileID: 3296302320629394631}
   - component: {fileID: 3296302320629394630}
+  - component: {fileID: 30919776}
   m_Layer: 0
   m_Name: Triangle Flying Drill Mech v2
   m_TagString: Untagged
@@ -822,7 +823,7 @@ Animator:
   m_GameObject: {fileID: 6818234780709451212}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 40c998b46279edf42b5dff4c676a5f06, type: 2}
+  m_Controller: {fileID: 9100000, guid: bd4b6d02378588f4b932f2060b04fa96, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -831,6 +832,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &30919776
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6818234780709451212}
+  m_Enabled: 1
+  m_AgentTypeID: -1923039037
+  m_Radius: 0.69
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &6891968525230165294
 GameObject:
   m_ObjectHideFlags: 0
