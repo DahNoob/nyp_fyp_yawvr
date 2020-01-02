@@ -91,6 +91,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_checkIntervals: 1.5
+  projectile: {fileID: 0}
+  m_detectRange: 15
+  m_inRange: 60
+  m_outRange: 150
+  m_rotationSpeed: 6
+  navMeshAgent: {fileID: 0}
 --- !u!1102 &-325408995689542891
 AnimatorState:
   serializedVersion: 5
@@ -238,7 +244,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f5e89d0fecd526f478396b26e5c6f424, type: 2}
+  m_Motion: {fileID: 0}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
