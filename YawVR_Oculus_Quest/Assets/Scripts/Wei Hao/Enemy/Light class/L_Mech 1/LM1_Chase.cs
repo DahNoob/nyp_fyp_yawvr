@@ -47,12 +47,17 @@ public class LM1_Chase : SMB_BaseEnemyState
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        PlayerHandler player = PlayerHandler.instance;
+        //PlayerHandler player = PlayerHandler.instance;
+
+        float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
+        //enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
+        if (distanceSqr < inRangeSqr)
+            animator.SetBool("Shoot", true);
         //animator.SetBool("Dodge", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_DodgeDetectRange));
         //Debug.Log("Is it time to dodge? " + animator.GetBool("Dodge"));
-        animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
+        //animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
         Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
-        Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(player.transform.position, enemy.transform.position));
+        Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position));
         //if (CustomUtility.HitCheckRadius(player.transform.position,enemy.transform.position) < m_detectRange * m_detectRange)
         //{
         //    navMeshAgent.isStopped = true;
@@ -116,11 +121,11 @@ public class LM1_Chase : SMB_BaseEnemyState
             }
         }
 
-        dodgeCheck -= 1.0f * Time.deltaTime;
-        if (dodgeCheck <= 0.0f)
-        {
-            Check(animator, animatorStateInfo, layerIndex);
-            dodgeCheck = 2.0f;
+        //dodgeCheck -= 1.0f * Time.deltaTime;
+        //if (dodgeCheck <= 0.0f)
+        //{
+           // Check(animator, animatorStateInfo, layerIndex);
+            //dodgeCheck = 2.0f;
             //Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, 5.0f);
             //for (int i = 0; i < hitColliders.Length; i++)
             //{
@@ -130,7 +135,7 @@ public class LM1_Chase : SMB_BaseEnemyState
             //        animator.SetBool("Dodge", true);
             //    }
             //}
-        }
+        //}
     }
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

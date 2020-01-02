@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class GUIReticleConfig
 {
     [SerializeField]
@@ -40,23 +40,27 @@ public class GUIReticleConfig
     [Tooltip("Reticle Size")]
     private float m_reticleInterestSize;
 
-    [Header("Shooting Test")]
     [SerializeField]
-    [Tooltip("Max Reticle Size")]
-    private float m_maxReticleSize;
+    [Tooltip("How fast does the reticle shrink in size")]
+    private float m_reticleRecoveryTimeScale;
 
     [SerializeField]
-    [Tooltip("Recovery Time")]
-    private float m_reticleRecoveryTime;
+    [Tooltip("Time for the animation to finish")]
+    private float m_reticleRecoveryTime = 1;
 
-    //Intiail size of reticle
-    private float m_initialReticleSize;
+    //Local variables
     //When the reticle has highlighted an enemy or something
     private bool m_objectInterest = false;
     //Size difference between the two
     private float m_sizeDelta;
-    //Has been changed
-    private bool changed = false;
+    //Initial reticleSize to calculate the size delta
+    private float m_initialReticleSize;
+    //The timer for the ease
+    private float m_reticleRecoveryTimer = 0;
+
+    //This is a variable to store the reticle size before tween
+    private float m_reticleSizeBeforeEase = 0;
+
 
     //Get functions
     public GameObject reticleReference
@@ -143,42 +147,6 @@ public class GUIReticleConfig
         }
     }
 
-    public float reticleRecoveryTime
-    {
-        get
-        {
-            return m_reticleRecoveryTime;
-        }
-        private set
-        {
-            m_reticleRecoveryTime = value;
-        }
-    }
-
-    public float maxReticleSize
-    {
-        get
-        {
-            return m_maxReticleSize;
-        }
-        set
-        {
-            m_maxReticleSize = value;
-        }
-    }
-
-    public float initialReticleSize
-    {
-        get
-        {
-            return m_initialReticleSize;
-        }
-        set
-        {
-            m_initialReticleSize = value;
-        }
-    }
-
     public float reticleInterestSize
     {
         get
@@ -215,6 +183,31 @@ public class GUIReticleConfig
         }
     }
 
+    public float initialReticleSize
+    {
+        get
+        {
+            return m_initialReticleSize;
+        }
+        set
+        {
+            m_initialReticleSize = value;
+        }
+    }
+
+    public float reticleRecoveryTimeScale
+    {
+        get
+        {
+            return m_reticleRecoveryTimeScale;
+        }
+        private set
+        {
+            m_reticleRecoveryTimeScale = value;
+        }
+    }
+
+
     public void SetReticleColor(Color resultColor)
     {
         if (m_reticleReference != null)
@@ -228,36 +221,44 @@ public class GUIReticleConfig
             m_reticleReference.GetComponent<SpriteRenderer>().color = m_reticleColor;
     }
 
-    //Reset the reticle default size
-    public void SetReticleDefaultSize()
-    {
-        m_reticleSize = m_initialReticleSize;
-    }
+    //Variables for ease
+    private float toInterestSize;
+    private float toInitialSize;
 
-    //Triggered this reticle
-    public void Triggered()
+    public void ObjectOfInterest(bool comparisonValue)
     {
-        //if the object is interest, then change size accordingly   
-        m_reticleSize = m_objectInterest ? m_maxReticleSize + sizeDelta : m_maxReticleSize;
-    }
-
-    public void UpdateScale()
-    {
-        float initialSize = objectInterest ? m_initialReticleSize + sizeDelta : m_initialReticleSize;
-        Debug.Log(initialSize);
-        if (m_reticleSize != initialSize)
+        if (m_objectInterest != comparisonValue)
         {
-            m_reticleSize -= Time.deltaTime * m_reticleRecoveryTime;
-            m_reticleSize = Mathf.Max(m_reticleSize, initialSize);
+            m_objectInterest = comparisonValue;
+            //Any one time sets can be done here
+            //Reset the timer
+            m_reticleRecoveryTimer = 0;
+            //Set these stuff
+            m_reticleSizeBeforeEase = m_reticleSize;
+
+            //if its of interest
+            if (comparisonValue)
+                toInterestSize = m_reticleInterestSize - m_reticleSize;
+            else
+                toInitialSize = m_initialReticleSize - m_reticleSize;       
         }
     }
 
-    public void ObjectOfInterest(bool returnValue)
+
+
+    public void UpdateEase()
     {
-        if(objectInterest != returnValue)
+        if (m_reticleSizeBeforeEase == 0)
+            return;
+
+        if (m_reticleRecoveryTimer < m_reticleRecoveryTime)
         {
-            objectInterest = returnValue;
-            m_reticleSize = objectInterest ? m_reticleInterestSize : m_initialReticleSize; 
+            m_reticleRecoveryTimer += Time.deltaTime * m_reticleRecoveryTimeScale;
+            m_reticleRecoveryTimer = Mathf.Min(m_reticleRecoveryTimer, m_reticleRecoveryTime);
+
+            m_reticleSize = m_objectInterest
+                ? Easing.OutBack(m_reticleRecoveryTimer, m_reticleSizeBeforeEase, toInterestSize, m_reticleRecoveryTime)
+                : Mathf.Lerp(m_reticleSize, m_initialReticleSize, m_reticleRecoveryTimer);
         }
     }
 

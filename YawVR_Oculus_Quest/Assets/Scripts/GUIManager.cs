@@ -74,12 +74,12 @@ public class GUIManager : MonoBehaviour
         //    SetReticleInformation(OVRInput.Controller.LTouch, hit.point, hit.collider.gameObject, true);
         //}
 
-        //if(Input.GetMouseButtonDown(0))
+        //if (Input.GetMouseButtonDown(0))
         //{
         //    Triggered(OVRInput.Controller.LTouch);
         //}
 
-        reticleModule.UpdateScale();
+        reticleModule.UpdateEase();
     }
 
     void LateUpdate()
@@ -134,7 +134,6 @@ public class GUIManager : MonoBehaviour
         {
             GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
             //Temporary code
-
             reticleConfig.ObjectOfInterest(hitObject.tag == "Enemy");
         }
     }
@@ -205,7 +204,7 @@ public class GUIManager : MonoBehaviour
     {
         //Get config I suppose.
         GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
-        reticleConfig.Triggered();
+        //reticleConfig.Triggered();
     }
 
 }

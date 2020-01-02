@@ -8,6 +8,7 @@ public class HP_Buff : MonoBehaviour
     void Start()
     {
         gameObject.GetComponentInParent<EnemyBase>().SetHealth(gameObject.GetComponentInParent<EnemyBase>().GetHealth() * 1.5f);
+        gameObject.GetComponentInParent<EnemyBase>().SetMaxHealth(gameObject.GetComponentInParent<EnemyBase>().GetMaxHealth() * 1.5f);
     }
 
     // Update is called once per frame
