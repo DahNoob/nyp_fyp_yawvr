@@ -12,20 +12,20 @@ public class PassiveBuffs : MonoBehaviour
         MSx2
     }
 
-    private enum _Rarity
-    {
-        NORMAL,
-        DELTA,
-        BETA,
-        OMEGA,
-        ALPHA
-    }
+    //private enum _Rarity
+    //{
+    //    NORMAL,
+    //    DELTA,
+    //    BETA,
+    //    OMEGA,
+    //    ALPHA
+    //}
 
     private _Buffs buffs;
 
-    private int healthCopy;
-    private int damageCopy;
-    private int moveSpeedCopy;
+    private float healthCopy;
+    private float damageCopy;
+    private float moveSpeedCopy;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +33,7 @@ public class PassiveBuffs : MonoBehaviour
         //Random();
     }
 
-    public void ApplyBuff(int health, int damage, int moveSpeed, EnemyBase._Rarity rarity)
+    public void ApplyBuff(float health, float damage, float moveSpeed, EnemyBase._Rarity rarity)
     {
         healthCopy = health;
         damageCopy = damage;
@@ -43,7 +43,26 @@ public class PassiveBuffs : MonoBehaviour
         System.Random random = new System.Random();
         buffs = (_Buffs)values.GetValue(random.Next(values.Length));
 
+        // 1 buff
+        if (rarity == EnemyBase._Rarity.DELTA)
+        {
 
+        }
+        // 2 buff
+        else if (rarity == EnemyBase._Rarity.BETA)
+        {
+
+        }
+        // 3 buff
+        else if (rarity == EnemyBase._Rarity.ALPHA)
+        {
+
+        }
+        // 4 buff
+        else if (rarity == EnemyBase._Rarity.OMEGA)
+        {
+
+        }
 
         switch (buffs)
         {
@@ -59,16 +78,16 @@ public class PassiveBuffs : MonoBehaviour
         }
     }
 
-    public int GetHealth()
-    {
-        return healthCopy;
-    }
-    public int GetDamage()
-    {
-        return damageCopy;
-    }
-    public int GetMoveSpeed()
-    {
-        return moveSpeedCopy;
-    }
+    //public int GetHealth()
+    //{
+    //    return healthCopy;
+    //}
+    //public int GetDamage()
+    //{
+    //    return damageCopy;
+    //}
+    //public int GetMoveSpeed()
+    //{
+    //    return moveSpeedCopy;
+    //}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,13 @@ public class LightMech2 : EnemyBase
     {
         CHASE,
         EXPLODE,
+    }
+
+    private enum _Buffs
+    {
+        HP,
+        DMG,
+        MS
     }
 
     private GameObject Player;
@@ -72,6 +80,13 @@ public class LightMech2 : EnemyBase
     public GameObject explosionPrefab;
     private GameObject explosion;
 
+    [Header("Buff Prefabs")]
+    [SerializeField]
+    public GameObject HP_Buff_Prefab;
+    public GameObject DMG_Buff_Prefab;
+    public GameObject MS_Buff_Prefab;
+    private _Buffs buffs;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -94,8 +109,26 @@ public class LightMech2 : EnemyBase
         //Debug.Log("Current dmg = " + damage);
         //Debug.Log("Current moveSpeed = " + moveSpeed);
 
+
+        if (rarity == _Rarity.DELTA)
+        {
+            GiveBuff();
+        }
+        else if (rarity == _Rarity.BETA)
+        {
+
+        }
+        else if (rarity == _Rarity.ALPHA)
+        {
+
+        }
+        else if (rarity == _Rarity.OMEGA)
+        {
+
+        }       
+
         /**/
-        //weightedRandom.GetComponent<PassiveBuffs>().ApplyBuff(health, damage, moveSpeed/*, rarity*/);
+        weightedRandom.GetComponent<PassiveBuffs>().ApplyBuff(health, damage, moveSpeed, rarity);
         //health = weightedRandom.GetComponent<PassiveBuffs>().GetHealth();
         //damage = weightedRandom.GetComponent<PassiveBuffs>().GetDamage();
         //moveSpeed = weightedRandom.GetComponent<PassiveBuffs>().GetMoveSpeed();
@@ -180,6 +213,26 @@ public class LightMech2 : EnemyBase
         //explosionPrefab = Resources.Load<GameObject>("VFX/Explosion/BoomBooms/BoomBooms");
         explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
 
+    }
+
+    public void GiveBuff()
+    {
+        Array values = Enum.GetValues(typeof(_Buffs));
+        System.Random random = new System.Random();
+        buffs = (_Buffs)values.GetValue(random.Next(values.Length));
+
+        if(buffs == _Buffs.DMG)
+        {
+            GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        }
+        else if (buffs == _Buffs.HP)
+        {
+            GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        }
+        else if (buffs == _Buffs.MS)
+        {
+            GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        }
     }
 
     void OnCollisionEnter(Collision collision)

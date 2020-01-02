@@ -95,14 +95,19 @@ abstract public class EnemyBase : MonoBehaviour
         return moveSpeed;
     }
 
-    public float GetHealth()
+    public float GetDamage()
+    {
+        return damage;
+    }
+
+    public float GetHealth ()
     {
         return health;
     }
 
-    public float GetDamage()
+    public float GetMaxHealth()
     {
-        return damage;
+        return maxHealth;
     }
 
     public void SetHealth(float new_HP)
@@ -118,6 +123,11 @@ abstract public class EnemyBase : MonoBehaviour
     public void SetMoveSpeed(float new_MoveSpeed)
     {
         moveSpeed = new_MoveSpeed;
+    }
+
+    public void SetMaxHealth(float new_MaxHealth)
+    {
+        maxHealth = new_MaxHealth;
     }
 
     void OnDisable()

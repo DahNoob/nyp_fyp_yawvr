@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,13 @@ public class Light_Enemy_1 : EnemyBase
         SHOOT,
         AVOID,
         DIE,
+    }
+
+    private enum _Buffs
+    {
+        HP,
+        DMG,
+        MS
     }
 
     public Transform projectile;
@@ -71,6 +79,18 @@ public class Light_Enemy_1 : EnemyBase
     // Dodge Check
     private float dodgeCheck = 2.0f;
 
+    [Header("Death Particle Effect")]
+    [SerializeField]
+    public GameObject explosionPrefab;
+    private GameObject explosion;
+
+    [Header("Buff Prefabs")]
+    [SerializeField]
+    public GameObject HP_Buff_Prefab;
+    public GameObject DMG_Buff_Prefab;
+    public GameObject MS_Buff_Prefab;
+    private _Buffs buffs;
+
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +108,23 @@ public class Light_Enemy_1 : EnemyBase
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
 
         transformX = transform.position;
+
+        if (rarity == _Rarity.DELTA)
+        {
+            GiveBuff();
+        }
+        else if (rarity == _Rarity.BETA)
+        {
+
+        }
+        else if (rarity == _Rarity.ALPHA)
+        {
+
+        }
+        else if (rarity == _Rarity.OMEGA)
+        {
+
+        }
 
         //Debug.Log("Current Health = " + health);
         //Debug.Log("Current Max Health = " + maxHealth);
@@ -205,9 +242,30 @@ public class Light_Enemy_1 : EnemyBase
     void PlayDeathParticle()
     {
         //Instantiate and store in a temporary variable
-        ParticleSystem explode = Instantiate(poof);
+        //ParticleSystem explode = Instantiate(poof);
         //Destroy the Instantiated ParticleSystem                    
-        Destroy(explode, explodeDuration);
+        //Destroy(explode, explodeDuration);
+        explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
+    }
+
+    public void GiveBuff()
+    {
+        Array values = Enum.GetValues(typeof(_Buffs));
+        System.Random random = new System.Random();
+        buffs = (_Buffs)values.GetValue(random.Next(values.Length));
+
+        if (buffs == _Buffs.DMG)
+        {
+            GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        }
+        else if (buffs == _Buffs.HP)
+        {
+            GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        }
+        else if (buffs == _Buffs.MS)
+        {
+            GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        }
     }
 
     void OnCollisionEnter(Collision collision)

@@ -64,11 +64,11 @@ public class LM1_Shoot : SMB_BaseEnemyState
             }
         }
 
-        dodgeCheck -= 1.0f * Time.deltaTime;
-        if (dodgeCheck <= 0.0f)
-        {
-            Check(animator, animatorStateInfo, layerIndex);
-            dodgeCheck = 2.0f;
+        //dodgeCheck -= 1.0f * Time.deltaTime;
+        //if (dodgeCheck <= 0.0f)
+        //{
+            //Check(animator, animatorStateInfo, layerIndex);
+            //dodgeCheck = 2.0f;
             //Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
             //for (int i = 0; i < hitColliders.Length; i++)
             //{
@@ -78,7 +78,7 @@ public class LM1_Shoot : SMB_BaseEnemyState
             //        currentState = _EnemyState.AVOID;
             //    }
             //}
-        }
+        //}
 
     }
 
