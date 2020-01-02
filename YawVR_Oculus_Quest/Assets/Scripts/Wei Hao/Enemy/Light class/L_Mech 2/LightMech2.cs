@@ -77,7 +77,7 @@ public class LightMech2 : EnemyBase
     {
         // Current State
         //currentState = _GameStates.CHASE;
-
+        GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;
         Player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();

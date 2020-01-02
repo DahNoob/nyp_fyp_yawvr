@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &11136793425131372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2635159879070105548}
+  m_Layer: 0
+  m_Name: SpawnPivot_L
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2635159879070105548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11136793425131372}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 303549922058565681}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &239280323365306936
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,8 +287,8 @@ MonoBehaviour:
   m_spawnRechargeTime: 10
   m_rigidBody: {fileID: 9132567093671381444}
   m_coreTransform: {fileID: 6460773364572207210}
-  m_rightSide: {fileID: 5166317202759432076}
-  m_leftSide: {fileID: 4169425836651350650}
+  m_spawnPivotRight: {fileID: 8455971920297601670}
+  m_spawnPivotLeft: {fileID: 2635159879070105548}
   m_lesserEnemy: {fileID: 6089654258507672792, guid: c5149578cf4385e428f65c56265f518d,
     type: 3}
 --- !u!95 &2244760435168840456
@@ -872,6 +902,8 @@ Transform:
   - {fileID: 6460773364572207210}
   - {fileID: 4169425836651350650}
   - {fileID: 5166317202759432076}
+  - {fileID: 8455971920297601670}
+  - {fileID: 2635159879070105548}
   m_Father: {fileID: 4307642105807626970}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1029,6 +1061,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &5076047159778146279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8455971920297601670}
+  m_Layer: 0
+  m_Name: SpawnPivot_R
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8455971920297601670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5076047159778146279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 303549922058565681}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5420615522815637027
 GameObject:
   m_ObjectHideFlags: 0

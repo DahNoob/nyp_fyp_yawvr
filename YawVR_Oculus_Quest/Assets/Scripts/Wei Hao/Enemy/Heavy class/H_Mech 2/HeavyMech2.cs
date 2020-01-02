@@ -35,9 +35,9 @@ public class HeavyMech2 : EnemyBase
     [SerializeField]
     protected Transform m_coreTransform;
     [SerializeField]
-    protected Transform m_rightSide;
+    protected Transform m_spawnPivotRight;
     [SerializeField]
-    protected Transform m_leftSide;
+    protected Transform m_spawnPivotLeft;
     [SerializeField]
     protected GameObject m_lesserEnemy;
 
@@ -45,6 +45,7 @@ public class HeavyMech2 : EnemyBase
     protected _GameStates m_currentState = _GameStates.WALK;
     protected bool activeSideIsRight = false;
     protected float spawnRechargeTimer;
+    protected List<Collider> ignoredColliders = new List<Collider>();
 
     // Start is called before the first frame update
     void Start()
@@ -92,18 +93,31 @@ public class HeavyMech2 : EnemyBase
     {
         m_currentState = _GameStates.SPAWN;
         GetComponent<NavMeshAgent>().isStopped = true;
+        GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+
         FlipActiveSide();
+
     }
     public void ExitSpawn()
     {
         m_currentState = _GameStates.CHASE;
         spawnRechargeTimer = Time.time + m_spawnRechargeTime;
         GetComponent<NavMeshAgent>().isStopped = false;
+        GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
+        Collider col = GetComponent<Collider>();
+        for (int i = 0; i < ignoredColliders.Count; ++i)
+        {
+            Physics.IgnoreCollision(col, ignoredColliders[i], false);
+        }
+        ignoredColliders.Clear();
     }
     public void SpawnEnemy()
     {
-        Transform spawnTransform = activeSideIsRight ? m_rightSide : m_leftSide;
-        Instantiate(m_lesserEnemy, spawnTransform.position, spawnTransform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        Transform spawnTransform = activeSideIsRight ? m_spawnPivotRight : m_spawnPivotLeft;
+        Collider newEnemy = Instantiate(m_lesserEnemy, spawnTransform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<Collider>();
+        Physics.IgnoreCollision(GetComponent<Collider>(), newEnemy, true);
+        ignoredColliders.Add(newEnemy);
+        newEnemy.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 5000.0f, 12000.0f));
     }
     public void FlipActiveSide()
     {
