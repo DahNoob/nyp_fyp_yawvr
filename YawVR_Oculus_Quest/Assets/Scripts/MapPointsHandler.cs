@@ -60,7 +60,7 @@ public class MapPointsHandler : MonoBehaviour
         int index = 0;
         foreach (Transform t in transform)
         {
-            t.name = string.Format("{0}{1}{2}", "(", index.ToString(), ")");
+            t.name = string.Format("{0}{1}{2}", " (", index.ToString(), ")");
             ++index;
         }
     }
