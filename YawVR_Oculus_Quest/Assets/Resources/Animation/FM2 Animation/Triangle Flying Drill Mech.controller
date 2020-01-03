@@ -97,6 +97,36 @@ MonoBehaviour:
   m_outRange: 150
   m_rotationSpeed: 6
   navMeshAgent: {fileID: 0}
+--- !u!114 &-963010547765669348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f76079e64da7ca4facdbcc7d5e14676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_checkIntervals: 1.5
+  m_detectRange: 50
+  m_fieldOfViewAngle: 60
+--- !u!114 &-758414984953113322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c67b1c2ce923b744b06b381a3ee4bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_checkIntervals: 1.5
+  m_detectRange: 50
+  m_fieldOfViewAngle: 60
 --- !u!1102 &-325408995689542891
 AnimatorState:
   serializedVersion: 5
@@ -109,7 +139,9 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4543662225111464867}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -758414984953113322}
+  - {fileID: -963010547765669348}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -206,7 +238,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 7404312642956578460}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -250,3 +283,19 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &7404312642956578460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3b309cc31c5ba4e9337fb449fc75c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_checkIntervals: 1.5
+  m_trackTime: 4
+  m_attackWindUp: 1
+  rotationSpeed: 6

@@ -672,6 +672,7 @@ GameObject:
   - component: {fileID: 3296302320629394630}
   - component: {fileID: 30919776}
   - component: {fileID: 5875549529491135416}
+  - component: {fileID: 1456948255247223642}
   m_Layer: 0
   m_Name: FM2_Triangle Flying Drill Mech v2
   m_TagString: Untagged
@@ -702,14 +703,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6818234780709451212}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!96 &3296302320629394631
 TrailRenderer:
   serializedVersion: 2
@@ -824,7 +825,7 @@ Animator:
   m_GameObject: {fileID: 6818234780709451212}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bd4b6d02378588f4b932f2060b04fa96, type: 2}
+  m_Controller: {fileID: 9100000, guid: 40c998b46279edf42b5dff4c676a5f06, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -873,9 +874,7 @@ MonoBehaviour:
   moveSpeed: 10
   m_dieEffect: {fileID: 8290165608302987775, guid: d903496c821bada4eadb62fdb6334398,
     type: 3}
-  m_bodyTransform: {fileID: 0}
-  projectile: {fileID: 0}
-  poof: {fileID: 0}
+  m_bodyTransform: {fileID: 7549270684064581599}
   currentState: 0
   rarity: 0
   HP_Buff_Prefab: {fileID: 3935465836604018861, guid: 3222aadb09b81b04e939777452714285,
@@ -887,6 +886,19 @@ MonoBehaviour:
   HP: 0
   DMG: 0
   MS: 0
+--- !u!65 &1456948255247223642
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6818234780709451212}
+  m_Material: {fileID: 13400000, guid: 832746190bb50914a82b42a7dc0aadd4, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3052368, y: 1.2516937, z: 1.3872375}
+  m_Center: {x: -0.011871338, y: -0.0013580322, z: -0.0018157959}
 --- !u!1 &6891968525230165294
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,15 +26,9 @@ public class Flying_Enemy_2 : EnemyBase
 
     List<string> buffs = new List<string> { "HP", "DMG", "MS" };
 
-    public Transform projectile;
     private Transform target;
     private GameObject Player;
 
-    //public GameObject leftBlaster;
-    //public GameObject rightBlaster;
-
-    // Attack range
-    private int attackRange = 10;
     // Baneling rotation speed
     private int rotationSpeed = 5;
     // Time taken before attack is activated
@@ -48,10 +42,6 @@ public class Flying_Enemy_2 : EnemyBase
 
     private Rigidbody rb;
 
-    // Particle effect when baneling explodes
-    public ParticleSystem poof;
-    float explodeDuration = 1.0f;
-
     [SerializeField]
     private _EnemyState currentState;
 
@@ -59,10 +49,6 @@ public class Flying_Enemy_2 : EnemyBase
     [SerializeField]
     private _Rarity rarity;
     private GameObject weightedRandom;
-
-    private float projectileSpeed;
-    private float amount = 1.0f; //how much it shakes
-    private Vector3 transformX;
 
     [Header("Buff Prefabs")]
     [SerializeField]
@@ -81,18 +67,76 @@ public class Flying_Enemy_2 : EnemyBase
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         Player = GameObject.Find("Player");
         target = Player.GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
-        poof = gameObject.GetComponent<ParticleSystem>();
         weightedRandom = GameObject.Find("WeightedRNG");
 
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
 
-        transformX = transform.position;
+        string currBuff = StartBuff();
+        string secondBuff = StartBuff();
+        string thirdBuff = StartBuff();
+
+        switch (rarity)
+        {
+            case _Rarity.DELTA:
+                if (currBuff == "HP")
+                {
+                    GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    HP = true;
+                }
+                if (currBuff == "DMG")
+                {
+                    GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    DMG = true;
+                }
+                if (currBuff == "MS")
+                {
+                    GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    MS = true;
+                }
+                break;
+            case _Rarity.BETA:                
+                if (currBuff == "HP" || secondBuff == "HP")
+                {
+                    GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    HP = true;
+                }
+                if (currBuff == "DMG" || secondBuff == "DMG")
+                {
+                    GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    DMG = true;
+                }
+                if (currBuff == "MS" || secondBuff == "MS")
+                {
+                    GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    MS = true;
+                }
+                break;
+            case _Rarity.ALPHA:              
+                if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
+                {
+                    GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    HP = true;
+                }
+                if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+                {
+                    GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    DMG = true;
+                }
+                if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+                {
+                    GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                    MS = true;
+                }
+                break;
+            case _Rarity.OMEGA:
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -123,7 +167,6 @@ public class Flying_Enemy_2 : EnemyBase
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
             //Debug.Log("Hit");
-            transformX = transform.position;
             currentState = _EnemyState.DIE;
             //m_Animator.SetBool("Explode", true);
         }

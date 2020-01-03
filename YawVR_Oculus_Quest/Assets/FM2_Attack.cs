@@ -10,7 +10,7 @@ public class FM2_Attack : SMB_BaseEnemyState
 
     [Header("Configurations")]
     [SerializeField]
-    private float m_trackTime = 4.0f;
+    private float m_trackTime = 3.0f;
     [SerializeField]
     private float m_attackWindUp = 1.0f;
     [SerializeField]
@@ -23,7 +23,7 @@ public class FM2_Attack : SMB_BaseEnemyState
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        
+        animator.SetBool("Chase_InRange", false);
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

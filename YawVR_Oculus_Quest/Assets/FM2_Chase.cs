@@ -26,13 +26,8 @@ public class FM2_Chase : SMB_BaseEnemyState
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        //PlayerHandler player = PlayerHandler.instance;
-        //animator.SetBool("Attack", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
-        //Debug.Log("Time to Attack " + animator.GetBool("Attack"));
-        //Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(player.transform.position, enemy.transform.position));
-
         float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
-        enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
+        //enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
         if (distanceSqr < inRangeSqr)
             animator.SetBool("Attack", true);
         //else if (distanceSqr > outRangeSqr)
@@ -42,8 +37,6 @@ public class FM2_Chase : SMB_BaseEnemyState
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        //m_projectileOriginL = animator.transform.Find("LBlaster Projectile Origin");
-        //m_projectileOriginR = animator.transform.Find("RBlaster Projectile Origin");
         navMeshAgent = animator.GetComponent<NavMeshAgent>();
         navMeshAgent.isStopped = false;
         navMeshAgent.SetDestination(PlayerHandler.instance.transform.position);

@@ -268,7 +268,7 @@ public class LightMech2 : EnemyBase
         return selectedBuff;
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
@@ -285,4 +285,21 @@ public class LightMech2 : EnemyBase
             collision.gameObject.SetActive(false);
         }
     }
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
+    //    {
+    //        Debug.Log("Hit");
+    //        //transformX = transform.position;
+    //        //currentState = _GameStates.EXPLODE;
+    //        m_Animator.SetBool("Chase", false);
+    //        m_Animator.SetBool("Explode", true);
+    //    }
+
+    //    if (collision.gameObject.tag == "Bullet")
+    //    {
+    //        takeDamage(1);
+    //        collision.gameObject.SetActive(false);
+    //    }
+    //}
 }
