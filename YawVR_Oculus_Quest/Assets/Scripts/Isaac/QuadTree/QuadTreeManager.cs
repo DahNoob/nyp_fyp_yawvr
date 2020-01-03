@@ -116,12 +116,12 @@ public class QuadTreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (showBoundaries)
-        //{
-        //    DrawNodes();
-        //    //DrawNodesLessOptimized();
-        //}
-        ////DistanceCheck();
+        if (showBoundaries)
+        {
+            DrawNodes();
+            //DrawNodesLessOptimized();
+        }
+        //DistanceCheck();
         //DistanceCheckLessOptimized();
     }
 
