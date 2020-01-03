@@ -24,6 +24,8 @@ public class Flying_Enemy_2 : EnemyBase
         DIE,
     }
 
+    List<string> buffs = new List<string> { "HP", "DMG", "MS" };
+
     public Transform projectile;
     private Transform target;
     private GameObject Player;
@@ -62,20 +64,24 @@ public class Flying_Enemy_2 : EnemyBase
     private float amount = 1.0f; //how much it shakes
     private Vector3 transformX;
 
-    [Header("Projectile Origin")]
-    // Light Mech Shooting
-    public Transform m_projectileOriginL;
-    public Transform m_projectileOriginR;
+    [Header("Buff Prefabs")]
+    [SerializeField]
+    public GameObject HP_Buff_Prefab;
+    public GameObject DMG_Buff_Prefab;
+    public GameObject MS_Buff_Prefab;
 
-    // Dodge Check
-    private float dodgeCheck = 2.0f;
+    [Header("Active Buff")]
+    [SerializeField]
+    private bool HP;
+    [SerializeField]
+    private bool DMG;
+    [SerializeField]
+    private bool MS;
 
 
     // Start is called before the first frame update
     void Start()
-    {
-        // Current State
-        //currentState = _EnemyState.AVOID;
+    { 
         Player = GameObject.Find("Player");
         target = Player.GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
@@ -87,58 +93,29 @@ public class Flying_Enemy_2 : EnemyBase
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
 
         transformX = transform.position;
-
-        //Debug.Log("Current Health = " + health);
-        //Debug.Log("Current Max Health = " + maxHealth);
-        //Debug.Log("Current dmg = " + damage);
     }
 
     // Update is called once per frame
     void Update()
     {
  
-
-        //switch (currentState)
-        //{
-            
-        //}
-    }
-
-    //IEnumerator EnemyShoot()
-    //{
-    //    BaseProjectile _projectileL = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-    //    _projectileL.Init(m_projectileOriginL);
-
-    //    yield return new WaitForSeconds(0.2f);
-
-    //    BaseProjectile _projectileR = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-    //    _projectileR.Init(m_projectileOriginR);
-    //}
-
-    //IEnumerator EnemyDodge()
-    //{
-    //    float random = Random.Range(1, 10);
-
-    //    if (random > 5)
-    //    {
-    //        transform.position += transform.right * (moveSpeed * 1.5f) * Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        transform.position += transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
-    //    }
-
-    //    yield return new WaitForSeconds(1.5f);
-
-    //    //currentState = _EnemyState.CHASE;
-    //}
+    }   
 
     void PlayDeathParticle()
     {
         //Instantiate and store in a temporary variable
-        ParticleSystem explode = Instantiate(poof);
+        //ParticleSystem explode = Instantiate(poof);
         //Destroy the Instantiated ParticleSystem                    
-        Destroy(explode, explodeDuration);
+        //Destroy(explode, explodeDuration);
+    }
+
+    public string StartBuff()
+    {
+        System.Random random = new System.Random();
+        int index = random.Next(buffs.Count);
+        var selectedBuff = buffs[index];
+        buffs.RemoveAt(index);
+        return selectedBuff;
     }
 
     void OnCollisionEnter(Collision collision)
