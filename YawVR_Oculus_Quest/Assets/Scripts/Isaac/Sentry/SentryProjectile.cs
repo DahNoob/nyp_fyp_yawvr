@@ -12,18 +12,6 @@ public class SentryProjectile : BaseProjectile
     [SerializeField]
     protected GameObject m_projectileImpactEffect;
 
-    public float projectileSpeed
-    {
-        get
-        {
-            return m_projectileSpeed;
-        }
-        set
-        {
-            m_projectileSpeed = value;
-        }
-    }
-
     public override void Init(Transform _transform = null)
     {
         if (_transform != null)

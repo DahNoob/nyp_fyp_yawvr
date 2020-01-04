@@ -64,7 +64,7 @@ public class AmmoModule
         get { return m_currentClips; }
         private set { m_currentClips = Mathf.Clamp(value, 0, m_maxClips); }
     }
-  
+
     //Inits values, for now can just not call if you want?
     public void Init()
     {
@@ -77,31 +77,51 @@ public class AmmoModule
     public bool DecreaseAmmo(int ammoDeduction)
     {
         //Just ignore and always return true to the ammo decrease.
-        if (usesAmmo == false)
+        if (!usesAmmo)
             return true;
 
         if (m_currentAmmo - ammoDeduction >= 0)
         {
-           m_currentAmmo -= ammoDeduction;
+            m_currentAmmo -= ammoDeduction;
             return true;
         }
         //Not enough ammo
         return false;
     }
 
+    //Function to decrease clips
+    public bool DecreaseClips(int clipDeduction)
+    {
+        //Just ignore and always return true to the clips decrease.
+        if (!usesClips)
+            return true;
+
+        if (m_currentClips - clipDeduction >= 0)
+        {
+            m_currentClips -= clipDeduction;
+            return true;
+        }
+
+        //Not enough clips
+        return false;
+    }
+
+
     //Reload function
     public IEnumerator Reload()
     {
-        if (!m_isReloading)
+        if (DecreaseClips(1))
         {
-            m_isReloading = true;
-            while (true)
+            if (!m_isReloading)
             {
-                yield return new WaitForSeconds(m_reloadTime);
-                Debug.Log("reloaded");
-                m_isReloading = false;
-                m_currentAmmo = m_maxAmmo;
-                break;
+                m_isReloading = true;
+                while (true)
+                {
+                    yield return new WaitForSeconds(m_reloadTime);
+                    m_isReloading = false;
+                    m_currentAmmo = m_maxAmmo;
+                    break;
+                }
             }
         }
     }

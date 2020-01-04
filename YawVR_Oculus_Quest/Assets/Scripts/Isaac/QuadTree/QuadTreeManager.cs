@@ -45,7 +45,7 @@ public class QuadTreeManager : MonoBehaviour
     [Tooltip("Which tree to render")]
     private SELECTEDTREE selectedTree;
     [SerializeField]
-    [ColorUsage(true,true)]
+    [ColorUsage(true, true)]
     [Tooltip("Color for the gizmos grid")]
     private Color staticTreeColor;
     [SerializeField]
@@ -181,7 +181,8 @@ public class QuadTreeManager : MonoBehaviour
             //Reset the moving tree
             for (int i = 0; i < dynamicList.Count; i++)
             {
-                dynamicList[i].GetComponent<DynamicQuadTreeObject>().AddToQuadTree(dynamicList[i].gameObject);
+                if (dynamicList[i] != null)
+                    dynamicList[i].GetComponent<DynamicQuadTreeObject>().AddToQuadTree(dynamicList[i].gameObject);
             }
         }
     }
@@ -266,9 +267,9 @@ public class QuadTreeManager : MonoBehaviour
     void DrawNodes()
     {
         queryBounds.position = playerTransform.position;
-       surroundingObjects = Query(queryBounds, true);
+        surroundingObjects = Query(queryBounds, true);
 
-        foreach(GameObject statics in staticList)
+        foreach (GameObject statics in staticList)
         {
             MeshRenderer[] renderers = statics.GetComponentsInChildren<MeshRenderer>();
             foreach (MeshRenderer meshR in renderers)
@@ -277,10 +278,10 @@ public class QuadTreeManager : MonoBehaviour
             }
         }
 
-        foreach(GameObject surrounds in surroundingObjects)
+        foreach (GameObject surrounds in surroundingObjects)
         {
             MeshRenderer[] renderers = surrounds.GetComponentsInChildren<MeshRenderer>();
-            foreach(MeshRenderer meshR  in renderers)
+            foreach (MeshRenderer meshR in renderers)
             {
                 meshR.material = materialArray[1];
             }
@@ -295,7 +296,7 @@ public class QuadTreeManager : MonoBehaviour
         {
             MeshRenderer[] renderers = statics.GetComponentsInChildren<MeshRenderer>();
 
-            if(queryBounds.Contains(statics.transform.position))
+            if (queryBounds.Contains(statics.transform.position))
             {
                 foreach (MeshRenderer meshR in renderers)
                 {
@@ -315,12 +316,12 @@ public class QuadTreeManager : MonoBehaviour
 
     void DistanceCheck()
     {
-        for(int i =0; i < staticList.Count; ++i)
+        for (int i = 0; i < staticList.Count; ++i)
         {
             QuadRect bounds = new QuadRect(staticList[i].transform.position, 50, 50);
             List<GameObject> surrounds = Query(bounds, true);
 
-            foreach(GameObject surround in surrounds)
+            foreach (GameObject surround in surrounds)
             {
                 float distance = Vector3.Distance(staticList[i].transform.position, surround.transform.position);
             }
@@ -331,12 +332,12 @@ public class QuadTreeManager : MonoBehaviour
     {
         for (int i = 0; i < staticList.Count; ++i)
         {
-            for(int x = 0; x < staticList.Count; ++x)
+            for (int x = 0; x < staticList.Count; ++x)
             {
                 if (i == x)
                     continue;
 
-                float distance = Vector3.Distance(staticList[i].transform.position, staticList[x].transform.position);                         
+                float distance = Vector3.Distance(staticList[i].transform.position, staticList[x].transform.position);
             }
         }
     }

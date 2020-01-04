@@ -32,15 +32,9 @@ public class LaserGunArm : MechArmModule
     protected AmmoModule ammoModule;
 
     [Header("UI Configuration")]
-    [SerializeField]
-    //Weapon fill circle or something that looks horrible now?
-    private Image weaponFill;
     //Current weapon ammo
     [SerializeField]
     private Text weaponAmmoText;
-    //Reloading status
-    [SerializeField]
-    private Text weaponReloading;
 
     //Local variables
     private float shootTick;
@@ -50,7 +44,6 @@ public class LaserGunArm : MechArmModule
         if (!CustomUtility.IsObjectPrefab(m_projectilePrefab))
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
         //Set the fill amount to be the normalized value of the ammo left
-        weaponFill.fillAmount = ammoModule.ReturnNormalized();
         weaponAmmoText.text = ammoModule.currentAmmo.ToString();
         m_laserPointer.gameObject.SetActive(true);
     }
@@ -74,7 +67,6 @@ public class LaserGunArm : MechArmModule
 
     public override bool Hold(OVRInput.Controller _controller)
     {
-
         //If the ammo module is not reloading?
         if (ammoModule.m_isReloading == false)
         {
@@ -86,8 +78,6 @@ public class LaserGunArm : MechArmModule
                 //{
                 if (ammoModule.DecreaseAmmo(1))
                 {
-                    //Set the fill amount to be the normalized value of the ammo left
-                    weaponFill.fillAmount = ammoModule.ReturnNormalized();
                     //Set the current ammo count
                     weaponAmmoText.text = ammoModule.currentAmmo.ToString();
 
@@ -102,8 +92,6 @@ public class LaserGunArm : MechArmModule
 
                     //Triggered
                     GUIManager.instance.Triggered(_controller);
-
-
                     return true;
                 }
                 else
@@ -131,9 +119,7 @@ public class LaserGunArm : MechArmModule
 
     private void Update()
     {
-        //Some test for now, will finish tommorow
-        weaponReloading.enabled = ammoModule.m_isReloading;
-        //If it's reloading, then don't show?
-        weaponAmmoText.enabled = !ammoModule.m_isReloading;
+        ////If it's reloading, then don't show?
+        //weaponAmmoText.enabled = !ammoModule.m_isReloading;
     }
 }
