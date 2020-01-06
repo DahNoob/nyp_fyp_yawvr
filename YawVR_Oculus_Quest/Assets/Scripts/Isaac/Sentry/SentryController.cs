@@ -30,7 +30,10 @@ public class SentryController : MonoBehaviour
     private QuadRect m_queryBounds;
     [SerializeField]
     [Tooltip("How fast the projectile travels")]
-    private float projectileVelocity;
+    private float m_projectileVelocity;
+    [SerializeField]
+    [Tooltip("The time taken for the turret to turn")]
+    private float m_turretTurnTimeScale;
 
     [Header("Shooting Configurations")]
     [SerializeField]
@@ -57,6 +60,12 @@ public class SentryController : MonoBehaviour
     [SerializeField]
     [Tooltip("Sentry Mode")]
     private SENTRY_MODES m_sentryMode = SENTRY_MODES.CLOSEST_DISTANCE;
+    [SerializeField]
+    [Tooltip("Restrict Y Rotation")]
+    private bool restrictYRotation;
+    [SerializeField]
+    [Tooltip("Margins")] [Range(0f,1f)]
+    private float marginForShooting = 0.001f;
 
     //Local variables
     private float m_shootTick;
@@ -71,6 +80,10 @@ public class SentryController : MonoBehaviour
     private bool m_isSearching = false;
     //Target predicted position
     private Vector3 m_predictedPosition;
+    //Angle towards enemy
+    private float m_desiredRotation;
+    //Secret techniques
+    private float m_previousRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -170,15 +183,24 @@ public class SentryController : MonoBehaviour
 
     void ShootTowardsTarget()
     {
-
         //Look towards the enemy
         //Calculate the target center
-        m_predictedPosition = FirstOrderIntercept(projectileVelocity, m_currentTarget);
-        transform.parent.LookAt(m_predictedPosition);
+        m_predictedPosition = FirstOrderIntercept(m_projectileVelocity, m_currentTarget);
 
-        // transform.parent.LookAt()
-        //Then we shoot using the forward vector
-        Shoot();
+        //Direction vector from predicted position to me    
+        Vector3 directionVector = m_predictedPosition - m_projectileOrigin.position;
+        if (restrictYRotation)
+            directionVector.y = 0;
+
+        Vector3 dirNormalized = directionVector.normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(dirNormalized, Vector3.up);
+        transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, targetRotation, m_turretTurnTimeScale * Time.smoothDeltaTime);
+
+        //Dot product to determine shoot
+        float dot = Vector3.Dot(m_projectileOrigin.forward, dirNormalized);
+        Debug.Log(dot);
+        if ( dot > 1 - marginForShooting)
+             Shoot();
     }
 
     void Shoot()
@@ -287,9 +309,6 @@ public class SentryController : MonoBehaviour
             }
         }
     }
-
-
-
 
     #region Intersect Functions
     //Some intersect functions
