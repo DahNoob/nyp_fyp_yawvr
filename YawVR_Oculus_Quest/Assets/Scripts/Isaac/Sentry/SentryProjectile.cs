@@ -35,4 +35,16 @@ public class SentryProjectile : BaseProjectile
         }
         Destroy(gameObject);
     }
+    //    GameObject efx = Instantiate(m_projectileImpactEffect, transform.position, Quaternion.identity);
+
+    //    efx.GetComponent<ParticleSystem>().Emit(20);
+
+    //    if (collision.gameObject.tag == "Enemy")
+    //    {
+    //        if(collision.collider)
+    //        {
+    //            Destroy(this.gameObject);
+    //        }
+    //    }
+    
 }
