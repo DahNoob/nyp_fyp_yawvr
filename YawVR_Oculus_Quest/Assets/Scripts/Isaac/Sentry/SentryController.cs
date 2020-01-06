@@ -85,6 +85,13 @@ public class SentryController : MonoBehaviour
     //Secret techniques
     private float m_previousRotation;
 
+    [SerializeField]
+    private UnityEngine.UI.Text ammoText;
+    [SerializeField]
+    private UnityEngine.UI.Text modeText;
+    [SerializeField]
+    private UnityEngine.UI.Text targetText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -102,8 +109,35 @@ public class SentryController : MonoBehaviour
     {
         if (m_sentryMode == SENTRY_MODES.DISABLED)
         {
+            ammoText.enabled = false;
+            targetText.enabled = false;
             //Do something like some disabled update.
+            modeText.text = "Mode : DISABLED";
             return;
+        }
+
+        //Update text
+        ammoText.text = "Ammo: " + m_ammoModule.currentAmmo.ToString() + "/" + m_ammoModule.maxAmmo.ToString();
+        if(m_currentTarget != null)
+            targetText.text = "Target: " + m_currentTarget.gameObject.name;
+        
+        switch(m_sentryMode)
+        {
+            case SENTRY_MODES.CLOSEST_DISTANCE:
+                {
+                    modeText.text = "Mode: CLOSEST_DISTANCE";
+                    break;
+                }
+            case SENTRY_MODES.DISABLED:
+                {
+                    modeText.text = "Mode: DISABLED";
+                    break;
+                }
+            case SENTRY_MODES.FIXED_TARGET:
+                {
+                    modeText.text = "Mode: FIXED_TARGET";
+                    break;
+                }
         }
 
         //Update query bounds position
@@ -186,6 +220,7 @@ public class SentryController : MonoBehaviour
         //Look towards the enemy
         //Calculate the target center
         m_predictedPosition = FirstOrderIntercept(m_projectileVelocity, m_currentTarget);
+        m_predictedPosition.y += 1;
 
         //Direction vector from predicted position to me    
         Vector3 directionVector = m_predictedPosition - m_projectileOrigin.position;
@@ -218,7 +253,7 @@ public class SentryController : MonoBehaviour
                 if (m_ammoModule.DecreaseAmmo(m_shootCost))
                 {
                     m_shootTick -= m_shootTime;
-                    BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, bulletSorter.transform).GetComponent<BaseProjectile>();
+                    BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
                     baseProjectile.Init(m_projectileOrigin);
                 }
                 else

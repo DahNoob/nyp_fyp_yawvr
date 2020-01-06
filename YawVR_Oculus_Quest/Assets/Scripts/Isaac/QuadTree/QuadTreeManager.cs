@@ -116,6 +116,9 @@ public class QuadTreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Removea ll null entires
+        dynamicList.RemoveAll(item => item == null);
+
         if (showBoundaries)
         {
             DrawNodes();
