@@ -28,12 +28,40 @@ public class QuadTreeManager : MonoBehaviour
         SHOWSELECTED
     }
 
-    private enum SELECTEDTREE
+    private enum RENDER_OPTIONS
     {
-        STATIC,
-        DYNAMIC,
+        SELECTED_STATIC,     //renders the current static enum of dynamic types
+        SELECTED_DYNAMIC, // renders the current enum of dynamic types
+        ALL_STATIC,
+        ALL_DYNAMIC,
         STATIC_DYNAMIC,
         NONE
+    }
+
+    public enum STATIC_TYPES
+    {
+        TERRAIN,
+        MAP_POINTS,
+        TOTAL_TYPE
+    }
+
+    public enum DYNAMIC_TYPES
+    {
+        ENEMIES,
+        TOTAL_TYPE
+    }
+
+    [System.Serializable]
+    public struct QuadTreeVisualization
+    {
+        public string name;
+        public List<GameObject> m_objectList;
+
+        public QuadTreeVisualization(string name , ref List<GameObject> objectList)
+        {
+            this.name = name;
+            this.m_objectList = objectList;
+        }
     }
 
     #region Visualizations
@@ -42,8 +70,8 @@ public class QuadTreeManager : MonoBehaviour
     [Tooltip("Toggle between gizmo modes for visualizations")]
     private GIZMOMODES gizmoModes;
     [SerializeField]
-    [Tooltip("Which tree to render")]
-    private SELECTEDTREE selectedTree;
+    [Tooltip("Which trees to render")]
+    private RENDER_OPTIONS selectedTree;
     [SerializeField]
     [ColorUsage(true, true)]
     [Tooltip("Color for the gizmos grid")]
@@ -75,14 +103,19 @@ public class QuadTreeManager : MonoBehaviour
     //Static one rarely needs to be "edited"
     //As long as there are a controllable amount of "dynamic", it should still be ok
     //Static tree
-    private QuadTree staticQuadTree;
+    private Dictionary<STATIC_TYPES, QuadTree> staticTrees;
     //Dynamic tree
-    private QuadTree dynamicQuadTree;
+    private Dictionary<DYNAMIC_TYPES, QuadTree> dynamicTrees;
 
     [SerializeField] //serialize added for visualization in inspector.
     private List<GameObject> staticList;
     [SerializeField] //serialize added for visualization in inspector.
     private List<GameObject> dynamicList;
+
+    [SerializeField]
+    private List<QuadTreeVisualization> staticVisualization;
+    [SerializeField]
+    private List<QuadTreeVisualization> dynamicVisualizations;
 
     //Test variables
     [SerializeField]
@@ -103,8 +136,28 @@ public class QuadTreeManager : MonoBehaviour
         maxCapacity = Mathf.Max(1, maxCapacity);
 
         //Initialize the quadtrees
-        staticQuadTree = new QuadTree(quadTreeBounds, maxCapacity);
-        dynamicQuadTree = new QuadTree(quadTreeBounds, maxCapacity);
+        staticTrees = new Dictionary<STATIC_TYPES, QuadTree>();
+        dynamicTrees = new Dictionary<DYNAMIC_TYPES, QuadTree>();
+
+        //Initialise the values
+        for(int i =0; i < (int)STATIC_TYPES.TOTAL_TYPE; ++i)
+        {
+            STATIC_TYPES currentType = (STATIC_TYPES)(i);
+            staticTrees[currentType] = new QuadTree(quadTreeBounds, maxCapacity);
+            List<GameObject> m_referenceList = new List<GameObject>();
+            staticTrees[currentType].GetObjects(ref m_referenceList);
+            staticVisualization.Add(new QuadTreeVisualization(currentType.ToString(), ref m_referenceList));
+        }
+        for (int i = 0; i < (int)DYNAMIC_TYPES.TOTAL_TYPE; ++i)
+        {
+            List<GameObject> referenceList = new List<GameObject>();
+            DYNAMIC_TYPES currentType = (DYNAMIC_TYPES)(i);
+            dynamicTrees[(DYNAMIC_TYPES)(i)] = new QuadTree(quadTreeBounds, maxCapacity);
+            List<GameObject> m_referenceList = new List<GameObject>();
+            dynamicTrees[currentType].GetObjects(ref m_referenceList);
+            dynamicVisualizations.Add(new QuadTreeVisualization(currentType.ToString(),  ref referenceList));
+        }
+
     }
 
     private void Start()
@@ -129,25 +182,35 @@ public class QuadTreeManager : MonoBehaviour
     }
 
     //Adds an object to the static list, shouldn't be called at all, other than by quadtreeobjects.
-    public bool AddToStaticQuadTree(GameObject referenceObject)
+    public bool AddToStaticQuadTree(GameObject referenceObject, STATIC_TYPES types)
     {
-        Insert(referenceObject, true);
-        if (!staticList.Contains(referenceObject))
+        if (referenceObject == null)
+            return false;
+
+        if (InsertStaticObject(referenceObject, types))
         {
-            staticList.Add(referenceObject);
-            return true;
+            if (!staticList.Contains(referenceObject))
+            {
+                staticList.Add(referenceObject);
+                return true;
+            }
         }
         return false;
     }
 
     //Adds an object to the dynamic list, shouldn't be called at all, other than by quadtreeobjects.
-    public bool AddToDynamicQuadTree(GameObject referenceObject)
+    public bool AddToDynamicQuadTree(GameObject referenceObject, DYNAMIC_TYPES types)
     {
-        Insert(referenceObject, false);
-        if (!dynamicList.Contains(referenceObject))
+        if (referenceObject == null)
+            return false;
+
+        if (InsertDynamicObject(referenceObject, types))
         {
-            dynamicList.Add(referenceObject);
-            return true;
+            if (!dynamicList.Contains(referenceObject))
+            {
+                dynamicList.Add(referenceObject);
+                return true;
+            }
         }
         return false;
     }
@@ -160,16 +223,16 @@ public class QuadTreeManager : MonoBehaviour
         Gizmos.DrawWireCube(quadTreeBounds.position,
             new Vector3((quadTreeBounds.width * 2) + quadTreeBoundsOffset.x, 0.01f, (quadTreeBounds.height * 2) + quadTreeBoundsOffset.y));
 
-        if (staticQuadTree != null && (selectedTree == SELECTEDTREE.STATIC || selectedTree == SELECTEDTREE.STATIC_DYNAMIC))
-        {
-            Gizmos.color = staticTreeColor;
-            staticQuadTree.Render(gizmosOffsets + new Vector3(0, quadTreeBounds.position.y, 0));
-        }
-        if (dynamicQuadTree != null && (selectedTree == SELECTEDTREE.DYNAMIC || selectedTree == SELECTEDTREE.STATIC_DYNAMIC))
-        {
-            Gizmos.color = dynamicTreeColor;
-            dynamicQuadTree.Render(gizmosOffsets + new Vector3(0, quadTreeBounds.position.y, 0));
-        }
+        //if (staticQuadTree != null && (selectedTree == SELECTEDTREE.STATIC || selectedTree == SELECTEDTREE.STATIC_DYNAMIC))
+        //{
+        //    Gizmos.color = staticTreeColor;
+        //    staticQuadTree.Render(gizmosOffsets + new Vector3(0, quadTreeBounds.position.y, 0));
+        //}
+        //if (dynamicQuadTree != null && (selectedTree == SELECTEDTREE.DYNAMIC || selectedTree == SELECTEDTREE.STATIC_DYNAMIC))
+        //{
+        //    Gizmos.color = dynamicTreeColor;
+        //    dynamicQuadTree.Render(gizmosOffsets + new Vector3(0, quadTreeBounds.position.y, 0));
+        //}
     }
 
     //Updates tree
@@ -179,65 +242,125 @@ public class QuadTreeManager : MonoBehaviour
         {
             yield return new WaitForSeconds(updateTick);
 
-            ResetDynamicTree();
+            ResetDynamicTrees();
 
             //Reset the moving tree
             for (int i = 0; i < dynamicList.Count; i++)
             {
                 if (dynamicList[i] != null)
-                    dynamicList[i].GetComponent<DynamicQuadTreeObject>().AddToQuadTree(dynamicList[i].gameObject);
+                {
+                    DynamicQuadTreeObject dynamicObject = dynamicList[i].GetComponent<DynamicQuadTreeObject>();
+                    dynamicObject.AddToQuadTree(dynamicList[i].gameObject, dynamicObject.Type);
+                }
             }
         }
     }
 
-    //Easier access to the quad tree's functions
-    public bool Insert(GameObject referenceObject, bool isStatic)
+    //Fine I'll make two
+    bool InsertStaticObject(GameObject referenceObject, STATIC_TYPES types)
     {
-        bool result = isStatic ? staticQuadTree.Insert(referenceObject) : dynamicQuadTree.Insert(referenceObject);
+        if (!staticTrees.ContainsKey(types))
+        {
+            Debug.Log("[InsertStaticObject]Static tree does not contain key of static type: " + types.ToString());
+            return false;
+        }
+
+        //Else there is a key so pog
+        bool result = staticTrees[types].Insert(referenceObject);
         return result;
     }
 
-    public List<GameObject> Query(QuadRect queryBounds, bool isStatic)
+    bool InsertDynamicObject(GameObject referenceObject, DYNAMIC_TYPES types)
     {
-        List<GameObject> result = isStatic ? staticQuadTree.Query(queryBounds) : dynamicQuadTree.Query(queryBounds);
+        if (!dynamicTrees.ContainsKey(types))
+        {
+            Debug.Log("[InsertDynamicObjects]Dynamic tree does not contain key of dynamic type: " + types.ToString());
+            return false;
+        }
+
+        //Else there is a key so pog
+        bool result = dynamicTrees[types].Insert(referenceObject);
         return result;
     }
 
-    public bool Remove(GameObject referenceObject, bool isStatic)
+    public List<GameObject> QueryStaticObjects(QuadRect queryBounds, STATIC_TYPES types)
     {
-        //IMPLEMENT LATER
-        bool result = isStatic ? staticQuadTree.Remove(referenceObject) : dynamicQuadTree.Remove(referenceObject);
+        if (!staticTrees.ContainsKey(types))
+        {
+            Debug.Log("[QueryStaticObjects] Static trees does not contain key of type: " + types.ToString());
+            return null;
+        }
+
+        //Else there is a key so pog
+        List<GameObject> result = staticTrees[types].Query(queryBounds);
         return result;
     }
+
+    public List<GameObject> QueryDynamicObjects(QuadRect queryBounds, DYNAMIC_TYPES types)
+    {
+        if (!dynamicTrees.ContainsKey(types))
+        {
+            Debug.Log("[QueryDynamicObjects] Static trees does not contain key of type: " + types.ToString());
+            return null;
+        }
+
+
+        //Else there is a key so pog
+        List<GameObject> result = dynamicTrees[types].Query(queryBounds);
+        return result;
+    }
+
+    public bool RemoveStaticObject(GameObject referenceObject, STATIC_TYPES types)
+    {
+        if (!staticTrees.ContainsKey(types))
+        {
+            Debug.Log("[RemoveStaticObjects] Static trees does not contain key of type: " + types.ToString());
+            return false;
+        }
+        //Else there is a key so pog
+        bool result = staticTrees[types].Remove(referenceObject);
+        return result;
+    }
+    public bool RemoveDynamicObject(GameObject referenceObject, DYNAMIC_TYPES types)
+    {
+        if (!dynamicTrees.ContainsKey(types))
+        {
+            Debug.Log("[RemoveDynamicObjects] Static trees does not contain key of type: " + types.ToString());
+            return false;
+        }
+        //Else there is a key so pog
+        bool result = dynamicTrees[types].Remove(referenceObject);
+        return result;
+    }
+
 
     public bool ResetQuadTrees()
     {
-        if (staticQuadTree != null)
-            staticQuadTree.Clear();
-
-        if (dynamicQuadTree != null)
-            dynamicQuadTree.Clear();
-
-        ////Make new ones
-        //staticQuadTree = new QuadTree(quadTreeBounds, maxCapacity);
-        //dynamicQuadTree = new QuadTree(quadTreeBounds, maxCapacity);
+        ResetStaticTrees();
+        ResetDynamicTrees();
 
         //Debug.Log("Quadtree reset.");
         return true;
     }
 
-    public bool ResetDynamicTree()
+    public bool ResetDynamicTrees()
     {
-        if (dynamicQuadTree != null)
-            dynamicQuadTree.Clear();
+        foreach (KeyValuePair<DYNAMIC_TYPES, QuadTree> dynamicTree in dynamicTrees)
+        {
+            if (dynamicTree.Value != null)
+                dynamicTree.Value.Clear();
+        }
 
         return true;
     }
 
-    public bool ResetStaticTree()
+    public bool ResetStaticTrees()
     {
-        if (staticQuadTree != null)
-            staticQuadTree.Clear();
+        foreach (KeyValuePair<STATIC_TYPES, QuadTree> staticTree in staticTrees)
+        {
+            if (staticTree.Value != null)
+                staticTree.Value.Clear();
+        }
 
         return true;
     }
@@ -266,11 +389,12 @@ public class QuadTreeManager : MonoBehaviour
         DrawGrid();
     }
 
+    //Terrain test for mid presentation
     public List<GameObject> surroundingObjects;
     void DrawNodes()
     {
         queryBounds.position = playerTransform.position;
-        surroundingObjects = Query(queryBounds, true);
+        surroundingObjects = QueryStaticObjects(queryBounds, STATIC_TYPES.TERRAIN);
 
         foreach (GameObject statics in staticList)
         {
@@ -322,7 +446,7 @@ public class QuadTreeManager : MonoBehaviour
         for (int i = 0; i < staticList.Count; ++i)
         {
             QuadRect bounds = new QuadRect(staticList[i].transform.position, 50, 50);
-            List<GameObject> surrounds = Query(bounds, true);
+            List<GameObject> surrounds = QueryStaticObjects(queryBounds, STATIC_TYPES.TERRAIN);
 
             foreach (GameObject surround in surrounds)
             {

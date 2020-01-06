@@ -104,9 +104,6 @@ public class Light_Enemy_1 : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        //Add this object to quad tree 
-        AddToQuadTree(this.gameObject);
-
         // Current State
         //currentState = _EnemyState.AVOID;
         Player = GameObject.Find("Player");
@@ -203,6 +200,10 @@ public class Light_Enemy_1 : EnemyBase
             //    MS = true;
             //}
         }
+
+
+        //Add this object to quad tree 
+        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
     }
 
     // Update is called once per frame

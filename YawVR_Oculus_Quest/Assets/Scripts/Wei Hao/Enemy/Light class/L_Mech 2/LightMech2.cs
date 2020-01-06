@@ -194,7 +194,7 @@ public class LightMech2 : EnemyBase
         }
 
         //Add to Quadtree
-        AddToQuadTree(this.gameObject);
+        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
     }
 
     // Update is called once per frame

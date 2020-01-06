@@ -247,5 +247,21 @@ public class QuadTree
 
         }
     }
+
+
+    public void GetObjects(ref List<GameObject> referenceList)
+    {
+        for (int i = 0; i < m_objectList.Count; ++i)
+        {
+            referenceList.Add(m_objectList[i]);
+        }
+        if(isDivided)
+        {
+            for(int i =0; i < QUADTREE_COUNT; ++i)
+            {
+                regions[i].GetObjects(ref referenceList);
+            }
+        }
+    }
 }
 

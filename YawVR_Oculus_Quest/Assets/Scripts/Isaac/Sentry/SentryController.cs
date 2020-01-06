@@ -267,7 +267,7 @@ public class SentryController : MonoBehaviour
                 if (m_ammoModule.DecreaseAmmo(m_shootCost))
                 {
                     m_shootTick -= m_shootTime;
-                    BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+                    BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, bulletSorter.transform).GetComponent<BaseProjectile>();
                     baseProjectile.Init(m_projectileOrigin);
                 }
                 else
@@ -300,13 +300,13 @@ public class SentryController : MonoBehaviour
                 yield return new WaitForSeconds(m_enemyQueryTime);
 
                 //Query the list and update the enemy list
-                m_enemyList = QuadTreeManager.instance.Query(m_queryBounds, false);
+                m_enemyList = QuadTreeManager.instance.QueryDynamicObjects(m_queryBounds, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
 
                 //List to be populated after the checks
                 List<GameObject> filteredList = new List<GameObject>();
 
                 //Potentially skip the more demanding code later on
-                if (m_enemyList.Count == 0)
+                if (m_enemyList == null || m_enemyList.Count == 0)
                 {
                     m_isSearching = false;
                     yield break;
@@ -329,7 +329,7 @@ public class SentryController : MonoBehaviour
                 }
 
                 //No enemies
-                if (filteredList.Count == 0)
+                if (filteredList == null || filteredList.Count == 0)
                 {
                     m_isSearching = false;
                     yield break;

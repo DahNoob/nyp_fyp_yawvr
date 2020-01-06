@@ -2,15 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DynamicQuadTreeObject : QuadTreeObject
+public class DynamicQuadTreeObject : MonoBehaviour
 {
-    public override void AddToQuadTree(GameObject referenceObject)
+    private QuadTreeManager.DYNAMIC_TYPES m_type = QuadTreeManager.DYNAMIC_TYPES.TOTAL_TYPE;
+
+    public QuadTreeManager.DYNAMIC_TYPES Type
     {
-        QuadTreeManager.instance.AddToDynamicQuadTree(referenceObject);
+        get
+        {
+            return m_type;
+        }
+        private set
+        {
+            m_type = value;
+        }
     }
 
-    public override void RemoveFromQuadTree(GameObject referenceObject)
+    //Adds the object to the quadtree and sets it's type for future reference.
+    public void AddToQuadTree(GameObject referenceObject, QuadTreeManager.DYNAMIC_TYPES type)
     {
-        QuadTreeManager.instance.Remove(referenceObject, false);
+        m_type = type;
+        QuadTreeManager.instance.AddToDynamicQuadTree(referenceObject, type);
+    }
+
+    public void RemoveFromQuadTree(GameObject referenceObject)
+    {
+        if (m_type != QuadTreeManager.DYNAMIC_TYPES.TOTAL_TYPE)
+            QuadTreeManager.instance.RemoveDynamicObject(referenceObject, m_type);
     }
 }

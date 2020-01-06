@@ -52,7 +52,7 @@ public class HeavyMech2 : EnemyBase
     {
         health = maxHealth;
         spawnRechargeTimer = Time.time;
-        AddToQuadTree(this.gameObject);
+        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
     }
 
     void Update()

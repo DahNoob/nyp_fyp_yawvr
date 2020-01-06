@@ -25,7 +25,7 @@ public class TestTargetFollower : DynamicQuadTreeObject
     // Start is called before the first frame update
     void Start()
     {
-        AddToQuadTree(this.gameObject);
+        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
 
         //Cheese it
         for (int i =0; i < targetObject.transform.childCount; ++i)
@@ -92,7 +92,7 @@ public class TestTargetFollower : DynamicQuadTreeObject
             fakeHP -= 10;
             if(fakeHP <=0)
             {
-                QuadTreeManager.instance.Remove(this.gameObject, false);
+                QuadTreeManager.instance.RemoveDynamicObject(this.gameObject, Type);
                 Destroy(this.gameObject);
   
             }

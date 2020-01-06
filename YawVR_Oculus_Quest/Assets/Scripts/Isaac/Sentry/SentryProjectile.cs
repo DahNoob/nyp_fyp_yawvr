@@ -22,29 +22,29 @@ public class SentryProjectile : BaseProjectile
 
     protected override void OnCollisionEnter(Collision collision)
     {
-        GameObject efx = Instantiate(m_projectileImpactEffect, Persistent.instance.GO_DYNAMIC.transform);
-        efx.transform.position = collision.GetContact(0).point;
-        efx.GetComponent<ParticleSystem>().Emit(6);
-        if (collision.collider)
+        //GameObject efx = Instantiate(m_projectileImpactEffect, Persistent.instance.GO_DYNAMIC.transform);
+        //efx.transform.position = collision.GetContact(0).point;
+        //efx.GetComponent<ParticleSystem>().Emit(6);
+        //if (collision.collider)
+        //{
+        //    EnemyBase eb = collision.collider.GetComponent<EnemyBase>() ?? collision.collider.GetComponentInChildren<EnemyBase>();
+        //    if (eb)
+        //    {
+        //        eb.takeDamage(5);
+        //    }
+        //}
+        //Destroy(gameObject);
+
+        GameObject efx = Instantiate(m_projectileImpactEffect, transform.position, Quaternion.identity);
+
+        efx.GetComponent<ParticleSystem>().Emit(20);
+
+        if (collision.gameObject.tag == "Enemy")
         {
-            EnemyBase eb = collision.collider.GetComponent<EnemyBase>() ?? collision.collider.GetComponentInChildren<EnemyBase>();
-            if (eb)
+            if (collision.collider)
             {
-                eb.takeDamage(5);
+                Destroy(this.gameObject);
             }
         }
-        Destroy(gameObject);
     }
-    //    GameObject efx = Instantiate(m_projectileImpactEffect, transform.position, Quaternion.identity);
-
-    //    efx.GetComponent<ParticleSystem>().Emit(20);
-
-    //    if (collision.gameObject.tag == "Enemy")
-    //    {
-    //        if(collision.collider)
-    //        {
-    //            Destroy(this.gameObject);
-    //        }
-    //    }
-    
 }
