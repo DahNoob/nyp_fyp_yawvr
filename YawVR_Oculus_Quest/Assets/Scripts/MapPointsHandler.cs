@@ -6,6 +6,9 @@ using UnityEngine;
 public class MapPointsHandler : MonoBehaviour
 {
     public static MapPointsHandler instance;
+    [Header("General Configuration")]
+    [SerializeField]
+    private bool m_showGizmos = false;
     [Header("Unconfirmed Gizmos Configuration")]
     [SerializeField]
     private Vector3 m_cubeSizeUnconfirmed = new Vector3(1, 4, 1);
@@ -85,6 +88,7 @@ public class MapPointsHandler : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        if (!m_showGizmos) return;
         Gizmos.color = m_colorUnconfirmed;
         foreach (Transform t in transform)
         {
