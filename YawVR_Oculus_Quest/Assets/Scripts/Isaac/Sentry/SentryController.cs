@@ -62,10 +62,22 @@ public class SentryController : MonoBehaviour
     private SENTRY_MODES m_sentryMode = SENTRY_MODES.CLOSEST_DISTANCE;
     [SerializeField]
     [Tooltip("Restrict Y Rotation")]
-    private bool restrictYRotation;
+    private bool restrictYRotation = false;
     [SerializeField]
+    [Tooltip("Can this sentry predict enemy movement")]
+    private bool predictEnemyMovement = true;
+[SerializeField]
     [Tooltip("Margins")] [Range(0f,1f)]
     private float marginForShooting = 0.001f;
+
+
+    [Header("UI Configuration")]
+    [SerializeField]
+    private UnityEngine.UI.Text ammoText;
+    [SerializeField]
+    private UnityEngine.UI.Text modeText;
+    [SerializeField]
+    private UnityEngine.UI.Text targetText;
 
     //Local variables
     private float m_shootTick;
@@ -85,12 +97,8 @@ public class SentryController : MonoBehaviour
     //Secret techniques
     private float m_previousRotation;
 
-    [SerializeField]
-    private UnityEngine.UI.Text ammoText;
-    [SerializeField]
-    private UnityEngine.UI.Text modeText;
-    [SerializeField]
-    private UnityEngine.UI.Text targetText;
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -219,8 +227,15 @@ public class SentryController : MonoBehaviour
     {
         //Look towards the enemy
         //Calculate the target center
-        m_predictedPosition = FirstOrderIntercept(m_projectileVelocity, m_currentTarget);
-        m_predictedPosition.y += 1;
+        if (predictEnemyMovement)
+        {
+            m_predictedPosition = FirstOrderIntercept(m_projectileVelocity, m_currentTarget);
+            m_predictedPosition.y += 1;
+        }
+        else
+        {
+            m_predictedPosition = m_currentTarget.transform.position;
+        }
 
         //Direction vector from predicted position to me    
         Vector3 directionVector = m_predictedPosition - m_projectileOrigin.position;
@@ -233,7 +248,6 @@ public class SentryController : MonoBehaviour
 
         //Dot product to determine shoot
         float dot = Vector3.Dot(m_projectileOrigin.forward, dirNormalized);
-        Debug.Log(dot);
         if ( dot > 1 - marginForShooting)
              Shoot();
     }
@@ -285,7 +299,6 @@ public class SentryController : MonoBehaviour
             {
                 yield return new WaitForSeconds(m_enemyQueryTime);
 
-                Debug.Log("Searching always");
                 //Query the list and update the enemy list
                 m_enemyList = QuadTreeManager.instance.Query(m_queryBounds, false);
 
