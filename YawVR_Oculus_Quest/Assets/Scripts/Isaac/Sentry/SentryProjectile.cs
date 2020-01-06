@@ -22,16 +22,17 @@ public class SentryProjectile : BaseProjectile
 
     protected override void OnCollisionEnter(Collision collision)
     {
-        GameObject efx = Instantiate(m_projectileImpactEffect, transform.position,Quaternion.identity);
+        GameObject efx = Instantiate(m_projectileImpactEffect, Persistent.instance.GO_DYNAMIC.transform);
         efx.transform.position = collision.GetContact(0).point;
-        
-        efx.GetComponent<ParticleSystem>().Emit(20);
-
-        if(collision.gameObject.tag == "Enemy")
+        efx.GetComponent<ParticleSystem>().Emit(6);
+        if (collision.collider)
         {
-            Debug.Log("hit enemy");
+            EnemyBase eb = collision.collider.GetComponent<EnemyBase>() ?? collision.collider.GetComponentInChildren<EnemyBase>();
+            if (eb)
+            {
+                eb.takeDamage(5);
+            }
         }
-
         Destroy(gameObject);
     }
 }

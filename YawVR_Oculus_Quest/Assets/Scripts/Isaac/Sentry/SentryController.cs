@@ -30,7 +30,10 @@ public class SentryController : MonoBehaviour
     private QuadRect m_queryBounds;
     [SerializeField]
     [Tooltip("How fast the projectile travels")]
-    private float projectileVelocity;
+    private float m_projectileVelocity;
+    [SerializeField]
+    [Tooltip("The time taken for the turret to turn")]
+    private float m_turretTurnTimeScale;
 
     [Header("Shooting Configurations")]
     [SerializeField]
@@ -57,6 +60,12 @@ public class SentryController : MonoBehaviour
     [SerializeField]
     [Tooltip("Sentry Mode")]
     private SENTRY_MODES m_sentryMode = SENTRY_MODES.CLOSEST_DISTANCE;
+    [SerializeField]
+    [Tooltip("Restrict Y Rotation")]
+    private bool restrictYRotation;
+    [SerializeField]
+    [Tooltip("Margins")] [Range(0f,1f)]
+    private float marginForShooting = 0.001f;
 
     //Local variables
     private float m_shootTick;
@@ -71,6 +80,17 @@ public class SentryController : MonoBehaviour
     private bool m_isSearching = false;
     //Target predicted position
     private Vector3 m_predictedPosition;
+    //Angle towards enemy
+    private float m_desiredRotation;
+    //Secret techniques
+    private float m_previousRotation;
+
+    [SerializeField]
+    private UnityEngine.UI.Text ammoText;
+    [SerializeField]
+    private UnityEngine.UI.Text modeText;
+    [SerializeField]
+    private UnityEngine.UI.Text targetText;
 
     // Start is called before the first frame update
     void Start()
@@ -89,8 +109,35 @@ public class SentryController : MonoBehaviour
     {
         if (m_sentryMode == SENTRY_MODES.DISABLED)
         {
+            ammoText.enabled = false;
+            targetText.enabled = false;
             //Do something like some disabled update.
+            modeText.text = "Mode : DISABLED";
             return;
+        }
+
+        //Update text
+        ammoText.text = "Ammo: " + m_ammoModule.currentAmmo.ToString() + "/" + m_ammoModule.maxAmmo.ToString();
+        if(m_currentTarget != null)
+            targetText.text = "Target: " + m_currentTarget.gameObject.name;
+        
+        switch(m_sentryMode)
+        {
+            case SENTRY_MODES.CLOSEST_DISTANCE:
+                {
+                    modeText.text = "Mode: CLOSEST_DISTANCE";
+                    break;
+                }
+            case SENTRY_MODES.DISABLED:
+                {
+                    modeText.text = "Mode: DISABLED";
+                    break;
+                }
+            case SENTRY_MODES.FIXED_TARGET:
+                {
+                    modeText.text = "Mode: FIXED_TARGET";
+                    break;
+                }
         }
 
         //Update query bounds position
@@ -170,15 +217,25 @@ public class SentryController : MonoBehaviour
 
     void ShootTowardsTarget()
     {
-
         //Look towards the enemy
         //Calculate the target center
-        m_predictedPosition = FirstOrderIntercept(projectileVelocity, m_currentTarget);
-        transform.parent.LookAt(m_predictedPosition);
+        m_predictedPosition = FirstOrderIntercept(m_projectileVelocity, m_currentTarget);
+        m_predictedPosition.y += 1;
 
-        // transform.parent.LookAt()
-        //Then we shoot using the forward vector
-        Shoot();
+        //Direction vector from predicted position to me    
+        Vector3 directionVector = m_predictedPosition - m_projectileOrigin.position;
+        if (restrictYRotation)
+            directionVector.y = 0;
+
+        Vector3 dirNormalized = directionVector.normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(dirNormalized, Vector3.up);
+        transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, targetRotation, m_turretTurnTimeScale * Time.smoothDeltaTime);
+
+        //Dot product to determine shoot
+        float dot = Vector3.Dot(m_projectileOrigin.forward, dirNormalized);
+        Debug.Log(dot);
+        if ( dot > 1 - marginForShooting)
+             Shoot();
     }
 
     void Shoot()
@@ -196,7 +253,7 @@ public class SentryController : MonoBehaviour
                 if (m_ammoModule.DecreaseAmmo(m_shootCost))
                 {
                     m_shootTick -= m_shootTime;
-                    BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, bulletSorter.transform).GetComponent<BaseProjectile>();
+                    BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
                     baseProjectile.Init(m_projectileOrigin);
                 }
                 else
@@ -287,9 +344,6 @@ public class SentryController : MonoBehaviour
             }
         }
     }
-
-
-
 
     #region Intersect Functions
     //Some intersect functions
