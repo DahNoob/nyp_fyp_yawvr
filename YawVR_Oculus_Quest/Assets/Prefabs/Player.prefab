@@ -11397,8 +11397,8 @@ MonoBehaviour:
   m_leftController: {fileID: 3352581431113299909}
   m_rightFollower: {fileID: 593048023022078872}
   m_leftFollower: {fileID: 7454591070388386404}
-  m_rightMechHand: {fileID: 983827942109641479}
-  m_leftMechHand: {fileID: 5048954556955374408}
+  m_rightMechHand: {fileID: 479962582153879321}
+  m_leftMechHand: {fileID: 6754631074978607865}
   m_mechLegs: {fileID: 1660539561907178953}
   m_energySlider: {fileID: 0}
   m_armInnerColor: {r: 0.5950722, g: 0.9521156, b: 1.0090355, a: 1}
@@ -108594,6 +108594,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechLegs
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 91471b64876858b4386b4fb6b873a173, type: 2}
     - target: {fileID: -4216859302048453862, guid: 39ba5ee659284c942b72f011f8c4c388,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -108649,11 +108654,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 91471b64876858b4386b4fb6b873a173, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39ba5ee659284c942b72f011f8c4c388, type: 3}
 --- !u!4 &8755393700263190707 stripped
@@ -108675,11 +108675,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8272630864868723331}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: c5b58c5299de80c449860bdfb1f02dd4,
-        type: 3}
-      propertyPath: m_Name
-      value: R_Arm
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c5b58c5299de80c449860bdfb1f02dd4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -108734,6 +108729,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c5b58c5299de80c449860bdfb1f02dd4,
+        type: 3}
+      propertyPath: m_Name
+      value: R_Arm
       objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: c5b58c5299de80c449860bdfb1f02dd4,
         type: 3}
