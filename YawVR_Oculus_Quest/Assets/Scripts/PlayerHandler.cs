@@ -94,6 +94,7 @@ public class PlayerHandler : MonoBehaviour
     private Quaternion origRot;
     private bool isResettingPose = false;
     private Vector3 finalCamOffset;
+    private Vector3 cameraBump = new Vector3();
 
     //Hidden variables
     private float _energy;
@@ -150,7 +151,8 @@ public class PlayerHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f);
+        m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f) + cameraBump;
+        cameraBump = Vector3.LerpUnclamped(cameraBump, Vector3.zero, 0.1f);
         //rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
         //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }
@@ -215,6 +217,10 @@ public class PlayerHandler : MonoBehaviour
     public void SetLegsAngle(float _x, float _y)
     {
         m_mechLegs.transform.localEulerAngles = new Vector3(0, Mathf.Atan2(-_y, _x) * Mathf.Rad2Deg + 90, 0);
+    }
+    public void BumpCamera(Vector3 _offset)
+    {
+        cameraBump = _offset;
     }
     public void OnGrabberQueryOffset(OVRGrabber _obj)
     {
