@@ -55,6 +55,13 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
     protected void CalculateFlee()
     {
         Vector3 playerToEnemyPos = PlayerHandler.instance.transform.position + (enemy.transform.position - PlayerHandler.instance.transform.position).normalized * m_fleeMovementRange;
-        enemy.GetComponent<NavMeshAgent>().SetDestination(MapPointsHandler.instance.GetClosestPoint(playerToEnemyPos));
+
+        //Use Quadtree stuff with a box radius of 75
+        QuadRect newQuadRect = new QuadRect(playerToEnemyPos, 75, 75);
+
+        enemy.GetComponent<NavMeshAgent>().SetDestination(MapPointsHandler.instance.GetClosestPoint(newQuadRect));
+
+        //Debug.Log("Result 1: "  + MapPointsHandler.instance.GetClosestPoint(playerToEnemyPos)
+        //                + "| Result 2: " + MapPointsHandler.instance.GetClosestPoint(newQuadRect));
     }
 }

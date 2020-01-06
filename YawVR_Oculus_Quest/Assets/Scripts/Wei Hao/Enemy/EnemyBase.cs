@@ -37,6 +37,12 @@ abstract public class EnemyBase : DynamicQuadTreeObject
     [SerializeField]
     protected Transform m_bodyTransform;
 
+    [Header("Objects of Interest Area")]
+    [SerializeField]
+    private bool showGizmos;
+    [SerializeField]
+    protected QuadRect queryBounds;
+
     public enum States
     {
         IDLE,
@@ -63,7 +69,7 @@ abstract public class EnemyBase : DynamicQuadTreeObject
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void takeDamage(int damage)
@@ -134,5 +140,14 @@ abstract public class EnemyBase : DynamicQuadTreeObject
     void OnDisable()
     {
         Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!showGizmos) return;
+
+        Gizmos.color = Color.gray;
+        Gizmos.DrawWireCube(queryBounds.position,
+            queryBounds.GetWidth() * 2);
     }
 }

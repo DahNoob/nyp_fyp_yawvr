@@ -173,6 +173,7 @@ public class QuadTree
         isDivided = true;
 
     }
+
     public List<GameObject> Query(QuadRect range)
     {
         List<GameObject> objectsInRange = new List<GameObject>();
@@ -211,6 +212,7 @@ public class QuadTree
         }
     }
 
+    //Render function
     public void Render(Vector3 offset = new Vector3())
     {
         //Prevent some error in the editor.
@@ -231,7 +233,7 @@ public class QuadTree
         }
     }
 
-
+    //Gets the number of sub divisions in this tree
     public void GetSubDivisions(ref int here)
     {
         if (isDivided)
@@ -248,7 +250,7 @@ public class QuadTree
         }
     }
 
-
+    //Gets all objects in this quadtree and returns a reference to it
     public void GetObjects(ref List<GameObject> referenceList)
     {
         for (int i = 0; i < m_objectList.Count; ++i)

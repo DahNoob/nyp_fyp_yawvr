@@ -245,44 +245,47 @@ public class Light_Enemy_1 : EnemyBase
 
         //switch (currentState)
         //{
-            //case _EnemyState.CHASE:
-            //    Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-            //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        //case _EnemyState.CHASE:
+        //    Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+        //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-            //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
 
-            //    attackWindUp -= 1.0f * Time.deltaTime;
-            //    if (attackWindUp <= 0.0f)
-            //    {
-            //        //StartCoroutine(EnemyShoot());
-            //        attackWindUp = 2.0f;
-            //    }
+        //    attackWindUp -= 1.0f * Time.deltaTime;
+        //    if (attackWindUp <= 0.0f)
+        //    {
+        //        //StartCoroutine(EnemyShoot());
+        //        attackWindUp = 2.0f;
+        //    }
 
-            //    break;
-            //case _EnemyState.SHOOT:
-            //    toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-            //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        //    break;
+        //case _EnemyState.SHOOT:
+        //    toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
+        //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-            //    attackWindUp -= 1.0f * Time.deltaTime;
-            //    if (attackWindUp <= 0.0f)
-            //    {
-            //        StartCoroutine(EnemyShoot());
-            //        attackWindUp = 2.0f;
-            //    }
+        //    attackWindUp -= 1.0f * Time.deltaTime;
+        //    if (attackWindUp <= 0.0f)
+        //    {
+        //        StartCoroutine(EnemyShoot());
+        //        attackWindUp = 2.0f;
+        //    }
 
-            //    //transformX.x = Mathf.Sin(Time.time * speed) * amount;
+        //    //transformX.x = Mathf.Sin(Time.time * speed) * amount;
 
-            //    break;
-            //case _EnemyState.AVOID:
+        //    break;
+        //case _EnemyState.AVOID:
 
-            //    StartCoroutine(EnemyDodge());               
-            //    //currentState = _EnemyState.CHASE;
-            //    //transform.position += transform.right * -moveSpeed * Time.deltaTime;
+        //    StartCoroutine(EnemyDodge());               
+        //    //currentState = _EnemyState.CHASE;
+        //    //transform.position += transform.right * -moveSpeed * Time.deltaTime;
 
-            //    break;
-            //case _EnemyState.DIE:
-            //    break;
+        //    break;
+        //case _EnemyState.DIE:
+        //    break;
         //}
+
+        //Update the bounds position to the transform.position
+        queryBounds.position = transform.position;
     }
 
     void PlayDeathParticle()

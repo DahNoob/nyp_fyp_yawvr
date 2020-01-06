@@ -206,17 +206,17 @@ public class LightMech2 : EnemyBase
         float distance = Vector3.Distance(transform.position, Player.transform.position);
         //if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
         //{
-            //currentState = _GameStates.CHASE;
-            //m_Animator.SetBool("Chase", true);
+        //currentState = _GameStates.CHASE;
+        //m_Animator.SetBool("Chase", true);
 
-            //Debug.Log("Current State: " + currentState);
-            //Debug.Log("Distance: " + distance);
-            //if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange)
-            //{
-            //    transformX = transform.position;
-            //    m_Animator.SetBool("Explode", true);
-            //}
-       // }
+        //Debug.Log("Current State: " + currentState);
+        //Debug.Log("Distance: " + distance);
+        //if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange)
+        //{
+        //    transformX = transform.position;
+        //    m_Animator.SetBool("Explode", true);
+        //}
+        // }
 
         //switch (currentState)
         //{
@@ -255,6 +255,9 @@ public class LightMech2 : EnemyBase
         //        }
         //        break;
         //}
+
+        //Update the bounds
+        queryBounds.position = transform.position;
     }
 
     public void PlayDeathParticle()

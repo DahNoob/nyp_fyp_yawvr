@@ -120,4 +120,22 @@ public class MapPointsHandler : MonoBehaviour
         }
         return point;
     }
+
+
+    public Vector3 GetClosestPoint(QuadRect queryBounds)
+    {
+        List<GameObject> nearbyMapPoints = QuadTreeManager.instance.QueryStaticObjects(queryBounds, QuadTreeManager.STATIC_TYPES.MAP_POINTS);
+        float dist = float.MaxValue;
+        Vector3 point = Vector3.zero;
+        for (int i = 0; i < nearbyMapPoints.Count; ++i)
+        {
+            float newDist = CustomUtility.HitCheckRadius(queryBounds.position, nearbyMapPoints[i].transform.position);
+            if (newDist < dist)
+            {
+                dist = newDist;
+                point = nearbyMapPoints[i].transform.position;
+            }
+        }
+        return point;
+    }
 }

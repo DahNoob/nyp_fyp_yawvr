@@ -14,6 +14,9 @@ public class SentryController : MonoBehaviour
         DISABLED,                       //doesn't do anything
         TOTAL_MODES               //are you serious right now?
     }
+    [Header("Gizmos Visualization")]
+    [SerializeField]
+    private bool enableGizmos;
 
     [Header("Sentry Configuration")]
     [SerializeField]
@@ -97,9 +100,7 @@ public class SentryController : MonoBehaviour
     //Secret techniques
     private float m_previousRotation;
 
-    
-
-
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -282,12 +283,13 @@ public class SentryController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!enableGizmos)
+            return;
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(m_queryBounds.position,
             m_queryBounds.GetWidth() * 2);
     }
-    //Get all dynamic objects
-    //  m_enemyList = QuadTreeManager.instance.Query(queryBounds, false);
 
     IEnumerator QueryEnemies()
     {
