@@ -52,6 +52,7 @@ public class HeavyMech2 : EnemyBase
     {
         health = maxHealth;
         spawnRechargeTimer = Time.time;
+        AddToQuadTree(this.gameObject);
     }
 
     void Update()
