@@ -27,8 +27,8 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
-        enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
+        float distanceSqr = CustomUtility.HitCheckRadius(enemy.m_target.transform.position, enemy.transform.position);
+        enemy.GetComponent<NavMeshAgent>().SetDestination(enemy.m_target.transform.position);
         if (distanceSqr < inRangeSqr)
             animator.SetBool("Chase_InRange", true);
         else if (distanceSqr > outRangeSqr)
@@ -42,7 +42,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
         animator.SetBool("Chase_OutRange", false);
         inRangeSqr = m_inRange * m_inRange;
         outRangeSqr = m_outRange * m_outRange;
-        enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
+        enemy.GetComponent<NavMeshAgent>().SetDestination(enemy.m_target.transform.position);
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

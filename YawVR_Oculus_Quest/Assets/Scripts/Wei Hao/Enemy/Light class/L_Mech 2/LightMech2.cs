@@ -96,8 +96,9 @@ public class LightMech2 : EnemyBase
     private bool MS;
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         // Current State
         //currentState = _GameStates.CHASE;
         GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;

@@ -48,8 +48,9 @@ public class HeavyMech2 : EnemyBase
     protected List<Collider> ignoredColliders = new List<Collider>();
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         health = maxHealth;
         spawnRechargeTimer = Time.time;
         AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);

@@ -25,8 +25,7 @@ public class SMB_EnemyWalk : SMB_BaseEnemyState
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        PlayerHandler player = PlayerHandler.instance;
-        animator.SetBool("Walk_HasDetected", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
+        animator.SetBool("Walk_HasDetected", CustomUtility.IsHitRadius(enemy.m_target.transform.position, enemy.transform.position, m_detectRange));
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

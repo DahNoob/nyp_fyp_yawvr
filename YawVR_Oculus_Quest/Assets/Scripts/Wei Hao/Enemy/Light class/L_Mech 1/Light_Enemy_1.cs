@@ -102,11 +102,12 @@ public class Light_Enemy_1 : EnemyBase
     private bool MS;
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         // Current State
         //currentState = _EnemyState.AVOID;
-        Player = GameObject.Find("Player");
+        Player = PlayerHandler.instance.gameObject;
         target = Player.GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();

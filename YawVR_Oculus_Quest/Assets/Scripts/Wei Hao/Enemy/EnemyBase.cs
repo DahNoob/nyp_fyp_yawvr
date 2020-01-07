@@ -40,6 +40,8 @@ abstract public class EnemyBase : DynamicQuadTreeObject
     [SerializeField]
     protected Transform m_bodyTransform;
 
+    public Transform m_target;
+
     [Header("Objects of Interest Area")]
     [SerializeField]
     private bool showGizmos;
@@ -64,9 +66,10 @@ abstract public class EnemyBase : DynamicQuadTreeObject
     }
 
     // Start is called before the first frame update
-    void Start()
+    virtual protected void Start()
     {
-        
+        if (m_target == null)
+            m_target = PlayerHandler.instance.transform;
     }
 
     // Update is called once per frame
