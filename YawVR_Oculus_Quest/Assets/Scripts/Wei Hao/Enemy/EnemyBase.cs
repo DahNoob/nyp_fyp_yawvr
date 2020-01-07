@@ -19,6 +19,9 @@ using UnityEngine;
 
 abstract public class EnemyBase : DynamicQuadTreeObject
 {
+    public delegate void OnEnemyDie(EnemyBase _enemy);
+    public event OnEnemyDie onEnemyDie;
+
     [Header("Enemy Stats")]
     // Enemy Current Health
     [SerializeField]
@@ -140,6 +143,7 @@ abstract public class EnemyBase : DynamicQuadTreeObject
     void OnDisable()
     {
         Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
+        onEnemyDie?.Invoke(this);
     }
 
     private void OnDrawGizmos()

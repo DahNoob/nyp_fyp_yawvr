@@ -16,6 +16,10 @@ public class Game : MonoBehaviour
     [SerializeField]
     private GameObject[] m_enemies;
 
+    [Header("Game Variables")]
+    [SerializeField]
+    public int m_objectivesLeft = 0;
+
     void Awake()
     {
         if (instance == null)
@@ -43,8 +47,16 @@ public class Game : MonoBehaviour
         {
             if(obj.type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
-                Instantiate(m_enemies[2], mph.m_mapPoints[obj.mapPointIndex], Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
+                EnemyBase enemy = Instantiate(m_enemies[2], mph.m_mapPoints[obj.mapPointIndex], Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                enemy.onEnemyDie += Enemy_onEnemyDie;
+                m_objectivesLeft++;
             }
         }
+    }
+
+    private void Enemy_onEnemyDie(EnemyBase _enemy)
+    {
+        _enemy.onEnemyDie -= Enemy_onEnemyDie;
+        m_objectivesLeft--;
     }
 }
