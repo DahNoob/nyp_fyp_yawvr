@@ -59,9 +59,6 @@ public class LaserGunArm : MechArmModule
         follower.m_followSpeed = m_followerSpeed;
         m_gatlingAnimator.SetFloat("Blend", 1);
         //m_laserPointer.gameObject.SetActive(true);
-
-        //Enable the reticle when holding
-        GUIManager.instance.EnableReticle(_controller, true);
         return true;
     }
 
@@ -106,7 +103,6 @@ public class LaserGunArm : MechArmModule
 
     public override bool Stop(OVRInput.Controller _controller)
     {
-        GUIManager.instance.EnableReticle(_controller, false);
         m_gatlingAnimator.SetFloat("Blend", 0);
         // m_laserPointer.gameObject.SetActive(false);
         return true;

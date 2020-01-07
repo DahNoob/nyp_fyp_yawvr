@@ -238,6 +238,7 @@ public class PilotController : MonoBehaviour
             modules[currModuleIndex].Stop(m_controller);
         isHandTriggered = follower.m_enabled = _isTriggered;
         mechHand.SetEnabled(_isTriggered);
+        GUIManager.instance.EnableReticle(m_controller, _isTriggered);
     }
 
     void IndexStateChange(bool _isTriggered)
@@ -249,12 +250,12 @@ public class PilotController : MonoBehaviour
             {
                 //VibrationManager.SetControllerVibration(m_controller, 16, 2, 100);
                 modules[currModuleIndex].Activate(m_controller);
+
             }
             else
             {
                 modules[currModuleIndex].Stop(m_controller);
             }
-            
         }
     }
 
