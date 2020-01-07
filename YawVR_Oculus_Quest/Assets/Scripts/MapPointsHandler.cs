@@ -5,10 +5,29 @@ using UnityEngine;
 [System.Serializable]
 public class MapPointsHandler : MonoBehaviour
 {
-    public static MapPointsHandler instance;
+    public static MapPointsHandler instance { private set; get; }
+
+    //Classes
+    [System.Serializable]
+    public struct ObjectiveInfo
+    {
+        public enum TYPE
+        {
+            BOUNTYHUNT,
+
+            TOTAL
+        }
+
+        public TYPE type;
+
+    }
+
+
     [Header("General Configuration")]
     [SerializeField]
     private bool m_showGizmos = false;
+    [SerializeField]
+    public float m_pointHeight = 4.0f;
     [Header("Unconfirmed Gizmos Configuration")]
     [SerializeField]
     private Vector3 m_cubeSizeUnconfirmed = new Vector3(1, 4, 1);
@@ -21,12 +40,21 @@ public class MapPointsHandler : MonoBehaviour
     private Color m_colorConfirmed = new Color(0.8f, 0.8f, 0.3f, 0.75f);
     [SerializeField]
     private GUIStyle m_textStyle = new GUIStyle();
+    [Header("Objective Gizmos Configuration")]
+    [SerializeField]
+    private float m_radiusSizeObjective = 10.0f;
+    [SerializeField]
+    private Color m_colorObjective = new Color(1, 1, 1, 0.75f);
 
     [Header("Map Points Configuration")]
     [SerializeField]
     public List<Vector3> m_mapPoints;
+    //[SerializeField]
+    //public int[] m_possibleObjectivePoints;
+
+    [Header("Objectives Configuration")]
     [SerializeField]
-    public float m_pointHeight = 4.0f;
+    public VariedObjectives m_variedObjectives;
 
     [InspectorButton("OnResetSavedMapPoints", 175.0f)]
     public bool resetSavedMapPoints;
@@ -82,6 +110,7 @@ public class MapPointsHandler : MonoBehaviour
         {
             Destroy(t.gameObject);
         }
+        m_showGizmos = false;
 #endif
         print("MapPointsHandler Start!");
     }
@@ -102,6 +131,11 @@ public class MapPointsHandler : MonoBehaviour
         for (int i = 0; i < m_mapPoints.Count; ++i)
         {
             Gizmos.DrawWireCube(m_mapPoints[i], m_cubeSizeConfirmed);
+        }
+        Gizmos.color = m_colorObjective;
+        for (int i = 0; i < m_variedObjectives.objectives.Length; ++i)
+        {
+            Gizmos.DrawWireSphere(m_mapPoints[m_variedObjectives.objectives[i].mapPointIndex], m_radiusSizeObjective);
         }
     }
 

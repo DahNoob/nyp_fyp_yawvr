@@ -3384,6 +3384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_showGizmos: 0
+  m_pointHeight: 4
   m_cubeSizeUnconfirmed: {x: 1, y: 4, z: 1}
   m_colorUnconfirmed: {r: 0, g: 1, b: 1, a: 0.75}
   m_cubeSizeConfirmed: {x: 0.75, y: 6, z: 0.75}
@@ -3455,6 +3456,8 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+  m_radiusSizeObjective: 28.42
+  m_colorObjective: {r: 1, g: 0.5707547, b: 0.9427764, a: 1}
   m_mapPoints:
   - {x: 309.57996, y: 94.557465, z: 452.16003}
   - {x: 333.30005, y: 94.52392, z: 416}
@@ -3561,7 +3564,7 @@ MonoBehaviour:
   - {x: -470.69995, y: 92.88416, z: -196}
   - {x: -197.09998, y: 88.964714, z: -119.900024}
   - {x: -112.400024, y: 92.97638, z: -150.70001}
-  m_pointHeight: 4
+  m_variedObjectives: {fileID: 11400000, guid: 67074664e9df5a04f8ba4a2d819ea38a, type: 2}
   resetSavedMapPoints: 0
   setPointsHeight: 0
   resetLabeling: 0
@@ -11470,14 +11473,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1108375614475736529, guid: d65fd8a10f5aff44eadb975a042bb7e4,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3981199448802755835, guid: d65fd8a10f5aff44eadb975a042bb7e4,
         type: 3}
       propertyPath: m_PolyMesh.m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108375614475736529, guid: d65fd8a10f5aff44eadb975a042bb7e4,
+        type: 3}
+      propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
