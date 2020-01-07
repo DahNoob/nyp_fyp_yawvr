@@ -268,7 +268,8 @@ public class SentryController : MonoBehaviour
                 if (m_ammoModule.DecreaseAmmo(m_shootCost))
                 {
                     m_shootTick -= m_shootTime;
-                    BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, bulletSorter.transform).GetComponent<BaseProjectile>();
+                    //BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, bulletSorter.transform).GetComponent<BaseProjectile>();
+                    BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
                     baseProjectile.Init(m_projectileOrigin);
                 }
                 else

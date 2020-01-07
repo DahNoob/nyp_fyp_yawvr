@@ -257,53 +257,77 @@ public class QuadTreeManager : MonoBehaviour
             new Vector3((quadTreeBounds.width * 2) + quadTreeBoundsOffset.x, 0.01f, (quadTreeBounds.height * 2) + quadTreeBoundsOffset.y));
 
 
-        //if (staticQuadTree != null && (selectedTree == SELECTEDTREE.STATIC || selectedTree == SELECTEDTREE.STATIC_DYNAMIC))
-        //{
-        //    Gizmos.color = staticTreeColor;
-        //    staticQuadTree.Render(gizmosOffsets + new Vector3(0, quadTreeBounds.position.y, 0));
-        //}
-        //if (dynamicQuadTree != null && (selectedTree == SELECTEDTREE.DYNAMIC || selectedTree == SELECTEDTREE.STATIC_DYNAMIC))
-        //{
-        //    Gizmos.color = dynamicTreeColor;
-        //    dynamicQuadTree.Render(gizmosOffsets + new Vector3(0, quadTreeBounds.position.y, 0));
-        //}
-
         switch (selectedTree)
         {
             case RENDER_OPTIONS.SELECTED_STATIC:
-                Gizmos.color = staticTreeColor;
-                staticTrees[m_staticRender].Render();
-                break;
+                {
+                    if (staticTrees != null)
+                    {
+                        Gizmos.color = staticTreeColor;
+                        if (staticTrees[m_staticRender] != null && staticTrees != null)
+                            staticTrees[m_staticRender].Render();
+                    }
+                    break;
+                }
             case RENDER_OPTIONS.SELECTED_DYNAMIC:
-                Gizmos.color = dynamicTreeColor;
-                dynamicTrees[m_dynamicRender].Render();
-                break;
+                {
+                    if(dynamicTrees != null)
+                    {
+                        Gizmos.color = dynamicTreeColor;
+                        if (dynamicTrees[m_dynamicRender] != null)
+                            dynamicTrees[m_dynamicRender].Render();
+                    }
+                    break;
+                }
             case RENDER_OPTIONS.ALL_STATIC:
-                Gizmos.color = staticTreeColor;
-                foreach (KeyValuePair<STATIC_TYPES, QuadTree> tree in staticTrees)
                 {
-                    tree.Value.Render();
+                    if (staticTrees != null)
+                    {
+                        Gizmos.color = staticTreeColor;
+                        foreach (KeyValuePair<STATIC_TYPES, QuadTree> tree in staticTrees)
+                        {
+                            if (tree.Value != null)
+                                tree.Value.Render();
+                        }
+                    }
+                    break;
                 }
-                break;
             case RENDER_OPTIONS.ALL_DYNAMIC:
-                Gizmos.color = dynamicTreeColor;
-                foreach (KeyValuePair<DYNAMIC_TYPES, QuadTree> tree in dynamicTrees)
                 {
-                    tree.Value.Render();
+                    if (dynamicTrees != null)
+                    {
+                        Gizmos.color = dynamicTreeColor;
+                        foreach (KeyValuePair<DYNAMIC_TYPES, QuadTree> tree in dynamicTrees)
+                        {
+                            if (tree.Value != null)
+                                tree.Value.Render();
+                        }
+                    }
+                    break;
                 }
-                break;
             case RENDER_OPTIONS.STATIC_DYNAMIC:
-                Gizmos.color = staticTreeColor;
-                foreach (KeyValuePair<STATIC_TYPES, QuadTree> tree in staticTrees)
                 {
-                    tree.Value.Render();
+                    if (staticTrees != null)
+                    {
+                        Gizmos.color = staticTreeColor;
+                        foreach (KeyValuePair<STATIC_TYPES, QuadTree> tree in staticTrees)
+                        {
+                            if (tree.Value != null)
+                                tree.Value.Render();
+                        }
+                    }
+                    if (dynamicTrees != null)
+                    {
+                        Gizmos.color = dynamicTreeColor;
+                        foreach (KeyValuePair<DYNAMIC_TYPES, QuadTree> tree in dynamicTrees)
+                        {
+                            if (tree.Value != null)
+                                tree.Value.Render();
+                        }
+                    }
+                    break;
+
                 }
-                Gizmos.color = dynamicTreeColor;
-                foreach (KeyValuePair<DYNAMIC_TYPES, QuadTree> tree in dynamicTrees)
-                {
-                    tree.Value.Render();
-                }
-                break;
             case RENDER_OPTIONS.NONE:
                 break;
             default:
