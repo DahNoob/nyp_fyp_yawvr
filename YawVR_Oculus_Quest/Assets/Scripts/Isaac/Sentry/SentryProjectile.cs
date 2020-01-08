@@ -17,7 +17,7 @@ public class SentryProjectile : BaseProjectile
         if (_transform != null)
             transform.SetPositionAndRotation(_transform.position, _transform.rotation);
         GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * m_projectileSpeed);
-
+        StartCoroutine(delayDestroy());
     }
 
     protected override void OnCollisionEnter(Collision collision)
@@ -46,5 +46,11 @@ public class SentryProjectile : BaseProjectile
         //        Destroy(this.gameObject);
         //    }
         //}
+    }
+
+    protected IEnumerator delayDestroy()
+    {
+        yield return new WaitForSeconds(m_lifeTime);
+        Destroy(gameObject);
     }
 }

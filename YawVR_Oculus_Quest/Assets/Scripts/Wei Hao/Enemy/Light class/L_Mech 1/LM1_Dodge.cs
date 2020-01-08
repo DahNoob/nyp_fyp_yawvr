@@ -40,12 +40,12 @@ public class LM1_Dodge : SMB_BaseEnemyState
 
         if (random > 5)
         {
-            animator.transform.position += animator.transform.forward * /*moveSpeed*/ animator.GetComponent<Light_Enemy_1>().GetMoveSpeed() * Time.deltaTime;
+            animator.transform.position += animator.transform.forward * /*moveSpeed*/ animator.GetComponent<Light_Enemy_1>().GetSpeed() * Time.deltaTime;
             //animator.transform.position += animator.transform.right * (moveSpeed * 1.5f) * Time.deltaTime;
         }
         else
         {
-            animator.transform.position += animator.transform.forward * /*moveSpeed*/ animator.GetComponent<Light_Enemy_1>().GetMoveSpeed() * Time.deltaTime;
+            animator.transform.position += animator.transform.forward * /*moveSpeed*/ animator.GetComponent<Light_Enemy_1>().GetSpeed() * Time.deltaTime;
             //animator.transform.position += animator.transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
         }
 

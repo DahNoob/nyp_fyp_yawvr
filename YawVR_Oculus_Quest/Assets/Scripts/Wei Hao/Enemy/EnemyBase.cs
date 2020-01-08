@@ -17,24 +17,23 @@ using UnityEngine;
 ** 2    18/12/2019, 10:31 PM    Wei Hao   Added rarity enum
 *******************************/
 
-abstract public class EnemyBase : DynamicQuadTreeObject
+abstract public class EnemyBase : BaseEntity
 {
-    public delegate void OnEnemyDie(EnemyBase _enemy);
-    public event OnEnemyDie onEnemyDie;
-
     [Header("Enemy Stats")]
-    // Enemy Current Health
     [SerializeField]
-    protected float health;
+    protected EnemyInfo m_enemyInfo;
+    //// Enemy Current Health
+    //[SerializeField]
+    //protected float health;
     // Enemy Max Health
     [SerializeField]
-    protected float maxHealth;
+    protected float maxHealthMultiplier = 1;
     // The amount of Damage the enemy deals
     [SerializeField]
-    protected float damage;
+    protected float damageMultiplier = 1;
     // The speed the enemy moves
     [SerializeField]
-    protected float moveSpeed;
+    protected float moveSpeedMultiplier = 1;
     [SerializeField]
     protected GameObject m_dieEffect;
     [SerializeField]
@@ -70,6 +69,8 @@ abstract public class EnemyBase : DynamicQuadTreeObject
     {
         if (m_target == null)
             m_target = PlayerHandler.instance.transform;
+        health = GetMaxHealth();
+        GetComponent<UnityEngine.AI.NavMeshAgent>().speed = GetSpeed();
     }
 
     // Update is called once per frame
@@ -78,18 +79,19 @@ abstract public class EnemyBase : DynamicQuadTreeObject
 
     }
 
-    public void takeDamage(int damage)
+    public override void takeDamage(int damage)
     {
-        health = Mathf.Max(0, health - damage);
-        if (health == 0)
+        health -= damage;
+        if (health <= 0)
             Die();
     }
 
-    public void Die()
+    public override void Die()
     {
         //gameObject.SetActive(false);
+        InvokeDie();
         Destroy(gameObject);
-        gameObject.GetComponent<ParticleSystem>().Play();
+        //gameObject.GetComponent<ParticleSystem>().Play();
     }
 
     //public override void takeDamage(int damage)
@@ -105,48 +107,48 @@ abstract public class EnemyBase : DynamicQuadTreeObject
 
     public float GetSpeed()
     {
-        return moveSpeed;
+        return m_enemyInfo.moveSpeed * moveSpeedMultiplier;
     }
 
-    public float GetDamage()
+    public int GetDamage()
     {
-        return damage;
+        return (int)(m_enemyInfo.damage * damageMultiplier);
     }
 
-    public float GetHealth ()
+    public int GetHealth ()
     {
         return health;
     }
 
-    public float GetMaxHealth()
+    public int GetMaxHealth()
     {
-        return maxHealth;
+        return (int)(m_enemyInfo.maxHealth * maxHealthMultiplier);
     }
 
-    public void SetHealth(float new_HP)
+    public void SetHealth(int new_HP)
     {
         health = new_HP;
     }
 
-    public void SetDamage(float new_Damage)
+    public void SetDamageMultiplier(float _newMult)
     {
-        damage = new_Damage;
+        damageMultiplier = _newMult;
     }
 
-    public void SetMoveSpeed(float new_MoveSpeed)
+    public void SetMoveSpeedMultiplier(float _newMult)
     {
-        moveSpeed = new_MoveSpeed;
+        moveSpeedMultiplier = _newMult;
+        GetComponent<UnityEngine.AI.NavMeshAgent>().speed = m_enemyInfo.moveSpeed * moveSpeedMultiplier;
     }
 
-    public void SetMaxHealth(float new_MaxHealth)
+    public void SetMaxHealthMultiplier(float _newMult)
     {
-        maxHealth = new_MaxHealth;
+        maxHealthMultiplier = _newMult;
     }
 
     void OnDisable()
     {
         Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
-        onEnemyDie?.Invoke(this);
     }
 
     private void OnDrawGizmos()

@@ -277,13 +277,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c00f91301284244dbac022b65d17a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  m_enemyInfo: {fileID: 11400000, guid: 6086026051b6fa643ac12fae3c275a0c, type: 2}
   maxHealth: 100
   damage: 10
   moveSpeed: 15
   m_dieEffect: {fileID: 8290165608302987775, guid: d903496c821bada4eadb62fdb6334398,
     type: 3}
   m_bodyTransform: {fileID: 303549922058565681}
+  m_target: {fileID: 0}
+  showGizmos: 0
+  queryBounds:
+    m_position: {x: 0, y: 0, z: 0}
+    m_width: 0
+    m_height: 0
   m_spawnRechargeTime: 10
   m_rigidBody: {fileID: 9132567093671381444}
   m_coreTransform: {fileID: 6460773364572207210}

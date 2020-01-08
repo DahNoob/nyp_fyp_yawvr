@@ -51,7 +51,7 @@ public class HeavyMech2 : EnemyBase
     new void Start()
     {
         base.Start();
-        health = maxHealth;
+        health = GetMaxHealth();
         spawnRechargeTimer = Time.time;
         AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
     }

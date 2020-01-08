@@ -7,7 +7,7 @@ public class DMG_Buff : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponentInParent<EnemyBase>().SetDamage(gameObject.GetComponentInParent<EnemyBase>().GetDamage() * 2);
+        gameObject.GetComponentInParent<EnemyBase>().SetDamageMultiplier(2);
     }
 
     // Update is called once per frame

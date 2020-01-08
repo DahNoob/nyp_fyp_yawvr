@@ -7,7 +7,7 @@ public class MS_Buff : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponentInParent<EnemyBase>().SetMoveSpeed(gameObject.GetComponentInParent<EnemyBase>().GetSpeed() * 2);
+        gameObject.GetComponentInParent<EnemyBase>().SetMoveSpeedMultiplier(2);
     }
 
     // Update is called once per frame

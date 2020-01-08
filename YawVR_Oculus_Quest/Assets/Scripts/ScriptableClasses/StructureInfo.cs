@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Structure Info", menuName = "Structure Info/Structure Info")]
-public class StructureInfo : ScriptableObject
+[CreateAssetMenu(fileName = "Structure Info", menuName = "Entity Info/Structure Info")]
+public class StructureInfo : EntityInfo
 {
-    public int health = 100;
-    public GameObject destroyEffect;
+    //[Header("Base Structure Info")]
 }

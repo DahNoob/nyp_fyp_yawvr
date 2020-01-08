@@ -242,5 +242,6 @@ public class PlayerHandler : BaseEntity
 
     public override void Die()
     {
+        InvokeDie();
     }
 }

@@ -29,10 +29,10 @@ public class Enemy_Roam : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 10;
-        health = maxHealth;
-        damage = 1;
-        moveSpeed = 4;
+        //maxHealth = 10;
+        //health = maxHealth;
+        //damage = 1;
+        //moveSpeed = 4;
         leapSpeed = 8;
         currentState = States.IDLE;
         Player = GameObject.Find("Player");
@@ -78,7 +78,7 @@ public class Enemy_Roam : EnemyBase
         switch (currentState)
         {
             case States.IDLE:
-                Vector3 newPosition = (transform.position + (transform.forward * moveSpeed)) + new Vector3(Random.Range(-4.5f, 4.5f), 0.0f, Random.Range(-4.5f, 4.5f));
+                Vector3 newPosition = (transform.position + (transform.forward * GetSpeed())) + new Vector3(Random.Range(-4.5f, 4.5f), 0.0f, Random.Range(-4.5f, 4.5f));
 
                 _targetDestination = new Vector3(newPosition.x, 0, newPosition.z);
                 _direction = Vector3.Normalize(_targetDestination - transform.position);
@@ -90,7 +90,7 @@ public class Enemy_Roam : EnemyBase
                 Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
                 transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                transform.position += transform.forward * GetSpeed() * Time.deltaTime;
                 break;
             case States.ATTACK:
 

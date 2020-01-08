@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /******************************  
 ** Name: Light Enemy 1
@@ -113,7 +114,6 @@ public class Light_Enemy_1 : EnemyBase
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         poof = gameObject.GetComponent<ParticleSystem>();
         weightedRandom = GameObject.Find("WeightedRNG");
-
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
 
@@ -124,17 +124,17 @@ public class Light_Enemy_1 : EnemyBase
         {
             if (currBuff == "HP")
             {
-                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
             if (currBuff == "DMG")
             {
-                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
             if (currBuff == "MS")
             {
-                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
                 MS = true;
             }
         }
@@ -144,17 +144,17 @@ public class Light_Enemy_1 : EnemyBase
 
             if (currBuff == "HP" || secondBuff == "HP")
             {
-                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
             if (currBuff == "DMG" || secondBuff == "DMG")
             {
-                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
             if (currBuff == "MS" || secondBuff == "MS")
             {
-                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
                 MS = true;
             }
         }
@@ -165,17 +165,17 @@ public class Light_Enemy_1 : EnemyBase
 
             if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
             {
-                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
             if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
             {
-                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
             if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
             {
-                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
                 MS = true;
             }
         }
@@ -320,10 +320,10 @@ public class Light_Enemy_1 : EnemyBase
         }
     }
 
-    public float GetMoveSpeed()
-    {
-        return moveSpeed;
-    }
+    //public float GetMoveSpeed()
+    //{
+    //    return moveSpeed;
+    //}
     public float GetRotationSpeed()
     {
         return rotationSpeed;

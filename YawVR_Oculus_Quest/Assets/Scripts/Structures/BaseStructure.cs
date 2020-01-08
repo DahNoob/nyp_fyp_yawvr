@@ -4,21 +4,18 @@ using UnityEngine;
 
 abstract public class BaseStructure : BaseEntity
 {
-    public delegate void OnStructureDestroy(BaseStructure _structure);
-    public event OnStructureDestroy onStructureDestroy;
-
-    [Header("Base Structure Configuration")]
+    [Header("Structure Configuration")]
     [SerializeField]
-    private StructureInfo m_structureInfo;
+    protected StructureInfo m_structureInfo;
 
-    void Start()
+    protected void Start()
     {
-        health = m_structureInfo.health;
+        health = m_structureInfo.maxHealth;
     }
     public override void Die()
     {
-        Instantiate(m_structureInfo.destroyEffect, transform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
-        onStructureDestroy?.Invoke(this);
+        Instantiate(m_structureInfo.dieEffect, transform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
+        InvokeDie();
         Destroy(gameObject);
     }
 

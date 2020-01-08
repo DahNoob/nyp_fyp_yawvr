@@ -178,10 +178,10 @@ public class Flying_Enemy_2 : EnemyBase
         }
     }
 
-    public float GetMoveSpeed()
-    {
-        return moveSpeed;
-    }
+    //public float GetMoveSpeed()
+    //{
+    //    return moveSpeed;
+    //}
     public float GetRotationSpeed()
     {
         return rotationSpeed;

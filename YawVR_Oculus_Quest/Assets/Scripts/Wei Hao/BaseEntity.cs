@@ -14,23 +14,19 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    27/11/2019, 5:05 PM     Wei Hao   
 *******************************/
-public abstract class BaseEntity : MonoBehaviour
+public abstract class BaseEntity : DynamicQuadTreeObject
 {
+    public delegate void OnEntityDie(BaseEntity _entity);
+    public event OnEntityDie onEntityDie;
+
     protected int health;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public abstract void takeDamage(int damage);
 
     public abstract void Die();
+
+    protected void InvokeDie()
+    {
+        onEntityDie?.Invoke(this);
+    }
 }

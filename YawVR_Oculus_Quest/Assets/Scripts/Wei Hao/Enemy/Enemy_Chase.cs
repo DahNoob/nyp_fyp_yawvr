@@ -41,10 +41,10 @@ public class Enemy_Chase : EnemyBase
     // Start is called before the first frame update
     void Start()
     {
-        maxHealth = 10;
-        health = maxHealth;
-        damage = 1;
-        moveSpeed = 6;
+        //maxHealth = 10;
+        //health = maxHealth;
+        //damage = 1;
+        //moveSpeed = 6;
         leapSpeed = 8;
         currentState = States.CHASE;
         Player = GameObject.Find("Player");
@@ -81,7 +81,7 @@ public class Enemy_Chase : EnemyBase
                 Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
                 transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                transform.position += transform.forward * GetSpeed() * Time.deltaTime;
                 break;
             case States.ATTACK:
                 transform.LookAt(new Vector3(Player.transform.position.x, 1, Player.transform.position.z));

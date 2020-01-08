@@ -48,15 +48,15 @@ public class Game : MonoBehaviour
             if(obj.type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
                 EnemyBase enemy = Instantiate(m_enemies[2], mph.m_mapPoints[obj.mapPointIndex], Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
-                enemy.onEnemyDie += Enemy_onEnemyDie;
+                enemy.onEntityDie += Enemy_onEntityDie;
                 m_objectivesLeft++;
             }
         }
     }
 
-    private void Enemy_onEnemyDie(EnemyBase _enemy)
+    private void Enemy_onEntityDie(BaseEntity _entity)
     {
-        _enemy.onEnemyDie -= Enemy_onEnemyDie;
+        _entity.onEntityDie += Enemy_onEntityDie;
         m_objectivesLeft--;
     }
 }
