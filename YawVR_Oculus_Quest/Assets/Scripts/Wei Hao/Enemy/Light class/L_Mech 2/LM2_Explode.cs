@@ -6,6 +6,8 @@ public class LM2_Explode : SMB_BaseEnemyState
 {
     private Transform Player;
 
+    [SerializeField]
+    private float m_explodeRange = 15.0f;
     // Time taken before attack is activated
     private float attackWindUp = 1.0f;
 
@@ -16,7 +18,7 @@ public class LM2_Explode : SMB_BaseEnemyState
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        Player = PlayerHandler.instance.transform;
         animator.GetComponent<Rigidbody>().velocity = Vector3.zero;
         animator.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
     }
@@ -27,12 +29,17 @@ public class LM2_Explode : SMB_BaseEnemyState
 
         if (attackWindUp <= 0.0f)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, 5.0f);
+            Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, m_explodeRange);
             for (int i = 0; i < hitColliders.Length; i++)
             {
-                if (hitColliders[i].gameObject.tag == "Player")
+                //if (hitColliders[i].gameObject.tag == "Player")
+                //{
+                //    Debug.Log("B00M !!");
+                //}
+                //var asd = hitColliders[i].GetComponent<BaseStructure>() ?? hitColliders[i].GetComponent<EnemyBase>();
+                if (hitColliders[i].transform == PlayerHandler.instance.transform)
                 {
-                    Debug.Log("B00M !!");
+                    PlayerHandler.instance.takeDamage((int)enemy.GetDamage());
                 }
             }
             animator.gameObject.GetComponent<LightMech2>().PlayDeathParticle();

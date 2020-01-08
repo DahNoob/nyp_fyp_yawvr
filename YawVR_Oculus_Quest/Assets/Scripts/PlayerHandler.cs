@@ -17,7 +17,7 @@ using OVR;
 ** 2    09/12/2019, 4:43PM      DahNoob   Added energy
 *******************************/
 [System.Serializable]
-public class PlayerHandler : MonoBehaviour
+public class PlayerHandler : BaseEntity
 {
     public static PlayerHandler instance { get; private set; }
 
@@ -231,5 +231,16 @@ public class PlayerHandler : MonoBehaviour
         rightHand.GetComponent<OVRGrabber>().QueryOffset -= OnGrabberQueryOffset;
         leftHand.GetComponent<OVRGrabber>().QueryOffset -= OnGrabberQueryOffset;
 
+    }
+
+    public override void takeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+            Die();
+    }
+
+    public override void Die()
+    {
     }
 }

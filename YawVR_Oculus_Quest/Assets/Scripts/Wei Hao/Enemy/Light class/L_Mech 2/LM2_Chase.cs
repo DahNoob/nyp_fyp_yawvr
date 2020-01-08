@@ -20,15 +20,20 @@ public class LM2_Chase : SMB_BaseEnemyState
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        animator.SetBool("Explode", CustomUtility.IsHitRadius(enemy.transform.position, enemy.m_target.transform.position, 5.0f));
-        //Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, 5.0f);
-        //for (int i = 0; i < hitColliders.Length; i++)
-        //{
-        //    if (hitColliders[i].gameObject.tag == "Player")
-        //    {
-        //        animator.SetBool("Explode", true);
-        //    }
-        //}
+        //animator.SetBool("Explode", CustomUtility.IsHitRadius(enemy.transform.position, enemy.m_target.transform.position, 5.0f));
+        Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, m_detectRange);
+        for (int i = 0; i < hitColliders.Length; i++)
+        {
+            //if (hitColliders[i].gameObject.tag == "Player")
+            //{
+            //    animator.SetBool("Explode", true);
+            //}
+            if(hitColliders[i].transform == enemy.m_target)
+            {
+                animator.SetBool("Explode", true);
+                break;
+            }
+        }
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
