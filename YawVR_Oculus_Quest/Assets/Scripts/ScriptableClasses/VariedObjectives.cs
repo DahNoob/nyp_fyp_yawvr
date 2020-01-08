@@ -8,6 +8,7 @@ public class VariedObjectives : ScriptableObject
     public enum TYPE
     {
         BOUNTYHUNT,
+        DEFEND_STRUCTURE,
 
         TOTAL
     }
@@ -16,8 +17,7 @@ public class VariedObjectives : ScriptableObject
     {
         public TYPE type;
         public int mapPointIndex;
-        [Range(0, 10)]
-        public int intensity;
+        public string tag;
     }
     public VariedObjectiveInfo[] objectives;
 }

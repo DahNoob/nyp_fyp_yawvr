@@ -36,7 +36,7 @@ public class LM2_Explode : SMB_BaseEnemyState
                 //{
                 //    Debug.Log("B00M !!");
                 //}
-                //var asd = hitColliders[i].GetComponent<BaseStructure>() ?? hitColliders[i].GetComponent<EnemyBase>();
+                var asd = hitColliders[i].GetComponent<BaseEntity>();
                 if (hitColliders[i].transform == PlayerHandler.instance.transform)
                 {
                     PlayerHandler.instance.takeDamage((int)enemy.GetDamage());

@@ -117,6 +117,7 @@ public class HeavyMech2 : EnemyBase
     {
         Transform spawnTransform = activeSideIsRight ? m_spawnPivotRight : m_spawnPivotLeft;
         Collider newEnemy = Instantiate(m_lesserEnemy, spawnTransform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<Collider>();
+        newEnemy.GetComponent<EnemyBase>().m_target = m_target;
         Physics.IgnoreCollision(GetComponent<Collider>(), newEnemy, true);
         ignoredColliders.Add(newEnemy);
         newEnemy.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 5000.0f, 12000.0f));

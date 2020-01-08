@@ -6,6 +6,17 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     public static Game instance { get; private set; }
+
+    [System.Serializable]
+    protected class ObjectiveInfo
+    {
+        public VariedObjectives.TYPE type;//dis is cancerous but wutever
+        public Transform m_highlight;
+        public bool m_completed = false;
+        public float m_timeLeft = 30;
+        public float m_timer = 0;
+        public float m_spawnTime = 7;
+    }
     
     [Header("Default Mech Loadouts")]
     [SerializeField]
@@ -15,10 +26,17 @@ public class Game : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField]
     private GameObject[] m_enemies;
+    [SerializeField]
+    private GameObject[] m_structures;
 
     [Header("Game Variables")]
     [SerializeField]
     public int m_objectivesLeft = 0;
+    [SerializeField]
+    protected ObjectiveInfo[] m_objectives;
+
+    //Local variables
+    private int currentObjectiveIndex = -1;
 
     void Awake()
     {
@@ -31,7 +49,32 @@ public class Game : MonoBehaviour
     {
         ApplyMechLoadouts();
         ApplyObjectives();
+        StartCoroutine(checkObjectives());
         print("Game started!");
+    }
+
+    void Update()
+    {
+        if (currentObjectiveIndex == -1) return;
+        ObjectiveInfo currObj = m_objectives[currentObjectiveIndex];
+        currObj.m_timeLeft -= Time.deltaTime;
+        currObj.m_timer += Time.deltaTime;
+        if (currObj.m_timeLeft <= 0)
+        {
+            print("Current Objective ended!");
+            currObj.m_completed = true;
+            currentObjectiveIndex = -1;
+        }
+        if (currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE && currObj.m_timer > currObj.m_spawnTime)
+        {
+            currObj.m_timer -= currObj.m_spawnTime;
+            print("Spawn Enemies!");
+            for (int i = 0; i < 3; ++i)
+            {
+                EnemyBase derp = Instantiate(m_enemies[i], currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                derp.m_target = currObj.m_highlight;
+            }
+        }
     }
 
     public void ApplyMechLoadouts()
@@ -43,20 +86,58 @@ public class Game : MonoBehaviour
     public void ApplyObjectives()
     {
         MapPointsHandler mph = MapPointsHandler.instance;
-        foreach (var obj in mph.m_variedObjectives.objectives)
+        System.Array.Resize(ref m_objectives, mph.m_variedObjectives.objectives.Length);
+        for (int i = 0; i < mph.m_variedObjectives.objectives.Length; ++i)
         {
-            if(obj.type == VariedObjectives.TYPE.BOUNTYHUNT)
+            var obj = mph.m_variedObjectives.objectives[i];
+            Vector3 objectivePos = mph.m_mapPoints[obj.mapPointIndex];
+            m_objectives[i] = new ObjectiveInfo();
+            m_objectives[i].type = obj.type;
+            if (obj.type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
-                EnemyBase enemy = Instantiate(m_enemies[2], mph.m_mapPoints[obj.mapPointIndex], Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                EnemyBase enemy = Instantiate(m_enemies[2], objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
                 enemy.onEntityDie += Enemy_onEntityDie;
                 m_objectivesLeft++;
+                m_objectives[i].m_highlight = enemy.transform;
+            }
+            else if(obj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+            {
+                BaseStructure structure = Instantiate(m_structures[0], objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
+                structure.onEntityDie += Structure_onEntityDie;
+                m_objectivesLeft++;
+                m_objectives[i].m_highlight = structure.transform;
             }
         }
     }
 
     private void Enemy_onEntityDie(BaseEntity _entity)
     {
-        _entity.onEntityDie += Enemy_onEntityDie;
+        _entity.onEntityDie -= Enemy_onEntityDie;
         m_objectivesLeft--;
+    }
+
+    private void Structure_onEntityDie(BaseEntity _entity)
+    {
+        _entity.onEntityDie -= Structure_onEntityDie;
+        m_objectivesLeft--;
+    }
+
+    IEnumerator checkObjectives()
+    {
+        while (isActiveAndEnabled)
+        {
+            yield return new WaitForSeconds(1);
+            if (currentObjectiveIndex != -1)
+                continue;
+            for (int i = 0; i < m_objectives.Length; ++i)
+            {
+                if(CustomUtility.IsHitRadius(m_objectives[i].m_highlight.position, PlayerHandler.instance.transform.position, 50.0f))
+                {
+                    currentObjectiveIndex = i;
+                    print("Current Objective started! : " + i);
+                    break;
+                }
+            }
+        }
     }
 }
