@@ -11344,6 +11344,7 @@ GameObject:
   - component: {fileID: 756605538046042365}
   - component: {fileID: 756605538046042339}
   - component: {fileID: 2490811769729633238}
+  - component: {fileID: 6443811998414984827}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -11448,11 +11449,28 @@ CharacterController:
   serializedVersion: 2
   m_Height: 6.75
   m_Radius: 1.59
-  m_SlopeLimit: 45
+  m_SlopeLimit: 70
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: -0.96, z: 0}
+--- !u!114 &6443811998414984827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756605538046042366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31862a6143989134da7c1c24fcf26986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 10
+  fastMovementSpeed: 100
+  freeLookSensitivity: 3
+  zoomSensitivity: 10
+  fastZoomSensitivity: 50
 --- !u!1 &757645498658516463
 GameObject:
   m_ObjectHideFlags: 0
@@ -108810,15 +108828,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 570a45d6a26883541ab055fc0c799f22, type: 3}
---- !u!95 &3380621591660375204 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 570a45d6a26883541ab055fc0c799f22,
-    type: 3}
-  m_PrefabInstance: {fileID: 367842036203891396}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4638816109430702558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 570a45d6a26883541ab055fc0c799f22,
+    type: 3}
+  m_PrefabInstance: {fileID: 367842036203891396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3380621591660375204 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 570a45d6a26883541ab055fc0c799f22,
     type: 3}
   m_PrefabInstance: {fileID: 367842036203891396}
   m_PrefabAsset: {fileID: 0}
@@ -108896,15 +108914,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 8a38946a1a82b374d94985fc68247c89, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a23f7bd281520be49865f6df62d6e6be, type: 3}
---- !u!4 &7496247908353079683 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: a23f7bd281520be49865f6df62d6e6be,
-    type: 3}
-  m_PrefabInstance: {fileID: 3274874561266438809}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &493951167757540535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3145884150761524782, guid: a23f7bd281520be49865f6df62d6e6be,
+    type: 3}
+  m_PrefabInstance: {fileID: 3274874561266438809}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7496247908353079683 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: a23f7bd281520be49865f6df62d6e6be,
     type: 3}
   m_PrefabInstance: {fileID: 3274874561266438809}
   m_PrefabAsset: {fileID: 0}
@@ -109112,15 +109130,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 91471b64876858b4386b4fb6b873a173, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39ba5ee659284c942b72f011f8c4c388, type: 3}
---- !u!95 &1660539561907178953 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
-    type: 3}
-  m_PrefabInstance: {fileID: 4394348716823727017}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8755393700263190707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 39ba5ee659284c942b72f011f8c4c388,
+    type: 3}
+  m_PrefabInstance: {fileID: 4394348716823727017}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1660539561907178953 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
     type: 3}
   m_PrefabInstance: {fileID: 4394348716823727017}
   m_PrefabAsset: {fileID: 0}
