@@ -16,6 +16,7 @@ using UnityEngine;
 *******************************/
 public class WeightedRandom : MonoBehaviour
 {
+    public static WeightedRandom instance { get; private set; }
     int[] weights;
     int weightTotal;
 
@@ -35,6 +36,9 @@ public class WeightedRandom : MonoBehaviour
 
     void Awake()
     {
+        if (instance == null)
+            instance = this;
+
         weights = new int[5]; // Total number of rarity
 
         //weighting of each rarity, high number means more occurrance

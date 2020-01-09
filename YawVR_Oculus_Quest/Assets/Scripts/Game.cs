@@ -47,6 +47,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
+        Random.InitState(System.DateTime.Now.Second);
         ApplyMechLoadouts();
         ApplyObjectives();
         StartCoroutine(checkObjectives());

@@ -102,7 +102,8 @@ public class LightMech2 : EnemyBase
         // Current State
         //currentState = _GameStates.CHASE;
         GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;
-        Player = GameObject.Find("Player");
+        //Player = GameObject.Find("Player");
+        Player = PlayerHandler.instance.gameObject;
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         //poof = gameObject.GetComponent<ParticleSystem>();
@@ -119,12 +120,12 @@ public class LightMech2 : EnemyBase
                 GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
-            if (currBuff == "DMG")
+            else if (currBuff == "DMG")
             {
                 GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
-            if (currBuff == "MS")
+            else if (currBuff == "MS")
             {
                 GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 MS = true;
@@ -139,12 +140,12 @@ public class LightMech2 : EnemyBase
                 GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
-            if (currBuff == "DMG" || secondBuff == "DMG")
+            else if (currBuff == "DMG" || secondBuff == "DMG")
             {
                 GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
-            if (currBuff == "MS" || secondBuff == "MS")
+            else if (currBuff == "MS" || secondBuff == "MS")
             {
                 GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 MS = true;
@@ -160,12 +161,12 @@ public class LightMech2 : EnemyBase
                 GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
-            if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+            else if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
             {
                 GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
-            if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+            else if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
             {
                 GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 MS = true;
