@@ -1,53 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3117058678553227569
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2102211864984024341}
-  - component: {fileID: 8683983948564573207}
-  m_Layer: 10
-  m_Name: PostProcessVolume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2102211864984024341
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3117058678553227569}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4223577705387104068}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8683983948564573207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3117058678553227569}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 52eed02416ec08a4681c2681e7618a8a, type: 2}
-  isGlobal: 1
-  blendDistance: 0
-  weight: 1
-  priority: 0
 --- !u!1 &4223577705387104122
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +35,6 @@ Transform:
   - {fileID: 4223577705621865353}
   - {fileID: 4223577705518759879}
   - {fileID: 4223577705490119041}
-  - {fileID: 2102211864984024341}
   - {fileID: 3356478760170513043}
   - {fileID: 8084552151028959729}
   m_Father: {fileID: 0}
@@ -295,7 +246,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4223577705387104068}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2200504067988808369
 MonoBehaviour:
@@ -311,8 +262,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gizmoModes: 1
   selectedTree: 2
+  m_staticRender: 0
+  m_dynamicRender: 0
   staticTreeColor: {r: 0, g: 1, b: 0.76967025, a: 1}
   dynamicTreeColor: {r: 1, g: 0, b: 0, a: 1}
+  quadTreeColor: {r: 0, g: 0, b: 0, a: 0}
   quadTreeBoundsOffset: {x: 0, y: 0}
   gizmosOffsets: {x: 0, y: 0, z: 0}
   quadTreeBounds:
@@ -323,16 +277,9 @@ MonoBehaviour:
   updateTick: 1
   staticList: []
   dynamicList: []
-  queryBounds:
-    m_position: {x: 0, y: 0, z: 0}
-    m_width: 150
-    m_height: 150
-  playerTransform: {fileID: 0}
-  materialArray:
-  - {fileID: 2100000, guid: bf46624bb893cbb4c93177efe182235b, type: 2}
-  - {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-  showBoundaries: 0
-  surroundingObjects: []
+  enableVisualizations: 0
+  m_staticVisualizations: []
+  m_dynamicVisualizations: []
 --- !u!1001 &278989132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -383,7 +330,7 @@ PrefabInstance:
     - target: {fileID: 3356478760449371103, guid: 317234475489c1949b07cffb653db47c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3356478760449371103, guid: 317234475489c1949b07cffb653db47c,
         type: 3}
