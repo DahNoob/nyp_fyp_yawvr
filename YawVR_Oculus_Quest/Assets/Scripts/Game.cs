@@ -86,23 +86,25 @@ public class Game : MonoBehaviour
     public void ApplyObjectives()
     {
         MapPointsHandler mph = MapPointsHandler.instance;
-        System.Array.Resize(ref m_objectives, mph.m_variedObjectives.objectives.Length);
-        for (int i = 0; i < mph.m_variedObjectives.objectives.Length; ++i)
+        System.Array.Resize(ref m_objectives, mph.m_variedObjectives.possibleObjectivePoints.Length);
+        for (int i = 0; i < m_objectives.Length; ++i)
         {
-            var obj = mph.m_variedObjectives.objectives[i];
-            Vector3 objectivePos = mph.m_mapPoints[obj.mapPointIndex];
+            var objIndex = mph.m_variedObjectives.possibleObjectivePoints[i];
+            Vector3 objectivePos = mph.m_mapPoints[objIndex];
             m_objectives[i] = new ObjectiveInfo();
-            m_objectives[i].type = obj.type;
-            if (obj.type == VariedObjectives.TYPE.BOUNTYHUNT)
+            m_objectives[i].type = Random.Range(0, 1000) > 500 ? VariedObjectives.TYPE.BOUNTYHUNT : VariedObjectives.TYPE.DEFEND_STRUCTURE;
+            if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
                 EnemyBase enemy = Instantiate(m_enemies[2], objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
                 enemy.onEntityDie += Enemy_onEntityDie;
                 m_objectivesLeft++;
                 m_objectives[i].m_highlight = enemy.transform;
             }
-            else if(obj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+            else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
             {
-                BaseStructure structure = Instantiate(m_structures[0], objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
+                RaycastHit hit;
+                Physics.Raycast(objectivePos, -Vector3.up, out hit);
+                BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
                 structure.onEntityDie += Structure_onEntityDie;
                 m_objectivesLeft++;
                 m_objectives[i].m_highlight = structure.transform;

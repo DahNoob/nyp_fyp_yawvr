@@ -12,12 +12,13 @@ public class VariedObjectives : ScriptableObject
 
         TOTAL
     }
-    [System.Serializable]
-    public struct VariedObjectiveInfo
-    {
-        public TYPE type;
-        public int mapPointIndex;
-        public string tag;
-    }
-    public VariedObjectiveInfo[] objectives;
+    //[System.Serializable]
+    //public struct VariedObjectiveInfo
+    //{
+    //    public TYPE type;
+    //    public int mapPointIndex;
+    //    public string tag;
+    //}
+    //public VariedObjectiveInfo[] objectives;
+    public int[] possibleObjectivePoints;
 }
