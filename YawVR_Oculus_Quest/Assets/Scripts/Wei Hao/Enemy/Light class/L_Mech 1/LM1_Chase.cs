@@ -49,7 +49,7 @@ public class LM1_Chase : SMB_BaseEnemyState
     {
         //PlayerHandler player = PlayerHandler.instance;
 
-        float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
+        float distanceSqr = CustomUtility.HitCheckRadius(enemy.m_target.position, enemy.transform.position);
         //enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
         if (distanceSqr < inRangeSqr)
             animator.SetBool("Shoot", true);
@@ -57,7 +57,7 @@ public class LM1_Chase : SMB_BaseEnemyState
         //Debug.Log("Is it time to dodge? " + animator.GetBool("Dodge"));
         //animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
         Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
-        Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position));
+        Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(enemy.m_target.position, enemy.transform.position));
         //if (CustomUtility.HitCheckRadius(player.transform.position,enemy.transform.position) < m_detectRange * m_detectRange)
         //{
         //    navMeshAgent.isStopped = true;
@@ -90,14 +90,14 @@ public class LM1_Chase : SMB_BaseEnemyState
         m_projectileOriginR = animator.transform.Find("RBlaster Projectile Origin");
         navMeshAgent = animator.GetComponent<NavMeshAgent>();
         navMeshAgent.isStopped = false;
-        navMeshAgent.SetDestination(PlayerHandler.instance.transform.position);
+        navMeshAgent.SetDestination(enemy.m_target.position);
         animator.SetBool("DodgeEnd", false);
         
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        navMeshAgent.SetDestination(PlayerTransform.position);
+        navMeshAgent.SetDestination(enemy.m_target.position);
         //relativePos = PlayerTransform.position - animator.transform.position;
 
         //Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
@@ -147,12 +147,14 @@ public class LM1_Chase : SMB_BaseEnemyState
     {
         //Debug.Log("Fire start");
         BaseProjectile _projectileL = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        m_projectileOriginL.LookAt(enemy.m_target);
         _projectileL.Init(m_projectileOriginL);
 
         yield return new WaitForSeconds(0.2f);
 
         //Debug.Log("2nd Fire start");
         BaseProjectile _projectileR = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        m_projectileOriginR.LookAt(enemy.m_target);
         _projectileR.Init(m_projectileOriginR);
     }
 

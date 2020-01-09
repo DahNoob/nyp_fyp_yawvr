@@ -16,7 +16,7 @@ public class GenericProjectile : BaseProjectile
     {
         if (_transform != null)
             transform.SetPositionAndRotation(_transform.position, _transform.rotation);
-        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * m_projectileSpeed);
+        GetComponent<Rigidbody>().AddForce(transform.forward * m_projectileSpeed);
     }
 
     protected override void OnCollisionEnter(Collision collision)
@@ -26,7 +26,7 @@ public class GenericProjectile : BaseProjectile
         efx.GetComponent<ParticleSystem>().Emit(6);
         if (collision.collider)
         {
-            EnemyBase eb = collision.collider.GetComponent<EnemyBase>() ?? collision.collider.GetComponentInChildren<EnemyBase>();
+            BaseEntity eb = collision.collider.GetComponent<BaseEntity>() ?? collision.collider.GetComponentInChildren<BaseEntity>();
             if(eb)
             {
                 eb.takeDamage(5);

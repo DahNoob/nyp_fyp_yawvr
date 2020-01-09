@@ -133,9 +133,9 @@ public class MapPointsHandler : MonoBehaviour
             Gizmos.DrawWireCube(m_mapPoints[i], m_cubeSizeConfirmed);
         }
         Gizmos.color = m_colorObjective;
-        for (int i = 0; i < m_variedObjectives.objectives.Length; ++i)
+        for (int i = 0; i < m_variedObjectives.possibleObjectivePoints.Length; ++i)
         {
-            Gizmos.DrawWireSphere(m_mapPoints[m_variedObjectives.objectives[i].mapPointIndex], m_radiusSizeObjective);
+            Gizmos.DrawWireSphere(m_mapPoints[m_variedObjectives.possibleObjectivePoints[i]], m_radiusSizeObjective);
         }
     }
 

@@ -8,16 +8,17 @@ public class VariedObjectives : ScriptableObject
     public enum TYPE
     {
         BOUNTYHUNT,
+        DEFEND_STRUCTURE,
 
         TOTAL
     }
-    [System.Serializable]
-    public struct VariedObjectiveInfo
-    {
-        public TYPE type;
-        public int mapPointIndex;
-        [Range(0, 10)]
-        public int intensity;
-    }
-    public VariedObjectiveInfo[] objectives;
+    //[System.Serializable]
+    //public struct VariedObjectiveInfo
+    //{
+    //    public TYPE type;
+    //    public int mapPointIndex;
+    //    public string tag;
+    //}
+    //public VariedObjectiveInfo[] objectives;
+    public int[] possibleObjectivePoints;
 }
