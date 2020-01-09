@@ -75,13 +75,21 @@ public class MapPointsHandler : MonoBehaviour
     }
     private void OnSetPointsHeight()
     {
-        foreach (Transform t in transform)
+        //foreach (Transform t in transform)
+        //{
+        //    RaycastHit hit;
+        //    if (Physics.Raycast(t.position, -t.up, out hit))
+        //    {
+        //        t.position = hit.point;
+        //        t.Translate(0, m_pointHeight, 0);
+        //    }
+        //}
+        for (int i = 0; i < m_mapPoints.Count; i++)
         {
             RaycastHit hit;
-            if (Physics.Raycast(t.position, -t.up, out hit))
+            if (Physics.Raycast(m_mapPoints[i], -Vector3.up, out hit))
             {
-                t.position = hit.point;
-                t.Translate(0, m_pointHeight, 0);
+                m_mapPoints[i] = hit.point + new Vector3(0, m_pointHeight);
             }
         }
     }
