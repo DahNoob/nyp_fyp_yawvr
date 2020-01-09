@@ -104,6 +104,7 @@ public class Game : MonoBehaviour
             {
                 RaycastHit hit;
                 Physics.Raycast(objectivePos, -Vector3.up, out hit);
+                print(hit.point);
                 BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
                 structure.onEntityDie += Structure_onEntityDie;
                 m_objectivesLeft++;
