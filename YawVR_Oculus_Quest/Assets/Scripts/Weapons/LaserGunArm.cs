@@ -13,7 +13,7 @@ public class LaserGunArm : MechArmModule
     [SerializeField]
     protected float m_shootInterval = 0.1f;
     [SerializeField]
-    protected ParticleSystem m_shootParticle;
+    protected GameObject m_muzzleFlash;
     [SerializeField]
     protected AudioSource m_shootAudioSource;
     [SerializeField]
@@ -58,6 +58,10 @@ public class LaserGunArm : MechArmModule
         shootTick = 0;
         follower.m_followSpeed = m_followerSpeed;
         m_gatlingAnimator.SetFloat("Blend", 1);
+        foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
+        {
+            asd.Play();
+        }
         //m_laserPointer.gameObject.SetActive(true);
         return true;
     }
@@ -83,7 +87,6 @@ public class LaserGunArm : MechArmModule
                     follower.Bump(m_recoilPosition, m_recoilRotation);
                     //VibrationManager.SetControllerVibration(m_controller, vibeClip);
                     VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
-                    m_shootParticle.Emit(2);
                     m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
                     m_shootAudioSource.Play();
 
@@ -104,6 +107,10 @@ public class LaserGunArm : MechArmModule
     public override bool Stop(OVRInput.Controller _controller)
     {
         m_gatlingAnimator.SetFloat("Blend", 0);
+        foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
+        {
+            asd.Stop();
+        }
         // m_laserPointer.gameObject.SetActive(false);
         return true;
     }
