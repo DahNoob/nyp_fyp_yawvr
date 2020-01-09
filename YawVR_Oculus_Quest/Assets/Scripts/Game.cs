@@ -64,9 +64,17 @@ public class Game : MonoBehaviour
             print("Current Objective ended!");
             currObj.m_completed = true;
             currentObjectiveIndex = -1;
+            return;
         }
         if (currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE && currObj.m_timer > currObj.m_spawnTime)
         {
+            if(currObj.m_highlight == null)
+            {
+                print("Current Objective ended!");
+                currObj.m_completed = true;
+                currentObjectiveIndex = -1;
+                return;
+            }
             currObj.m_timer -= currObj.m_spawnTime;
             print("Spawn Enemies!");
             for (int i = 0; i < 3; ++i)
