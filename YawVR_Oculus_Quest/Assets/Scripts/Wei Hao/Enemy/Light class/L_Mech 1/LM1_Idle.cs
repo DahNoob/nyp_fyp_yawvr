@@ -13,9 +13,9 @@ public class LM1_Idle : SMB_BaseEnemyState
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void Check(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerHandler player = PlayerHandler.instance;
-        animator.SetBool("Alert", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
-        Debug.Log("Is there a player nearby? " + animator.GetBool("Alert"));
+        //PlayerHandler player = PlayerHandler.instance;
+        animator.SetBool("Alert", CustomUtility.IsHitRadius(enemy.m_target.position, enemy.transform.position, m_detectRange));
+        Debug.Log("Is the LM1's target nearby? " + animator.GetBool("Alert"));
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
