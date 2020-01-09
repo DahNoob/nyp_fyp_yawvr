@@ -58,6 +58,7 @@ public class LM1_Chase : SMB_BaseEnemyState
         //animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
         Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
         Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(enemy.m_target.position, enemy.transform.position));
+        navMeshAgent.SetDestination(enemy.m_target.position);
         //if (CustomUtility.HitCheckRadius(player.transform.position,enemy.transform.position) < m_detectRange * m_detectRange)
         //{
         //    navMeshAgent.isStopped = true;
@@ -97,7 +98,7 @@ public class LM1_Chase : SMB_BaseEnemyState
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        navMeshAgent.SetDestination(enemy.m_target.position);
+        //navMeshAgent.SetDestination(enemy.m_target.position);
         //relativePos = PlayerTransform.position - animator.transform.position;
 
         //Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
@@ -157,6 +158,7 @@ public class LM1_Chase : SMB_BaseEnemyState
         m_projectileOriginR.LookAt(enemy.m_target);
         _projectileR.Init(m_projectileOriginR);
     }
+
 
     //// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -99,6 +99,7 @@ public class LightMech2 : EnemyBase
     new void Start()
     {
         base.Start();
+
         // Current State
         //currentState = _GameStates.CHASE;
         GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;

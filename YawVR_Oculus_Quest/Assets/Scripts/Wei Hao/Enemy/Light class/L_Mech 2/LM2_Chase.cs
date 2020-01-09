@@ -34,6 +34,7 @@ public class LM2_Chase : SMB_BaseEnemyState
                 break;
             }
         }
+        navMeshAgent.SetDestination(enemy.m_target.transform.position);
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -47,7 +48,7 @@ public class LM2_Chase : SMB_BaseEnemyState
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        navMeshAgent.SetDestination(enemy.m_target.transform.position);
+
         //relativePos = PlayerTransform.position - animator.transform.position;
 
         //Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));

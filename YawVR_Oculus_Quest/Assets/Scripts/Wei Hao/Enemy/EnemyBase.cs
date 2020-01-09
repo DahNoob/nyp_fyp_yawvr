@@ -39,7 +39,18 @@ abstract public class EnemyBase : BaseEntity
     [SerializeField]
     protected Transform m_bodyTransform;
 
-    public Transform m_target;
+    public Transform m_target {
+        get {
+            if (_m_target == null)
+                _m_target = PlayerHandler.instance.transform;
+
+            return _m_target;
+        }
+        set { _m_target = value; }
+    }
+
+    //Hidden variables
+    private Transform _m_target;
 
     [Header("Objects of Interest Area")]
     [SerializeField]
