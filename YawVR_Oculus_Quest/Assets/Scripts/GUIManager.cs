@@ -48,8 +48,8 @@ public class GUIManager : MonoBehaviour
 
     void Start()
     {
-        transform.position = m_cameraTransform.position;
-        transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
+        //transform.position = m_cameraTransform.position;
+        //transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
         reticleModule.SetupReticleModule();
         reticleModule.SetupReticleColors();
@@ -88,8 +88,8 @@ public class GUIManager : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = m_cameraTransform.position;
-        transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
+        //transform.position = m_cameraTransform.position;
+        //transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         m_fpsValue.text = fps.ToString();
         m_armRotationValue.text = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch).eulerAngles.ToString();
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
