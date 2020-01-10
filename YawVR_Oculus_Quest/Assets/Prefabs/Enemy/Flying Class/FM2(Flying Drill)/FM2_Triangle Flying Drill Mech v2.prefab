@@ -672,7 +672,7 @@ GameObject:
   - component: {fileID: 3296302320629394630}
   - component: {fileID: 30919776}
   - component: {fileID: 5875549529491135416}
-  - component: {fileID: 1456948255247223642}
+  - component: {fileID: 62382414}
   m_Layer: 0
   m_Name: FM2_Triangle Flying Drill Mech v2
   m_TagString: Untagged
@@ -710,7 +710,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!96 &3296302320629394631
 TrailRenderer:
   serializedVersion: 2
@@ -841,7 +841,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6818234780709451212}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: -1923039037
   m_Radius: 0.69
   m_Speed: 3.5
@@ -868,13 +868,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e767d4b18df8cba47821f637d1ff4274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  maxHealth: 10
-  damage: 10
-  moveSpeed: 10
+  m_enemyInfo: {fileID: 0}
+  maxHealthMultiplier: 1
+  damageMultiplier: 1
+  moveSpeedMultiplier: 1
   m_dieEffect: {fileID: 8290165608302987775, guid: d903496c821bada4eadb62fdb6334398,
     type: 3}
   m_bodyTransform: {fileID: 7549270684064581599}
+  showGizmos: 0
+  queryBounds:
+    m_position: {x: 0, y: 0, z: 0}
+    m_width: 0
+    m_height: 0
   currentState: 0
   rarity: 0
   HP_Buff_Prefab: {fileID: 3935465836604018861, guid: 3222aadb09b81b04e939777452714285,
@@ -886,8 +891,8 @@ MonoBehaviour:
   HP: 0
   DMG: 0
   MS: 0
---- !u!65 &1456948255247223642
-BoxCollider:
+--- !u!135 &62382414
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -897,8 +902,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3052368, y: 1.2516937, z: 1.3872375}
-  m_Center: {x: -0.011871338, y: -0.0013580322, z: -0.0018157959}
+  m_Radius: 0.74
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6891968525230165294
 GameObject:
   m_ObjectHideFlags: 0

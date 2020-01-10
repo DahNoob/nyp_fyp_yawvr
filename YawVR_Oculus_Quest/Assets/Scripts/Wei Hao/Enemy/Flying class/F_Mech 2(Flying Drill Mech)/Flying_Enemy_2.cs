@@ -168,7 +168,8 @@ public class Flying_Enemy_2 : EnemyBase
         {
             //Debug.Log("Hit");
             currentState = _EnemyState.DIE;
-            //m_Animator.SetBool("Explode", true);
+            m_Animator.SetBool("Cooldown", true);
+            m_Animator.SetBool("Attack", false);
         }
 
         if (collision.gameObject.tag == "Bullet")
@@ -176,6 +177,9 @@ public class Flying_Enemy_2 : EnemyBase
             takeDamage(1);
             collision.gameObject.SetActive(false);
         }
+
+        m_Animator.SetBool("Cooldown", true);
+        m_Animator.SetBool("Attack", false);
     }
 
     //public float GetMoveSpeed()
