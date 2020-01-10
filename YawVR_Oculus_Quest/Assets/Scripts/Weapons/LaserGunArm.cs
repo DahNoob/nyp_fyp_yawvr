@@ -26,6 +26,8 @@ public class LaserGunArm : MechArmModule
     protected Vector3 m_recoilPosition = new Vector3(0, 0.02f, 0.05f);
     [SerializeField]
     protected Vector3 m_recoilRotation = new Vector3(-2, 0, 0);
+    [SerializeField]
+    protected Transform m_dissolveTransform;
 
     [Header("Ammo Configuration")]
     [SerializeField]
@@ -38,6 +40,9 @@ public class LaserGunArm : MechArmModule
 
     //Local variables
     private float shootTick;
+    private bool isFullyVisible = false;
+    private Vector3 fadeInPos = new Vector3(0, 0.841f, 0);
+    private Vector3 fadeOutPos = new Vector3(0, -1.512f, 0);
 
     void Start()
     {
@@ -46,11 +51,18 @@ public class LaserGunArm : MechArmModule
         //Set the fill amount to be the normalized value of the ammo left
         weaponAmmoText.text = ammoModule.currentAmmo.ToString();
         m_laserPointer.gameObject.SetActive(true);
+        MeshRenderer[] ms = m_armObject.GetComponentsInChildren<MeshRenderer>();
+        for (int i = 0; i < ms.Length; i++)
+        {
+            ms[i].material.SetFloat("_Amount", -1000.0f);
+        }
     }
 
     void OnEnable()
     {
         mechHand.SetPose("HoldGun", true);
+        StartCoroutine(fadeIn());
+        
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -118,11 +130,63 @@ public class LaserGunArm : MechArmModule
     void OnDisable()
     {
         mechHand.SetPose("HoldGun", false);
+        MeshRenderer[] ms = m_armObject.GetComponentsInChildren<MeshRenderer>();
+        for (int i = 0; i < ms.Length; i++)
+        {
+            ms[i].material.SetFloat("_Amount", -1000.0f);
+        }
+        StartCoroutine(fadeOut());
     }
 
     private void Update()
     {
         ////If it's reloading, then don't show?
         //weaponAmmoText.enabled = !ammoModule.m_isReloading;
+    }
+
+    private void FixedUpdate()
+    {
+        m_dissolveTransform.localPosition = Vector3.LerpUnclamped(m_dissolveTransform.localPosition, new Vector3(0, 0.841f, 0), 0.01f);
+        MeshRenderer[] ms = m_armObject.GetComponentsInChildren<MeshRenderer>();
+        for (int i = 0; i < ms.Length; i++)
+        {
+            ms[i].material.SetFloat("_Amount", m_dissolveTransform.position.y);
+        }
+
+    }
+
+    IEnumerator fadeIn()
+    {
+        isFullyVisible = false;
+        m_dissolveTransform.localPosition = fadeOutPos;
+        while (!isFullyVisible)
+        {
+            yield return new WaitForFixedUpdate();
+            m_dissolveTransform.localPosition = Vector3.LerpUnclamped(m_dissolveTransform.localPosition, fadeInPos, 0.03f);
+            MeshRenderer[] ms = m_armObject.GetComponentsInChildren<MeshRenderer>();
+            for (int i = 0; i < ms.Length; i++)
+            {
+                ms[i].material.SetFloat("_Amount", m_dissolveTransform.position.y);
+            }
+            if (m_dissolveTransform.localPosition.y == fadeInPos.y)
+                isFullyVisible = true;
+        }
+    }
+    IEnumerator fadeOut()
+    {
+        isFullyVisible = true;
+        m_dissolveTransform.localPosition = fadeInPos;
+        while (isFullyVisible)
+        {
+            yield return new WaitForFixedUpdate();
+            m_dissolveTransform.localPosition = Vector3.LerpUnclamped(m_dissolveTransform.localPosition, fadeOutPos, 0.03f);
+            MeshRenderer[] ms = m_armObject.GetComponentsInChildren<MeshRenderer>();
+            for (int i = 0; i < ms.Length; i++)
+            {
+                ms[i].material.SetFloat("_Amount", m_dissolveTransform.position.y);
+            }
+            if (m_dissolveTransform.localPosition.y == fadeOutPos.y)
+                isFullyVisible = false;
+        }
     }
 }
