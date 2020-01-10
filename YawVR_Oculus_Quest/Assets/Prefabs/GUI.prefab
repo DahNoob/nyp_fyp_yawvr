@@ -2354,6 +2354,7 @@ Transform:
   - {fileID: 1697291350807769123}
   - {fileID: 7237686205786814980}
   - {fileID: 6677131309179895339}
+  - {fileID: 5750088866428786770}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2371,30 +2372,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reticleModule:
     m_leftReticle:
-      m_reticleReference: {fileID: 0}
-      m_reticleSprite: {fileID: 0}
-      m_reticleText: {fileID: 0}
-      m_reticleString: 
-      m_reticleColor: {r: 0, g: 0, b: 0, a: 0}
-      m_reticleTextColor: {r: 0, g: 0, b: 0, a: 0}
-      m_reticleSize: 0
-      m_reticleInterestSize: 0
-      m_maxReticleSize: 0
-      m_reticleRecoveryTime: 0
+      m_reticleReference: {fileID: 1636679569767766893}
+      m_reticleSprite: {fileID: 21300000, guid: 0b030dc9ae2dd764c91d717549ec8709,
+        type: 3}
+      m_reticleText: {fileID: 2686563014926808262}
+      m_reticleString: Left
+      m_reticleColor: {r: 0, g: 0.8180351, b: 1, a: 1}
+      m_reticleTextColor: {r: 1, g: 0.3372549, b: 0, a: 1}
+      m_reticleSize: 0.65
+      m_reticleInterestSize: 0.5
+      m_reticleRecoveryTimeScale: 5
+      m_reticleRecoveryTime: 1
     m_rightReticle:
-      m_reticleReference: {fileID: 0}
-      m_reticleSprite: {fileID: 0}
-      m_reticleText: {fileID: 0}
-      m_reticleString: 
-      m_reticleColor: {r: 0, g: 0, b: 0, a: 0}
-      m_reticleTextColor: {r: 0, g: 0, b: 0, a: 0}
-      m_reticleSize: 0
-      m_reticleInterestSize: 0
-      m_maxReticleSize: 0
-      m_reticleRecoveryTime: 0
+      m_reticleReference: {fileID: 6555566256537390049}
+      m_reticleSprite: {fileID: 21300000, guid: 0b030dc9ae2dd764c91d717549ec8709,
+        type: 3}
+      m_reticleText: {fileID: 1315599298812411299}
+      m_reticleString: Right
+      m_reticleColor: {r: 0, g: 0.81960785, b: 1, a: 1}
+      m_reticleTextColor: {r: 1, g: 0.3372549, b: 0, a: 1}
+      m_reticleSize: 0.65
+      m_reticleInterestSize: 0.5
+      m_reticleRecoveryTimeScale: 5
+      m_reticleRecoveryTime: 1
     m_reticleColors:
       m_reticleLayerColors: []
-      m_reticleTagColors: []
+      m_reticleTagColors:
+      - m_tag: Enemy
+        m_tagColor: {r: 1, g: 0, b: 0, a: 1}
   m_cameraTransform: {fileID: 0}
   m_dumbCubes: {fileID: 6713068302700422119, guid: f8a6d94bc6a9f8c46a761b928695003a,
     type: 3}
@@ -3327,3 +3332,102 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Right
+--- !u!1001 &6621580599228437040
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6558094311634985178}
+    m_Modifications:
+    - target: {fileID: 8838357403866703667, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_Name
+      value: Reticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d223a7ba248897d46a0198428384121a, type: 3}
+--- !u!4 &5750088866428786770 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6621580599228437040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1636679569767766893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5571571889790552413, guid: d223a7ba248897d46a0198428384121a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6621580599228437040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!102 &2686563014926808262 stripped
+TextMesh:
+  m_CorrespondingSourceObject: {fileID: 9127673478635005686, guid: d223a7ba248897d46a0198428384121a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6621580599228437040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6555566256537390049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 80669793385175505, guid: d223a7ba248897d46a0198428384121a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6621580599228437040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!102 &1315599298812411299 stripped
+TextMesh:
+  m_CorrespondingSourceObject: {fileID: 5306760914300989331, guid: d223a7ba248897d46a0198428384121a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6621580599228437040}
+  m_PrefabAsset: {fileID: 0}

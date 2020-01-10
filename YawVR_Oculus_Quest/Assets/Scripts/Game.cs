@@ -47,6 +47,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
+        Random.InitState(System.DateTime.Now.Second);
         ApplyMechLoadouts();
         ApplyObjectives();
         StartCoroutine(checkObjectives());
@@ -64,9 +65,17 @@ public class Game : MonoBehaviour
             print("Current Objective ended!");
             currObj.m_completed = true;
             currentObjectiveIndex = -1;
+            return;
         }
         if (currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE && currObj.m_timer > currObj.m_spawnTime)
         {
+            if(currObj.m_highlight == null)
+            {
+                print("Current Objective ended!");
+                currObj.m_completed = true;
+                currentObjectiveIndex = -1;
+                return;
+            }
             currObj.m_timer -= currObj.m_spawnTime;
             print("Spawn Enemies!");
             for (int i = 0; i < 3; ++i)
@@ -104,6 +113,7 @@ public class Game : MonoBehaviour
             {
                 RaycastHit hit;
                 Physics.Raycast(objectivePos, -Vector3.up, out hit);
+                print(hit.point);
                 BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
                 structure.onEntityDie += Structure_onEntityDie;
                 m_objectivesLeft++;

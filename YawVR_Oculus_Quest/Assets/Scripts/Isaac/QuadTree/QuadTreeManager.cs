@@ -186,8 +186,8 @@ public class QuadTreeManager : MonoBehaviour
     void Update()
     {
         //Remove all null entires
-        staticList.RemoveAll(item => item == null);
-        dynamicList.RemoveAll(item => item == null);
+        //staticList.RemoveAll(item => item == null);
+
 
         //queryBounds.position = playerTransform.position;
         //nearbyTransforms = QueryStaticObjects(queryBounds, STATIC_TYPES.MAP_POINTS);
@@ -271,7 +271,7 @@ public class QuadTreeManager : MonoBehaviour
                 }
             case RENDER_OPTIONS.SELECTED_DYNAMIC:
                 {
-                    if(dynamicTrees != null)
+                    if (dynamicTrees != null)
                     {
                         Gizmos.color = dynamicTreeColor;
                         if (dynamicTrees[m_dynamicRender] != null)
@@ -353,7 +353,11 @@ public class QuadTreeManager : MonoBehaviour
                 {
                     DynamicQuadTreeObject dynamicObject = dynamicList[i].GetComponent<DynamicQuadTreeObject>();
                     dynamicObject.AddToQuadTree(dynamicList[i].gameObject, dynamicObject.Type);
+                    continue;
                 }
+
+                dynamicList.Remove(dynamicList[i]);
+
             }
         }
     }
@@ -363,7 +367,7 @@ public class QuadTreeManager : MonoBehaviour
     {
         if (!staticTrees.ContainsKey(types))
         {
-            Debug.Log("[InsertStaticObject]Static tree does not contain key of static type: " + types.ToString());
+            print("[InsertStaticObject]Static tree does not contain key of static type: " + types.ToString());
             return false;
         }
 
@@ -376,7 +380,7 @@ public class QuadTreeManager : MonoBehaviour
     {
         if (!dynamicTrees.ContainsKey(types))
         {
-            Debug.Log("[InsertDynamicObjects]Dynamic tree does not contain key of dynamic type: " + types.ToString());
+            print("[InsertDynamicObjects]Dynamic tree does not contain key of dynamic type: " + types.ToString());
             return false;
         }
 
@@ -389,7 +393,7 @@ public class QuadTreeManager : MonoBehaviour
     {
         if (!staticTrees.ContainsKey(types))
         {
-            Debug.Log("[QueryStaticObjects] Static trees does not contain key of type: " + types.ToString());
+            print("[QueryStaticObjects] Static trees does not contain key of type: " + types.ToString());
             return null;
         }
 
@@ -402,7 +406,7 @@ public class QuadTreeManager : MonoBehaviour
     {
         if (!dynamicTrees.ContainsKey(types))
         {
-            Debug.Log("[QueryDynamicObjects] Static trees does not contain key of type: " + types.ToString());
+            print("[QueryDynamicObjects] Static trees does not contain key of type: " + types.ToString());
             return null;
         }
 
@@ -416,7 +420,7 @@ public class QuadTreeManager : MonoBehaviour
     {
         if (!staticTrees.ContainsKey(types))
         {
-            Debug.Log("[RemoveStaticObjects] Static trees does not contain key of type: " + types.ToString());
+            print("[RemoveStaticObjects] Static trees does not contain key of type: " + types.ToString());
             return false;
         }
         //Else there is a key so pog
@@ -427,7 +431,7 @@ public class QuadTreeManager : MonoBehaviour
     {
         if (!dynamicTrees.ContainsKey(types))
         {
-            Debug.Log("[RemoveDynamicObjects] Static trees does not contain key of type: " + types.ToString());
+            print("[RemoveDynamicObjects] Static trees does not contain key of type: " + types.ToString());
             return false;
         }
         //Else there is a key so pog
