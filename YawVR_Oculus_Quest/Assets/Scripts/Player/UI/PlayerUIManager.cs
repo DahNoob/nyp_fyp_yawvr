@@ -8,8 +8,6 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] [Tooltip("Player's Minimap Component")]
     private PlayerUIMinimap m_playerMinimap;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +18,7 @@ public class PlayerUIManager : MonoBehaviour
     void Update()
     {
         m_playerMinimap.Update();
+        if (Input.GetKeyDown(KeyCode.R))
+            EdgeDetectionController.instance.StartScan();
     }
 }

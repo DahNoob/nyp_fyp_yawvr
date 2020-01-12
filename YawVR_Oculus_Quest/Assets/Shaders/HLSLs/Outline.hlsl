@@ -83,20 +83,23 @@ void OutlineMinimap_float(float2 UV, float OutlineThickness, float DepthSensitiv
 	uvSamples[1] = UV + float2(Texel.x, Texel.y) * halfScaleCeil;
 	uvSamples[2] = UV + float2(Texel.x * halfScaleCeil, -Texel.y * halfScaleFloor);
 	uvSamples[3] = UV + float2(-Texel.x * halfScaleFloor, Texel.y * halfScaleCeil);
-
+	float linearDepth = 0;
 	for (int i = 0; i < 4; i++)
 	{
-		depthSamples[i] = SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, uvSamples[i]).r;
+		depthSamples[i] = SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, uvSamples[i]).r ;
+		linearDepth += 1.0 / (_ZBufferParams.x * depthSamples[i] + _ZBufferParams.y);
 		normalSamples[i] = DecodeNormal(SAMPLE_TEXTURE2D(_CameraDepthNormalsTexture, sampler_CameraDepthNormalsTexture, uvSamples[i]));
 		colorSamples[i] = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uvSamples[i]);
 	}
 
+	linearDepth /= 4;
+
 	// Depth
 	float depthFiniteDifference0 = depthSamples[1] - depthSamples[0];
 	float depthFiniteDifference1 = depthSamples[3] - depthSamples[2];
-	float edgeDepth = sqrt(pow(depthFiniteDifference0, 2) + pow(depthFiniteDifference1, 2)) * 1000;
+	float edgeDepth = sqrt(pow(depthFiniteDifference0, 2) + pow(depthFiniteDifference1, 2)) * 100;
 	float depthThreshold = (1 / DepthSensitivity) * depthSamples[0];
-	//edgeDepth = edgeDepth > depthThreshold ? 1 : 0;
+	edgeDepth = edgeDepth > depthThreshold ? 1 : 0;
 
 	// Normals
 	float3 normalFiniteDifference0 = normalSamples[1] - normalSamples[0];
@@ -113,9 +116,26 @@ void OutlineMinimap_float(float2 UV, float OutlineThickness, float DepthSensitiv
 	float edge = max(edgeDepth, max(edgeNormal, edgeColor));
 
 	float4 original = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uvSamples[0]);
-	//Out = edge != 0 ? ((edge * OutlineColor) * ColorMultiplier) : float4(0.15f,0.15f,0.15f,1.0f);
-	Out = edge;
+	//Out = edge != 0 ? ((edge * OutlineColor) * ColorMultiplier) : float4(0.05, 0.05, 0.05,1.0f);
+	//Out = DecodeNormal(SAMPLE_TEXTURE2D(_CameraDepthNormalsTexture, sampler_CameraDepthNormalsTexture, uvSamples[0]));
+	//Average depth sample
+	//if (linearDepth >= 1)
+	//	return col;
+	//else
+	//	return col * 0.1f;
+
+	//linearDepth = 1 - linearDepth;
+
+	Out = original;
+
 	//Out = ((1 - edge) * original) + (edge * lerp(original, OutlineColor, OutlineColor.a));
+
+	//Out = edgeDepth * averageDepth > 0.1f && edgeDepth * averageDepth < 10 ? ((1 - edge) * original) + (edge * lerp(original, OutlineColor, OutlineColor.a)) : original;
+	//Out =  pow(linearDepth,1);
+	//Out = (1 - edgeDepth) * linearDepth;
+	//Out = edge * (linearDepth +0.1);
+	//Out = depthSamples[0];
+
 }
 
 

@@ -23,6 +23,8 @@ public class PlayerUIMinimap
     [Tooltip("The inner ring object")]
     private Image m_innerRing;
     [SerializeField]
+    private RectTransform m_innerRingTransform;
+    [SerializeField]
     [Tooltip("Inner Ring Rotation Speed")]
     private float m_innerRingRotationSpeed;
     [SerializeField]
@@ -34,17 +36,26 @@ public class PlayerUIMinimap
     [Tooltip("The inner ring object")]
     private Image m_outerRing;
     [SerializeField]
+    private RectTransform m_outerRingTransform;
+    [SerializeField]
     [Tooltip("Inner Ring Rotation Speed")] //Lerps towards the desired rotation
     private float m_outerRingRotationSpeed;
 
+    [Header("Camera Configuration")]
+    [SerializeField]
+    [Range(0.5f, 1.0f)]
+    private float cameraMultiplier = 0.95f;
+    [SerializeField]
+    private float cameraLerpSpeed = 1;
 
     //Local variables
     private Transform m_playerReference;
-    [SerializeField]
-    private RectTransform m_innerRingTransform;
-    [SerializeField]
-    private RectTransform m_outerRingTransform;
 
+
+    //Desired position for camera to be.
+    public Vector3 desiredPosition;
+    private Vector3 previousDesiredPosition;
+    private float lerpTime;
 
     // Start is called before the first frame update
     public void Start()
@@ -58,13 +69,42 @@ public class PlayerUIMinimap
     {
         bool result = doAnimations ? AnimatedMinimap() : NonAnimatedMinimap();
 
-        //Calculate the offsets for minimaps and stuff
-        Vector3 cameraPosition = m_minimapCamera.transform.localPosition;
-        cameraPosition.y = m_minimapOffset;
-        m_minimapCamera.transform.localPosition = cameraPosition;
-
         //Size of camera
         m_minimapCamera.orthographicSize = m_minimapZoom;
+
+        //Do raycast upwards onto terrain to bring it down if needed.
+        Ray ray = new Ray(m_playerReference.transform.position, Vector3.up);
+        RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
+        if(Physics.Raycast(ray.origin, ray.direction, out hit, float.MaxValue, LayerMask.GetMask("Terrain")))
+        {
+            //Fake kinda of camera stuff for the minimap
+            float desired = hit.distance * cameraMultiplier;
+            if(desired < m_minimapOffset)
+                desiredPosition.y = desired;
+        }
+        else
+        {
+            //Calculate the offsets for minimaps and stuff
+            desiredPosition = m_minimapCamera.transform.localPosition;
+            desiredPosition.y = m_minimapOffset;
+        }
+
+        if(previousDesiredPosition != desiredPosition)
+        {
+            previousDesiredPosition = desiredPosition;
+            lerpTime = 0;
+        }
+
+        if(lerpTime != 1)
+        {
+            lerpTime += Time.deltaTime * cameraLerpSpeed;
+            lerpTime = Mathf.Min(lerpTime, 1f);
+            //Lerp towards the desiredPosition always
+            m_minimapCamera.transform.localPosition = Vector3.Lerp(m_minimapCamera.transform.localPosition, desiredPosition, lerpTime);
+        }
+
+
 
     }
     bool AnimatedMinimap()

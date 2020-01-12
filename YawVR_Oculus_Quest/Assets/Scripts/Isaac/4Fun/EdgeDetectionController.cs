@@ -18,150 +18,140 @@ using UnityEngine;
 *******************************/
 public class EdgeDetectionController : MonoBehaviour
 {
+    public static EdgeDetectionController instance;
+
+    [Header("Scan Manager Configurations")]
+    [SerializeField]
+    //Whether to use player's transform
+    private bool usePlayer = true;
     //Where to start the scan.
     [SerializeField]
-    private Transform scanOrigin;
+    private Transform m_scanOrigin;
     //Edge detection material
     [SerializeField]
-    public Material edgeDetectionMaterial;
+    public Material m_edgeDetectionMaterial;
     //Scan distance for the edge detection.
     [SerializeField]
-    private float startScanDistance;
+    private float m_startScanDistance;
     [SerializeField]
-    private float scanWidth;
+    private float m_scanWidth;
     [SerializeField]
-    private float scanSpeed;
+    private float m_scanSpeed;
 
-    //Get camera
+    //Local variables
     private Camera m_camera;
     private float scanDistance;
 
     //Is the scan happening?
     bool isScanning;
 
-    //   // Use this for initialization
-    //   void Start () {
+    //Get and set
+    public Transform scanOrigin
+    {
+        get
+        {
+            return m_scanOrigin;
+        }
+        set
+        {
+            m_scanOrigin = value;
+        }
+    }
+    public float startScanDistance
+    {
+        get
+        {
+            return m_startScanDistance;
+        }
+        set
+        {
+            m_startScanDistance = value;
+        }
+    }
+    public float scanWidth
+    {
+        get
+        {
+            return m_scanWidth;
+        }
+        set
+        {
+            m_edgeDetectionMaterial.SetFloat("_ScanWidth", m_scanWidth);
+            m_scanWidth = value;
+        }
+    }
+    public float scanSpeed
+    {
+        get
+        {
+            return m_scanSpeed;
+        }
+        set
+        {
+            m_scanSpeed = value;
+        }
+    }
 
-    //}
+
+    private void Awake()
+    {
+        //Scan Manager
+        if (instance == null)
+            instance = this;
+    }
+    private void Start()
+    {
+        if (usePlayer)
+            m_scanOrigin = PlayerHandler.instance.transform;
+    }
+
     private void OnEnable()
     {
         m_camera = GetComponent<Camera>();
         if (m_camera == null)
             m_camera = Camera.main;
 
-        //Set depth texture mode to generate a depth map
-        m_camera.depthTextureMode = DepthTextureMode.Depth;
 
-        scanDistance = startScanDistance;
+        scanDistance = m_startScanDistance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            isScanning = true;
-            scanDistance = startScanDistance;
-        }
+        if (Input.GetKeyDown(KeyCode.P))
+            StartScanWithPosition(m_scanOrigin.position);
+
         if (isScanning)
-        {
-            scanDistance += Time.deltaTime * scanSpeed;
-        }
+            scanDistance += Time.deltaTime * m_scanSpeed;
+
+        //always in update
+        m_edgeDetectionMaterial.SetFloat("_ScanDistance", scanDistance);
     }
 
-    //OnRenderImage callback
-    [ImageEffectOpaque]
-    private void OnRenderImage(RenderTexture source, RenderTexture destination)
+    public void StartScanWithPosition(Vector3 position)
     {
-        edgeDetectionMaterial.SetVector("_ScanOrigin", scanOrigin.position);
-        edgeDetectionMaterial.SetFloat("_ScanDistance", scanDistance);
-        edgeDetectionMaterial.SetFloat("_ScanWidth", scanWidth);
-        RaycastDepthToWorld(source, destination);
+        isScanning = true;
+        scanDistance = m_startScanDistance;
+        m_edgeDetectionMaterial.SetVector("_ScannerPosition", position);
     }
 
-    void RaycastDepthToWorld(RenderTexture source, RenderTexture destination)
+    public void StartScan()
     {
-        //Get camera values
-        float m_farPlane = m_camera.farClipPlane;
-        float m_fov = m_camera.fieldOfView;
-        float m_camAspect = m_camera.aspect;
-        float m_nearPlane = m_camera.nearClipPlane;
-
-        //Half FOV
-        float m_halfFOV = m_fov * 0.5f;
-
-        //Get top right coordinates of camera
-        Vector3 width = m_camera.transform.right * Mathf.Tan(m_halfFOV * Mathf.Deg2Rad) * m_camAspect;
-        Vector3 height = m_camera.transform.up * Mathf.Tan(m_halfFOV * Mathf.Deg2Rad);
-
-        //Get all four sides of frustrum in world space.
-
-        //- 1 1
-        Vector3 TL = (m_camera.transform.forward - width + height);
-        // 1  1
-        Vector3 TR = (m_camera.transform.forward + width + height);     
-        // -1 -1
-        Vector3 BL = (m_camera.transform.forward - width - height);
-        //1  -1
-        Vector3 BR = (m_camera.transform.forward + width - height);
-
-        //Normalize all and * scale
-        TL.Normalize();
-        TR.Normalize();
-        BL.Normalize();
-        BR.Normalize();
-
-        //This is the scale between 0 and far plane when normalized.
-        float m_scale = TL.magnitude * m_farPlane;
-
-        TL *= m_scale;
-        TR *= m_scale;
-        BL *= m_scale;
-        BR *= m_scale;
-
-        //Set the render texture to the destination texture
-        RenderTexture.active = destination;
-
-        //Set some stuff in the material.
-        edgeDetectionMaterial.SetTexture("_MainTex", source);
-
-        //This is where i kind of get confused...
-        GL.PushMatrix();
-        GL.LoadOrtho();
-
-        edgeDetectionMaterial.SetPass(0);
-
-        //Screen coordinates
-        //0,1---------1,1
-        //|               |
-        //0,0-------- 1,0
-
-        //Draw a quad over whole screen
-        GL.Begin(GL.QUADS);
-
-        //Anti clockwise
-        //Bottom left for unit 0
-        GL.MultiTexCoord2(0, 0f, 0f);
-        GL.MultiTexCoord(1, BL);
-        GL.Vertex3(0f, 0f, 0f);
-
-        //Bottom Right Unit 0
-        GL.MultiTexCoord2(0, 1.0f, 0f);
-        GL.MultiTexCoord(1, BR);
-        GL.Vertex3(1.0f, 0f, 0f);
-
-        //Top Right Unit 0
-        GL.MultiTexCoord2(0, 1.0f, 1.0f);
-        GL.MultiTexCoord(1, TR);
-        GL.Vertex3(1.0f, 1.0f, 0f);
-
-        //Top Left Unit 0
-        GL.MultiTexCoord2(0, 0f, 1f);
-        GL.MultiTexCoord(1, TL);
-        GL.Vertex3(0f, 1.0f, 0f);
-
-        GL.End();
-        GL.PopMatrix();
+        isScanning = true;
+        scanDistance = m_startScanDistance;
+        m_edgeDetectionMaterial.SetVector("_ScannerPosition", m_scanOrigin.position);
     }
 
+    private void OnValidate()
+    {
+        //Update the material when the value changes
+        UpdateMaterial();
+    }
+
+    void UpdateMaterial()
+    {
+        m_edgeDetectionMaterial.SetFloat("_ScanDistance", scanDistance);
+        m_edgeDetectionMaterial.SetFloat("_ScanWidth", m_scanWidth);
+        m_edgeDetectionMaterial.SetVector("_ScannerPosition", m_scanOrigin.position);
+    }
 }
