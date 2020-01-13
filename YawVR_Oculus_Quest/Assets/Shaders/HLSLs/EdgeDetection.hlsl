@@ -4,6 +4,7 @@
 TEXTURE2D(_CameraColorTexture);
 SAMPLER(sampler_CameraColorTexture);
 float4 _CameraColorTexture_TexelSize;
+half4 _CameraColorTexture_ST;
 
 //Number of hits
 int m_scanCount = 0;//
@@ -60,6 +61,7 @@ void DoWave_float(
 	float3 TrailColor,
 	out float3 Out)
 {
+	//float4 original = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, UV);
 	float4 original = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, UV);
 	float3 scannerCol = half4(0, 0, 0, 0);
 
