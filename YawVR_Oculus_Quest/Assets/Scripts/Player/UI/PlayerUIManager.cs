@@ -32,8 +32,8 @@ public class PlayerUIManager : MonoBehaviour
         //       GenerateRandomColor(),
         //       GenerateRandomColor(),
         //      GenerateRandomColor());
-        //if (Input.GetKeyDown(KeyCode.T))
-        //    EdgeDetectionController.instance.AddWaveButton();
+        if (Input.GetKeyDown(KeyCode.T))
+            EdgeDetectionController.instance.AddWaveButton();
 
     }
 
