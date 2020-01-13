@@ -94,7 +94,9 @@ public class PlayerHandler : BaseEntity
     private Quaternion origRot;
     private bool isResettingPose = false;
     private Vector3 finalCamOffset;
-    private Vector3 cameraBump = new Vector3();
+    private Vector3 cameraShake = new Vector3();
+    private float shakeElapsed = 0;
+    private int shakeInterval = 0;
 
     //Hidden variables
     private float _energy;
@@ -133,8 +135,13 @@ public class PlayerHandler : BaseEntity
             ResetPose();
         if (!(m_leftController.IsModuleActivated() || m_rightController.IsModuleActivated()))
             currEnergy += m_energyRegenRate * Time.deltaTime;
+        shakeElapsed -= Time.deltaTime;
         m_energySlider.value = currEnergy;
-        if(state == STATE.IDLE)
+        if (++shakeInterval % 4 == 0 && shakeElapsed > 0)
+        {
+            cameraShake = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)), shakeElapsed);
+        }
+        if (state == STATE.IDLE)
         {
             m_cameraOffset = Vector3.zero;
             m_mechLegs.SetFloat("Blend", 0);
@@ -146,13 +153,14 @@ public class PlayerHandler : BaseEntity
             m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * m_camSwayIntensity, Mathf.Sin(time_mult * 2) * m_camSwayIntensity, 0), walkMultiplier);
             m_mechLegs.SetFloat("Blend", walkMultiplier);
         }
-        
+        if (Input.GetKeyDown(KeyCode.G))
+            Shake(0.2f);
     }
 
     private void FixedUpdate()
     {
-        m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f) + cameraBump;
-        cameraBump = Vector3.LerpUnclamped(cameraBump, Vector3.zero, 0.1f);
+        m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f) + cameraShake;
+        
         //rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
         //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }
@@ -218,9 +226,9 @@ public class PlayerHandler : BaseEntity
     {
         m_mechLegs.transform.localEulerAngles = new Vector3(0, Mathf.Atan2(-_y, _x) * Mathf.Rad2Deg + 90, 0);
     }
-    public void BumpCamera(Vector3 _offset)
+    public void Shake(float _duration)
     {
-        cameraBump = _offset;
+        shakeElapsed = _duration;
     }
     public void OnGrabberQueryOffset(OVRGrabber _obj)
     {
@@ -236,6 +244,7 @@ public class PlayerHandler : BaseEntity
     public override void takeDamage(int damage)
     {
         health -= damage;
+        Shake(damage * 0.03f);
         if (health <= 0)
             Die();
     }

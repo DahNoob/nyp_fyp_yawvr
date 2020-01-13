@@ -7948,6 +7948,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_followerTransform: {fileID: 1838295574976855757}
   m_armLength: 3
+  m_rightLimit: 80
+  m_leftLimit: 40
+  m_upperLimit: 80
+  m_lowerLimit: 80
   m_armStretch: 0
 --- !u!1 &695797908882621065
 GameObject:
@@ -11556,12 +11560,15 @@ MonoBehaviour:
     m_minimapOffset: 20
     m_minimapZoom: 20
     m_innerRing: {fileID: 8997107158465597754}
+    m_innerRingTransform: {fileID: 0}
     m_innerRingRotationSpeed: 5
     m_innerRingRotateClockwise: 1
     m_outerRing: {fileID: 7999528973090769340}
-    m_outerRingRotationSpeed: 5
-    m_innerRingTransform: {fileID: 0}
     m_outerRingTransform: {fileID: 0}
+    m_outerRingRotationSpeed: 5
+    cameraMultiplier: 0.95
+    cameraLerpSpeed: 1
+    desiredPosition: {x: 0, y: 0, z: 0}
 --- !u!143 &2490811769729633238
 CharacterController:
   m_ObjectHideFlags: 0
@@ -53997,6 +54004,7 @@ MonoBehaviour:
   m_followSpeed: 0.05
   m_origin: {fileID: 2145586970531902851, guid: 90fd21b414afe0342acec0c5e71cbbb9,
     type: 3}
+  m_armEuler: {x: 0, y: 0, z: 0}
 --- !u!1 &4337408684100307782
 GameObject:
   m_ObjectHideFlags: 0
@@ -65080,6 +65088,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_followerTransform: {fileID: 1666997101816253687}
   m_armLength: 3
+  m_rightLimit: 40
+  m_leftLimit: 80
+  m_upperLimit: 80
+  m_lowerLimit: 80
   m_armStretch: 0
 --- !u!1 &5293194350206389915
 GameObject:
@@ -105128,6 +105140,7 @@ MonoBehaviour:
   m_followSpeed: 0.05
   m_origin: {fileID: 5487406842446288566, guid: 43571d22433bc844e9432423f457b83b,
     type: 3}
+  m_armEuler: {x: 0, y: 0, z: 0}
 --- !u!1 &8878310717692569357
 GameObject:
   m_ObjectHideFlags: 0
@@ -109462,11 +109475,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechLegs
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 91471b64876858b4386b4fb6b873a173, type: 2}
     - target: {fileID: -4216859302048453862, guid: 39ba5ee659284c942b72f011f8c4c388,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -109522,6 +109530,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 91471b64876858b4386b4fb6b873a173, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39ba5ee659284c942b72f011f8c4c388, type: 3}
 --- !u!4 &8755393700263190707 stripped

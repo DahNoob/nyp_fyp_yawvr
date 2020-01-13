@@ -28,6 +28,9 @@ public class ControllerFollower : MonoBehaviour
     public float m_followSpeed = 0.05f;
     public Transform m_origin;
 
+    [Header("Debug")]
+    public Vector3 m_armEuler;
+
     //Local variables
     private Vector3 prevPosition, goalPosition, currPosition;
     private Quaternion prevRotation, goalRotation, currRotation;
