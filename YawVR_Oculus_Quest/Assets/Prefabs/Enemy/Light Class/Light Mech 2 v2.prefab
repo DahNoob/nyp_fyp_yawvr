@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7161193219792369677}
   - component: {fileID: 3233343319646372841}
   - component: {fileID: 3040576076035962383}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ChargeParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5028,13 +5028,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enemyInfo: {fileID: 11400000, guid: 982cb686293bc2e4ba909987b873ec62, type: 2}
-  maxHealth: 10
-  damage: 10
-  moveSpeed: 15
+  maxHealthMultiplier: 1
+  damageMultiplier: 1
+  moveSpeedMultiplier: 1
   m_dieEffect: {fileID: 8290165608302987775, guid: d903496c821bada4eadb62fdb6334398,
     type: 3}
   m_bodyTransform: {fileID: 8190647652789664018}
-  m_target: {fileID: 0}
   showGizmos: 0
   queryBounds:
     m_position: {x: 0, y: 0, z: 0}
@@ -5090,7 +5089,7 @@ GameObject:
   - component: {fileID: 6636967734375457041}
   - component: {fileID: 4270566056181937397}
   - component: {fileID: 2700359653785633371}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ChaseParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

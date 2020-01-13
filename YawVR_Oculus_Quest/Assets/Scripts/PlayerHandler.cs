@@ -61,6 +61,8 @@ public class PlayerHandler : BaseEntity
     [Header("UIs")]
     [SerializeField]
     private UnityEngine.UI.Slider m_energySlider;
+    [SerializeField]
+    private UnityEngine.UI.Image m_vignette;
 
     [Header("Configuration")]
     [SerializeField]
@@ -98,6 +100,7 @@ public class PlayerHandler : BaseEntity
     private float shakeElapsed = 0;
     private int shakeInterval = 0;
     private bool walkHapticReady = true;
+    private bool isShaking = false;
 
     //Hidden variables
     private float _energy;
@@ -120,6 +123,7 @@ public class PlayerHandler : BaseEntity
 
     void Start()
     {
+        m_vignette.color = Persistent.instance.COLOR_TRANSPARENT;
         m_camScreenFade.FadeIn();
         origPos = transform.position;
         origRot = transform.rotation;
@@ -138,9 +142,14 @@ public class PlayerHandler : BaseEntity
             currEnergy += m_energyRegenRate * Time.deltaTime;
         shakeElapsed -= Time.deltaTime;
         m_energySlider.value = currEnergy;
-        if (++shakeInterval % 4 == 0 && shakeElapsed > 0)
+        if (isShaking && ++shakeInterval % 4 == 0 && shakeElapsed > 0)
         {
             cameraShake = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)), shakeElapsed);
+        }
+        else if(isShaking && shakeElapsed < 0)
+        {
+            isShaking = false;
+            cameraShake = Vector3.zero;
         }
         if (state == STATE.IDLE)
         {
@@ -151,15 +160,14 @@ public class PlayerHandler : BaseEntity
         else if(state == STATE.WALK)
         {
             float walkMultiplier = GetComponent<MechMovement>().movementAlpha;
-            float time_mult = Time.time * 8 * walkMultiplier;
+            float time_mult = Time.time * 8;
             float sin = Mathf.Sin(time_mult * 2);
             if(walkHapticReady && sin < -0.8f)
             {
                 walkHapticReady = false;
-                float strength = 0.25f * walkMultiplier;
-                print("boom");
-                VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.04f, strength, false, 0.02f);
-                VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.04f, strength, false, 0.02f);
+                float strength = 0.35f * walkMultiplier;
+                VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.04f, strength, false, 0.005f);
+                VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.04f, strength, false, 0.005f);
             }
             else if(!walkHapticReady && sin > 0.5f)
             {
@@ -175,7 +183,7 @@ public class PlayerHandler : BaseEntity
     private void FixedUpdate()
     {
         m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f) + cameraShake;
-        
+        m_vignette.color = Color.LerpUnclamped(m_vignette.color, Persistent.instance.COLOR_TRANSPARENT, 0.05f);
         //rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
         //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }
@@ -243,6 +251,7 @@ public class PlayerHandler : BaseEntity
     }
     public void Shake(float _duration)
     {
+        isShaking = true;
         shakeElapsed = _duration;
     }
     public void OnGrabberQueryOffset(OVRGrabber _obj)
@@ -259,10 +268,11 @@ public class PlayerHandler : BaseEntity
     public override void takeDamage(int damage)
     {
         health -= damage;
-        float intensity = Mathf.Min(damage * 0.03f, 0.5f);
+        float intensity = Mathf.Min(damage * 0.05f, 0.5f);
         Shake(intensity);
-        VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.05f, intensity);
-        VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.05f, intensity);
+        m_vignette.color = Color.white;
+        VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.08f, intensity);
+        VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.08f, intensity);
         if (health <= 0)
             Die();
     }
