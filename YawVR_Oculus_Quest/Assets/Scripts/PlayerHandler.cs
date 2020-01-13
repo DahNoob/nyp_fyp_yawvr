@@ -259,7 +259,10 @@ public class PlayerHandler : BaseEntity
     public override void takeDamage(int damage)
     {
         health -= damage;
-        Shake(damage * 0.03f);
+        float intensity = Mathf.Min(damage * 0.03f, 0.5f);
+        Shake(intensity);
+        VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.05f, intensity);
+        VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.05f, intensity);
         if (health <= 0)
             Die();
     }
