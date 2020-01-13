@@ -97,6 +97,7 @@ public class PlayerHandler : BaseEntity
     private Vector3 cameraShake = new Vector3();
     private float shakeElapsed = 0;
     private int shakeInterval = 0;
+    private bool walkHapticReady = true;
 
     //Hidden variables
     private float _energy;
@@ -145,12 +146,26 @@ public class PlayerHandler : BaseEntity
         {
             m_cameraOffset = Vector3.zero;
             m_mechLegs.SetFloat("Blend", 0);
+            walkHapticReady = true;
         }
         else if(state == STATE.WALK)
         {
             float walkMultiplier = GetComponent<MechMovement>().movementAlpha;
-            float time_mult = Time.time * 8;
-            m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * m_camSwayIntensity, Mathf.Sin(time_mult * 2) * m_camSwayIntensity, 0), walkMultiplier);
+            float time_mult = Time.time * 8 * walkMultiplier;
+            float sin = Mathf.Sin(time_mult * 2);
+            if(walkHapticReady && sin < -0.8f)
+            {
+                walkHapticReady = false;
+                float strength = 0.25f * walkMultiplier;
+                print("boom");
+                VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.04f, strength, false, 0.02f);
+                VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.04f, strength, false, 0.02f);
+            }
+            else if(!walkHapticReady && sin > 0.5f)
+            {
+                walkHapticReady = true;
+            }
+            m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * m_camSwayIntensity, sin * m_camSwayIntensity, 0), walkMultiplier);
             m_mechLegs.SetFloat("Blend", walkMultiplier);
         }
         if (Input.GetKeyDown(KeyCode.G))
