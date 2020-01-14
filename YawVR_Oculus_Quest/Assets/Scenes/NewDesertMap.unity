@@ -583,6 +583,99 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2075412785}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &602823177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2845542201662918097, guid: 55918678b82f09947be0fcf0f3795567,
+    type: 3}
+  m_PrefabInstance: {fileID: 2075412785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &602823178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602823177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 1479372276
+  m_CollectObjects: 1
+  m_Size: {x: 612.7352, y: 97.05118, z: 524.3925}
+  m_Center: {x: -262.44666, y: 299.2025, z: 146.7781}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.64
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 23800000, guid: 11a3bc9b5a2d98042af16c3ea7b9dabc, type: 2}
+--- !u!114 &602823179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602823177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: -902729914
+  m_CollectObjects: 1
+  m_Size: {x: 612.7352, y: 97.05118, z: 524.3925}
+  m_Center: {x: -262.44666, y: 299.2025, z: 146.7781}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.51
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 23800000, guid: e2011a4b2fe34ad4f9e5bc18cf73bc80, type: 2}
+--- !u!114 &602823180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602823177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 287145453
+  m_CollectObjects: 1
+  m_Size: {x: 612.7352, y: 97.05118, z: 524.3925}
+  m_Center: {x: -262.44666, y: 299.2025, z: 146.7781}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 1.2666667
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 23800000, guid: 22ce203b73b2b7041bf5134300e7fec6, type: 2}
 --- !u!43 &621859951
 Mesh:
   m_ObjectHideFlags: 0
@@ -1524,6 +1617,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game
       objectReference: {fileID: 0}
+    - target: {fileID: 2845542201662918097, guid: 55918678b82f09947be0fcf0f3795567,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8009945753609742990, guid: 55918678b82f09947be0fcf0f3795567,
         type: 3}
       propertyPath: m_IsActive
@@ -1698,18 +1796,8 @@ PrefabInstance:
       objectReference: {fileID: 528868151}
     - target: {fileID: 4749437561131921269, guid: 55918678b82f09947be0fcf0f3795567,
         type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 16183
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749437561131921269, guid: 55918678b82f09947be0fcf0f3795567,
-        type: 3}
       propertyPath: m_TargetEye
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845542201662918097, guid: 55918678b82f09947be0fcf0f3795567,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3392180588505813210, guid: 55918678b82f09947be0fcf0f3795567,
         type: 3}

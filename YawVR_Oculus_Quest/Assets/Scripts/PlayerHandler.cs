@@ -91,7 +91,16 @@ public class PlayerHandler : BaseEntity
     [Range(0.0f,0.2f)]
     private float m_camSwayIntensity = 0.1f;
 
+    [Header("Armor Configuration")]
+    [SerializeField]
+    private float m_maxArmor = 25.0f;
+    [SerializeField]
+    private float m_armorRegenRate = 10.0f;
+    [SerializeField]
+    private float m_armorRegenDelay = 3.0f;
+
     //Local variables
+    private float armor;
     private Vector3 origPos;
     private Quaternion origRot;
     private bool isResettingPose = false;
@@ -101,6 +110,7 @@ public class PlayerHandler : BaseEntity
     private int shakeInterval = 0;
     private bool walkHapticReady = true;
     private bool isShaking = false;
+    private float armorRegenElapsed = 0;
 
     //Hidden variables
     private float _energy;
@@ -125,6 +135,7 @@ public class PlayerHandler : BaseEntity
     {
         m_vignette.color = Persistent.instance.COLOR_TRANSPARENT;
         m_camScreenFade.FadeIn();
+        armor = m_maxArmor;
         origPos = transform.position;
         origRot = transform.rotation;
         currEnergy = m_maxEnergy;
@@ -141,16 +152,12 @@ public class PlayerHandler : BaseEntity
         if (!(m_leftController.IsModuleActivated() || m_rightController.IsModuleActivated()))
             currEnergy += m_energyRegenRate * Time.deltaTime;
         shakeElapsed -= Time.deltaTime;
+        armorRegenElapsed += Time.deltaTime;
+        if (armorRegenElapsed > m_armorRegenDelay)
+        {
+            armor = Mathf.Min(m_maxArmor, armor + m_armorRegenRate * Time.deltaTime);
+        }
         m_energySlider.value = currEnergy;
-        if (isShaking && ++shakeInterval % 4 == 0 && shakeElapsed > 0)
-        {
-            cameraShake = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)), shakeElapsed);
-        }
-        else if(isShaking && shakeElapsed < 0)
-        {
-            isShaking = false;
-            cameraShake = Vector3.zero;
-        }
         if (state == STATE.IDLE)
         {
             m_cameraOffset = Vector3.zero;
@@ -182,8 +189,19 @@ public class PlayerHandler : BaseEntity
 
     private void FixedUpdate()
     {
+        if (isShaking && ++shakeInterval % 2 == 0 && shakeElapsed > 0)
+        {
+            cameraShake = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Random.Range(-0.15f, 0.15f), Random.Range(-0.15f, 0.15f)), shakeElapsed);
+            print(cameraShake);
+        }
+        else if (isShaking && shakeElapsed < 0)
+        {
+            isShaking = false;
+            cameraShake = Vector3.zero;
+        }
         m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f) + cameraShake;
         m_vignette.color = Color.LerpUnclamped(m_vignette.color, Persistent.instance.COLOR_TRANSPARENT, 0.05f);
+        
         //rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
         //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }
@@ -267,10 +285,19 @@ public class PlayerHandler : BaseEntity
 
     public override void takeDamage(int damage)
     {
-        health -= damage;
+        if (armor > 0)
+        {
+            armor = Mathf.Max(0, armor - damage);
+            m_vignette.color = Color.cyan;
+        }
+        else
+        {
+            health -= damage;
+            m_vignette.color = Color.red;
+        }
+        armorRegenElapsed = 0;
         float intensity = Mathf.Min(damage * 0.05f, 0.5f);
         Shake(intensity);
-        m_vignette.color = Color.white;
         VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.08f, intensity);
         VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.08f, intensity);
         if (health <= 0)

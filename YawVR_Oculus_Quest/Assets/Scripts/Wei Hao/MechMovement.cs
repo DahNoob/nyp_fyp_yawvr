@@ -128,6 +128,6 @@ public class MechMovement : MonoBehaviour
 
     public float GetMovementAlpha()
     {
-        return lStickDelta.magnitude;
+        return speed / maxSpeed;
     }
 }
