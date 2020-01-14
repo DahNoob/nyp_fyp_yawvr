@@ -116,7 +116,7 @@ void OutlineMinimap_float(float2 UV, float OutlineThickness, float DepthSensitiv
 	float edge = max(edgeDepth, max(edgeNormal, edgeColor));
 
 	float4 original = SAMPLE_TEXTURE2D(_CameraColorTexture, sampler_CameraColorTexture, uvSamples[0]);
-	//Out = edge != 0 ? ((edge * OutlineColor) * ColorMultiplier) : float4(0.05, 0.05, 0.05,1.0f);
+	Out = edge != 0 ? ((edge * OutlineColor) * ColorMultiplier) : float4(0.05, 0.05, 0.05,1.0f);
 	//Out = DecodeNormal(SAMPLE_TEXTURE2D(_CameraDepthNormalsTexture, sampler_CameraDepthNormalsTexture, uvSamples[0]));
 	//Average depth sample
 	//if (linearDepth >= 1)
@@ -125,8 +125,6 @@ void OutlineMinimap_float(float2 UV, float OutlineThickness, float DepthSensitiv
 	//	return col * 0.1f;
 
 	//linearDepth = 1 - linearDepth;
-
-	Out = original;
 
 	//Out = ((1 - edge) * original) + (edge * lerp(original, OutlineColor, OutlineColor.a));
 

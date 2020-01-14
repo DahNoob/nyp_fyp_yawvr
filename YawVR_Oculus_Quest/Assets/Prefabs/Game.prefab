@@ -407,7 +407,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 870356838873983929}
+  - {fileID: 5854042772982390142}
   m_Father: {fileID: 3198803091135731427}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1512,6 +1512,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3473058117719080291, guid: 2cfd504a3772e4a45ad4006c28d1210c,
+        type: 3}
+      propertyPath: m_MaterialTemplate
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3473058115970940754, guid: 2cfd504a3772e4a45ad4006c28d1210c,
         type: 3}
@@ -5188,11 +5193,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8602080149038066884}
     m_Modifications:
-    - target: {fileID: 6270111127060148024, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 18
-      objectReference: {fileID: 0}
     - target: {fileID: 756605538046042366, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_Name
@@ -5258,10 +5258,120 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6270111127060148024, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2190331730173437227, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_RootOrder
       value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[0].iconName
+      value: DEFAULT
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[0].iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 51a9d6192e4ec824ca2e2b4d14aa0804,
+        type: 3}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[0].iconSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[1].iconName
+      value: LIGHTMECH
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[1].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[1].iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2284709ecb9998640b485ac97ffa2ea2,
+        type: 3}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[1].iconSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[2].iconName
+      value: LIGHTMECH2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[2].type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[2].iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2284709ecb9998640b485ac97ffa2ea2,
+        type: 3}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[2].iconSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[3].iconName
+      value: HEAVYMECH2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[3].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[3].iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2284709ecb9998640b485ac97ffa2ea2,
+        type: 3}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[3].iconSize
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[4].iconName
+      value: OBJECTIVES
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[4].type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[4].iconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a55334dd3517a38488f58f590af81a27,
+        type: 3}
+    - target: {fileID: 5802277514052396054, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_playerMinimapIcons.minimapIconData.Array.data[4].iconSize
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 756605538046042365, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
@@ -5428,7 +5538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8a6d94bc6a9f8c46a761b928695003a, type: 3}
---- !u!4 &870356838873983929 stripped
+--- !u!4 &5854042772982390142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6713068302700422120, guid: f8a6d94bc6a9f8c46a761b928695003a,
     type: 3}

@@ -56,8 +56,8 @@ public class LM1_Chase : SMB_BaseEnemyState
         //animator.SetBool("Dodge", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_DodgeDetectRange));
         //Debug.Log("Is it time to dodge? " + animator.GetBool("Dodge"));
         //animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
-        Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
-        Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(enemy.m_target.position, enemy.transform.position));
+        //Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
+        //Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(enemy.m_target.position, enemy.transform.position));
         navMeshAgent.SetDestination(enemy.m_target.position);
         //if (CustomUtility.HitCheckRadius(player.transform.position,enemy.transform.position) < m_detectRange * m_detectRange)
         //{
