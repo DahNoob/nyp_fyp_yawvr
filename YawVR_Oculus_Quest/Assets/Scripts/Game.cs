@@ -108,16 +108,17 @@ public class Game : MonoBehaviour
                 enemy.onEntityDie += Enemy_onEntityDie;
                 m_objectivesLeft++;
                 m_objectives[i].m_highlight = enemy.transform;
+                print("Objective deployed : Bounty Hunt @ " + objIndex);
             }
             else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
             {
                 RaycastHit hit;
                 Physics.Raycast(objectivePos, -Vector3.up, out hit);
-                print(hit.point);
                 BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
                 structure.onEntityDie += Structure_onEntityDie;
                 m_objectivesLeft++;
                 m_objectives[i].m_highlight = structure.transform;
+                print("Objective deployed : Defend Structure @ " + objIndex);
             }
         }
     }

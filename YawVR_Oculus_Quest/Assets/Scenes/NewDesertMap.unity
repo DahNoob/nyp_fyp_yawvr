@@ -1082,8 +1082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93c95456017081a498bc773fc38c4dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fastInvertColourMaterial: {fileID: 2100000, guid: 3344e653ba0942a4186c8bc013ff881c,
-    type: 2}
 --- !u!114 &1987465973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,11 +1466,6 @@ PrefabInstance:
       propertyPath: m_PolyMesh.m_Mesh
       value: 
       objectReference: {fileID: 528868151}
-    - target: {fileID: 4749437561131921269, guid: 55918678b82f09947be0fcf0f3795567,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 16183
-      objectReference: {fileID: 0}
     - target: {fileID: 4749437561131921269, guid: 55918678b82f09947be0fcf0f3795567,
         type: 3}
       propertyPath: m_TargetEye
@@ -12205,6 +12198,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: bf984f0e4e4e2d244ba59eaacf83babf,
         type: 2}
+    - target: {fileID: 4749437561131921271, guid: 55918678b82f09947be0fcf0f3795567,
+        type: 3}
+      propertyPath: queueAhead
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749437561131921271, guid: 55918678b82f09947be0fcf0f3795567,
+        type: 3}
+      propertyPath: useRecommendedMSAALevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749437561131921271, guid: 55918678b82f09947be0fcf0f3795567,
+        type: 3}
+      propertyPath: _monoscopic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4977877520680983503, guid: 55918678b82f09947be0fcf0f3795567,
         type: 3}
       propertyPath: m_Mesh
@@ -12235,21 +12243,6 @@ PrefabInstance:
       propertyPath: m_PolyMesh.m_Mesh
       value: 
       objectReference: {fileID: 621859951}
-    - target: {fileID: 4749437561131921271, guid: 55918678b82f09947be0fcf0f3795567,
-        type: 3}
-      propertyPath: queueAhead
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749437561131921271, guid: 55918678b82f09947be0fcf0f3795567,
-        type: 3}
-      propertyPath: useRecommendedMSAALevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749437561131921271, guid: 55918678b82f09947be0fcf0f3795567,
-        type: 3}
-      propertyPath: _monoscopic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3513727426234415928, guid: 55918678b82f09947be0fcf0f3795567,
         type: 3}
       propertyPath: m_StaticEditorFlags
