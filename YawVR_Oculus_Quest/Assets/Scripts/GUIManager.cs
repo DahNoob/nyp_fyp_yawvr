@@ -33,6 +33,10 @@ public class GUIManager : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Text m_armRotationValue;
 
+    [Header("Object Pool Resources")]
+    [SerializeField]
+    private UnityEngine.UI.Text m_projectileText;
+
     //Local variables
     int frameCount = 0;
     float dt = 0.0f;
@@ -84,6 +88,8 @@ public class GUIManager : MonoBehaviour
         //}
 
         reticleModule.UpdateEase();
+
+        m_projectileText.text = ObjectPooler.instance.AmountActive("PlayerProjectile");
     }
 
     void LateUpdate()

@@ -196,4 +196,22 @@ public class ObjectPooler : MonoBehaviour
         PoolObject resultObject = new PoolObject(poolName, objectToPool, amountToPool, amountToPool);
         return AddAnotherPool(resultObject, overWrite); 
     }
+
+    public string AmountActive(string tag)
+    {
+        if (poolDictionary == null || poolDictionary[tag] == null)
+            return "";
+
+        int totalCount = poolDictionary[tag].Count;
+
+        int totalActive = 0;
+        for(int i =0; i < poolDictionary[tag].Count; ++i)
+        {
+            if (poolDictionary[tag][i].activeSelf)
+                totalActive++;
+        }
+
+        return tag + " Pool: " + totalActive + "/" + totalCount;
+
+    }
 }
