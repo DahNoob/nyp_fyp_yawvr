@@ -35,7 +35,6 @@ public class HandedInputSelector : MonoBehaviour
         {
             SetActiveController(OVRInput.Controller.RTouch);
         }
-
     }
 
     void SetActiveController(OVRInput.Controller c)

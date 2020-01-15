@@ -18,7 +18,6 @@ public class PlayerUIManager : MonoBehaviour
     [Tooltip("Player Minimap Icons Configuration")]
     private PlayerUIMinimapIcons m_playerMinimapIcons;
 
-
     //Get stuff
     public PlayerUIMinimap playerMinimap
     {

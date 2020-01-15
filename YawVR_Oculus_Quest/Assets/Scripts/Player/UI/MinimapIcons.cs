@@ -14,6 +14,7 @@ public class MinimapIcons : MonoBehaviour
 
     private void Start()
     {
-        PlayerUIManager.instance.playerMinimapIcons.UpdateSprite(this);   
+        if(PlayerUIManager.instance != null)
+            PlayerUIManager.instance.playerMinimapIcons.UpdateSprite(this);   
     }
 }

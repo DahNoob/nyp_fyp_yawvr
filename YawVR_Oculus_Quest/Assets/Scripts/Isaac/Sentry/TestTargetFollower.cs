@@ -21,6 +21,8 @@ public class TestTargetFollower : DynamicQuadTreeObject
 
     public int fakeHP = 100;
 
+    public List<int> intList;
+
 
     // Start is called before the first frame update
     void Start()
@@ -89,7 +91,7 @@ public class TestTargetFollower : DynamicQuadTreeObject
     {
         if(collision.gameObject.tag =="Bullet")
         {
-            fakeHP -= 10;
+            fakeHP -= 0;
             if(fakeHP <=0)
             {
                 QuadTreeManager.instance.RemoveDynamicObject(this.gameObject, Type);

@@ -91,7 +91,8 @@ public class LM1_Shoot : SMB_BaseEnemyState
     {
         //Debug.Log("Fire start");
         //BaseProjectile _projectileL = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        BaseProjectile _projectileL = Instantiate(projectile, m_projectileOriginL.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        //BaseProjectile _projectileL = Instantiate(projectile, m_projectileOriginL.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        BaseProjectile _projectileL = ObjectPooler.instance.SpawnFromPool("EnemyProjectile", m_projectileOriginL.position, Quaternion.identity).GetComponent<BaseProjectile>();
         m_projectileOriginL.LookAt(enemy.m_target);
         _projectileL.Init(m_projectileOriginL);
 
@@ -99,7 +100,7 @@ public class LM1_Shoot : SMB_BaseEnemyState
 
         //Debug.Log("2nd Fire start");
         //BaseProjectile _projectileR = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        BaseProjectile _projectileR = Instantiate(projectile, m_projectileOriginR.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        BaseProjectile _projectileR = ObjectPooler.instance.SpawnFromPool("EnemyProjectile", m_projectileOriginR.position, Quaternion.identity).GetComponent<BaseProjectile>();
         m_projectileOriginR.LookAt(enemy.m_target);
         _projectileR.Init(m_projectileOriginR);
     }

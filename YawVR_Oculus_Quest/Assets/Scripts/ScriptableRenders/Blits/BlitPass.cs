@@ -78,5 +78,6 @@
             if (destination == RenderTargetHandle.CameraTarget)
                 cmd.ReleaseTemporaryRT(m_TemporaryColorTexture.id);
         }
+
     }
 }
