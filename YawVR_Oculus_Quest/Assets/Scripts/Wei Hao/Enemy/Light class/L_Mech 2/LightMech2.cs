@@ -277,7 +277,7 @@ public class LightMech2 : EnemyBase
         return selectedBuff;
     }
 
-    void OnTriggerEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
