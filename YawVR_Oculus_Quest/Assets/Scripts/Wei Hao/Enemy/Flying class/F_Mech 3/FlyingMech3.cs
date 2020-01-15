@@ -36,28 +36,10 @@ public class FlyingMech3 : EnemyBase
     //Fetch the Animator
     Animator m_Animator;
 
-    //// Particle effect when baneling explodes
-    //public ParticleSystem poof;
-    //float explodeDuration = 1.0f;
-
-
-
-    //[Header("Explosion")]
-    //private float speed = 1.0f; //how fast it shakes
-    //private float amount = 1.0f; //how much it shakes
-    //private Vector3 transformX;
-
-    //private GameObject passiveBuffs;
-
     [Header("Rarity")]
     [SerializeField]
     private _Rarity rarity;
     private GameObject weightedRandom;
-
-    [Header("Death Particle Effect")]
-    [SerializeField]
-    public GameObject explosionPrefab;
-    private GameObject explosion;
 
     [Header("Buff Prefabs")]
     [SerializeField]
@@ -82,6 +64,11 @@ public class FlyingMech3 : EnemyBase
     protected GameObject m_lesserEnemy;
 
     protected List<Collider> ignoredColliders = new List<Collider>();
+
+    [SerializeField]
+    protected GameObject m_WeakPoint_1;
+    [SerializeField]
+    protected GameObject m_WeakPoint_2;
 
     // Start is called before the first frame update
     new void Start()
@@ -251,11 +238,6 @@ public class FlyingMech3 : EnemyBase
         queryBounds.position = transform.position;
     }
 
-    public void PlayDeathParticle()
-    {
-        //explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
-    }
-
     public string StartBuff()
     {
         System.Random random = new System.Random();
@@ -279,7 +261,8 @@ public class FlyingMech3 : EnemyBase
         if (collision.gameObject.tag == "Bullet")
         {
             takeDamage(1);
-            collision.gameObject.SetActive(false);
+            Debug.Log("Parent Object collided");
+            //collision.gameObject.SetActive(false);
         }
     }
     //void OnCollisionEnter(Collision collision)
@@ -298,5 +281,17 @@ public class FlyingMech3 : EnemyBase
     //        takeDamage(1);
     //        collision.gameObject.SetActive(false);
     //    }
+    //}
+
+    public void CollisionDetected(WeakPoint child)
+    {       
+        takeDamage(5);
+        Debug.Log("Child object collided");
+    }
+
+
+    //private void OnCollisionEnterChild(Collision collision)
+    //{
+        
     //}
 }
