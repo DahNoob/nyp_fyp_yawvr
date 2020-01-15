@@ -16,7 +16,6 @@ public class EnemyProjectile : BaseProjectile
 
     protected override void OnCollisionEnter(Collision collision)
     {
-
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
             Debug.Log("PLAYER HIT");

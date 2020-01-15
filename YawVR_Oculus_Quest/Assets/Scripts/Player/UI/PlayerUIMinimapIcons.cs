@@ -80,7 +80,6 @@ public class PlayerUIMinimapIcons
         SpriteRenderer thatRenderer = thatIcon.GetComponent<SpriteRenderer>();
         //Get that type
         MinimapIconData data = ReturnData(thatIcon.iconType);
-        Debug.Log("Data icon size " + data.iconSize);
         thatIcon.gameObject.transform.localScale = new Vector3(data.iconSize, data.iconSize, data.iconSize);
         thatRenderer.sprite = data.iconSprite;
 
