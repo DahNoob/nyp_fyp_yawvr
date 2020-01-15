@@ -82,7 +82,7 @@ public class ObjectPooler : MonoBehaviour
 
     }
 
-    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation, Transform parent = null)
+    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
@@ -94,16 +94,17 @@ public class ObjectPooler : MonoBehaviour
         for (int i = 0; i < poolDictionary[tag].Count; ++i)
         {
             GameObject resultObject = poolDictionary[tag][i];
-            if (!resultObject.activeInHierarchy)
+            if (!resultObject.activeSelf)
             {
                 resultObject.transform.position = position;
                 resultObject.transform.rotation = rotation;
+
+                resultObject.SetActive(true);
 
                 IPooledObject pooledObject = resultObject.GetComponent<IPooledObject>();
                 if (pooledObject != null)
                     pooledObject.OnObjectSpawn();
 
-                resultObject.SetActive(true);
 
                 return resultObject;
             }
@@ -128,6 +129,7 @@ public class ObjectPooler : MonoBehaviour
             poolDictionary[tag].Add(resultObject);
         }
         //Debug.Log("Expanded pool by " + objectData.amountToExpand);
+        poolDictionary[tag][newCount].SetActive(true);
         return poolDictionary[tag][newCount];
 
     }

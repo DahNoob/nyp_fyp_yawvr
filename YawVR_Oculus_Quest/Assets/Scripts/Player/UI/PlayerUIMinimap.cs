@@ -53,7 +53,7 @@ public class PlayerUIMinimap
 
 
     //Desired position for camera to be.
-    public Vector3 desiredPosition;
+    private Vector3 desiredPosition;
     private Vector3 previousDesiredPosition;
     private float lerpTime;
 

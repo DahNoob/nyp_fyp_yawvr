@@ -53,7 +53,7 @@ public class PlayerUIMinimapIcons
         foreach(MinimapIconData data in minimapIconData)
         {
             iconData.Add(data.type, data);
-            Debug.Log("Added " + data.type.ToString());
+            //Debug.Log("Added " + data.type.ToString());
         }
 
     }

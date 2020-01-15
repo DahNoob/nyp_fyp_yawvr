@@ -96,7 +96,6 @@ public class TestTargetFollower : DynamicQuadTreeObject
             {
                 QuadTreeManager.instance.RemoveDynamicObject(this.gameObject, Type);
                 Destroy(this.gameObject);
-  
             }
         }
     }

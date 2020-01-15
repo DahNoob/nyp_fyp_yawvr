@@ -2,18 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VFXHandler : MonoBehaviour
+public class VFXHandler : MonoBehaviour , IPooledObject
 {
     public float m_time = 1;
 
-    void Start()
+    public void OnObjectSpawn()
     {
-        StartCoroutine(destroy());
+        Start();
     }
 
-    IEnumerator destroy()
+     public void OnObjectDestroy()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    void Start()
+    {
+        StartCoroutine(Destroy());
+    }
+
+    IEnumerator Destroy()
     {
         yield return new WaitForSeconds(m_time);
-        Destroy(gameObject);
+        OnObjectDestroy();
     }
 }

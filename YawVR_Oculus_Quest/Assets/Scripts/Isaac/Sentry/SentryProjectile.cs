@@ -50,8 +50,8 @@ public class SentryProjectile : BaseProjectile , IPooledObject
         //}
         //Destroy(gameObject);
 
-        GameObject efx = Instantiate(m_projectileImpactEffect, transform.position, Quaternion.identity);
-
+        //GameObject efx = Instantiate(m_projectileImpactEffect, transform.position, Quaternion.identity);
+        GameObject efx = ObjectPooler.instance.SpawnFromPool("PlayerProjectileImpact", collision.GetContact(0).point, Quaternion.identity);
         efx.GetComponent<ParticleSystem>().Emit(20);
 
         if (collision.gameObject.tag == "Enemy")
@@ -59,7 +59,6 @@ public class SentryProjectile : BaseProjectile , IPooledObject
             if (collision.collider)
             {
                 //Destroy(this.gameObject);
-
                 OnObjectDestroy();
             }
         }

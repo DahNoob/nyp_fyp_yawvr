@@ -26,7 +26,7 @@ public class SMB_HM2_Spawn : SMB_BaseEnemyState
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        if(m_currentIteration > m_spawnIterations)
+        if(m_currentIteration >= m_spawnIterations)
         {
             animator.SetBool("Spawn_Done", true);
         }

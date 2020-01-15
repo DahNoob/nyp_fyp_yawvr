@@ -11,8 +11,6 @@ public class GenericProjectile : BaseProjectile, IPooledObject
     //protected float m_projectileSpeed = 14000.0f;
     //[SerializeField]
     //protected float m_lifeTime = 1.5f;
-    [SerializeField]
-    protected GameObject m_projectileImpactEffect;
 
 
     public void OnObjectSpawn()
@@ -38,8 +36,9 @@ public class GenericProjectile : BaseProjectile, IPooledObject
 
     protected override void OnCollisionEnter(Collision collision)
     {
-        GameObject efx = Instantiate(m_projectileInfo.impactEffect, Persistent.instance.GO_DYNAMIC.transform);
-        efx.transform.position = collision.GetContact(0).point;
+        //GameObject efx = Instantiate(m_projectileInfo.impactEffect, Persistent.instance.GO_DYNAMIC.transform);
+        GameObject efx = ObjectPooler.instance.SpawnFromPool("PlayerProjectileImpact", collision.GetContact(0).point, Quaternion.identity);
+        //efx.transform.position = collision.GetContact(0).point;
         //efx.GetComponent<ParticleSystem>().Emit(6);
         if (collision.collider)
         {
