@@ -2503,6 +2503,8 @@ MonoBehaviour:
   m_enabled: 1
   m_followerSpeed: 0.12
   m_controller: 1
+  m_fadeInThreshold: 2
+  m_fadeOutThreshold: -2
   m_armObject: {fileID: 5505354877561874254}
   m_holoObject: {fileID: 2537564943693852358}
   m_holoMeshes:
@@ -2522,12 +2524,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6ea3e2c27688c634289ca1fa9153284d, type: 3}
   - {fileID: 8300000, guid: ea2fcbd6ae4437c44845058e6b4df6cc, type: 3}
   - {fileID: 8300000, guid: cefd562633df4b54db5387f71735d892, type: 3}
-  m_gatlingAnimator: {fileID: 5779190951069822281}
   m_laserPointer: {fileID: 3013876983873388077}
-  m_recoilPosition: {x: 0, y: 0, z: 0}
-  m_recoilRotation: {x: 0, y: 0, z: 0}
-  m_dissolveTransform: {fileID: 3622531028749558159}
+  weaponAmmoText: {fileID: 8756756935916254767}
   ammoModule:
+    m_ammoInfo: {fileID: 11400000, guid: 48445952f58c3bf4f9870ce392e1cdec, type: 2}
     m_currentAmmo: 100
     m_maxAmmo: 100
     m_reloadTime: 1
@@ -2536,7 +2536,9 @@ MonoBehaviour:
     m_isReloading: 0
     usesClips: 0
     usesAmmo: 1
-  weaponAmmoText: {fileID: 8756756935916254767}
+  m_gatlingAnimator: {fileID: 5779190951069822281}
+  m_recoilPosition: {x: 0, y: 0, z: 0}
+  m_recoilRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &665761324409856081
 GameObject:
   m_ObjectHideFlags: 0
@@ -54247,6 +54249,8 @@ MonoBehaviour:
   m_enabled: 1
   m_followerSpeed: 0.12
   m_controller: 2
+  m_fadeInThreshold: 2
+  m_fadeOutThreshold: -2
   m_armObject: {fileID: 7274486959753181492}
   m_holoObject: {fileID: 7079513416747540685}
   m_holoMeshes:
@@ -54266,12 +54270,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6ea3e2c27688c634289ca1fa9153284d, type: 3}
   - {fileID: 8300000, guid: ea2fcbd6ae4437c44845058e6b4df6cc, type: 3}
   - {fileID: 8300000, guid: cefd562633df4b54db5387f71735d892, type: 3}
-  m_gatlingAnimator: {fileID: 4080869393023477679}
   m_laserPointer: {fileID: 2052405200291889923}
-  m_recoilPosition: {x: 0, y: 0, z: 0}
-  m_recoilRotation: {x: 0, y: 0, z: 0}
-  m_dissolveTransform: {fileID: 2131247277261094745}
+  weaponAmmoText: {fileID: 3359309097295274807}
   ammoModule:
+    m_ammoInfo: {fileID: 11400000, guid: 48445952f58c3bf4f9870ce392e1cdec, type: 2}
     m_currentAmmo: 100
     m_maxAmmo: 100
     m_reloadTime: 1
@@ -54280,7 +54282,9 @@ MonoBehaviour:
     m_isReloading: 0
     usesClips: 0
     usesAmmo: 1
-  weaponAmmoText: {fileID: 3359309097295274807}
+  m_gatlingAnimator: {fileID: 4080869393023477679}
+  m_recoilPosition: {x: 0, y: 0, z: 0}
+  m_recoilRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &6429444425921767705
 GameObject:
   m_ObjectHideFlags: 0

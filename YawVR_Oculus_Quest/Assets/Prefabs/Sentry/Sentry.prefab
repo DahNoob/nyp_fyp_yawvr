@@ -42,6 +42,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6212ab2ab90b5458420c6cf09b9236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableGizmos: 0
   m_projectileOrigin: {fileID: 6443661705569667149}
   m_projectilePrefab: {fileID: 9208457272521591478, guid: 25ed455aceec77e40a9ce36b07640ef6,
     type: 3}
@@ -55,10 +56,9 @@ MonoBehaviour:
   m_shootTime: 0.15
   m_shootCost: 1
   m_ammoModule:
+    m_ammoInfo: {fileID: 11400000, guid: 951c2ffbeaa13324080ee4c524fe093b, type: 2}
     m_currentAmmo: 10
-    m_maxAmmo: 10
     m_reloadTime: 0.5
-    m_maxClips: 10
     m_currentClips: 10
     m_isReloading: 0
     usesClips: 0
@@ -67,7 +67,11 @@ MonoBehaviour:
   m_reactToAttacks: 0
   m_sentryMode: 0
   restrictYRotation: 1
+  predictEnemyMovement: 1
   marginForShooting: 0.001
+  ammoText: {fileID: 0}
+  modeText: {fileID: 0}
+  targetText: {fileID: 0}
   m_enemyList: []
 --- !u!1 &6443661704074347722
 GameObject:
