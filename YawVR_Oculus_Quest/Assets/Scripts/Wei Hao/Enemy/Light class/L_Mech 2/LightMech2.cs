@@ -277,11 +277,11 @@ public class LightMech2 : EnemyBase
         return selectedBuff;
     }
 
-    void OnTriggerEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
             //transformX = transform.position;
             //currentState = _GameStates.EXPLODE;
             m_Animator.SetBool("Chase", false);
