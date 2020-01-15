@@ -15,7 +15,7 @@ public class LM1_Idle : SMB_BaseEnemyState
     {
         //PlayerHandler player = PlayerHandler.instance;
         animator.SetBool("Alert", CustomUtility.IsHitRadius(enemy.m_target.position, enemy.transform.position, m_detectRange));
-        Debug.Log("Is the LM1's target nearby? " + animator.GetBool("Alert"));
+        //Debug.Log("Is the LM1's target nearby? " + animator.GetBool("Alert"));
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -48,6 +48,6 @@ public class Cargo_Spawn : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        Debug.Log("ayy");
+        //Debug.Log("ayy");
     }
 }

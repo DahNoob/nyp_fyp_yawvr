@@ -281,7 +281,7 @@ public class LightMech2 : EnemyBase
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
         {
-            Debug.Log("Hit");
+            //Debug.Log("Hit");
             //transformX = transform.position;
             //currentState = _GameStates.EXPLODE;
             m_Animator.SetBool("Chase", false);
