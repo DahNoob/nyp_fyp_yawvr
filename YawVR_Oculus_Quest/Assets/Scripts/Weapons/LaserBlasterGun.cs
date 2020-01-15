@@ -4,8 +4,8 @@ using UnityEngine;
 
 
 /******************************  
-** Name: Laser Blaster Module
-** Desc: Mech's Laser Blaster Module (like stormtrooper's pew pew guns)
+** Name: Laser Blaster Gun
+** Desc: Mech's Laser Blaster Gun (shotgun-like)
 ** Author: DahNoob
 ** Date: 09/12/2019, 11:59AM
 **************************
@@ -16,7 +16,7 @@ using UnityEngine;
 ** 1    09/12/2019, 11:59AM     DahNoob   Created
 ** 2    12/12/2019, asd
 *******************************/
-public class LaserBlasterArm : MechArmModule
+public class LaserBlasterGun : MechBaseWeapon
 {
     [Header("Laser Blaster Configuration")]
     [SerializeField]
@@ -41,6 +41,11 @@ public class LaserBlasterArm : MechArmModule
     {
         if (!CustomUtility.IsObjectPrefab(m_projectilePrefab))
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
+    }
+
+    public override bool Grip()
+    {
+        return true;
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -78,6 +83,11 @@ public class LaserBlasterArm : MechArmModule
     }
 
     public override bool Stop(OVRInput.Controller _controller)
+    {
+        return true;
+    }
+
+    public override bool Ungrip()
     {
         return true;
     }

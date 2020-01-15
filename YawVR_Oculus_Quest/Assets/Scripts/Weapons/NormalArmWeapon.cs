@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /******************************  
-** Name: Normal Arm Module
-** Desc: Mech's Normal Arm module
+** Name: Normal Arm Weapon
+** Desc: Mech's Normal Arm weapon (just fists pretty much)
 ** Author: DahNoob
 ** Date: 06/12/2019, 2:47 PM
 **************************
@@ -16,7 +16,7 @@ using UnityEngine;
 ** 2    09/12/2019, 11:58AM     DahNoob   Renamed it to Normal Arm Module
 ** 3    11/12/2019, 3:34PM      DahNoob   Did abit of punching particles
 *******************************/
-public class NormalArmModule : MechArmModule
+public class NormalArmWeapon : MechBaseWeapon
 {
     [Header("Normal Arm Configuration")]
     [SerializeField]
@@ -41,6 +41,17 @@ public class NormalArmModule : MechArmModule
         //m_activateHolos.SetActive(false);
         //m_activateParticles.SetActive(false);
         //m_punchingParticles.Stop();
+    }
+
+    override public bool Selected()
+    {
+        isSelected = true;
+        return true;
+    }
+
+    public override bool Grip()
+    {
+        return true;
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -78,6 +89,17 @@ public class NormalArmModule : MechArmModule
         isPunching = false;
         //m_punchingParticles.Stop();
         follower.m_followSpeed = m_followerSpeed;
+        return true;
+    }
+
+    public override bool Ungrip()
+    {
+        return true;
+    }
+
+    override public bool Unselected()
+    {
+        isSelected = false;
         return true;
     }
 }

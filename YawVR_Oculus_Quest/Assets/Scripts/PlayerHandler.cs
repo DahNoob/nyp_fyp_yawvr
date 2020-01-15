@@ -192,7 +192,6 @@ public class PlayerHandler : BaseEntity
         if (isShaking && ++shakeInterval % 2 == 0 && shakeElapsed > 0)
         {
             cameraShake = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Random.Range(-0.15f, 0.15f), Random.Range(-0.15f, 0.15f)), shakeElapsed);
-            print(cameraShake);
         }
         else if (isShaking && shakeElapsed < 0)
         {

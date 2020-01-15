@@ -2725,7 +2725,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 32a352be899c09142bb8baa1269334bf, type: 2}
-  - {fileID: 2100000, guid: b073a2a3c1ac54640888bb4a981e80a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4381,7 +4380,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 32a352be899c09142bb8baa1269334bf, type: 2}
-  - {fileID: 2100000, guid: b073a2a3c1ac54640888bb4a981e80a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11556,7 +11554,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 32a352be899c09142bb8baa1269334bf, type: 2}
-  - {fileID: 2100000, guid: b073a2a3c1ac54640888bb4a981e80a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -13392,6 +13389,8 @@ MonoBehaviour:
   m_enabled: 1
   m_followerSpeed: 0.12
   m_controller: 1
+  m_fadeInThreshold: 2
+  m_fadeOutThreshold: -2
   m_armObject: {fileID: 9083532595754135564}
   m_holoObject: {fileID: 1251717075614464388}
   m_holoMeshes:
@@ -13411,11 +13410,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6ea3e2c27688c634289ca1fa9153284d, type: 3}
   - {fileID: 8300000, guid: ea2fcbd6ae4437c44845058e6b4df6cc, type: 3}
   - {fileID: 8300000, guid: cefd562633df4b54db5387f71735d892, type: 3}
-  m_gatlingAnimator: {fileID: 7086990568663448075}
   m_laserPointer: {fileID: 1998106151244196207}
-  m_recoilPosition: {x: 0, y: 0, z: 0}
-  m_recoilRotation: {x: 0, y: 0, z: 0}
-  m_dissolveTransform: {fileID: 12405876944271053}
+  weaponAmmoText: {fileID: 5471737048658911597}
   ammoModule:
     m_currentAmmo: 100
     m_maxAmmo: 100
@@ -13425,7 +13421,9 @@ MonoBehaviour:
     m_isReloading: 0
     usesClips: 0
     usesAmmo: 1
-  weaponAmmoText: {fileID: 5471737048658911597}
+  m_gatlingAnimator: {fileID: 7086990568663448075}
+  m_recoilPosition: {x: 0, y: 0, z: 0}
+  m_recoilRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &4251376465459645007
 GameObject:
   m_ObjectHideFlags: 0
@@ -13849,7 +13847,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 32a352be899c09142bb8baa1269334bf, type: 2}
-  - {fileID: 2100000, guid: b073a2a3c1ac54640888bb4a981e80a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23420,6 +23417,8 @@ MonoBehaviour:
   m_enabled: 1
   m_followerSpeed: 0.12
   m_controller: 2
+  m_fadeInThreshold: 2
+  m_fadeOutThreshold: -2
   m_armObject: {fileID: 6241400339407171190}
   m_holoObject: {fileID: 5789016830819973007}
   m_holoMeshes:
@@ -23439,11 +23438,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6ea3e2c27688c634289ca1fa9153284d, type: 3}
   - {fileID: 8300000, guid: ea2fcbd6ae4437c44845058e6b4df6cc, type: 3}
   - {fileID: 8300000, guid: cefd562633df4b54db5387f71735d892, type: 3}
-  m_gatlingAnimator: {fileID: 777973489091801325}
   m_laserPointer: {fileID: 3319813133089985601}
-  m_recoilPosition: {x: 0, y: 0, z: 0}
-  m_recoilRotation: {x: 0, y: 0, z: 0}
-  m_dissolveTransform: {fileID: 3457205166312990747}
+  weaponAmmoText: {fileID: 2087253501063509109}
   ammoModule:
     m_currentAmmo: 100
     m_maxAmmo: 100
@@ -23453,7 +23449,9 @@ MonoBehaviour:
     m_isReloading: 0
     usesClips: 0
     usesAmmo: 1
-  weaponAmmoText: {fileID: 2087253501063509109}
+  m_gatlingAnimator: {fileID: 777973489091801325}
+  m_recoilPosition: {x: 0, y: 0, z: 0}
+  m_recoilRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &7759979483029970353
 GameObject:
   m_ObjectHideFlags: 0
@@ -24031,7 +24029,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7785544529562364252}
   m_Layer: 0
-  m_Name: LaserGunArmsPackage
+  m_Name: LaserGunsPackage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24045,7 +24043,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7907170700044680567}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 335.3283, y: 90.30194, z: 437.29468}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6575361187789686982}
@@ -26790,7 +26788,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 32a352be899c09142bb8baa1269334bf, type: 2}
-  - {fileID: 2100000, guid: b073a2a3c1ac54640888bb4a981e80a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27495,7 +27492,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 32a352be899c09142bb8baa1269334bf, type: 2}
-  - {fileID: 2100000, guid: b073a2a3c1ac54640888bb4a981e80a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
