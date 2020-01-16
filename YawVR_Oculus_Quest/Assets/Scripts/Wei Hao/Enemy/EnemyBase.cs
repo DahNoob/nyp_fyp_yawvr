@@ -75,6 +75,13 @@ abstract public class EnemyBase : BaseEntity
         ALPHA
     }
 
+    private enum _Buffs
+    {
+        HP,
+        DMG,
+        MS
+    }
+
     // Start is called before the first frame update
     virtual protected void Start()
     {

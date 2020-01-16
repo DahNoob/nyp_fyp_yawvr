@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,7 +31,8 @@ public class LightMech2 : EnemyBase , IPooledObject
         DMG,
         MS
     }
-    List<string> buffs = new List<string> { "HP", "DMG", "MS" };
+
+    private List<string> buffs;
 
     private GameObject Player;
     [Header("Light Mech 2 Configuration")]
@@ -99,6 +99,7 @@ public class LightMech2 : EnemyBase , IPooledObject
         //Reset velocity
         rb.velocity = new Vector3(0f, 0f, 0f);
         rb.angularVelocity = new Vector3(0f, 0f, 0f);
+
     }
 
     public void OnObjectDestroy()
@@ -120,12 +121,14 @@ public class LightMech2 : EnemyBase , IPooledObject
         //currentState = _GameStates.CHASE;
         GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;
         Player = PlayerHandler.instance.gameObject;
-        rb = gameObject.GetComponent<Rigidbody>();
-        m_Animator = gameObject.GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody>();
+        m_Animator = GetComponentInChildren<Animator>();
         //poof = gameObject.GetComponent<ParticleSystem>();
 
         // Get rarity
         rarity = (_Rarity)WeightedRandom.instance.random();
+        //Initialise buff list
+        buffs = new List<string> { "HP", "DMG", "MS" };
 
         string currBuff = StartBuff();
         if (rarity == _Rarity.DELTA)
@@ -155,12 +158,12 @@ public class LightMech2 : EnemyBase , IPooledObject
                 GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
-            else if (currBuff == "DMG" || secondBuff == "DMG")
+             if (currBuff == "DMG" || secondBuff == "DMG")
             {
                 GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
-            else if (currBuff == "MS" || secondBuff == "MS")
+             if (currBuff == "MS" || secondBuff == "MS")
             {
                 GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 MS = true;
@@ -176,12 +179,12 @@ public class LightMech2 : EnemyBase , IPooledObject
                 GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
-            else if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+             if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
             {
                 GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
-            else if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+             if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
             {
                 GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
                 MS = true;
@@ -279,8 +282,9 @@ public class LightMech2 : EnemyBase , IPooledObject
 
     public string StartBuff()
     {
-        System.Random random = new System.Random();
-        int index = random.Next(buffs.Count);
+        //System.Random random = new System.Random();
+        //int index = random.Next(buffs.Count);
+        int index = Random.Range(0, buffs.Count);
         var selectedBuff = buffs[index];
         buffs.RemoveAt(index);
         return selectedBuff;
