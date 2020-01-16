@@ -42,9 +42,7 @@ public class LM2_Explode : SMB_BaseEnemyState
                     PlayerHandler.instance.takeDamage((int)enemy.GetDamage());
                 }
             }
-            animator.gameObject.GetComponent<LightMech2>().PlayDeathParticle();
-            //animator.gameObject.SetActive(false);
-            Destroy(animator.gameObject);
+            animator.GetComponent<IPooledObject>().OnObjectDestroy();
         }
     }
 

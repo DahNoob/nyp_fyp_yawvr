@@ -102,6 +102,15 @@ public class GUIManager : MonoBehaviour
         m_fpsValue.text = fps.ToString();
         m_armRotationValue.text = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch).eulerAngles.ToString();
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SpawnLightMech1();
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SpawnHeavyMech2();
+        }
     }
 
 
@@ -122,7 +131,8 @@ public class GUIManager : MonoBehaviour
     }
     public void SpawnHeavyMech2()
     {
-        Instantiate(m_heavyMech2Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        //Instantiate(m_heavyMech2Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        ObjectPooler.instance.SpawnFromPool("HeavyMech2", PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
     }
     public void RecenterPose()
     {
