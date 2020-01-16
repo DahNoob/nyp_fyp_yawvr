@@ -17,7 +17,7 @@ using UnityEngine.AI;
 ** 2    27/12/2019, 11:47 AM    DahNoob   Implemented spawning recharge time
 *******************************/
 [RequireComponent(typeof(Rigidbody))]
-public class HeavyMech2 : EnemyBase
+public class HeavyMech2 : EnemyBase ,IPooledObject
 {
     // Banelings states
     protected enum _GameStates
@@ -46,6 +46,22 @@ public class HeavyMech2 : EnemyBase
     protected bool activeSideIsRight = false;
     protected float spawnRechargeTimer;
     protected List<Collider> ignoredColliders = new List<Collider>();
+
+    public void OnObjectSpawn()
+    {
+        Start();
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.velocity = new Vector3(0f, 0f, 0f);
+        rb.angularVelocity = new Vector3(0f, 0f, 0f);
+    }
+
+    public void OnObjectDestroy()
+    {
+        RemoveFromQuadTree(this.gameObject);
+        this.gameObject.SetActive(false);
+        ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
+    }
 
     // Start is called before the first frame update
     new void Start()
@@ -113,10 +129,12 @@ public class HeavyMech2 : EnemyBase
         }
         ignoredColliders.Clear();
     }
+
     public void SpawnEnemy()
     {
         Transform spawnTransform = activeSideIsRight ? m_spawnPivotRight : m_spawnPivotLeft;
-        Collider newEnemy = Instantiate(m_lesserEnemy, spawnTransform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<Collider>();
+        //Collider newEnemy = Instantiate(m_lesserEnemy, spawnTransform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<Collider>();
+        Collider newEnemy = ObjectPooler.instance.SpawnFromPool("LightMech2", spawnTransform.position, transform.rotation).GetComponent<Collider>();
         newEnemy.GetComponent<EnemyBase>().m_target = m_target;
         Physics.IgnoreCollision(GetComponent<Collider>(), newEnemy, true);
         ignoredColliders.Add(newEnemy);

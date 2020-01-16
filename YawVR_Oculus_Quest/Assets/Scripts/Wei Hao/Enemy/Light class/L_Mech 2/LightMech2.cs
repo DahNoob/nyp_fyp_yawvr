@@ -17,7 +17,7 @@ using UnityEngine;
 ** 2    13/12/2019, 1:33 PM     Wei Hao   Updated basic animation
 ** 3    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
 *******************************/
-public class LightMech2 : EnemyBase
+public class LightMech2 : EnemyBase , IPooledObject
 {
     // Banelings states
     private enum _GameStates
@@ -62,8 +62,6 @@ public class LightMech2 : EnemyBase
     //public ParticleSystem poof;
     //float explodeDuration = 1.0f;
 
-
-
     //[Header("Explosion")]
     //private float speed = 1.0f; //how fast it shakes
     //private float amount = 1.0f; //how much it shakes
@@ -74,7 +72,6 @@ public class LightMech2 : EnemyBase
     [Header("Rarity")]
     [SerializeField]
     private _Rarity rarity;
-    private GameObject weightedRandom;
 
     [Header("Death Particle Effect")]
     [SerializeField]
@@ -95,6 +92,25 @@ public class LightMech2 : EnemyBase
     [SerializeField]
     private bool MS;
 
+    public void OnObjectSpawn()
+    {
+        //Just gonna cheese it by calling start first
+        Start();
+        //Reset velocity
+        rb.velocity = new Vector3(0f, 0f, 0f);
+        rb.angularVelocity = new Vector3(0f, 0f, 0f);
+    }
+
+    public void OnObjectDestroy()
+    {
+        //Set bool i suppose if it actually dead
+        m_Animator.SetBool("ResetAnim", true);
+        RemoveFromQuadTree(this.gameObject);
+        this.gameObject.SetActive(false);
+        ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
+    }
+
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -103,15 +119,13 @@ public class LightMech2 : EnemyBase
         // Current State
         //currentState = _GameStates.CHASE;
         GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;
-        //Player = GameObject.Find("Player");
         Player = PlayerHandler.instance.gameObject;
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         //poof = gameObject.GetComponent<ParticleSystem>();
-        weightedRandom = GameObject.Find("WeightedRNG");
 
         // Get rarity
-        rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
+        rarity = (_Rarity)WeightedRandom.instance.random();
 
         string currBuff = StartBuff();
         if (rarity == _Rarity.DELTA)
@@ -203,10 +217,10 @@ public class LightMech2 : EnemyBase
     // Update is called once per frame
     void Update()
     {
-        Vector3 relativePos = Player.transform.position - transform.position;
+        //Vector3 relativePos = Player.transform.position - transform.position;
 
         // Debugging distance
-        float distance = Vector3.Distance(transform.position, Player.transform.position);
+       // float distance = Vector3.Distance(transform.position, Player.transform.position);
         //if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
         //{
         //currentState = _GameStates.CHASE;
@@ -263,11 +277,6 @@ public class LightMech2 : EnemyBase
         queryBounds.position = transform.position;
     }
 
-    public void PlayDeathParticle()
-    {
-        //explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
-    }
-
     public string StartBuff()
     {
         System.Random random = new System.Random();
@@ -291,7 +300,8 @@ public class LightMech2 : EnemyBase
         if (collision.gameObject.tag == "Bullet")
         {
             takeDamage(1);
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
+            collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
         }
     }
     //void OnCollisionEnter(Collision collision)

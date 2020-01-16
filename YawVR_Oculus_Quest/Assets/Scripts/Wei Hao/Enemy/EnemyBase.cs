@@ -160,7 +160,7 @@ abstract public class EnemyBase : BaseEntity
     void OnDisable()
     {
         // Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
-        ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
+        //ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
     }
 
     private void OnDrawGizmos()
