@@ -9,12 +9,6 @@ public class TriGatlingGun : MechGunWeapon
     [SerializeField]
     protected Animator m_gatlingAnimator;
 
-    public override bool Grip()
-    {
-        m_laserPointer.gameObject.SetActive(true);
-        return true;
-    }
-
     public override bool Activate(OVRInput.Controller _controller)
     {
         shootTick = 0;
@@ -39,12 +33,7 @@ public class TriGatlingGun : MechGunWeapon
         return true;
     }
 
-    public override bool Ungrip()
-    {
-        m_laserPointer.gameObject.SetActive(false);
-        return true;
-    }
-
+   
     private void Update()
     {
         ////If it's reloading, then don't show?

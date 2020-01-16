@@ -52,6 +52,12 @@ abstract public class MechGunWeapon : MechBaseWeapon
         return true;
     }
 
+    override public bool Grip()
+    {
+        m_laserPointer.gameObject.SetActive(true);
+        return true;
+    }
+
     public override bool Hold(OVRInput.Controller _controller)
     {
         //If the ammo module is not reloading?
@@ -86,6 +92,12 @@ abstract public class MechGunWeapon : MechBaseWeapon
             }
         }
         return false;
+    }
+
+    override public bool Ungrip()
+    {
+        m_laserPointer.gameObject.SetActive(false);
+        return true;
     }
 
     override public bool Unselected()

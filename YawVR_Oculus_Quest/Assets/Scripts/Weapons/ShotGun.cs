@@ -23,29 +23,27 @@ public class ShotGun : MechGunWeapon
     [SerializeField]
     protected int m_projectileAmount = 4;
 
-    public override bool Grip()
-    {
-        return true;
-    }
-
     public override bool Activate(OVRInput.Controller _controller)
     {
         shootTick = 0;
         follower.m_followSpeed = m_followerSpeed;
+        foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
+        {
+            asd.Play();
+        }
         return true;
     }
 
     public override bool Stop(OVRInput.Controller _controller)
     {
+        foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
+        {
+            asd.Stop();
+        }
         return true;
     }
 
-    public override bool Ungrip()
-    {
-        return true;
-    }
-
-    protected override void SpawnProjectile()
+    override protected void SpawnProjectile()
     {
         for (int i = 0; i < m_projectileAmount; ++i)
         {

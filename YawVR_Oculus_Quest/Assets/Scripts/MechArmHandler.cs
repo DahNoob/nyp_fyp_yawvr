@@ -50,6 +50,8 @@ public class MechArmHandler : MonoBehaviour
         transform.LookAt(m_followerTransform);
         Vector3 asd = transform.localEulerAngles;
         transform.localEulerAngles = new Vector3(asd.x, asd.y > 180.0f ? Mathf.Max(m_leftLimit, asd.y) : Mathf.Min(m_rightLimit, asd.y), asd.z);
+#if UNITY_EDITOR
         m_followerTransform.GetComponent<ControllerFollower>().m_armEuler = transform.localEulerAngles;
+#endif
     }
 }
