@@ -119,7 +119,7 @@ public class Game : MonoBehaviour
             m_objectives[i].type = Random.Range(0, 1000) > 500 ? VariedObjectives.TYPE.BOUNTYHUNT : VariedObjectives.TYPE.DEFEND_STRUCTURE;
             if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
-                Debug.Log(m_enemies[2].nameInPool);
+                //Debug.Log(m_enemies[2].nameInPool);
                 //EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
                 EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].nameInPool, objectivePos, Quaternion.identity).GetComponent<EnemyBase>();
                 enemy.onEntityDie += Enemy_onEntityDie;
