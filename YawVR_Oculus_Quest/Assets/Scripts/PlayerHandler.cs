@@ -169,12 +169,12 @@ public class PlayerHandler : BaseEntity
             float walkMultiplier = GetComponent<MechMovement>().movementAlpha;
             float time_mult = Time.time * 8;
             float sin = Mathf.Sin(time_mult * 2);
-            if(walkHapticReady && sin < -0.8f)
+            if(walkHapticReady && sin < -0.85f)
             {
                 walkHapticReady = false;
-                float strength = 0.35f * walkMultiplier;
-                VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.04f, strength, false, 0.005f);
-                VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.04f, strength, false, 0.005f);
+                float strength = 0.15f * walkMultiplier;
+                VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.03f, strength, false, 0.005f);
+                VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, strength, false, 0.005f);
             }
             else if(!walkHapticReady && sin > 0.5f)
             {
@@ -183,8 +183,10 @@ public class PlayerHandler : BaseEntity
             m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * m_camSwayIntensity, sin * m_camSwayIntensity, 0), walkMultiplier);
             m_mechLegs.SetFloat("Blend", walkMultiplier);
         }
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.G))
             Shake(0.2f);
+#endif
     }
 
     private void FixedUpdate()

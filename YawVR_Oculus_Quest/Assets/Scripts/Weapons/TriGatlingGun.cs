@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LaserGunWeapon : MechGunWeapon
+public class TriGatlingGun : MechGunWeapon
 {
-    [Header("Laser Gun Configuration")]
+    [Header("Tri-Gatling Gun Configuration")]
     [SerializeField]
     protected Animator m_gatlingAnimator;
 
@@ -19,7 +19,7 @@ public class LaserGunWeapon : MechGunWeapon
     {
         shootTick = 0;
         follower.m_followSpeed = m_followerSpeed;
-        m_gatlingAnimator.SetFloat("Blend", 1);
+        m_gatlingAnimator.SetBool("Shooting", true);
         foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
         {
             asd.Play();
@@ -30,7 +30,7 @@ public class LaserGunWeapon : MechGunWeapon
 
     public override bool Stop(OVRInput.Controller _controller)
     {
-        m_gatlingAnimator.SetFloat("Blend", 0);
+        m_gatlingAnimator.SetBool("Shooting", false);
         foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
         {
             asd.Stop();

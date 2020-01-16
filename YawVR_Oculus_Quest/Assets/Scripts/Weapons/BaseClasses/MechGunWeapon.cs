@@ -47,6 +47,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     override public bool Selected()
     {
         base.Selected();
+        m_laserPointer.gameObject.SetActive(true);
         mechHand.SetPose("HoldGun", true);
         return true;
     }
@@ -90,6 +91,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     override public bool Unselected()
     {
         base.Unselected();
+        m_laserPointer.gameObject.SetActive(false);
         mechHand.SetPose("HoldGun", false);
         return true;
     }

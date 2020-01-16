@@ -4,8 +4,8 @@ using UnityEngine;
 
 
 /******************************  
-** Name: Laser Blaster Gun
-** Desc: Mech's Laser Blaster Gun (shotgun-like)
+** Name: Shot Gun
+** Desc: Mech's Shot Gun
 ** Author: DahNoob
 ** Date: 09/12/2019, 11:59AM
 **************************
@@ -14,11 +14,12 @@ using UnityEngine;
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
 ** 1    09/12/2019, 11:59AM     DahNoob   Created
-** 2    12/12/2019, asd
+** 2    ????                    DahNoob   forgot lol
+** 3    16/01/2020, 10:23AM     DahNoob   Renamed it from LaserBlaster to ShotGun
 *******************************/
-public class LaserBlasterGun : MechGunWeapon
+public class ShotGun : MechGunWeapon
 {
-    [Header("Laser Blaster Configuration")]
+    [Header("Shot Gun Configuration")]
     [SerializeField]
     protected int m_projectileAmount = 4;
 

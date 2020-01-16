@@ -109,7 +109,7 @@ public class Light_Enemy_1 : EnemyBase
         // Current State
         //currentState = _EnemyState.AVOID;
         Player = PlayerHandler.instance.gameObject;
-        target = Player.GetComponent<Transform>();
+        target = Player.transform;
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
         poof = gameObject.GetComponent<ParticleSystem>();
