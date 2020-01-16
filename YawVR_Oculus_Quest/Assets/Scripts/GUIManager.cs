@@ -36,6 +36,8 @@ public class GUIManager : MonoBehaviour
     [Header("Object Pool Resources")]
     [SerializeField]
     private UnityEngine.UI.Text m_projectileText;
+    [SerializeField]
+    private UnityEngine.UI.Text m_projectileText2;
 
     //Local variables
     int frameCount = 0;
@@ -90,6 +92,7 @@ public class GUIManager : MonoBehaviour
         reticleModule.UpdateEase();
 
         m_projectileText.text = ObjectPooler.instance.AmountActive("PlayerProjectile");
+        m_projectileText2.text = ObjectPooler.instance.AmountActive("PlayerProjectileImpact");
     }
 
     void LateUpdate()
