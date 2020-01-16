@@ -147,4 +147,20 @@ public class AmmoModule
         return (float)m_currentAmmo / (float)m_ammoInfo.maxAmmo;
     }
 
+    public bool NeedReload()
+    {
+        //if already reloading then just dont do the reload again
+        if (m_isReloading)
+            return false;
+
+        if (!usesAmmo)
+            return false;
+
+        //Else if bullet less or equals 0 
+        if (currentAmmo <= 0)
+            return true;
+
+        return false;
+    }
+
 }
