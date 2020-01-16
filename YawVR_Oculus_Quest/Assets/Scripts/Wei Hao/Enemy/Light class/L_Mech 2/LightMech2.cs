@@ -107,7 +107,8 @@ public class LightMech2 : EnemyBase , IPooledObject
         m_Animator.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);
-        ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
+        ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.LIGHT_MECH2);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, m_bodyTransform.position, Quaternion.identity);
     }
 
 

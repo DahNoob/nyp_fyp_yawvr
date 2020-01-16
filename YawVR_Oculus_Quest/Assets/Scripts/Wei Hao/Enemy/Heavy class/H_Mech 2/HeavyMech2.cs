@@ -66,7 +66,8 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         anim.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);
-        ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
+        ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.HEAVY_MECH2);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, m_bodyTransform.position, Quaternion.identity);
     }
 
     // Start is called before the first frame update
@@ -142,7 +143,7 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
     {
         Transform spawnTransform = activeSideIsRight ? m_spawnPivotRight : m_spawnPivotLeft;
         //Collider newEnemy = Instantiate(m_lesserEnemy, spawnTransform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<Collider>();
-        Collider newEnemy = ObjectPooler.instance.SpawnFromPool("LightMech2", spawnTransform.position, transform.rotation).GetComponent<Collider>();
+        Collider newEnemy = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.LIGHT_MECH2, spawnTransform.position, transform.rotation).GetComponent<Collider>();
         newEnemy.GetComponent<EnemyBase>().m_target = m_target;
         Physics.IgnoreCollision(GetComponent<Collider>(), newEnemy, true);
         ignoredColliders.Add(newEnemy);

@@ -91,8 +91,8 @@ public class GUIManager : MonoBehaviour
 
         reticleModule.UpdateEase();
 
-        m_projectileText.text = ObjectPooler.instance.AmountActive("PlayerProjectile");
-        m_projectileText2.text = ObjectPooler.instance.AmountActive("PlayerProjectileImpact");
+        m_projectileText.text = ObjectPooler.instance.AmountActive(PoolObject.OBJECTTYPES.LIGHT_MECH2);
+        m_projectileText2.text = ObjectPooler.instance.AmountActive(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE_IMPACT);
     }
 
     void LateUpdate()
@@ -127,12 +127,12 @@ public class GUIManager : MonoBehaviour
     public void SpawnLightMech1()
     {
         //Instantiate(m_lightMech1Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
-        ObjectPooler.instance.SpawnFromPool("LightMech1", PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.LIGHT_MECH1, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
     }
     public void SpawnHeavyMech2()
     {
         //Instantiate(m_heavyMech2Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
-        ObjectPooler.instance.SpawnFromPool("HeavyMech2", PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.HEAVY_MECH2, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
     }
     public void RecenterPose()
     {

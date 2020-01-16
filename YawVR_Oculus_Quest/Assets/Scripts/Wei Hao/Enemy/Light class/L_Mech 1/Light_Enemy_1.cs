@@ -118,7 +118,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         m_Animator.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);
-        ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, m_bodyTransform.position, Quaternion.identity);
     }
 
     // Start is called before the first frame update

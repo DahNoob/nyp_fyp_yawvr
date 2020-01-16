@@ -118,7 +118,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     virtual protected void SpawnProjectile()
     {
         //BaseProjectile derp = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        BaseProjectile derp = ObjectPooler.instance.SpawnFromPool("PlayerProjectile", m_projectileOrigin.position, m_projectileOrigin.rotation).GetComponent<BaseProjectile>();
+        BaseProjectile derp = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE, m_projectileOrigin.position, m_projectileOrigin.rotation).GetComponent<BaseProjectile>();
         derp.Init(m_projectileOrigin);
     }
 

@@ -272,7 +272,7 @@ public class SentryController : MonoBehaviour
                     m_shootTick -= m_shootTime;
                     //BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, bulletSorter.transform).GetComponent<BaseProjectile>();
                     //BaseProjectile baseProjectile = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-                    BaseProjectile baseProjectile = ObjectPooler.instance.SpawnFromPool("PlayerProjectile", m_projectileOrigin.position, m_projectileOrigin.rotation).GetComponent<BaseProjectile>();
+                   BaseProjectile baseProjectile = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE, m_projectileOrigin.position, m_projectileOrigin.rotation).GetComponent<BaseProjectile>();
                     baseProjectile.Init(m_projectileOrigin);
                 }
                 else

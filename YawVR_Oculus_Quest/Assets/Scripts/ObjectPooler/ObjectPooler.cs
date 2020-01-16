@@ -5,8 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class PoolObject
 {
-    //Tag reference
+    //For visualization.
     public string poolName;
+    //Tag reference
+    public OBJECTTYPES poolType;
     //Prefab for the pool
     public GameObject objToPool;
     //Amount to pool
@@ -18,23 +20,43 @@ public class PoolObject
     //Hierachy stuff
     public GameObject parentInHierachy;
 
-    public PoolObject(string _poolName, GameObject _objToPool, int _amountToPool, int _amountToExpand)
+    public int amountActiveInPool;
+
+    //Public enums
+    public enum OBJECTTYPES
     {
-        poolName = _poolName;
+        PLAYER_PROJECTILE,
+        ENEMY_PROJECTILE,
+        PLAYER_PROJECTILE_IMPACT,
+        ENEMY_DEATH_EFFECT,
+        LIGHT_MECH2,
+        HEAVY_MECH2,
+        LIGHT_MECH1,
+        TEST_PROJECTILE,
+        TOTAL_TYPES
+    }
+
+
+    public PoolObject(OBJECTTYPES types, GameObject _objToPool, int _amountToPool, int _amountToExpand)
+    {
+        poolType = types;
         objToPool = _objToPool;
         amountToPool = _amountToPool;
         amountToExpand = _amountToExpand;
+        amountActiveInPool = 0;
     }
 }
+
+
 
 public class ObjectPooler : MonoBehaviour
 {
     //Instance object
     public static ObjectPooler instance;
     //Dictionary to store the queues
-    private Dictionary<string, List<GameObject>> poolDictionary = new Dictionary<string, List<GameObject>>();
+    private Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
     //Another dictionary to store data for future instancing
-    private Dictionary<string, PoolObject> pooledObjectData = new Dictionary<string, PoolObject>();
+    private Dictionary<int, PoolObject> pooledObjectData = new Dictionary<int, PoolObject>();
     //List of objects to instantiate
     [SerializeField]
     private List<PoolObject> poolList;
@@ -50,9 +72,10 @@ public class ObjectPooler : MonoBehaviour
         poolParent = new GameObject("Object Pools");
         //poolParent.transform.parent = Persistent.instance.GO_DYNAMIC.transform;
         poolParent.transform.parent = transform;
+        int totalCount = 0;
         foreach (PoolObject poolObject in poolList)
         {
-            List<GameObject> resultPool = new List<GameObject>();
+            Queue<GameObject> resultPool = new Queue<GameObject>();
             //Make new object with name under this transform
             GameObject parent = new GameObject(poolObject.poolName + " Pool");
             parent.transform.parent = poolParent.transform;
@@ -61,82 +84,83 @@ public class ObjectPooler : MonoBehaviour
             {
                 GameObject resultObject = Instantiate(poolObject.objToPool, parent.transform);
                 resultObject.SetActive(false);
-                resultPool.Add(resultObject);
+                resultPool.Enqueue(resultObject);
             }
 
             //MAke sure the reference to the gameObject parent is saved
             poolObject.parentInHierachy = parent;
 
-            poolDictionary.Add(poolObject.poolName, resultPool);
-            pooledObjectData.Add(poolObject.poolName, poolObject);
+            poolDictionary.Add(totalCount, resultPool);
+            pooledObjectData.Add(totalCount, poolObject);
+
+            totalCount++;
         }
     }
 
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-
-    //}
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-
-    //}
-
-    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+    public GameObject SpawnFromPool(PoolObject.OBJECTTYPES objectType, Vector3 position, Quaternion rotation)
     {
+        int tag = (int)(objectType);
+
         if (!poolDictionary.ContainsKey(tag))
         {
             Debug.LogWarning("The dictionary does not contain key " + tag);
             return null;
         }
 
-        //Only if object is active then we swap, don't want to kinda teleport stuff around
-        for (int i = 0; i < poolDictionary[tag].Count; ++i)
+        //The current queue
+        Queue<GameObject> currentQueue = poolDictionary[tag];
+        PoolObject currentData = pooledObjectData[tag];
+        if (currentData.amountActiveInPool < currentQueue.Count)
         {
-            GameObject resultObject = poolDictionary[tag][i];
-            if (!resultObject.activeSelf)
-            {
-                resultObject.transform.position = position;
-                resultObject.transform.rotation = rotation;
-
-                resultObject.SetActive(true);
-
-                IPooledObject pooledObject = resultObject.GetComponent<IPooledObject>();
-                if (pooledObject != null)
-                    pooledObject.OnObjectSpawn();
-
-
-                return resultObject;
-            }
-        }
-
-        //Else we instantiate more and add poggers
-
-        //Get pool data
-        PoolObject objectData = pooledObjectData[tag];
-
-        int newCount = poolDictionary[tag].Count;
-
-        //Gonna add more badboys in
-        for (int i = 0; i < objectData.amountToExpand; ++i)
-        {
-            GameObject resultObject = Instantiate(objectData.objToPool, objectData.parentInHierachy.transform);
+            print("spawning");
+            GameObject resultObject = currentQueue.Dequeue();
 
             resultObject.transform.position = position;
             resultObject.transform.rotation = rotation;
 
-            resultObject.SetActive(false);
-            poolDictionary[tag].Add(resultObject);
+            resultObject.SetActive(true);
+
+            IPooledObject pooledObject = resultObject.GetComponent<IPooledObject>();
+            if (pooledObject != null)
+                pooledObject.OnObjectSpawn();
+
+            currentQueue.Enqueue(resultObject);
+
+            currentData.amountActiveInPool++;
+            return resultObject;
         }
+
+        print("Expanding by "+ currentData.amountToExpand);
+        //Else we instantiate more and add poggers
+        //Gonna add more badboys in
+        GameObject newestObject = null;
+        for (int i = 0; i < currentData.amountToExpand; ++i)
+        {
+            GameObject newObject = Instantiate(currentData.objToPool, currentData.parentInHierachy.transform);
+            newObject.SetActive(false);
+            if (i == 0)
+            {
+                print("set");
+                newestObject = newObject;
+            }
+            currentQueue.Enqueue(newObject);
+        }
+
+        //GameObject newResultObject = currentQueue.Dequeue();
+
+        newestObject.transform.position = position;
+        newestObject.transform.rotation = rotation;
+
         //Debug.Log("Expanded pool by " + objectData.amountToExpand);
-        poolDictionary[tag][newCount].SetActive(true);
-        return poolDictionary[tag][newCount];
+        newestObject.SetActive(true);
+
+        currentData.amountActiveInPool++;
+        //Put back into list to keep using
+       // currentQueue.Enqueue(newestObject);
+
+        return newestObject;
 
     }
-
-
 
     /// <summary> NOT TESTED FUNCTION WILL PROBABLY BREAK <
     /// Adds another pool of objects during runtime, might cause like performance loss, instantiate as less as possible at any given time
@@ -149,7 +173,9 @@ public class ObjectPooler : MonoBehaviour
         if (thatObject == null)
             return false;
 
-        if (poolDictionary.ContainsKey(thatObject.poolName))
+        int tag = (int)(thatObject.poolType);
+
+        if (poolDictionary.ContainsKey(tag))
         {
             if (!overWrite)
                 return false;
@@ -164,14 +190,14 @@ public class ObjectPooler : MonoBehaviour
             }
 
             //Idk maybe safety, not sure just in case?
-            poolDictionary[thatObject.poolName].Clear();
+            poolDictionary[tag].Clear();
             //Copy the list into the old list
-            poolDictionary[thatObject.poolName] = new List<GameObject>(newList);
+            poolDictionary[tag] = new Queue<GameObject>();
 
             return true;
         }
-            
-        List<GameObject> resultPool = new List<GameObject>();
+
+        Queue<GameObject> resultPool = new Queue<GameObject>();
         //Make new object with name under this transform
         GameObject parent = new GameObject(thatObject.poolName + " Pool");
         parent.transform.parent = poolParent.transform;
@@ -180,40 +206,58 @@ public class ObjectPooler : MonoBehaviour
         {
             GameObject resultObject = Instantiate(thatObject.objToPool, parent.transform);
             resultObject.SetActive(false);
-            resultPool.Add(resultObject);
+            resultPool.Enqueue(resultObject);
         }
 
         //MAke sure the reference to the gameObject parent is saved
         thatObject.parentInHierachy = parent;
 
-        poolDictionary.Add(thatObject.poolName, resultPool);
-        pooledObjectData.Add(thatObject.poolName, thatObject);
+        poolDictionary.Add(tag, resultPool);
+        pooledObjectData.Add(tag, thatObject);
 
 
         return true;
     }
 
-    public bool AddAnotherPool(string poolName, GameObject objectToPool, int amountToPool, int amountToExpand , bool overWrite = false)
+    public bool AddAnotherPool(PoolObject.OBJECTTYPES type , GameObject objectToPool, int amountToPool, int amountToExpand, bool overWrite = false)
     {
-        PoolObject resultObject = new PoolObject(poolName, objectToPool, amountToPool, amountToPool);
-        return AddAnotherPool(resultObject, overWrite); 
+        PoolObject resultObject = new PoolObject(type, objectToPool, amountToPool, amountToPool);
+        return AddAnotherPool(resultObject, overWrite);
     }
 
-    public string AmountActive(string tag)
+    public string AmountActive(PoolObject.OBJECTTYPES type)
     {
+        int tag = (int)(type);
+
         if (poolDictionary == null || poolDictionary[tag] == null)
             return "";
 
-        int totalCount = poolDictionary[tag].Count;
+        Queue<GameObject> tempQueue = new Queue<GameObject>(poolDictionary[tag]);
+        int totalCount = tempQueue.Count;
 
         int totalActive = 0;
-        for(int i =0; i < poolDictionary[tag].Count; ++i)
+        int count = 0;
+
+        do
         {
-            if (poolDictionary[tag][i].activeSelf)
+            if (tempQueue.Dequeue().activeSelf)
                 totalActive++;
-        }
 
-        return tag + " Pool: " + totalActive + "/" + totalCount;
+            count++;
 
+        } while (count < totalCount);
+
+
+
+
+        return pooledObjectData[tag].poolName + " Pool: " + totalActive + "/" + totalCount;
+
+    }
+
+    public void DisableInPool(PoolObject.OBJECTTYPES type)
+    {
+        //Guaranteed type, dont need to check, i hope.
+        int tag = (int)(type);
+        pooledObjectData[tag].amountActiveInPool -= 1;
     }
 }

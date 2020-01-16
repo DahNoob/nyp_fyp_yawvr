@@ -425,6 +425,7 @@ public class QuadTreeManager : MonoBehaviour
         }
         //Else there is a key so pog
         bool result = staticTrees[types].Remove(referenceObject);
+        staticList.Remove(referenceObject);
         return result;
     }
     public bool RemoveDynamicObject(GameObject referenceObject, DYNAMIC_TYPES types)
@@ -436,6 +437,7 @@ public class QuadTreeManager : MonoBehaviour
         }
         //Else there is a key so pog
         bool result = dynamicTrees[types].Remove(referenceObject);
+        dynamicList.Remove(referenceObject);
         return result;
     }
 

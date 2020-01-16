@@ -11,12 +11,12 @@ public class Game : MonoBehaviour
     protected class PoolObjectsInfo
     {
         public GameObject enemy;
-        public string nameInPool;
+        public PoolObject.OBJECTTYPES poolType;
 
-        public PoolObjectsInfo(GameObject _enemy, string _nameInPool)
+        public PoolObjectsInfo(GameObject _enemy, PoolObject.OBJECTTYPES typeInPool)
         {
             enemy = _enemy;
-            nameInPool = _nameInPool;
+            poolType = typeInPool;
         }
     }
 
@@ -95,7 +95,7 @@ public class Game : MonoBehaviour
             for (int i = 0; i < 3; ++i)
             {
                 //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
-                EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].nameInPool, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
+                EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
                 derp.m_target = currObj.m_highlight;
             }
         }
@@ -120,8 +120,8 @@ public class Game : MonoBehaviour
             if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
                 //Debug.Log(m_enemies[2].nameInPool);
-                //EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
-                EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].nameInPool, objectivePos, Quaternion.identity).GetComponent<EnemyBase>();
+               // EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, objectivePos, Quaternion.identity).GetComponent<EnemyBase>();
                 enemy.onEntityDie += Enemy_onEntityDie;
                 m_objectivesLeft++;
                 m_objectives[i].m_highlight = enemy.transform;

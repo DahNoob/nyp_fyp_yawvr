@@ -46,7 +46,7 @@ public class ShotGun : MechGunWeapon
     {
         for (int i = 0; i < m_projectileAmount; ++i)
         {
-            BaseProjectile derp = ObjectPooler.instance.SpawnFromPool("PlayerProjectile", m_projectileOrigin.position, m_projectileOrigin.rotation * Quaternion.Euler(Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f))).GetComponent<BaseProjectile>();
+            BaseProjectile derp = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE, m_projectileOrigin.position, m_projectileOrigin.rotation * Quaternion.Euler(Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f))).GetComponent<BaseProjectile>();
             derp.Init();
         }
     }

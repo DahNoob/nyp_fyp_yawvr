@@ -20,9 +20,11 @@ public class SentryProjectile : BaseProjectile , IPooledObject
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         GetComponentInChildren<TrailRenderer>().Clear();
+        StartCoroutine(delayDestroy());
     }
     public void OnObjectDestroy()
     {
+        ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE);
         this.gameObject.SetActive(false);
     }
 
@@ -51,7 +53,7 @@ public class SentryProjectile : BaseProjectile , IPooledObject
         //Destroy(gameObject);
 
         //GameObject efx = Instantiate(m_projectileImpactEffect, transform.position, Quaternion.identity);
-        GameObject efx = ObjectPooler.instance.SpawnFromPool("PlayerProjectileImpact", collision.GetContact(0).point, Quaternion.identity);
+        GameObject efx = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE_IMPACT, collision.GetContact(0).point, Quaternion.identity);
         efx.GetComponent<ParticleSystem>().Emit(20);
 
         if (collision.gameObject.tag == "Enemy")
@@ -66,7 +68,7 @@ public class SentryProjectile : BaseProjectile , IPooledObject
 
     protected IEnumerator delayDestroy()
     {
-        yield return new WaitForSeconds(m_projectileInfo.lifeTime);
+        yield return new WaitForSeconds(0.5f);
         //Destroy(gameObject);
         OnObjectDestroy();
     }

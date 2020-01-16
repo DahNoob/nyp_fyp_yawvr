@@ -507,35 +507,69 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolList:
   - poolName: PlayerProjectile
+    poolType: 0
     objToPool: {fileID: 9208457272521591478, guid: ea8cc7d1e69bf764c8297c3231cebfe8,
       type: 3}
     amountToPool: 15
     amountToExpand: 2
     parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
   - poolName: EnemyProjectile
+    poolType: 1
     objToPool: {fileID: 9208457272521591478, guid: 84b6b4ca99af4ff40906caea5d12bde5,
       type: 3}
-    amountToPool: 1
+    amountToPool: 10
     amountToExpand: 2
     parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
   - poolName: PlayerProjectileImpact
+    poolType: 2
     objToPool: {fileID: 7298378838209257786, guid: 28bcee94cdcd8ca47bd78c6064ba3f70,
       type: 3}
-    amountToPool: 1
+    amountToPool: 10
     amountToExpand: 2
     parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
   - poolName: EnemyDeathEffect
+    poolType: 3
     objToPool: {fileID: 8290165608302987775, guid: d903496c821bada4eadb62fdb6334398,
       type: 3}
-    amountToPool: 1
+    amountToPool: 10
     amountToExpand: 2
     parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
   - poolName: LightMech2
+    poolType: 4
     objToPool: {fileID: 6089654258507672792, guid: c5149578cf4385e428f65c56265f518d,
       type: 3}
-    amountToPool: 1
+    amountToPool: 20
     amountToExpand: 5
     parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: HeavyMech2
+    poolType: 5
+    objToPool: {fileID: 980808854142652617, guid: becfd3f6e3347e74bb033d91b3079787,
+      type: 3}
+    amountToPool: 20
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: LightMech1
+    poolType: 6
+    objToPool: {fileID: 425559466754471307, guid: 87c4db333979fec4293598ca163adb71,
+      type: 3}
+    amountToPool: 20
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: TestProjectile
+    poolType: 7
+    objToPool: {fileID: 9208457272521591478, guid: 0ce1f5d38ec724f4ea0fd0c6a5daa561,
+      type: 3}
+    amountToPool: 5000
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
 --- !u!1001 &278989132
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -623,6 +657,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4223577705387104068}
     m_Modifications:
+    - target: {fileID: 2145586970531902850, guid: 90fd21b414afe0342acec0c5e71cbbb9,
+        type: 3}
+      propertyPath: m_Name
+      value: MECHARMOrigin_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145586970531902850, guid: 90fd21b414afe0342acec0c5e71cbbb9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 2145586970531902851, guid: 90fd21b414afe0342acec0c5e71cbbb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -678,16 +722,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2145586970531902850, guid: 90fd21b414afe0342acec0c5e71cbbb9,
-        type: 3}
-      propertyPath: m_Name
-      value: MECHARMOrigin_L
-      objectReference: {fileID: 0}
-    - target: {fileID: 2145586970531902850, guid: 90fd21b414afe0342acec0c5e71cbbb9,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90fd21b414afe0342acec0c5e71cbbb9, type: 3}
 --- !u!4 &4223577706192702910 stripped
@@ -703,6 +737,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4223577705387104068}
     m_Modifications:
+    - target: {fileID: 5487406842446288567, guid: 43571d22433bc844e9432423f457b83b,
+        type: 3}
+      propertyPath: m_Name
+      value: MECHARMOrigin_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487406842446288567, guid: 43571d22433bc844e9432423f457b83b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 5487406842446288566, guid: 43571d22433bc844e9432423f457b83b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -757,16 +801,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487406842446288567, guid: 43571d22433bc844e9432423f457b83b,
-        type: 3}
-      propertyPath: m_Name
-      value: MECHARMOrigin_R
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487406842446288567, guid: 43571d22433bc844e9432423f457b83b,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43571d22433bc844e9432423f457b83b, type: 3}

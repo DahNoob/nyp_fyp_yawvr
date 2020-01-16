@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenericProjectile : BaseProjectile, IPooledObject
+public class TestProjectile : BaseProjectile , IPooledObject
 {
     [Header("Generic Configuration")]
     [SerializeField]
@@ -12,23 +12,23 @@ public class GenericProjectile : BaseProjectile, IPooledObject
     //[SerializeField]
     //protected float m_lifeTime = 1.5f;
 
-    [Header("Components")]
+        [SerializeField]
+    private Rigidbody rb;
     [SerializeField]
-    private Rigidbody m_rigidbody;
-    [SerializeField]
-    private TrailRenderer m_trailRenderer;
+    private TrailRenderer tr;
 
     public void OnObjectSpawn()
     {
         //Reset normal and angular velocities
-        m_rigidbody.velocity = Vector3.zero;
-        m_rigidbody.angularVelocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         //Clears the renderer positions so the trail stops acting out
-        m_trailRenderer.Clear();
+        tr.Clear();
+       // StartCoroutine(delayDestroy());
     }
     public void OnObjectDestroy()
     {
-        ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE);
+        ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.TEST_PROJECTILE);
         this.gameObject.SetActive(false);
     }
 
@@ -36,8 +36,8 @@ public class GenericProjectile : BaseProjectile, IPooledObject
     {
         if (_transform != null)
             transform.SetPositionAndRotation(_transform.position, _transform.rotation);
-       m_rigidbody.AddForce(transform.forward * m_projectileInfo.speed);
-        StartCoroutine(delayDestroy());
+        rb.AddForce(transform.forward * m_projectileInfo.speed);
+       // StartCoroutine(delayDestroy());
     }
 
     protected override void OnCollisionEnter(Collision collision)
@@ -55,7 +55,6 @@ public class GenericProjectile : BaseProjectile, IPooledObject
             }
         }
         OnObjectDestroy();
-        //Destroy(gameObject);
     }
 
     protected IEnumerator delayDestroy()
