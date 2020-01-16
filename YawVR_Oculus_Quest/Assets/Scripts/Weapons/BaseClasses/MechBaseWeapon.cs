@@ -55,22 +55,6 @@ abstract public class MechBaseWeapon : BaseMechModule
     protected bool isFullyVisible = false;
     protected bool isSelected = false;
 
-    virtual public bool Selected()       // To be called when the player has selected the weapon as the current
-    {
-        isSelected = true;
-        StartCoroutine(fadeIn());
-        return true;
-    }
-    abstract public bool Grip();         // To be called when the player mech arm's hand-trigger is activated
-    abstract public bool Ungrip();       // To be called when the player mech arm's hand-trigger is deactivated
-    virtual public bool Unselected()     // To be called when the player has unselected the weapon from the current
-    {
-        isSelected = false;
-        StartCoroutine(fadeOut());
-        return true;
-    }
-
-
     protected void Awake()
     {
         if (m_holoObject.transform.Find("HandReference"))
@@ -82,15 +66,20 @@ abstract public class MechBaseWeapon : BaseMechModule
         armObject.name = name + "Arm";
     }
 
-    //public MechArmModule InitController()
-    //{
-    //    name = m_moduleName;
-    //    holoObject.name = name + "Holo";
-    //    holoModel = holoObject.transform.Find("Model").GetComponent<MeshRenderer>();
-    //    armObject.name = name + "Arm";
-    //    //armModel = armObject.transform.Find("Model").gameObject;
-    //    return this;
-    //}
+    virtual public bool Selected()       // To be called when the player has selected the weapon as the current
+    {
+        isSelected = true;
+        FadeIn();
+        return true;
+    }
+    abstract public bool Grip();         // To be called when the player mech arm's hand-trigger is activated
+    abstract public bool Ungrip();       // To be called when the player mech arm's hand-trigger is deactivated
+    virtual public bool Unselected()     // To be called when the player has unselected the weapon from the current
+    {
+        isSelected = false;
+        FadeOut();
+        return true;
+    }
 
     public OVRInput.Controller GetController()
     {
@@ -103,6 +92,14 @@ abstract public class MechBaseWeapon : BaseMechModule
         {
             ms[i].material.SetFloat("_Amount", _val);
         }
+    }
+    protected void FadeIn()
+    {
+        StartCoroutine(fadeIn());
+    }
+    protected void FadeOut()
+    {
+        StartCoroutine(fadeOut());
     }
 
     IEnumerator fadeIn()

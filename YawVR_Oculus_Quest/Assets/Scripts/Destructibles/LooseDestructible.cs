@@ -13,8 +13,11 @@ public class LooseDestructible : BaseEntity
     void Start()
     {
         gameObject.GetComponent<Rigidbody>().constraints = isRooted ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
-        //transform.localScale += Vector3.Scale(m_destructibleInfo.scaleVariancy, new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)));
+        transform.localScale *= Random.Range(m_destructibleInfo.scaleVariancyMin, m_destructibleInfo.scaleVariancyMax);
         health = m_destructibleInfo.maxHealth;
+        int modelIndex = Random.Range(0, m_destructibleInfo.meshVariants.Length);
+        GetComponent<MeshFilter>().mesh = m_destructibleInfo.meshVariants[modelIndex];
+        GetComponent<MeshRenderer>().material = m_destructibleInfo.materialVariants[modelIndex];
     }
 
     public override void Die()

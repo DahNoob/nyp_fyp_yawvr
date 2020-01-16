@@ -5,6 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class AmmoModule
 {
+    public delegate void FinishReload();
+    public event FinishReload onFinishReload;
+
     [Header("Ammo Setup")]
     [SerializeField]
     private AmmoModuleInfo m_ammoInfo;
@@ -123,6 +126,7 @@ public class AmmoModule
                     yield return new WaitForSeconds(m_reloadTime);
                     m_isReloading = false;
                     m_currentAmmo = m_ammoInfo.maxAmmo;
+                    onFinishReload?.Invoke();
                     break;
                 }
             }

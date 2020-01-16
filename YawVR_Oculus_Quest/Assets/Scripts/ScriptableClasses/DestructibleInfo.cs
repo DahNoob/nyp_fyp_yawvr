@@ -6,5 +6,11 @@ using UnityEngine;
 public class DestructibleInfo : EntityInfo
 {
     [Header("Base Destructible Info")]
-    public Vector3 scaleVariancy;
+    [Range(0.0f,10.0f)]
+    public float scaleVariancyMin;
+    [Range(0.0f, 10.0f)]
+    public float scaleVariancyMax;
+    [Header("Model Variants")]
+    public Mesh[] meshVariants;
+    public Material[] materialVariants;
 }

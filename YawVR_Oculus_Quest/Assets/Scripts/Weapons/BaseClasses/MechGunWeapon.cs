@@ -24,6 +24,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     [SerializeField]
     protected Vector3 m_recoilRotation = new Vector3(-2, 0, 0);
 
+
     [Header("UI Configuration")]
     //Current weapon ammo
     [SerializeField]
@@ -35,6 +36,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
 
     //Local variables
     protected float shootTick;
+    protected float reloadTick;
 
     virtual protected void Start()
     {
@@ -42,6 +44,13 @@ abstract public class MechGunWeapon : MechBaseWeapon
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
         //Set the fill amount to be the normalized value of the ammo left
         weaponAmmoText.text = ammoModule.currentAmmo.ToString();
+        ammoModule.onFinishReload += _AmmoModule_onFinishReload;
+    }
+
+    private void _AmmoModule_onFinishReload()
+    {
+        if (isSelected)
+            FadeIn();
     }
 
     override public bool Selected()
@@ -119,5 +128,10 @@ abstract public class MechGunWeapon : MechBaseWeapon
     virtual protected void Vibe()
     {
         VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
+    }
+
+    virtual protected void Reload()
+    {
+        FadeOut();
     }
 }
