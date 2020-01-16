@@ -56,7 +56,7 @@ public class MechHandHandler : MonoBehaviour
     void FixedUpdate()
     {
         if(m_enabled)
-            m_handModel.SetFloat("Blend", Mathf.LerpUnclamped(m_handModel.GetFloat("Blend"), OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller), 0.1f));
+            m_handModel.SetFloat("Blend", Mathf.LerpUnclamped(m_handModel.GetFloat("Blend"), OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller), 0.13f));
     }
 
     public void Bump(Vector3 _posOffset, Vector3 _rotOffset = new Vector3())

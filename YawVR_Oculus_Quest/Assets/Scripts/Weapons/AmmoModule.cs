@@ -77,6 +77,9 @@ public class AmmoModule
         currentAmmo = m_ammoInfo.maxAmmo;
         currentClips = m_ammoInfo.maxClip;
         m_reloadTick = 0;
+        m_reloadTime = m_ammoInfo.reloadTime;
+        usesAmmo = m_ammoInfo.usesAmmo;
+        usesClips = m_ammoInfo.usesClips;
     }
 
     //A function to decrease ammo or shoot

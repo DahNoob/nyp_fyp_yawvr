@@ -84,16 +84,16 @@ public class PilotController : MonoBehaviour
         if (!isAttached)
             return;
         
-        if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
-            (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
-        {
-            HandStateChange(!isHandTriggered);
-        }
-        if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
-            (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
-        {
-            IndexStateChange(!isIndexTriggered);
-        }
+        //if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
+        //    (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
+        //{
+        //    HandStateChange(!isHandTriggered);
+        //}
+        //if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
+        //    (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
+        //{
+        //    IndexStateChange(!isIndexTriggered);
+        //}
 
         if (OVRInput.GetDown(OVRInput.Button.One, m_controller))
         {
@@ -107,10 +107,12 @@ public class PilotController : MonoBehaviour
         if (IsModuleActivated())
             modules[currModuleIndex].Hold(m_controller);
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Minus))
+        if (Input.GetKeyDown(KeyCode.U))
             HandStateChange(!isHandTriggered);
-        if (Input.GetKeyDown(KeyCode.Plus))
+
+        if (Input.GetKeyDown(KeyCode.I))
             IndexStateChange(!isIndexTriggered);
+
         if (Input.GetKeyDown(KeyCode.P))
             SetCurrentModule(currModuleIndex + 1);
 #endif
@@ -261,7 +263,7 @@ public class PilotController : MonoBehaviour
             {
                 //VibrationManager.SetControllerVibration(m_controller, 16, 2, 100);
                 modules[currModuleIndex].Activate(m_controller);
-
+                print("derp");
             }
             else
             {

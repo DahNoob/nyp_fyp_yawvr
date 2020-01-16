@@ -54,6 +54,7 @@ abstract public class MechBaseWeapon : BaseMechModule
     protected float fadeValue;
     protected bool isFullyVisible = false;
     protected bool isSelected = false;
+    protected bool forceFade = false;
 
     protected void Awake()
     {
@@ -105,7 +106,7 @@ abstract public class MechBaseWeapon : BaseMechModule
     IEnumerator fadeIn()
     {
         m_armObject.SetActive(true);
-        while (isSelected)
+        while (isSelected || (forceFade && !isFullyVisible))
         {
             yield return new WaitForFixedUpdate();
             fadeValue += 0.05f;
@@ -121,7 +122,7 @@ abstract public class MechBaseWeapon : BaseMechModule
     }
     IEnumerator fadeOut()
     {
-        while (!isSelected)
+        while (!isSelected || (forceFade && m_armObject.activeSelf))
         {
             yield return new WaitForFixedUpdate();
             fadeValue -= 0.05f;

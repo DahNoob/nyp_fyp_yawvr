@@ -11,7 +11,6 @@ public class TriGatlingGun : MechGunWeapon
 
     public override bool Activate(OVRInput.Controller _controller)
     {
-        shootTick = 0;
         follower.m_followSpeed = m_followerSpeed;
         m_gatlingAnimator.SetBool("Shooting", true);
         foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
@@ -31,12 +30,5 @@ public class TriGatlingGun : MechGunWeapon
         }
         // m_laserPointer.gameObject.SetActive(false);
         return true;
-    }
-
-   
-    private void Update()
-    {
-        ////If it's reloading, then don't show?
-        //weaponAmmoText.enabled = !ammoModule.m_isReloading;
     }
 }

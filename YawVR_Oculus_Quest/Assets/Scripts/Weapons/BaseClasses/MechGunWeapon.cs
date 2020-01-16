@@ -36,19 +36,21 @@ abstract public class MechGunWeapon : MechBaseWeapon
 
     //Local variables
     protected float shootTick;
-    protected float reloadTick;
 
     virtual protected void Start()
     {
         if (!CustomUtility.IsObjectPrefab(m_projectilePrefab))
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
         //Set the fill amount to be the normalized value of the ammo left
+        ammoModule.Init();
         weaponAmmoText.text = ammoModule.currentAmmo.ToString();
         ammoModule.onFinishReload += _AmmoModule_onFinishReload;
+        shootTick = m_shootInterval;
     }
 
     private void _AmmoModule_onFinishReload()
     {
+        forceFade = false;
         if (isSelected)
             FadeIn();
     }
@@ -70,12 +72,11 @@ abstract public class MechGunWeapon : MechBaseWeapon
     public override bool Hold(OVRInput.Controller _controller)
     {
         //If the ammo module is not reloading?
-        if (ammoModule.m_isReloading == false)
+        if (!ammoModule.m_isReloading && isFullyVisible)
         {
-            shootTick += Time.deltaTime;
-            if (shootTick >= m_shootInterval)
+            if (shootTick > m_shootInterval)
             {
-                shootTick -= m_shootInterval;
+                shootTick = 0;
                 //if (PlayerHandler.instance.DecreaseEnergy(m_energyReduction))
                 //{
                 if (ammoModule.DecreaseAmmo(1))
@@ -88,7 +89,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
                     //VibrationManager.SetControllerVibration(m_controller, vibeClip);
                     m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
                     m_shootAudioSource.Play();
-
                     //Triggered
                     GUIManager.instance.Triggered(_controller);
                     return true;
@@ -96,7 +96,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
                 else
                 {
                     //Try to reload? I mean it's a test.
-                    StartCoroutine(ammoModule.Reload());
+                    Reload();
                 }
             }
         }
@@ -132,6 +132,20 @@ abstract public class MechGunWeapon : MechBaseWeapon
 
     virtual protected void Reload()
     {
+        if (ammoModule.m_isReloading)
+            return;
+        forceFade = true;
         FadeOut();
+        StartCoroutine(ammoModule.Reload());
+    }
+
+    void OnDestroy()
+    {
+        ammoModule.onFinishReload -= _AmmoModule_onFinishReload;
+    }
+
+    void Update()
+    {
+        shootTick += Time.deltaTime;
     }
 }

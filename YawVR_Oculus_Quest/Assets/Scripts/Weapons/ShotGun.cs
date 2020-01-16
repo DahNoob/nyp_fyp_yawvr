@@ -25,7 +25,6 @@ public class ShotGun : MechGunWeapon
 
     public override bool Activate(OVRInput.Controller _controller)
     {
-        shootTick = 0;
         follower.m_followSpeed = m_followerSpeed;
         foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
         {
