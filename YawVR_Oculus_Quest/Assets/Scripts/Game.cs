@@ -8,6 +8,19 @@ public class Game : MonoBehaviour
     public static Game instance { get; private set; }
 
     [System.Serializable]
+    protected class PoolObjectsInfo
+    {
+        public GameObject enemy;
+        public string nameInPool;
+
+        public PoolObjectsInfo(GameObject _enemy, string _nameInPool)
+        {
+            enemy = _enemy;
+            nameInPool = _nameInPool;
+        }
+    }
+
+    [System.Serializable]
     protected class ObjectiveInfo
     {
         public VariedObjectives.TYPE type;//dis is cancerous but wutever
@@ -17,7 +30,7 @@ public class Game : MonoBehaviour
         public float m_timer = 0;
         public float m_spawnTime = 7;
     }
-    
+
     [Header("Default Mech Loadouts")]
     [SerializeField]
     private GameObject[] m_rightArmModules;
@@ -25,9 +38,10 @@ public class Game : MonoBehaviour
     private GameObject[] m_leftArmModules;
     [Header("Prefabs")]
     [SerializeField]
-    private GameObject[] m_enemies;
+    private PoolObjectsInfo[] m_enemies;
     [SerializeField]
     private GameObject[] m_structures;
+  
 
     [Header("Game Variables")]
     [SerializeField]
@@ -80,7 +94,8 @@ public class Game : MonoBehaviour
             print("Spawn Enemies!");
             for (int i = 0; i < 3; ++i)
             {
-                EnemyBase derp = Instantiate(m_enemies[i], currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].nameInPool, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
                 derp.m_target = currObj.m_highlight;
             }
         }
@@ -104,7 +119,9 @@ public class Game : MonoBehaviour
             m_objectives[i].type = Random.Range(0, 1000) > 500 ? VariedObjectives.TYPE.BOUNTYHUNT : VariedObjectives.TYPE.DEFEND_STRUCTURE;
             if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
-                EnemyBase enemy = Instantiate(m_enemies[2], objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                Debug.Log(m_enemies[2].nameInPool);
+                //EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].nameInPool, objectivePos, Quaternion.identity).GetComponent<EnemyBase>();
                 enemy.onEntityDie += Enemy_onEntityDie;
                 m_objectivesLeft++;
                 m_objectives[i].m_highlight = enemy.transform;

@@ -113,7 +113,6 @@ public class GUIManager : MonoBehaviour
         }
     }
 
-
     public void SpawnCubes()
     {
         Instantiate(m_dumbCubes).transform.SetParent(GameObject.Find("CubePile").transform);
@@ -127,12 +126,13 @@ public class GUIManager : MonoBehaviour
     }
     public void SpawnLightMech1()
     {
-        Instantiate(m_lightMech1Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        //Instantiate(m_lightMech1Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        ObjectPooler.instance.SpawnFromPool("LightMech1", PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
     }
     public void SpawnHeavyMech2()
     {
-        //Instantiate(m_heavyMech2Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
-        ObjectPooler.instance.SpawnFromPool("HeavyMech2", PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
+        //Instantiate(m_heavyMech2Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        ObjectPooler.instance.SpawnFromPool("HeavyMech2", PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
     }
     public void RecenterPose()
     {

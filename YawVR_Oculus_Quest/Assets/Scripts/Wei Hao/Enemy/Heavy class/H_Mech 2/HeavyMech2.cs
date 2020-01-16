@@ -47,17 +47,23 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
     protected float spawnRechargeTimer;
     protected List<Collider> ignoredColliders = new List<Collider>();
 
+    //New variables
+    private Animator anim;
+    private NavMeshAgent navMeshAgent;
+
     public void OnObjectSpawn()
     {
-        Start();
-
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.velocity = new Vector3(0f, 0f, 0f);
         rb.angularVelocity = new Vector3(0f, 0f, 0f);
+
+        Start();
+
     }
 
     public void OnObjectDestroy()
     {
+        anim.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);
         ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
@@ -69,17 +75,19 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         base.Start();
         health = GetMaxHealth();
         spawnRechargeTimer = Time.time;
-        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
+
+        anim = GetComponent<Animator>();
+        navMeshAgent = GetComponent<NavMeshAgent>(); 
+
+        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES); 
     }
 
     void Update()
     {
         bool spawnRecharged = Time.time > spawnRechargeTimer;
-        Animator anim = GetComponent<Animator>();
-        NavMeshAgent nav = GetComponent<NavMeshAgent>();
         anim.SetBool("Flee_Done", spawnRecharged);
         anim.SetBool("Walk_DoFlee", !spawnRecharged);
-        if (nav.velocity == Vector3.zero)
+        if (navMeshAgent.velocity == Vector3.zero)
         {
             anim.SetFloat("AnimSpeed", 0);
             return;
@@ -153,7 +161,7 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         {
             activeSideIsRight = hittedRight;
         }
-        GetComponent<Animator>().SetFloat("Blend", activeSideIsRight ? 1.0f : 0.0f);
+        anim.SetFloat("Blend", activeSideIsRight ? 1.0f : 0.0f);
         //activeSideIsRight = !activeSideIsRight;
     }
 }

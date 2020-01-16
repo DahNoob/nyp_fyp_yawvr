@@ -46,11 +46,7 @@ public class ObjectPooler : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
         poolParent = new GameObject("Object Pools");
         //poolParent.transform.parent = Persistent.instance.GO_DYNAMIC.transform;
         poolParent.transform.parent = transform;
@@ -76,11 +72,17 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Start is called before the first frame update
+    //void Start()
+    //{
 
-    }
+    //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+
+    //}
 
     public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
     {
