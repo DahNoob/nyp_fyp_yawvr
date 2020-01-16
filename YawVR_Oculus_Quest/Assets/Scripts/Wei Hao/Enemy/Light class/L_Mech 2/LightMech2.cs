@@ -96,14 +96,13 @@ public class LightMech2 : EnemyBase , IPooledObject
     {
         //Just gonna cheese it by calling start first
         Start();
-        //Reset velocity
-        rb.velocity = new Vector3(0f, 0f, 0f);
-        rb.angularVelocity = new Vector3(0f, 0f, 0f);
-
     }
 
     public void OnObjectDestroy()
-    {
+    {     
+        //Reset velocity
+        rb.velocity = new Vector3(0f, 0f, 0f);
+        rb.angularVelocity = new Vector3(0f, 0f, 0f);
         //Set bool i suppose if it actually dead
         m_Animator.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
