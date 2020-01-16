@@ -83,17 +83,17 @@ public class PilotController : MonoBehaviour
     {
         if (!isAttached)
             return;
-        
-        //if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
-        //    (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
-        //{
-        //    HandStateChange(!isHandTriggered);
-        //}
-        //if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
-        //    (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
-        //{
-        //    IndexStateChange(!isIndexTriggered);
-        //}
+
+        if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
+            (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
+        {
+            HandStateChange(!isHandTriggered);
+        }
+        if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
+            (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
+        {
+            IndexStateChange(!isIndexTriggered);
+        }
 
         if (OVRInput.GetDown(OVRInput.Button.One, m_controller))
         {

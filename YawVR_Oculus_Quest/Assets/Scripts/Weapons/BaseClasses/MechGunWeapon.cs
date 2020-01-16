@@ -48,6 +48,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
         shootTick = m_shootInterval;
     }
 
+
     private void _AmmoModule_onFinishReload()
     {
         forceFade = false;
@@ -81,8 +82,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
                 //{
                 if (ammoModule.DecreaseAmmo(1))
                 {
-                    //Set the current ammo count
-                    weaponAmmoText.text = ammoModule.currentAmmo.ToString();
                     SpawnProjectile();
                     Vibe();
                     follower.Bump(m_recoilPosition, m_recoilRotation);
@@ -99,7 +98,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
         if (ammoModule.NeedReload())
             Reload();
 
-        
         return false;
     }
 
@@ -147,5 +145,8 @@ abstract public class MechGunWeapon : MechBaseWeapon
     void Update()
     {
         shootTick += Time.deltaTime;
+
+        //Set the current ammo count
+        weaponAmmoText.text =ammoModule.m_isReloading ? "Reloading..." : ammoModule.currentAmmo.ToString();
     }
 }

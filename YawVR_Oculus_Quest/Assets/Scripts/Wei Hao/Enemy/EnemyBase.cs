@@ -108,7 +108,7 @@ abstract public class EnemyBase : BaseEntity
     {
         //gameObject.SetActive(false);
         InvokeDie();
-        Destroy(gameObject);
+        GetComponent<IPooledObject>().OnObjectDestroy();
         //gameObject.GetComponent<ParticleSystem>().Play();
     }
 
