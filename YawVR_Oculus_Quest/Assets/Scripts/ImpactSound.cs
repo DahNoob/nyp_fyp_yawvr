@@ -15,6 +15,7 @@ public class ImpactSound : MonoBehaviour , IPooledObject
 
     public void OnObjectDestroy()
     {
+        ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE_IMPACT);
         gameObject.SetActive(false);
     }
 
