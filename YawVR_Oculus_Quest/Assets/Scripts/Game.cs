@@ -21,7 +21,7 @@ public class Game : MonoBehaviour
     }
 
     [System.Serializable]
-    protected class ObjectiveInfo
+    public class ObjectiveInfo
     {
         public VariedObjectives.TYPE type;//dis is cancerous but wutever
         public Transform m_highlight;
@@ -47,7 +47,7 @@ public class Game : MonoBehaviour
     [SerializeField]
     public int m_objectivesLeft = 0;
     [SerializeField]
-    protected ObjectiveInfo[] m_objectives;
+    public ObjectiveInfo[] m_objectives;
 
     //Local variables
     private int currentObjectiveIndex = -1;
@@ -101,13 +101,13 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void ApplyMechLoadouts()
+    private void ApplyMechLoadouts()
     {
         PlayerHandler.instance.GetLeftPilotController().AttachArmModules(m_leftArmModules);
         PlayerHandler.instance.GetRightPilotController().AttachArmModules(m_rightArmModules);
     }
 
-    public void ApplyObjectives()
+    private void ApplyObjectives()
     {
         MapPointsHandler mph = MapPointsHandler.instance;
         System.Array.Resize(ref m_objectives, mph.m_variedObjectives.possibleObjectivePoints.Length);
