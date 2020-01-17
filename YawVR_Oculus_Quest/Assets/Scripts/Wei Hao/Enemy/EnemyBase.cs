@@ -75,6 +75,13 @@ abstract public class EnemyBase : BaseEntity
         ALPHA
     }
 
+    private enum _Buffs
+    {
+        HP,
+        DMG,
+        MS
+    }
+
     // Start is called before the first frame update
     virtual protected void Start()
     {
@@ -101,7 +108,7 @@ abstract public class EnemyBase : BaseEntity
     {
         //gameObject.SetActive(false);
         InvokeDie();
-        Destroy(gameObject);
+        GetComponent<IPooledObject>().OnObjectDestroy();
         //gameObject.GetComponent<ParticleSystem>().Play();
     }
 
@@ -159,7 +166,8 @@ abstract public class EnemyBase : BaseEntity
 
     void OnDisable()
     {
-        Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
+        // Instantiate(m_dieEffect, m_bodyTransform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
+        //ObjectPooler.instance.SpawnFromPool("EnemyDeathEffect", m_bodyTransform.position, Quaternion.identity);
     }
 
     private void OnDrawGizmos()

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2635159879070105548}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: SpawnPivot_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 711876437226934493}
   - component: {fileID: 2768922834889568291}
   - component: {fileID: 266204690830023105}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 869740772836916882}
   - component: {fileID: 6822052897891835753}
   - component: {fileID: 7049365058193140181}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,8 +210,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1786523398808339384}
   - component: {fileID: 2242128319122028407}
+  - component: {fileID: 1333133543943812025}
   m_Layer: 14
-  m_Name: EnemyIcon
+  m_Name: HeavyMech2Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +227,7 @@ Transform:
   m_GameObject: {fileID: 565233584167934972}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 15, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4307642105807626970}
   m_RootOrder: 1
@@ -279,6 +280,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1333133543943812025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565233584167934972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669dc326c5c83544cbd471efd783ca79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_iconType: 3
 --- !u!1 &980808854142652617
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +307,7 @@ GameObject:
   - component: {fileID: 6002456942104543715}
   - component: {fileID: 2244760435168840456}
   - component: {fileID: 327241490529827104}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Heavy Mech 2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -324,7 +338,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980808854142652617}
   serializedVersion: 2
-  m_Mass: 300
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -428,7 +442,7 @@ GameObject:
   - component: {fileID: 7001909470224271944}
   - component: {fileID: 6090492484122534051}
   - component: {fileID: 79110501893281109}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +519,7 @@ GameObject:
   - component: {fileID: 7423653898383413652}
   - component: {fileID: 6859784670013600286}
   - component: {fileID: 6051010650883481994}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +596,7 @@ GameObject:
   - component: {fileID: 384956750954999159}
   - component: {fileID: 1975024352482847744}
   - component: {fileID: 3242635939703582703}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -659,7 +673,7 @@ GameObject:
   - component: {fileID: 5166317202759432076}
   - component: {fileID: 8702775757587531570}
   - component: {fileID: 1585764252410537177}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L_Side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -736,7 +750,7 @@ GameObject:
   - component: {fileID: 1353747256245697263}
   - component: {fileID: 6846578924559787562}
   - component: {fileID: 5806864795623926767}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -813,7 +827,7 @@ GameObject:
   - component: {fileID: 2971368728579684059}
   - component: {fileID: 8549977933647094747}
   - component: {fileID: 2157927761878560272}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -890,7 +904,7 @@ GameObject:
   - component: {fileID: 4169915812395410516}
   - component: {fileID: 564916002754518983}
   - component: {fileID: 4710567161747115481}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -965,7 +979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 303549922058565681}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Heavy Mech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,7 +1017,7 @@ GameObject:
   - component: {fileID: 5760551706351177927}
   - component: {fileID: 5851420260000441721}
   - component: {fileID: 8047007470248288213}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1080,7 +1094,7 @@ GameObject:
   - component: {fileID: 8239590915054482992}
   - component: {fileID: 622137152899940532}
   - component: {fileID: 2258068921758477296}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1155,7 +1169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8455971920297601670}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: SpawnPivot_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1187,7 +1201,7 @@ GameObject:
   - component: {fileID: 2270174606593776002}
   - component: {fileID: 8806206015070073302}
   - component: {fileID: 2354913229717718521}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1264,7 +1278,7 @@ GameObject:
   - component: {fileID: 1710282197749174628}
   - component: {fileID: 5902538137861472003}
   - component: {fileID: 4508362099932378135}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1341,7 +1355,7 @@ GameObject:
   - component: {fileID: 2378963969109304444}
   - component: {fileID: 4257861588662845782}
   - component: {fileID: 7240665546277229512}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1418,7 +1432,7 @@ GameObject:
   - component: {fileID: 6854324276039065556}
   - component: {fileID: 6283823523684135238}
   - component: {fileID: 894177399153581439}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1495,7 +1509,7 @@ GameObject:
   - component: {fileID: 6460773364572207210}
   - component: {fileID: 6029921016301518179}
   - component: {fileID: 1715229141666355745}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1572,7 +1586,7 @@ GameObject:
   - component: {fileID: 4169425836651350650}
   - component: {fileID: 3159253010345390149}
   - component: {fileID: 5454880291733668541}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: R_Side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1649,7 +1663,7 @@ GameObject:
   - component: {fileID: 7508534956311402345}
   - component: {fileID: 773597254625245439}
   - component: {fileID: 4516452965995413842}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1726,7 +1740,7 @@ GameObject:
   - component: {fileID: 5367518369826461563}
   - component: {fileID: 7730316493485106773}
   - component: {fileID: 7746589032500592904}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1803,7 +1817,7 @@ GameObject:
   - component: {fileID: 5651145804208774997}
   - component: {fileID: 2874986135505021812}
   - component: {fileID: 1955667032599444058}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Tread15
   m_TagString: Untagged
   m_Icon: {fileID: 0}

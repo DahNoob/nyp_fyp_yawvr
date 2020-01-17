@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour
 {
@@ -14,10 +15,14 @@ public class GUIManager : MonoBehaviour
     [Header("Configuration")]
     [SerializeField]
     private GUIReticleModule reticleModule;
+    [SerializeField]
+    private RawImage m_minimap;
 
     [Header("Resources")]
     [SerializeField]
     private Transform m_cameraTransform;
+    [SerializeField]
+    private GameObject m_objectiveArrowPrefab;
 
     [Header("Experimental Resources")]
     [SerializeField]
@@ -33,11 +38,18 @@ public class GUIManager : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Text m_armRotationValue;
 
+    [Header("Object Pool Resources")]
+    [SerializeField]
+    private UnityEngine.UI.Text m_projectileText;
+    [SerializeField]
+    private UnityEngine.UI.Text m_projectileText2;
+
     //Local variables
     int frameCount = 0;
     float dt = 0.0f;
     float fps = 0.0f;
     float updateRate = 4.0f;  // 4 updates per sec.
+    private RectTransform[] minimapArrows;
 
     void Awake()
     {
@@ -57,6 +69,19 @@ public class GUIManager : MonoBehaviour
         //Disable both reticles
         EnableReticle(OVRInput.Controller.LTouch, false);
         EnableReticle(OVRInput.Controller.RTouch, false);
+
+        var objectives = Game.instance.m_objectives;
+        System.Array.Resize(ref minimapArrows, 1);//objectives.Length);
+        for (int i = 0; i < minimapArrows.Length; ++i)
+        {
+            RectTransform arrowUI = Instantiate(m_objectiveArrowPrefab, m_minimap.rectTransform).GetComponent<RectTransform>();
+            //arrowUI.LookAt(objectives[i].m_highlight);
+            Vector3 bap = Vector3.Scale(objectives[i].m_highlight.position - PlayerHandler.instance.transform.position, new Vector3(1,0,1)).normalized;
+            float lol = Mathf.Atan2(bap.x, bap.z) * Mathf.Rad2Deg;
+            arrowUI.eulerAngles = new Vector3(0, lol, 0);
+            arrowUI.Rotate(90, 0, 0);
+            minimapArrows[i] = arrowUI;
+        }
     }
 
     void Update()
@@ -84,6 +109,20 @@ public class GUIManager : MonoBehaviour
         //}
 
         reticleModule.UpdateEase();
+
+        m_projectileText.text = ObjectPooler.instance.AmountActive(PoolObject.OBJECTTYPES.LIGHT_MECH2);
+        m_projectileText2.text = ObjectPooler.instance.AmountActive(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE_IMPACT);
+
+        for (int i = 0; i < 1; ++i)
+        {
+            Vector3 displacement = Vector3.Scale(Game.instance.m_objectives[i].m_highlight.position - PlayerHandler.instance.transform.position, new Vector3(1, 0, 1));
+            Vector3 bap = displacement.normalized;
+            float lol = Mathf.Atan2(bap.x, bap.z) * Mathf.Rad2Deg;
+            minimapArrows[i].localPosition = Vector3.zero;
+            minimapArrows[i].eulerAngles = new Vector3(0, lol, 0);
+            minimapArrows[i].Rotate(90, 0, 0);
+            minimapArrows[i].Translate(0, Mathf.Min(0.14f, displacement.sqrMagnitude * 0.00005f), 0);
+        }
     }
 
     void LateUpdate()
@@ -93,8 +132,16 @@ public class GUIManager : MonoBehaviour
         m_fpsValue.text = fps.ToString();
         m_armRotationValue.text = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch).eulerAngles.ToString();
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
-    }
 
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SpawnLightMech1();
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SpawnHeavyMech2();
+        }
+    }
 
     public void SpawnCubes()
     {
@@ -109,11 +156,13 @@ public class GUIManager : MonoBehaviour
     }
     public void SpawnLightMech1()
     {
-        Instantiate(m_lightMech1Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        //Instantiate(m_lightMech1Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.LIGHT_MECH1, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
     }
     public void SpawnHeavyMech2()
     {
-        Instantiate(m_heavyMech2Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 5 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        //Instantiate(m_heavyMech2Prefab, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.HEAVY_MECH2, PlayerHandler.instance.transform.position + PlayerHandler.instance.transform.forward * 10 + Vector3.up * 3, PlayerHandler.instance.transform.rotation);
     }
     public void RecenterPose()
     {

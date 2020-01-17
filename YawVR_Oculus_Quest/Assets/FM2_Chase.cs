@@ -28,7 +28,7 @@ public class FM2_Chase : SMB_BaseEnemyState
     {
         float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
         //enemy.GetComponent<NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
-        if (distanceSqr < inRangeSqr)
+        //if (distanceSqr < inRangeSqr)
             animator.SetBool("Attack", true);
         //else if (distanceSqr > outRangeSqr)
         //    animator.SetBool("Chase_OutRange", true);
@@ -36,15 +36,16 @@ public class FM2_Chase : SMB_BaseEnemyState
 
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        //PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = animator.GetComponent<NavMeshAgent>();
         navMeshAgent.isStopped = false;
-        navMeshAgent.SetDestination(PlayerHandler.instance.transform.position);
+        //navMeshAgent.SetDestination(PlayerHandler.instance.transform.position);
+        animator.SetBool("Cooldown", false);
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        navMeshAgent.SetDestination(PlayerTransform.position);
+        //navMeshAgent.SetDestination(PlayerHandler.instance.transform.position);
     }
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

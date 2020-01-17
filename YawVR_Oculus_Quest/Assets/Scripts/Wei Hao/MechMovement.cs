@@ -101,6 +101,15 @@ public class MechMovement : MonoBehaviour
             transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * secondaryAxis.x);
         }
 
+        if(Input.GetKey(KeyCode.X))
+        {
+            transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * 1);
+        }
+        if (Input.GetKey(KeyCode.Z))
+        {
+            transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * -1);
+        }
+
         movementAlpha = GetMovementAlpha();
 
         ////Reset the MoveVector
@@ -119,6 +128,6 @@ public class MechMovement : MonoBehaviour
 
     public float GetMovementAlpha()
     {
-        return lStickDelta.magnitude;
+        return speed / maxSpeed;
     }
 }

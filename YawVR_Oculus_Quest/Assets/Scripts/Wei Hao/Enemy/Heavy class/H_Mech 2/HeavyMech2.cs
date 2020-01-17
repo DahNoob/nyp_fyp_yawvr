@@ -17,7 +17,7 @@ using UnityEngine.AI;
 ** 2    27/12/2019, 11:47 AM    DahNoob   Implemented spawning recharge time
 *******************************/
 [RequireComponent(typeof(Rigidbody))]
-public class HeavyMech2 : EnemyBase
+public class HeavyMech2 : EnemyBase ,IPooledObject
 {
     // Banelings states
     protected enum _GameStates
@@ -47,23 +47,48 @@ public class HeavyMech2 : EnemyBase
     protected float spawnRechargeTimer;
     protected List<Collider> ignoredColliders = new List<Collider>();
 
+    //New variables
+    private Animator anim;
+    private NavMeshAgent navMeshAgent;
+
+    public void OnObjectSpawn()
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.velocity = new Vector3(0f, 0f, 0f);
+        rb.angularVelocity = new Vector3(0f, 0f, 0f);
+
+        Start();
+
+    }
+
+    public void OnObjectDestroy()
+    {
+        anim.SetBool("ResetAnim", true);
+        RemoveFromQuadTree(this.gameObject);
+        this.gameObject.SetActive(false);
+        ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.HEAVY_MECH2);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, m_bodyTransform.position, Quaternion.identity);
+    }
+
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
         health = GetMaxHealth();
         spawnRechargeTimer = Time.time;
-        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
+
+        anim = GetComponent<Animator>();
+        navMeshAgent = GetComponent<NavMeshAgent>(); 
+
+        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES); 
     }
 
     void Update()
     {
         bool spawnRecharged = Time.time > spawnRechargeTimer;
-        Animator anim = GetComponent<Animator>();
-        NavMeshAgent nav = GetComponent<NavMeshAgent>();
         anim.SetBool("Flee_Done", spawnRecharged);
         anim.SetBool("Walk_DoFlee", !spawnRecharged);
-        if (nav.velocity == Vector3.zero)
+        if (navMeshAgent.velocity == Vector3.zero)
         {
             anim.SetFloat("AnimSpeed", 0);
             return;
@@ -113,14 +138,16 @@ public class HeavyMech2 : EnemyBase
         }
         ignoredColliders.Clear();
     }
+
     public void SpawnEnemy()
     {
         Transform spawnTransform = activeSideIsRight ? m_spawnPivotRight : m_spawnPivotLeft;
-        Collider newEnemy = Instantiate(m_lesserEnemy, spawnTransform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<Collider>();
+        //Collider newEnemy = Instantiate(m_lesserEnemy, spawnTransform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<Collider>();
+        Collider newEnemy = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.LIGHT_MECH2, spawnTransform.position, transform.rotation).GetComponent<Collider>();
         newEnemy.GetComponent<EnemyBase>().m_target = m_target;
         Physics.IgnoreCollision(GetComponent<Collider>(), newEnemy, true);
         ignoredColliders.Add(newEnemy);
-        newEnemy.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 5000.0f, 12000.0f));
+        newEnemy.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 500000.0f, 1200000.0f));
     }
     public void FlipActiveSide()
     {
@@ -135,7 +162,7 @@ public class HeavyMech2 : EnemyBase
         {
             activeSideIsRight = hittedRight;
         }
-        GetComponent<Animator>().SetFloat("Blend", activeSideIsRight ? 1.0f : 0.0f);
+        anim.SetFloat("Blend", activeSideIsRight ? 1.0f : 0.0f);
         //activeSideIsRight = !activeSideIsRight;
     }
 }

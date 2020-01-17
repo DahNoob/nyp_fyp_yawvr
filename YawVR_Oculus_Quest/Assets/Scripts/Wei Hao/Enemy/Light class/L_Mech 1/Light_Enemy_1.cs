@@ -18,7 +18,7 @@ using UnityEngine.AI;
 ** 2    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
 ** 3    2/1/2020, 4:31 PM       Wei Hao   Added passive buffs depending on rarity
 *******************************/
-public class Light_Enemy_1 : EnemyBase
+public class Light_Enemy_1 : EnemyBase, IPooledObject
 {
     public enum _EnemyState
     {
@@ -34,7 +34,8 @@ public class Light_Enemy_1 : EnemyBase
         DMG,
         MS
     }
-    List<string> buffs = new List<string> { "HP", "DMG", "MS" };
+
+    List<string> buffs;
 
     public Transform projectile;
     private Transform target;
@@ -102,6 +103,24 @@ public class Light_Enemy_1 : EnemyBase
     [SerializeField]
     private bool MS;
 
+    public void OnObjectSpawn()
+    {
+        //Just gonna cheese it by calling start first
+        Start();
+        //Reset velocity
+        rb.velocity = new Vector3(0f, 0f, 0f);
+        rb.angularVelocity = new Vector3(0f, 0f, 0f);
+    }
+
+    public void OnObjectDestroy()
+    {
+        //Set bool i suppose if it actually dead
+        m_Animator.SetBool("ResetAnim", true);
+        RemoveFromQuadTree(this.gameObject);
+        this.gameObject.SetActive(false);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, m_bodyTransform.position, Quaternion.identity);
+    }
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -109,14 +128,14 @@ public class Light_Enemy_1 : EnemyBase
         // Current State
         //currentState = _EnemyState.AVOID;
         Player = PlayerHandler.instance.gameObject;
-        target = Player.GetComponent<Transform>();
-        rb = gameObject.GetComponent<Rigidbody>();
-        m_Animator = gameObject.GetComponentInChildren<Animator>();
-        poof = gameObject.GetComponent<ParticleSystem>();
-        //weightedRandom = GameObject.Find("WeightedRNG");
-        weightedRandom = WeightedRandom.instance;
+        target = Player.transform;
+        rb = GetComponent<Rigidbody>();
+        m_Animator = GetComponentInChildren<Animator>();
+        poof = GetComponent<ParticleSystem>();
+
         // Get rarity
-        rarity = (_Rarity)weightedRandom.random();
+        rarity = (_Rarity)WeightedRandom.instance.random();
+        buffs = new List<string> { "HP", "DMG", "MS" };
 
         transformX = transform.position;
 
@@ -128,12 +147,12 @@ public class Light_Enemy_1 : EnemyBase
                 GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
-            if (currBuff == "DMG")
+            else if (currBuff == "DMG")
             {
                 GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
-            if (currBuff == "MS")
+            else if (currBuff == "MS")
             {
                 GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
                 MS = true;
@@ -202,7 +221,6 @@ public class Light_Enemy_1 : EnemyBase
             //    MS = true;
             //}
         }
-
 
         //Add this object to quad tree 
         AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
@@ -290,10 +308,10 @@ public class Light_Enemy_1 : EnemyBase
         queryBounds.position = transform.position;
     }
 
-    void PlayDeathParticle()
-    {
-        explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
-    }
+    //void PlayDeathParticle()
+    //{
+    //    explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
+    //}
 
     public string StartBuff()
     {
@@ -313,20 +331,16 @@ public class Light_Enemy_1 : EnemyBase
             //currentState = _EnemyState.DIE;
             //m_Animator.SetBool("Explode", true);
         }
-
-        if (collision.gameObject.tag == "Bullet")
-        {
-            takeDamage(10);
-            collision.gameObject.SetActive(false);
-        }
     }
 
     //public float GetMoveSpeed()
     //{
     //    return moveSpeed;
     //}
+
     public float GetRotationSpeed()
     {
         return rotationSpeed;
     }
+
 }

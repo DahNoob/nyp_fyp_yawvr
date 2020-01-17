@@ -5,20 +5,25 @@ using UnityEngine;
 [System.Serializable]
 public class AmmoModule
 {
+    public delegate void FinishReload();
+    public event FinishReload onFinishReload;
+
     [Header("Ammo Setup")]
+    [SerializeField]
+    private AmmoModuleInfo m_ammoInfo;
     [SerializeField]
     [Tooltip("The current ammo in the clip")]
     private int m_currentAmmo;
-    [SerializeField]
-    [Tooltip("How much ammo is in each clip?")]
-    private int m_maxAmmo = 1;
+    //[SerializeField]
+    //[Tooltip("How much ammo is in each clip?")]
+    //private int m_maxAmmo = 1;
     [SerializeField]
     [Tooltip("How long does it take to reload?")]
     private float m_reloadTime = 0.5f;
     //Not sure if this is necessary
-    [SerializeField]
-    [Tooltip("Max amount of clips before the gun can't reload no more")]
-    private int m_maxClips;
+    //[SerializeField]
+    //[Tooltip("Max amount of clips before the gun can't reload no more")]
+    //private int m_maxClips;
     [SerializeField]
     [Tooltip("Current amount of clips that is in the range 0 - maxClips")]
     private int m_currentClips;
@@ -44,33 +49,37 @@ public class AmmoModule
     public int currentAmmo
     {
         get { return m_currentAmmo; }
-        private set { m_currentAmmo = Mathf.Clamp(value, 0, m_maxAmmo); }
+        private set { m_currentAmmo = Mathf.Clamp(value, 0, m_ammoInfo.maxAmmo); }
     }
 
     public int maxAmmo
     {
-        get { return m_maxAmmo; }
-        private set { m_maxAmmo = value; }
+        get { return m_ammoInfo.maxAmmo; }
+        //private set { m_maxAmmo = value; }
     }
 
     public int maxClips
     {
-        get { return m_maxClips; }
-        private set { m_maxClips = value; }
+        get { return m_ammoInfo.maxClip; }
+        //private set { m_maxClips = value; }
     }
 
     public int currentClips
     {
         get { return m_currentClips; }
-        private set { m_currentClips = Mathf.Clamp(value, 0, m_maxClips); }
+        private set { m_currentClips = Mathf.Clamp(value, 0, m_ammoInfo.maxClip); }
     }
 
     //Inits values, for now can just not call if you want?
     public void Init()
     {
         //Sets current ammo to max ammo?
-        currentAmmo = maxAmmo;
+        currentAmmo = m_ammoInfo.maxAmmo;
+        currentClips = m_ammoInfo.maxClip;
         m_reloadTick = 0;
+        m_reloadTime = m_ammoInfo.reloadTime;
+        usesAmmo = m_ammoInfo.usesAmmo;
+        usesClips = m_ammoInfo.usesClips;
     }
 
     //A function to decrease ammo or shoot
@@ -119,7 +128,8 @@ public class AmmoModule
                 {
                     yield return new WaitForSeconds(m_reloadTime);
                     m_isReloading = false;
-                    m_currentAmmo = m_maxAmmo;
+                    m_currentAmmo = m_ammoInfo.maxAmmo;
+                    onFinishReload?.Invoke();
                     break;
                 }
             }
@@ -134,7 +144,23 @@ public class AmmoModule
 
     public float ReturnNormalized()
     {
-        return (float)m_currentAmmo / (float)m_maxAmmo;
+        return (float)m_currentAmmo / (float)m_ammoInfo.maxAmmo;
+    }
+
+    public bool NeedReload()
+    {
+        //if already reloading then just dont do the reload again
+        if (m_isReloading)
+            return false;
+
+        if (!usesAmmo)
+            return false;
+
+        //Else if bullet less or equals 0 
+        if (currentAmmo <= 0)
+            return true;
+
+        return false;
     }
 
 }

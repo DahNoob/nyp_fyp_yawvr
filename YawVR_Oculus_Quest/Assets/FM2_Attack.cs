@@ -15,6 +15,8 @@ public class FM2_Attack : SMB_BaseEnemyState
     private float m_attackWindUp = 1.0f;
     [SerializeField]
     private float rotationSpeed = 6.0f;
+    [SerializeField]
+    private float thrust = 200.0f;
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
@@ -24,6 +26,7 @@ public class FM2_Attack : SMB_BaseEnemyState
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         animator.SetBool("Chase_InRange", false);
+        m_trackTime = 3.0f;      
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -43,12 +46,12 @@ public class FM2_Attack : SMB_BaseEnemyState
         }
         else
         {
-            animator.gameObject.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, 100));
+            animator.gameObject.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * thrust);
         }
     }
 
     public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        
+        StopTrack = false;
     }
 }

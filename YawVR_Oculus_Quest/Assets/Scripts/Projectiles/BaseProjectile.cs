@@ -6,9 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 abstract public class BaseProjectile : MonoBehaviour
 {
-    [Header("Base Configuration")]
-    [SerializeField]
-    protected string m_projectileName;
+    //[Header("Base Configuration")]
+    //[SerializeField]
+    //protected string m_projectileName;
 
     abstract public void Init(Transform _transform = null);
     abstract protected void OnCollisionEnter(Collision collision);

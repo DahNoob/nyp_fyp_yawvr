@@ -56,8 +56,8 @@ public class LM1_Chase : SMB_BaseEnemyState
         //animator.SetBool("Dodge", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_DodgeDetectRange));
         //Debug.Log("Is it time to dodge? " + animator.GetBool("Dodge"));
         //animator.SetBool("Shoot", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
-        Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
-        Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(enemy.m_target.position, enemy.transform.position));
+        //Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
+        //Debug.Log("Hit Check Radius: " + CustomUtility.HitCheckRadius(enemy.m_target.position, enemy.transform.position));
         navMeshAgent.SetDestination(enemy.m_target.position);
         //if (CustomUtility.HitCheckRadius(player.transform.position,enemy.transform.position) < m_detectRange * m_detectRange)
         //{
@@ -147,14 +147,20 @@ public class LM1_Chase : SMB_BaseEnemyState
     IEnumerator EnemyShoot(Animator animator)
     {
         //Debug.Log("Fire start");
-        BaseProjectile _projectileL = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        //BaseProjectile _projectileL = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        //BaseProjectile _projectileL = Instantiate(projectile, m_projectileOriginL.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        BaseProjectile _projectileL = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, m_projectileOriginL.position, Quaternion.identity).GetComponent<BaseProjectile>();
+        //Physics.IgnoreCollision(_projectileL.GetComponentInChildren<Collider>(), enemy.GetComponentInChildren<Collider>());
         m_projectileOriginL.LookAt(enemy.m_target);
         _projectileL.Init(m_projectileOriginL);
 
         yield return new WaitForSeconds(0.2f);
 
         //Debug.Log("2nd Fire start");
-        BaseProjectile _projectileR = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        //BaseProjectile _projectileR = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        //BaseProjectile _projectileR = Instantiate(projectile, m_projectileOriginR.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        BaseProjectile _projectileR = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, m_projectileOriginR.position, Quaternion.identity).GetComponent<BaseProjectile>();
+        //Physics.IgnoreCollision(_projectileR.GetComponentInChildren<Collider>(), enemy.GetComponentInChildren<Collider>());
         m_projectileOriginR.LookAt(enemy.m_target);
         _projectileR.Init(m_projectileOriginR);
     }

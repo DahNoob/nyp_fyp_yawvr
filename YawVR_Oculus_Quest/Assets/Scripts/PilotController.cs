@@ -59,7 +59,7 @@ public class PilotController : MonoBehaviour
     private MechHandHandler mechHand;
 
     private bool isAttached = false, isHandTriggered = false, isIndexTriggered = false;
-    private List<MechArmModule> modules = new List<MechArmModule>();
+    private List<MechBaseWeapon> modules = new List<MechBaseWeapon>();
     private int currModuleIndex = 0;
     private float currCanvasUIRotation = 0.0f;
     private Color currHoloInnerColor, currHoloRimColor;
@@ -83,7 +83,7 @@ public class PilotController : MonoBehaviour
     {
         if (!isAttached)
             return;
-        
+
         if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
             (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
         {
@@ -106,6 +106,16 @@ public class PilotController : MonoBehaviour
 
         if (IsModuleActivated())
             modules[currModuleIndex].Hold(m_controller);
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.U))
+            HandStateChange(!isHandTriggered);
+
+        if (Input.GetKeyDown(KeyCode.I))
+            IndexStateChange(!isIndexTriggered);
+
+        if (Input.GetKeyDown(KeyCode.P))
+            SetCurrentModule(currModuleIndex + 1);
+#endif
     }
     void FixedUpdate()
     {
@@ -141,7 +151,7 @@ public class PilotController : MonoBehaviour
             Transform validFind = armModulePackage.transform.Find(m_controller == OVRInput.Controller.RTouch ? "Right" : "Left");
             if (validFind != null)
             {
-                MechArmModule armModuleAgain = (CustomUtility.IsObjectPrefab(validFind.gameObject) ? Instantiate(validFind.gameObject, transform) : validFind.gameObject).GetComponent<MechArmModule>();
+                MechBaseWeapon armModuleAgain = (CustomUtility.IsObjectPrefab(validFind.gameObject) ? Instantiate(validFind.gameObject, transform) : validFind.gameObject).GetComponent<MechBaseWeapon>();
                 modules.Add(armModuleAgain);
                 GameObject holoArm = armModuleAgain.holoObject;
                 holoArm.transform.SetParent(m_holos);
@@ -170,18 +180,9 @@ public class PilotController : MonoBehaviour
             modIcon.localPosition = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad)) * 50.0f;
             modIcon.GetComponentInChildren<UnityEngine.UI.Image>().sprite = modules[i].GetIcon();
             modIcon.GetComponentInChildren<UnityEngine.UI.Text>().text = modules[i].name;
+            modules[i].Unselected();
         }
         SetCurrentModule(0);
-    }
-
-    void VibrateCrescendo()
-    {
-        OVRHapticsClip clip = new OVRHapticsClip();
-        for (int i = 0; i < 80; ++i)
-        {
-            clip.WriteSample(i % 3 == 0 ? (byte)Mathf.Min(i * 4.0f, 255) : (byte)0);
-        }
-        VibrationManager.SetControllerVibration(m_controller, clip);
     }
 
     void SetHoloArmMaterialColor(int _index, Color _newInnerColor, Color _newRimColor)
@@ -205,10 +206,17 @@ public class PilotController : MonoBehaviour
             currModuleIndex = 0;
         else if (currModuleIndex < 0)
             currModuleIndex = modules.Count - 1; //very shitty way of doin it rn but wuteva
-        if(IsModuleActivated())
+        modules[prevModuleIndex].Unselected();
+        modules[currModuleIndex].Selected();
+        if(isHandTriggered)
         {
-            modules[prevModuleIndex].Stop(m_controller);
-            modules[currModuleIndex].Activate(m_controller);
+            modules[prevModuleIndex].Ungrip();
+            modules[currModuleIndex].Grip();
+            if(isIndexTriggered)
+            {
+                modules[prevModuleIndex].Stop(m_controller);
+                modules[currModuleIndex].Activate(m_controller);
+            }
         }
         ResetArmModules();
     }
@@ -223,22 +231,27 @@ public class PilotController : MonoBehaviour
             //    modules[i].holoModel.materials[j].SetColor("_RimColor", Persistent.instance.COLOR_TRANSPARENT);
             //}
             SetHoloArmMaterialColor(i, Persistent.instance.COLOR_TRANSPARENT, Persistent.instance.COLOR_TRANSPARENT);
-            modules[i].armObject.SetActive(false);
-            modules[i].holoObject.SetActive(false);
-            modules[i].gameObject.SetActive(false);
+            
         }
-        modules[currModuleIndex].armObject.SetActive(true);
-        modules[currModuleIndex].holoObject.SetActive(true);
-        modules[currModuleIndex].gameObject.SetActive(true);
+        
     }
 
     void HandStateChange(bool _isTriggered)
     {
-        if (!_isTriggered && IsModuleActivated())
-            modules[currModuleIndex].Stop(m_controller);
+        if (!_isTriggered)
+        {
+            if (isIndexTriggered)
+                modules[currModuleIndex].Stop(m_controller);
+            modules[currModuleIndex].Ungrip();
+        }
+        else
+        {
+            modules[currModuleIndex].Grip();
+        }
         isHandTriggered = follower.m_enabled = _isTriggered;
         mechHand.SetEnabled(_isTriggered);
         GUIManager.instance.EnableReticle(m_controller, _isTriggered);
+        
     }
 
     void IndexStateChange(bool _isTriggered)
@@ -250,7 +263,7 @@ public class PilotController : MonoBehaviour
             {
                 //VibrationManager.SetControllerVibration(m_controller, 16, 2, 100);
                 modules[currModuleIndex].Activate(m_controller);
-
+                print("derp");
             }
             else
             {

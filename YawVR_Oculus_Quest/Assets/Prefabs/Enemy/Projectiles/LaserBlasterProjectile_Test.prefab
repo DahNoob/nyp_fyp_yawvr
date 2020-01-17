@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 9208457272521591482}
   - component: {fileID: 5011876928398098949}
   - component: {fileID: -5853908847641165203}
-  m_Layer: 9
+  m_Layer: 15
   m_Name: LaserBlasterProjectile_Test
   m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}
@@ -259,11 +259,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 383a6bfa52e04ad499b39a6922d7e966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectileName: LaserBlasterProjectile
-  m_projectileSpeed: 19000
-  m_lifeTime: 1.5
-  m_projectileImpactEffect: {fileID: 7298378838209257786, guid: 28bcee94cdcd8ca47bd78c6064ba3f70,
-    type: 3}
+  m_projectileInfo: {fileID: 11400000, guid: 34a9cf639fdf4f444820b02bc5914273, type: 2}
+  m_rigidbody: {fileID: 9208457272521591482}
+  m_trailRenderer: {fileID: 9208457271817767987}
 --- !u!114 &-5853908847641165203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,4 +274,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4907c6dcfd5c2da4ba10537c01e60c9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectileName: 
+  m_rigidbody: {fileID: 9208457272521591482}
+  m_trailRenderer: {fileID: 9208457271817767987}
