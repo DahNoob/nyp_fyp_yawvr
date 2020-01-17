@@ -11,6 +11,9 @@ abstract public class MechGunWeapon : MechBaseWeapon
     protected Transform m_projectileOrigin;
     [SerializeField]
     protected float m_shootInterval = 0.1f;
+    [Range(0.0f, 5.0f)]
+    [SerializeField]
+    protected float m_shootDeviation = 1.0f;
     [SerializeField]
     protected GameObject m_muzzleFlash;
     [SerializeField]
@@ -118,8 +121,8 @@ abstract public class MechGunWeapon : MechBaseWeapon
     virtual protected void SpawnProjectile()
     {
         //BaseProjectile derp = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        BaseProjectile derp = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE, m_projectileOrigin.position, m_projectileOrigin.rotation).GetComponent<BaseProjectile>();
-        derp.Init(m_projectileOrigin);
+        BaseProjectile derp = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE, m_projectileOrigin.position, m_projectileOrigin.rotation * Quaternion.Euler(Random.Range(-m_shootDeviation, m_shootDeviation), Random.Range(-m_shootDeviation, m_shootDeviation), 0)).GetComponent<BaseProjectile>();
+        derp.Init();
     }
 
     //vibecheck dawg

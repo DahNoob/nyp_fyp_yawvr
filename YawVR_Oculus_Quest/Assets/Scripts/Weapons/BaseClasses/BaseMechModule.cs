@@ -24,8 +24,8 @@ abstract public class BaseMechModule : MonoBehaviour
     protected string m_moduleName;
     [SerializeField]
     protected Sprite m_moduleIcon;
-    [SerializeField]
-    protected float m_energyReduction = 10.0f;
+    //[SerializeField]
+    //protected float m_energyReduction = 10.0f;
 
     abstract public bool Activate(OVRInput.Controller _controller);    // To be called when the module is first used/pressed/activated/derp
     abstract public bool Hold(OVRInput.Controller _controller);        // To be called while the module is activated/in usage

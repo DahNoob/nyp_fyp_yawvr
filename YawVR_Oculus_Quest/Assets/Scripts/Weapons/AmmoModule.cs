@@ -11,20 +11,20 @@ public class AmmoModule
     [Header("Ammo Setup")]
     [SerializeField]
     private AmmoModuleInfo m_ammoInfo;
-    [SerializeField]
+    //[SerializeField]
     [Tooltip("The current ammo in the clip")]
     private int m_currentAmmo;
     //[SerializeField]
     //[Tooltip("How much ammo is in each clip?")]
     //private int m_maxAmmo = 1;
-    [SerializeField]
+    //[SerializeField]
     [Tooltip("How long does it take to reload?")]
     private float m_reloadTime = 0.5f;
     //Not sure if this is necessary
     //[SerializeField]
     //[Tooltip("Max amount of clips before the gun can't reload no more")]
     //private int m_maxClips;
-    [SerializeField]
+    //[SerializeField]
     [Tooltip("Current amount of clips that is in the range 0 - maxClips")]
     private int m_currentClips;
     //Reload timer that determines whether the reload has finished
@@ -34,9 +34,9 @@ public class AmmoModule
     public bool m_isReloading = false;
 
     [Header("Behaviour changes")]
-    [SerializeField]
+    //[SerializeField]
     private bool usesClips = true;
-    [SerializeField]
+   // [SerializeField]
     private bool usesAmmo = true;
 
     //Getter for reloadTime

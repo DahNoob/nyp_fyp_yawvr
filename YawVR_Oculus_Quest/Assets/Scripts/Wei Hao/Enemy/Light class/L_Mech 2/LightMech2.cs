@@ -96,6 +96,8 @@ public class LightMech2 : EnemyBase , IPooledObject
     {
         //Just gonna cheese it by calling start first
         Start();
+        SetIconColor(Color.white);
+        SetIconSprite();
     }
 
     public void OnObjectDestroy()

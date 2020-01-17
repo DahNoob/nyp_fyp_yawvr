@@ -58,7 +58,8 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         rb.angularVelocity = new Vector3(0f, 0f, 0f);
 
         Start();
-
+        SetIconColor(Color.white);
+        SetIconSprite();
     }
 
     public void OnObjectDestroy()

@@ -107,6 +107,8 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     {
         //Just gonna cheese it by calling start first
         Start();
+        SetIconColor(Color.white);
+        SetIconSprite();
         //Reset velocity
         rb.velocity = new Vector3(0f, 0f, 0f);
         rb.angularVelocity = new Vector3(0f, 0f, 0f);

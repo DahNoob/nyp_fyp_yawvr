@@ -8,4 +8,5 @@ public class EntityInfo : ScriptableObject
     [Header("Base Entity Info")]
     public int maxHealth = 100;
     public GameObject dieEffect;
+    public Sprite defaultIcon;
 }

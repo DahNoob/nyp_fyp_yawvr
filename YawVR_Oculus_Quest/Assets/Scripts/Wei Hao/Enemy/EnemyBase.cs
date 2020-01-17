@@ -38,6 +38,8 @@ abstract public class EnemyBase : BaseEntity
     protected GameObject m_dieEffect;
     [SerializeField]
     protected Transform m_bodyTransform;
+    [SerializeField]
+    protected SpriteRenderer m_minimapIcon;
 
     public Transform m_target {
         get {
@@ -141,6 +143,15 @@ abstract public class EnemyBase : BaseEntity
     public int GetMaxHealth()
     {
         return (int)(m_enemyInfo.maxHealth * maxHealthMultiplier);
+    }
+
+    public void SetIconSprite(Sprite _newSprite = null)
+    {
+        m_minimapIcon.sprite = _newSprite ?? m_enemyInfo.defaultIcon;
+    }
+    public void SetIconColor(Color _color)
+    {
+        m_minimapIcon.color = _color;
     }
 
     public void SetHealth(int new_HP)

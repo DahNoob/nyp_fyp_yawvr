@@ -36,12 +36,12 @@ public class Game : MonoBehaviour
     private GameObject[] m_rightArmModules;
     [SerializeField]
     private GameObject[] m_leftArmModules;
+
     [Header("Prefabs")]
     [SerializeField]
     private PoolObjectsInfo[] m_enemies;
     [SerializeField]
     private GameObject[] m_structures;
-  
 
     [Header("Game Variables")]
     [SerializeField]
@@ -49,8 +49,14 @@ public class Game : MonoBehaviour
     [SerializeField]
     public ObjectiveInfo[] m_objectives;
 
+    [Header("Game Configuration")]
+    [SerializeField]
+    private Color m_bountyHuntEnemyColor;
+    [SerializeField]
+    private GameObject m_bountyHuntObjectivePrefab;
+
     //Local variables
-    private int currentObjectiveIndex = -1;
+    public int currentObjectiveIndex { private set; get; } = -1;
 
     void Awake()
     {
@@ -120,11 +126,10 @@ public class Game : MonoBehaviour
             if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
                 //Debug.Log(m_enemies[2].nameInPool);
-               // EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
-                EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, objectivePos, Quaternion.identity).GetComponent<EnemyBase>();
-                enemy.onEntityDie += Enemy_onEntityDie;
+                // EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                GameObject marker = Instantiate(m_bountyHuntObjectivePrefab, objectivePos, Quaternion.identity, Persistent.instance.GO_STATIC.transform);
                 m_objectivesLeft++;
-                m_objectives[i].m_highlight = enemy.transform;
+                m_objectives[i].m_highlight = marker.transform;
                 print("Objective deployed : Bounty Hunt @ " + objIndex);
             }
             else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
@@ -164,6 +169,21 @@ public class Game : MonoBehaviour
                 if(CustomUtility.IsHitRadius(m_objectives[i].m_highlight.position, PlayerHandler.instance.transform.position, 50.0f))
                 {
                     currentObjectiveIndex = i;
+                    if(m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
+                    {
+                        //should make it pick a random enemy but even more buffed up, and randomise wher it spawns???????? idk
+                        EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, m_objectives[i].m_highlight.position, Quaternion.identity).GetComponent<EnemyBase>();
+                        Destroy(m_objectives[i].m_highlight.gameObject);
+                        m_objectives[i].m_highlight = enemy.transform;
+                        //SpriteRenderer enemyMarker = enemy.GetComponentInChildren<SpriteRenderer>();
+                        //if (enemyMarker)
+                        //{   
+                        //    enemyMarker.sprite = Persistent.instance.MINIMAP_ICON_OBJECTIVE;
+                        //    enemyMarker.color = m_bountyHuntEnemyColor;
+                        //}
+                        enemy.SetIconColor(m_bountyHuntEnemyColor);
+                        enemy.SetIconSprite(Persistent.instance.MINIMAP_ICON_OBJECTIVE);
+                    }
                     print("Current Objective started! : " + i);
                     break;
                 }

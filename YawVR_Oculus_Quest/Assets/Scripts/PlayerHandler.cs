@@ -102,6 +102,9 @@ public class PlayerHandler : BaseEntity
     [SerializeField]
     private float m_armorRegenDelay = 3.0f;
 
+    [Header("Debugs")]
+    public bool overrideControllers = false;
+
     //Local variables
     private Vector3 origPos;
     private Quaternion origRot;
@@ -189,7 +192,7 @@ public class PlayerHandler : BaseEntity
             {
                 walkHapticReady = true;
             }
-            m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * m_camSwayIntensity, sin * m_camSwayIntensity, 0), walkMultiplier);
+            m_cameraOffset = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Mathf.Cos(time_mult) * m_camSwayIntensity * 0.25f, sin * m_camSwayIntensity, 0), walkMultiplier);
             m_mechLegs.SetFloat("Blend", walkMultiplier);
         }
 #if UNITY_EDITOR

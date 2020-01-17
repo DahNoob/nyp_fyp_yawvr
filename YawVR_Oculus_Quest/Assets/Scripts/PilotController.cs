@@ -46,17 +46,16 @@ public class PilotController : MonoBehaviour
     Transform m_holos;
     [SerializeField]
     Canvas m_armModulesCanvas;
+    [SerializeField]
+    ControllerFollower m_follower;
+    [SerializeField]
+    MechHandHandler m_mechHand;
 
     [Header("Offsets")]
     [SerializeField]
     Transform m_pivotOffset;
     [SerializeField]
     Transform m_ringOffset;
-
-    //Local variables
-    private ControllerFollower follower;
-    [SerializeField]
-    private MechHandHandler mechHand;
 
     private bool isAttached = false, isHandTriggered = false, isIndexTriggered = false;
     private List<MechBaseWeapon> modules = new List<MechBaseWeapon>();
@@ -74,8 +73,6 @@ public class PilotController : MonoBehaviour
     void Start()
     {
         //ARM_MINSPEED = m_armFollower.m_followSpeed;
-        follower = m_controller == OVRInput.Controller.RTouch ? PlayerHandler.instance.GetRightFollower() : PlayerHandler.instance.GetLeftFollower();
-        mechHand = m_controller == OVRInput.Controller.RTouch ? PlayerHandler.instance.GetRightMechHand() : PlayerHandler.instance.GetLeftMechHand();
         Attach();
         print("PilotController " + (m_controller == OVRInput.Controller.LTouch ? "L" : "R") + " started!");
     }
@@ -84,6 +81,21 @@ public class PilotController : MonoBehaviour
         if (!isAttached)
             return;
 
+#if UNITY_EDITOR
+        if(!PlayerHandler.instance.overrideControllers)
+        {
+            if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
+            (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
+            {
+                HandStateChange(!isHandTriggered);
+            }
+            if ((isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < m_indexTriggerEnd) ||
+                (!isIndexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > m_indexTriggerBegin))
+            {
+                IndexStateChange(!isIndexTriggered);
+            }
+        }
+#else
         if ((isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) < m_handTriggerEnd) ||
             (!isHandTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller) > m_handTriggerBegin))
         {
@@ -94,6 +106,7 @@ public class PilotController : MonoBehaviour
         {
             IndexStateChange(!isIndexTriggered);
         }
+#endif
 
         if (OVRInput.GetDown(OVRInput.Button.One, m_controller))
         {
@@ -158,11 +171,11 @@ public class PilotController : MonoBehaviour
                 holoArm.transform.localPosition = Vector3.zero;
                 holoArm.transform.localRotation = Quaternion.identity;
                 GameObject armObject = armModuleAgain.armObject;
-                armObject.transform.SetParent(mechHand.weaponsTransform);
+                armObject.transform.SetParent(m_mechHand.weaponsTransform);
                 armObject.transform.localPosition = Vector3.zero;
                 armObject.transform.localRotation = Quaternion.identity;
-                armModuleAgain.follower = follower;
-                armModuleAgain.mechHand = mechHand;
+                armModuleAgain.follower = m_follower;
+                armModuleAgain.mechHand = m_mechHand;
             }
             else
             {
@@ -248,8 +261,8 @@ public class PilotController : MonoBehaviour
         {
             modules[currModuleIndex].Grip();
         }
-        isHandTriggered = follower.m_enabled = _isTriggered;
-        mechHand.SetEnabled(_isTriggered);
+        isHandTriggered = m_follower.m_enabled = _isTriggered;
+        m_mechHand.SetEnabled(_isTriggered);
         GUIManager.instance.EnableReticle(m_controller, _isTriggered);
         
     }
