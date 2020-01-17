@@ -222,9 +222,9 @@ public class PlayerHandler : BaseEntity
         leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(finalCamOffset);
     }
 
-    public GameObject GetNearestObjective()
-    {
-    }
+    //public GameObject GetNearestObjective()
+    //{
+    //}
 
     public void ResetPose()
     {
