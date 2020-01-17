@@ -985,6 +985,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2200504067988808369, guid: d72faaec1037cf84ca5a38d7f91834f8,
+        type: 3}
+      propertyPath: enableVisualizations
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
         type: 3}
       propertyPath: poolList.Array.size
@@ -993,12 +998,12 @@ PrefabInstance:
     - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
         type: 3}
       propertyPath: poolList.Array.data[7].amountToPool
-      value: 0
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
         type: 3}
       propertyPath: poolList.Array.data[7].amountToExpand
-      value: 5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
         type: 3}
@@ -1010,10 +1015,46 @@ PrefabInstance:
       propertyPath: poolList.Array.data[4].amountToExpand
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 2200504067988808369, guid: d72faaec1037cf84ca5a38d7f91834f8,
+    - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
         type: 3}
-      propertyPath: enableVisualizations
-      value: 0
+      propertyPath: poolList.Array.data[7].poolName
+      value: TestProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
+        type: 3}
+      propertyPath: poolList.Array.data[7].poolType
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
+        type: 3}
+      propertyPath: poolList.Array.data[7].objToPool
+      value: 
+      objectReference: {fileID: 9208457272521591478, guid: 0ce1f5d38ec724f4ea0fd0c6a5daa561,
+        type: 3}
+    - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
+        type: 3}
+      propertyPath: poolList.Array.data[0].amountToExpand
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
+        type: 3}
+      propertyPath: poolList.Array.data[0].amountToPool
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
+        type: 3}
+      propertyPath: poolList.Array.data[2].amountToPool
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
+        type: 3}
+      propertyPath: poolList.Array.data[1].amountToPool
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475436874599946965, guid: d72faaec1037cf84ca5a38d7f91834f8,
+        type: 3}
+      propertyPath: poolList.Array.data[3].amountToPool
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d72faaec1037cf84ca5a38d7f91834f8, type: 3}
@@ -1449,6 +1490,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enemies.Array.data[2].poolType
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 277399139671185919, guid: 55918678b82f09947be0fcf0f3795567,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 99768483, guid: 55918678b82f09947be0fcf0f3795567, type: 3}
       propertyPath: m_RenderShadows

@@ -14,7 +14,7 @@ public class PoolObject
     //Amount to pool
     public int amountToPool;
     //How much to increase it by each time
-    [Range(1, 5)]
+    [Range(1, 15)]
     public int amountToExpand = 1;
 
     //Hierachy stuff
@@ -46,8 +46,6 @@ public class PoolObject
         amountActiveInPool = 0;
     }
 }
-
-
 
 public class ObjectPooler : MonoBehaviour
 {
@@ -112,7 +110,6 @@ public class ObjectPooler : MonoBehaviour
         PoolObject currentData = pooledObjectData[tag];
         if (currentData.amountActiveInPool < currentQueue.Count)
         {
-            print("spawning");
             GameObject resultObject = currentQueue.Dequeue();
 
             resultObject.transform.position = position;
@@ -130,23 +127,27 @@ public class ObjectPooler : MonoBehaviour
             return resultObject;
         }
 
-        print("Expanding by "+ currentData.amountToExpand);
+
         //Else we instantiate more and add poggers
         //Gonna add more badboys in
-        GameObject newestObject = null;
-        for (int i = 0; i < currentData.amountToExpand; ++i)
+        Queue<GameObject> currentQueueCopy = new Queue<GameObject>(currentQueue);
+
+        //Clear current Queue
+        currentQueue.Clear();
+
+        for (int i = 0; i < currentData.amountToExpand; i++)
         {
             GameObject newObject = Instantiate(currentData.objToPool, currentData.parentInHierachy.transform);
             newObject.SetActive(false);
-            if (i == 0)
-            {
-                print("set");
-                newestObject = newObject;
-            }
             currentQueue.Enqueue(newObject);
         }
 
-        //GameObject newResultObject = currentQueue.Dequeue();
+        while (currentQueueCopy.Count > 0)
+        {
+            currentQueue.Enqueue(currentQueueCopy.Dequeue());
+        }
+
+        GameObject newestObject = currentQueue.Dequeue();
 
         newestObject.transform.position = position;
         newestObject.transform.rotation = rotation;
@@ -155,8 +156,8 @@ public class ObjectPooler : MonoBehaviour
         newestObject.SetActive(true);
 
         currentData.amountActiveInPool++;
-        //Put back into list to keep using
-       // currentQueue.Enqueue(newestObject);
+
+        currentQueue.Enqueue(newestObject);
 
         return newestObject;
 
@@ -219,7 +220,7 @@ public class ObjectPooler : MonoBehaviour
         return true;
     }
 
-    public bool AddAnotherPool(PoolObject.OBJECTTYPES type , GameObject objectToPool, int amountToPool, int amountToExpand, bool overWrite = false)
+    public bool AddAnotherPool(PoolObject.OBJECTTYPES type, GameObject objectToPool, int amountToPool, int amountToExpand, bool overWrite = false)
     {
         PoolObject resultObject = new PoolObject(type, objectToPool, amountToPool, amountToPool);
         return AddAnotherPool(resultObject, overWrite);
@@ -246,7 +247,6 @@ public class ObjectPooler : MonoBehaviour
             count++;
 
         } while (count < totalCount);
-
 
 
 
