@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using OVR;
 
 /******************************  
@@ -60,7 +61,9 @@ public class PlayerHandler : BaseEntity
 
     [Header("UIs")]
     [SerializeField]
-    private UnityEngine.UI.Slider m_energySlider;
+    private Slider m_healthBar;
+    [SerializeField]
+    private Slider m_armorBar;
     [SerializeField]
     private UnityEngine.UI.Image m_vignette;
 
@@ -72,7 +75,7 @@ public class PlayerHandler : BaseEntity
     [ColorUsage(true, true)]
     private Color m_armRimColor;
     [SerializeField]
-    private float m_maxEnergy = 100.0f;
+    private int m_maxHealth = 100;
     [SerializeField]
     private float m_energyRegenRate = 8.0f;
     [SerializeField]
@@ -100,7 +103,6 @@ public class PlayerHandler : BaseEntity
     private float m_armorRegenDelay = 3.0f;
 
     //Local variables
-    private float armor;
     private Vector3 origPos;
     private Quaternion origRot;
     private bool isResettingPose = false;
@@ -113,14 +115,23 @@ public class PlayerHandler : BaseEntity
     private float armorRegenElapsed = 0;
 
     //Hidden variables
-    private float _energy;
+    private float _health, _armor;
 
     //Getters/Setters
-    public float currEnergy {
-        get { return _energy; }
+    public new float health {
+        get { return _health; }
         private set
         {
-            _energy = Mathf.Clamp(value, 0.0f, m_maxEnergy);
+            _health = Mathf.Clamp(value, 0.0f, m_maxHealth);
+            m_healthBar.value = _health;
+        }
+    }
+    public float armor {
+        get { return _armor; }
+        private set
+        {
+            _armor = Mathf.Clamp(value, 0.0f, m_maxArmor);
+            m_armorBar.value = _armor;
         }
     }
 
@@ -136,10 +147,11 @@ public class PlayerHandler : BaseEntity
         m_vignette.color = Persistent.instance.COLOR_TRANSPARENT;
         m_camScreenFade.FadeIn();
         armor = m_maxArmor;
+        health = m_maxHealth;
         origPos = transform.position;
         origRot = transform.rotation;
-        currEnergy = m_maxEnergy;
-        m_energySlider.maxValue = m_maxEnergy;
+        m_healthBar.maxValue = m_maxHealth;
+        m_armorBar.maxValue = m_maxArmor;
         rightHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
         leftHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
         print("PlayerHandler started!");
@@ -149,15 +161,12 @@ public class PlayerHandler : BaseEntity
     {
         if (transform.position.y < m_fallThreshold)
             ResetPose();
-        if (!(m_leftController.IsModuleActivated() || m_rightController.IsModuleActivated()))
-            currEnergy += m_energyRegenRate * Time.deltaTime;
         shakeElapsed -= Time.deltaTime;
         armorRegenElapsed += Time.deltaTime;
         if (armorRegenElapsed > m_armorRegenDelay)
         {
             armor = Mathf.Min(m_maxArmor, armor + m_armorRegenRate * Time.deltaTime);
         }
-        m_energySlider.value = currEnergy;
         if (state == STATE.IDLE)
         {
             m_cameraOffset = Vector3.zero;
@@ -207,14 +216,14 @@ public class PlayerHandler : BaseEntity
         //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }
 
-    public bool DecreaseEnergy(float _decrement)
+    private void LateUpdate()
     {
-        if (currEnergy - _decrement > 0)
-        {
-            currEnergy -= _decrement;
-            return true;
-        }
-        return false;
+        rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(finalCamOffset);
+        leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(finalCamOffset);
+    }
+
+    public GameObject GetNearestObjective()
+    {
     }
 
     public void ResetPose()
@@ -288,7 +297,7 @@ public class PlayerHandler : BaseEntity
     {
         if (armor > 0)
         {
-            armor = Mathf.Max(0, armor - damage);
+            armor = armor - damage;
             m_vignette.color = Color.cyan;
         }
         else
@@ -301,12 +310,14 @@ public class PlayerHandler : BaseEntity
         Shake(intensity);
         VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.08f, intensity);
         VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.08f, intensity);
-        if (health <= 0)
+        if (health == 0)
             Die();
     }
 
     public override void Die()
     {
+        health = m_maxHealth;
         InvokeDie();
+        ResetPose();
     }
 }
