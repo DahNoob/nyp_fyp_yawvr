@@ -221,6 +221,10 @@ public class PilotController : MonoBehaviour
             currModuleIndex = modules.Count - 1; //very shitty way of doin it rn but wuteva
         modules[prevModuleIndex].Unselected();
         modules[currModuleIndex].Selected();
+
+        //Update information in the weaponsUI
+        modules[currModuleIndex].UpdateUI();
+
         if(isHandTriggered)
         {
             modules[prevModuleIndex].Ungrip();

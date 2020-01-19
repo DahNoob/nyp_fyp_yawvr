@@ -82,6 +82,9 @@ abstract public class MechBaseWeapon : BaseMechModule
         return true;
     }
 
+    //Update UI
+    abstract public bool UpdateUI();
+
     public OVRInput.Controller GetController()
     {
         return m_controller;

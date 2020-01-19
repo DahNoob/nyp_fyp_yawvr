@@ -27,12 +27,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
     [SerializeField]
     protected Vector3 m_recoilRotation = new Vector3(-2, 0, 0);
 
-
-    [Header("UI Configuration")]
-    //Current weapon ammo
-    [SerializeField]
-    protected UnityEngine.UI.Text weaponAmmoText;
-
     [Header("Ammo Configuration")]
     [SerializeField]
     protected AmmoModule ammoModule;
@@ -46,9 +40,13 @@ abstract public class MechGunWeapon : MechBaseWeapon
             throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
         //Set the fill amount to be the normalized value of the ammo left
         ammoModule.Init();
-        weaponAmmoText.text = ammoModule.currentAmmo.ToString();
         ammoModule.onFinishReload += _AmmoModule_onFinishReload;
         shootTick = m_shootInterval;
+
+        GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo);
+
+        //Update ammo in GUI first
+        //GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
     }
 
 
@@ -57,6 +55,9 @@ abstract public class MechGunWeapon : MechBaseWeapon
         forceFade = false;
         if (isSelected)
             FadeIn();
+
+        //Update the UI again with the new ammo
+        GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
     }
 
     override public bool Selected()
@@ -70,6 +71,13 @@ abstract public class MechGunWeapon : MechBaseWeapon
     override public bool Grip()
     {
         m_laserPointer.gameObject.SetActive(true);
+        return true;
+    }
+
+    //Update UI
+    public override bool UpdateUI()
+    {
+        GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo);
         return true;
     }
 
@@ -93,15 +101,27 @@ abstract public class MechGunWeapon : MechBaseWeapon
                     m_shootAudioSource.Play();
                     //Triggered
                     GUIManager.instance.Triggered(_controller);
+
+
                     return true;
                 }
             }
         }
 
+        //If after shot and needs to reload
         if (ammoModule.NeedReload())
+        {
+            //Call reloading function...
             Reload();
-
+            GUIManager.instance.SetWeaponInfoReloading(m_controller);
+        }
+        else
+        {
+            if (ammoModule.m_isReloading == false)
+                GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
+        }
         return false;
+
     }
 
     override public bool Ungrip()
@@ -149,7 +169,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
     {
         shootTick += Time.deltaTime;
 
-        //Set the current ammo count
-        weaponAmmoText.text =ammoModule.m_isReloading ? "Reloading..." : ammoModule.currentAmmo.ToString();
+
     }
 }

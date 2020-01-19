@@ -54,6 +54,12 @@ public class NormalArmWeapon : MechBaseWeapon
         return true;
     }
 
+    public override bool UpdateUI()
+    {
+        GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, 0, 0);
+        return true;
+    }
+
     public override bool Activate(OVRInput.Controller _controller)
     {
         //m_activateHolos.SetActive(true);
@@ -68,7 +74,7 @@ public class NormalArmWeapon : MechBaseWeapon
     {
         //m_handAnimator.SetFloat("Blend", OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller));
         float followerCurrentSpeed = follower.CalculateFollowerSpeed();
-        if(!isPunching && followerCurrentSpeed > m_punchSpeedEnter)
+        if (!isPunching && followerCurrentSpeed > m_punchSpeedEnter)
         {
             isPunching = true;
             //m_punchingParticles.Play();

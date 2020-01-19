@@ -46,6 +46,11 @@ public class GUIManager : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Text m_projectileText2;
 
+    [Header("Weapon Info Resources")]
+    [SerializeField]
+    private GUIWeaponInfo m_weaponInfo;
+
+
     //Local variables
     int frameCount = 0;
     float dt = 0.0f;
@@ -123,7 +128,7 @@ public class GUIManager : MonoBehaviour
         //        objectiveArrow[i].Translate(0, Mathf.Min(0.14f, displacement.sqrMagnitude * 0.00005f), 0);
         //    }
         //}
-        if(m_objectiveArrow.gameObject.activeInHierarchy)
+        if (m_objectiveArrow.gameObject.activeInHierarchy)
         {
             if (objectiveTarget == null)
                 m_objectiveArrow.gameObject.SetActive(false);
@@ -195,6 +200,9 @@ public class GUIManager : MonoBehaviour
         //}
     }
 
+
+    #region Reticles
+
     public void SetReticleInformation(OVRInput.Controller _controller, Vector3 hitPoint, GameObject hitObject, bool useTag = true)
     {
         //Set the reticle position based on raycasted position
@@ -264,7 +272,7 @@ public class GUIManager : MonoBehaviour
 
     //Scaling the reticle to make its same size no matter what
     public void ScaleReticle(OVRInput.Controller _controller)
-    {      
+    {
         //Get config I suppose.
         GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
 
@@ -289,5 +297,62 @@ public class GUIManager : MonoBehaviour
         GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
         reticleConfig.reticleReference.SetActive(enabled);
     }
+
+
+    #endregion
+
+
+    #region WeaponPanelUpdates
+    public void SetWeaponInfo(OVRInput.Controller _controller,
+        Sprite m_weaponSprite,
+        string m_weaponName,
+        float m_currWeaponAmmo,
+        float m_maxWeaponAmmo)
+    {
+        GUIWeaponInfoConfig weaponInfo = _controller == OVRInput.Controller.RTouch ? m_weaponInfo.rightWeaponInfo : m_weaponInfo.leftWeaponInfo;
+
+        if (m_weaponSprite != null)
+            weaponInfo.weaponSprite.sprite = m_weaponSprite;
+
+        weaponInfo.weaponNameText.text = m_weaponName;
+        //Format the string
+        weaponInfo.weaponAmmoText.text = m_currWeaponAmmo.ToString() + "/" + m_maxWeaponAmmo.ToString();
+    }
+    
+    public void ReloadGunUI(OVRInput.Controller _controller)
+    {
+        GUIWeaponInfoConfig weaponInfo = _controller == OVRInput.Controller.RTouch ? m_weaponInfo.rightWeaponInfo : m_weaponInfo.leftWeaponInfo;
+
+
+    }
+
+    public void SetWeaponInfoAmmo(OVRInput.Controller _controller, float m_currAmmo, float m_maxAmmo)
+    {
+        GUIWeaponInfoConfig weaponInfo = _controller == OVRInput.Controller.RTouch ? m_weaponInfo.rightWeaponInfo : m_weaponInfo.leftWeaponInfo;
+        //Format the string
+        weaponInfo.weaponAmmoText.fontSize = 18;
+        weaponInfo.weaponAmmoText.text = m_currAmmo.ToString() + "/" + m_maxAmmo.ToString();
+    }
+
+    public void SetWeaponInfoReloading(OVRInput.Controller _controller)
+    {
+        GUIWeaponInfoConfig weaponInfo = _controller == OVRInput.Controller.RTouch ? m_weaponInfo.rightWeaponInfo : m_weaponInfo.leftWeaponInfo;
+        weaponInfo.weaponAmmoText.fontSize = 13;
+        StartCoroutine(StartReloadingTextAnimation(weaponInfo));
+    }
+
+    //Going to cheese it by adding two coroutines
+    IEnumerator StartReloadingTextAnimation(GUIWeaponInfoConfig weaponInfo)
+    {
+        weaponInfo.weaponAmmoText.text = "";
+        foreach(char letter in "Reloading...")
+        {
+            weaponInfo.weaponAmmoText.text += letter;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
+
+    #endregion
 
 }
