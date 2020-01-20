@@ -6,6 +6,7 @@ using UnityEngine;
 public class DestructibleInfo : EntityInfo
 {
     [Header("Base Destructible Info")]
+    public int additionalHealth = 20;
     [Range(0.0f,10.0f)]
     public float scaleVariancyMin;
     [Range(0.0f, 10.0f)]

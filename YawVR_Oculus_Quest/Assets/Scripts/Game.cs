@@ -54,6 +54,8 @@ public class Game : MonoBehaviour
     private Color m_bountyHuntEnemyColor;
     [SerializeField]
     private GameObject m_bountyHuntObjectivePrefab;
+    [SerializeField]
+    private GameObject m_environmentParticles;
 
     //Local variables
     public int currentObjectiveIndex { private set; get; } = -1;
@@ -71,6 +73,7 @@ public class Game : MonoBehaviour
         ApplyMechLoadouts();
         ApplyObjectives();
         StartCoroutine(checkObjectives());
+        StartCoroutine(setEnvironmentParticlePosition());
         print("Game started!");
     }
 
@@ -188,6 +191,15 @@ public class Game : MonoBehaviour
                     break;
                 }
             }
+        }
+    }
+
+    IEnumerator setEnvironmentParticlePosition()
+    {
+        while (isActiveAndEnabled)
+        {
+            yield return new WaitForSeconds(3);
+            m_environmentParticles.transform.position = PlayerHandler.instance.transform.position;
         }
     }
 }
