@@ -105,7 +105,7 @@ public class Game : MonoBehaviour
             {
                 //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
                 EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
-                derp.m_target = currObj.m_highlight;
+                derp.m_target = Random.Range(0,100) > 50 ? currObj.m_highlight : PlayerHandler.instance.transform;
             }
         }
     }

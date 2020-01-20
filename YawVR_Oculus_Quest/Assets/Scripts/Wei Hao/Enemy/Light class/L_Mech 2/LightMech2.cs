@@ -73,6 +73,12 @@ public class LightMech2 : EnemyBase , IPooledObject
     [SerializeField]
     private _Rarity rarity;
 
+    [Header("Roll Particle Systems")]
+    [SerializeField]
+    private ParticleSystem m_dustEffect;
+    [SerializeField]
+    private ParticleSystem m_swirlEffect;
+
     [Header("Death Particle Effect")]
     [SerializeField]
     public GameObject explosionPrefab;
@@ -290,6 +296,20 @@ public class LightMech2 : EnemyBase , IPooledObject
         var selectedBuff = buffs[index];
         buffs.RemoveAt(index);
         return selectedBuff;
+    }
+
+    public void SetRollingEffect(bool _isActive)
+    {
+        if(_isActive)
+        {
+            m_dustEffect.Play();
+            m_swirlEffect.Play();
+        }
+        else
+        {
+            m_dustEffect.Stop();
+            m_swirlEffect.Stop();
+        }
     }
 
     void OnTriggerEnter(Collider collision)
