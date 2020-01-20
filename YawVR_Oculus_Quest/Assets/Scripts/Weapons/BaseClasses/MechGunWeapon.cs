@@ -83,14 +83,21 @@ abstract public class MechGunWeapon : MechBaseWeapon
 
     public override bool Hold(OVRInput.Controller _controller)
     {
+        //If after shot and needs to reload
+        if (ammoModule.NeedReload())
+        {
+            //Call reloading function...
+            Reload();
+            GUIManager.instance.SetWeaponInfoReloading(m_controller);
+        }
         //If the ammo module is not reloading?
         if (!ammoModule.m_isReloading && isFullyVisible)
         {
             if (shootTick > m_shootInterval)
             {
                 shootTick = 0;
-                //if (PlayerHandler.instance.DecreaseEnergy(m_energyReduction))
-                //{
+
+                //If can decrease ammo, then shoot
                 if (ammoModule.DecreaseAmmo(1))
                 {
                     SpawnProjectile();
@@ -101,25 +108,13 @@ abstract public class MechGunWeapon : MechBaseWeapon
                     m_shootAudioSource.Play();
                     //Triggered
                     GUIManager.instance.Triggered(_controller);
-
-
+                    //Set weapon info ammo
+                    GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
                     return true;
                 }
             }
         }
 
-        //If after shot and needs to reload
-        if (ammoModule.NeedReload())
-        {
-            //Call reloading function...
-            Reload();
-            GUIManager.instance.SetWeaponInfoReloading(m_controller);
-        }
-        else
-        {
-            if (ammoModule.m_isReloading == false)
-                GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
-        }
         return false;
 
     }
