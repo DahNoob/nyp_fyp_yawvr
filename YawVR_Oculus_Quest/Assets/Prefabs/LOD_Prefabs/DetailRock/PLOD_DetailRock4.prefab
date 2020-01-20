@@ -39,7 +39,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322157804945148327}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
   m_Name: 
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 9212557683992345895}
   - component: {fileID: 8977008361107257776}
   - component: {fileID: 8876321381868018470}
-  - component: {fileID: 8322838498980134622}
+  - component: {fileID: 1467512461016699638}
   m_Layer: 13
   m_Name: DetailRock4_LOD0
   m_TagString: Untagged
@@ -206,8 +206,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8322838498980134622
-BoxCollider:
+--- !u!64 &1467512461016699638
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -216,9 +216,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.513235, y: 0.365122, z: 0.66485375}
-  m_Center: {x: -0.0047179908, y: 0.006901756, z: 0.00707373}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -1638101362006599501, guid: 76799e357bcaf5f45857e115c70bf074, type: 3}
 --- !u!1 &4224463959263761472
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +231,7 @@ GameObject:
   - component: {fileID: 4027499668552286656}
   - component: {fileID: 1700943688541363193}
   - component: {fileID: 5246072044763068313}
-  - component: {fileID: 5413974365541978348}
+  - component: {fileID: 3640561489565204141}
   m_Layer: 13
   m_Name: DetailRock4_LOD1
   m_TagString: Untagged
@@ -297,8 +298,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &5413974365541978348
-BoxCollider:
+--- !u!64 &3640561489565204141
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -307,9 +308,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5292078, y: 0.3641482, z: 0.6626396}
-  m_Center: {x: -0.010905862, y: 0.0064148605, z: 0.01283963}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 8819288993469679182, guid: 76799e357bcaf5f45857e115c70bf074, type: 3}
 --- !u!1 &7464823028713217475
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +323,7 @@ GameObject:
   - component: {fileID: 6545436498300161432}
   - component: {fileID: 1128487446093784431}
   - component: {fileID: 194401476969980642}
-  - component: {fileID: 4001762487490397414}
+  - component: {fileID: 8281899839583545515}
   m_Layer: 13
   m_Name: DetailRock4_LOD2
   m_TagString: Untagged
@@ -388,8 +390,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4001762487490397414
-BoxCollider:
+--- !u!64 &8281899839583545515
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -398,9 +400,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.53706515, y: 0.364954, z: 0.72852427}
-  m_Center: {x: -0.009815589, y: 0.01695583, z: -0.019022435}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 3451920876365300413, guid: 76799e357bcaf5f45857e115c70bf074, type: 3}
 --- !u!1 &7510025877404732489
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +415,7 @@ GameObject:
   - component: {fileID: 7604285233646756209}
   - component: {fileID: 4852559915589530681}
   - component: {fileID: 4783486983966456127}
-  - component: {fileID: 8055344757341543493}
+  - component: {fileID: 5719381797365311841}
   m_Layer: 13
   m_Name: DetailRock4_LOD3
   m_TagString: Untagged
@@ -479,8 +482,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8055344757341543493
-BoxCollider:
+--- !u!64 &5719381797365311841
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -489,6 +492,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5799805, y: 0.3920688, z: 0.72852427}
-  m_Center: {x: 0.011642069, y: 0.030513242, z: -0.019022435}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 2232304139805188909, guid: 76799e357bcaf5f45857e115c70bf074, type: 3}

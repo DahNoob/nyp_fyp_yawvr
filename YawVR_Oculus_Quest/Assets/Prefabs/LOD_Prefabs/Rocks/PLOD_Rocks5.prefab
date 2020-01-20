@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 721446401218722264}
   - component: {fileID: 6548038105413238678}
   - component: {fileID: 3763060193493636494}
-  - component: {fileID: 5293085355985711193}
+  - component: {fileID: 8626937867689708279}
   m_Layer: 13
   m_Name: Rocks5_LOD0
   m_TagString: Untagged
@@ -78,8 +78,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &5293085355985711193
-BoxCollider:
+--- !u!64 &8626937867689708279
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -88,9 +88,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.6042454, y: 2.8008554, z: 4.474184}
-  m_Center: {x: 0.21722806, y: -0.010242462, z: -0.06001687}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 39638274731280376, guid: 7c48f58cb8422ef4b9553cef0c9cfb34, type: 3}
 --- !u!1 &246542136327234981
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +182,7 @@ GameObject:
   - component: {fileID: 8035768667635878442}
   - component: {fileID: 907877636563406979}
   - component: {fileID: 4670897615206483650}
-  - component: {fileID: 6645597049987473653}
+  - component: {fileID: 4183540274080123038}
   m_Layer: 13
   m_Name: Rocks5_LOD1
   m_TagString: Untagged
@@ -248,8 +249,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6645597049987473653
-BoxCollider:
+--- !u!64 &4183540274080123038
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -258,9 +259,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.6205657, y: 2.8991556, z: 4.5097146}
-  m_Center: {x: 0.22538817, y: 0.01316458, z: -0.042251587}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 6139690630746960787, guid: 7c48f58cb8422ef4b9553cef0c9cfb34, type: 3}
 --- !u!1 &1932488222983547085
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +302,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932488222983547085}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
   m_Name: 
@@ -321,7 +323,7 @@ GameObject:
   - component: {fileID: 1790352604350549902}
   - component: {fileID: 1978041133316450854}
   - component: {fileID: 7424130175501970600}
-  - component: {fileID: 8408092340091025799}
+  - component: {fileID: 9025235254946211435}
   m_Layer: 13
   m_Name: Rocks5_LOD3
   m_TagString: Untagged
@@ -388,8 +390,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8408092340091025799
-BoxCollider:
+--- !u!64 &9025235254946211435
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -398,9 +400,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.0561495, y: 2.992209, z: 5.524709}
-  m_Center: {x: 0.46874177, y: 0.011988044, z: -0.34015012}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 3207290974469201030, guid: 7c48f58cb8422ef4b9553cef0c9cfb34, type: 3}
 --- !u!1 &7812319240511142307
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,7 +415,7 @@ GameObject:
   - component: {fileID: 3537716711783653508}
   - component: {fileID: 951666419783954129}
   - component: {fileID: 630629954209256891}
-  - component: {fileID: 8354368756532577089}
+  - component: {fileID: 1364476046646058323}
   m_Layer: 13
   m_Name: Rocks5_LOD2
   m_TagString: Untagged
@@ -479,8 +482,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8354368756532577089
-BoxCollider:
+--- !u!64 &1364476046646058323
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -489,6 +492,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.6469162, y: 2.7049003, z: 4.9629755}
-  m_Center: {x: 0.26412523, y: -0.07523686, z: -0.1267569}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 5078690955803759009, guid: 7c48f58cb8422ef4b9553cef0c9cfb34, type: 3}

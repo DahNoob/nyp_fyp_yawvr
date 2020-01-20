@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 7707218846658487586}
   - component: {fileID: 7892629316292084343}
   - component: {fileID: 6488325070812243756}
-  - component: {fileID: 3769050055816842487}
+  - component: {fileID: 7172625033987670891}
   m_Layer: 13
   m_Name: TinyRocks3_LOD1
   m_TagString: Untagged
@@ -157,8 +157,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &3769050055816842487
-BoxCollider:
+--- !u!64 &7172625033987670891
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -167,9 +167,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5271549, y: 0.3485161, z: 0.6047647}
-  m_Center: {x: -0.09494318, y: -0.0012108311, z: 0.04004143}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -4503398223106054291, guid: d454dd56c2182e243bb300cdecf09e25, type: 3}
 --- !u!1 &1933092410102598891
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +182,7 @@ GameObject:
   - component: {fileID: 962181384119457048}
   - component: {fileID: 8988975305575316324}
   - component: {fileID: 344453608139454233}
-  - component: {fileID: 7848010493344273448}
+  - component: {fileID: 1807332741616276575}
   m_Layer: 13
   m_Name: TinyRocks3_LOD3
   m_TagString: Untagged
@@ -248,8 +249,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7848010493344273448
-BoxCollider:
+--- !u!64 &1807332741616276575
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -258,9 +259,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.58087635, y: 0.6540849, z: 0.59587353}
-  m_Center: {x: -0.024330646, y: 0.11818059, z: -0.0027190447}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -4242275269067686036, guid: d454dd56c2182e243bb300cdecf09e25, type: 3}
 --- !u!1 &4161516812059645532
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +274,7 @@ GameObject:
   - component: {fileID: 4783561208495646529}
   - component: {fileID: 3249838919555858809}
   - component: {fileID: 8783001790163530032}
-  - component: {fileID: 7160784214226965396}
+  - component: {fileID: 2268961949627503367}
   m_Layer: 13
   m_Name: TinyRocks3_LOD2
   m_TagString: Untagged
@@ -339,8 +341,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7160784214226965396
-BoxCollider:
+--- !u!64 &2268961949627503367
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -349,9 +351,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.52371204, y: 0.42100418, z: 0.59587353}
-  m_Center: {x: -0.093221754, y: 0.0016401932, z: -0.0027190447}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 1216503136669601270, guid: d454dd56c2182e243bb300cdecf09e25, type: 3}
 --- !u!1 &5933631218750265658
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +394,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5933631218750265658}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
   m_Name: 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6286987802589597071}
   - component: {fileID: 4997995370012889916}
   - component: {fileID: 8047393827236639089}
-  - component: {fileID: 1635606912898758500}
+  - component: {fileID: 5086606829882146992}
   m_Layer: 13
   m_Name: DetailRock3_LOD0
   m_TagString: Untagged
@@ -78,8 +78,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1635606912898758500
-BoxCollider:
+--- !u!64 &5086606829882146992
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -88,9 +88,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.36510333, y: 0.21815348, z: 0.3222823}
-  m_Center: {x: 0.004994929, y: -0.007426504, z: -0.0045485273}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 9214945807892802780, guid: a9f1c582d5ef09146814bfb8eca9dd93, type: 3}
 --- !u!1 &1431553875048971430
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +103,7 @@ GameObject:
   - component: {fileID: 1520981263463465450}
   - component: {fileID: 8100662558482734779}
   - component: {fileID: 2797145744880490545}
+  - component: {fileID: 1059376521208244036}
   m_Layer: 13
   m_Name: DetailRock3_LOD3
   m_TagString: Untagged
@@ -168,6 +170,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &1059376521208244036
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431553875048971430}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -56720310676854558, guid: a9f1c582d5ef09146814bfb8eca9dd93, type: 3}
 --- !u!1 &3915364480826380929
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +195,7 @@ GameObject:
   - component: {fileID: 8112090203583126394}
   - component: {fileID: 1515845580160890865}
   - component: {fileID: 5178089088800254366}
-  - component: {fileID: 8040723557448365857}
+  - component: {fileID: 4100599247770959274}
   m_Layer: 13
   m_Name: DetailRock3_LOD1
   m_TagString: Untagged
@@ -246,8 +262,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8040723557448365857
-BoxCollider:
+--- !u!64 &4100599247770959274
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -256,9 +272,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.36933762, y: 0.23569816, z: 0.32454407}
-  m_Center: {x: 0.0006945506, y: 0.0071541667, z: 0.0057111755}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -9043542393614696038, guid: a9f1c582d5ef09146814bfb8eca9dd93, type: 3}
 --- !u!1 &4656005383290023294
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +366,7 @@ GameObject:
   - component: {fileID: 5849068726129797935}
   - component: {fileID: 838767077332969689}
   - component: {fileID: 5841253852625343553}
+  - component: {fileID: 3541927203026195611}
   m_Layer: 13
   m_Name: DetailRock3_LOD2
   m_TagString: Untagged
@@ -415,6 +433,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &3541927203026195611
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4773832093755755629}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -7629671952593651195, guid: a9f1c582d5ef09146814bfb8eca9dd93, type: 3}
 --- !u!1 &8226684073429892062
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +486,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8226684073429892062}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
   m_Name: 

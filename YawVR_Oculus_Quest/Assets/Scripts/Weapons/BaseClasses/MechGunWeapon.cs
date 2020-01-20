@@ -163,7 +163,13 @@ abstract public class MechGunWeapon : MechBaseWeapon
     void Update()
     {
         shootTick += Time.deltaTime;
-
+        //If after shot and needs to reload
+        if (ammoModule.NeedReload())
+        {
+            //Call reloading function...
+            Reload();
+            GUIManager.instance.SetWeaponInfoReloading(m_controller);
+        }
 
     }
 }

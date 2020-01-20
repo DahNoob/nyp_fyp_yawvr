@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5383197357327314377}
   - component: {fileID: 7102389371848761853}
   - component: {fileID: 7110409356138283709}
-  - component: {fileID: 7613758211537769956}
+  - component: {fileID: 7944907233127022852}
   m_Layer: 13
   m_Name: Rocks2_LOD0
   m_TagString: Untagged
@@ -78,8 +78,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7613758211537769956
-BoxCollider:
+--- !u!64 &7944907233127022852
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -88,9 +88,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.4724429, y: 3.9719634, z: 2.6132994}
-  m_Center: {x: 0.02890575, y: 0.7544022, z: 0.124988794}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -1993699830878386472, guid: 63e46bc1f0f1f444c9d19ec81d1f23ac, type: 3}
 --- !u!1 &840938823601552680
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +182,7 @@ GameObject:
   - component: {fileID: 936704300993048809}
   - component: {fileID: 3292075395989552364}
   - component: {fileID: 5615104364297353031}
+  - component: {fileID: 6941532962455586636}
   m_Layer: 13
   m_Name: Rocks2_LOD3
   m_TagString: Untagged
@@ -247,6 +249,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &6941532962455586636
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656877776520937775}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 207577461192144090, guid: 63e46bc1f0f1f444c9d19ec81d1f23ac, type: 3}
 --- !u!1 &4282176897338876522
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +274,7 @@ GameObject:
   - component: {fileID: 2747870429920013274}
   - component: {fileID: 7539091611966629773}
   - component: {fileID: 4037529664602222428}
-  - component: {fileID: 1404848053778214513}
+  - component: {fileID: 5811379611554335}
   m_Layer: 13
   m_Name: Rocks2_LOD1
   m_TagString: Untagged
@@ -325,8 +341,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1404848053778214513
-BoxCollider:
+--- !u!64 &5811379611554335
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -335,9 +351,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.4901311, y: 3.9746706, z: 2.6456923}
-  m_Center: {x: 0.020061612, y: 0.75304854, z: 0.12623262}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 7754262590289652957, guid: 63e46bc1f0f1f444c9d19ec81d1f23ac, type: 3}
 --- !u!1 &5809640075293555414
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +394,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5809640075293555414}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
   m_Name: 
@@ -398,6 +415,7 @@ GameObject:
   - component: {fileID: 2864849885667588444}
   - component: {fileID: 7540696116852658522}
   - component: {fileID: 4042391211353090191}
+  - component: {fileID: 1668421111484747100}
   m_Layer: 13
   m_Name: Rocks2_LOD2
   m_TagString: Untagged
@@ -464,3 +482,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &1668421111484747100
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252073461141125275}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 8266743509327567209, guid: 63e46bc1f0f1f444c9d19ec81d1f23ac, type: 3}

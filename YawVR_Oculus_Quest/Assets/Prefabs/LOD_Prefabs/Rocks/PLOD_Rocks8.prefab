@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6112504230780374943}
   - component: {fileID: 8885987778600857669}
   - component: {fileID: 9182122115791832790}
-  - component: {fileID: 8058091640794412241}
+  - component: {fileID: 106733364501278673}
   m_Layer: 13
   m_Name: Rocks8_LOD1
   m_TagString: Untagged
@@ -78,8 +78,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &8058091640794412241
-BoxCollider:
+--- !u!64 &106733364501278673
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -88,9 +88,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.4384472, y: 2.4521098, z: 1.310909}
-  m_Center: {x: 0.08798489, y: -0.024454892, z: -0.012404472}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -5232072506578347144, guid: 6c83a806296da294299d6317bf35fd11, type: 3}
 --- !u!1 &790206527301365000
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +103,7 @@ GameObject:
   - component: {fileID: 7428678654399779116}
   - component: {fileID: 3256522892140730816}
   - component: {fileID: 5101157171379377913}
-  - component: {fileID: 7117047809169336249}
+  - component: {fileID: 3727920383793196360}
   m_Layer: 13
   m_Name: Rocks8_LOD2
   m_TagString: Untagged
@@ -169,8 +170,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7117047809169336249
-BoxCollider:
+--- !u!64 &3727920383793196360
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -179,9 +180,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.480062, y: 2.4521098, z: 1.174193}
-  m_Center: {x: -0.027193129, y: -0.024454892, z: -0.015164673}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -4472932971941944140, guid: 6c83a806296da294299d6317bf35fd11, type: 3}
 --- !u!1 &4265277025123460603
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +223,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4265277025123460603}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
   m_Name: 
@@ -321,7 +323,7 @@ GameObject:
   - component: {fileID: 1257814479642738848}
   - component: {fileID: 1983075402032827256}
   - component: {fileID: 244338429724017352}
-  - component: {fileID: 2064033262476507880}
+  - component: {fileID: 2182907615670834090}
   m_Layer: 13
   m_Name: Rocks8_LOD3
   m_TagString: Untagged
@@ -388,8 +390,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2064033262476507880
-BoxCollider:
+--- !u!64 &2182907615670834090
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -398,9 +400,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.161687, y: 3.04263, z: 1.5398372}
-  m_Center: {x: 0.14844158, y: -0.10819614, z: -0.19798678}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -1804914538606969178, guid: 6c83a806296da294299d6317bf35fd11, type: 3}
 --- !u!1 &6552533651774322697
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,6 +415,7 @@ GameObject:
   - component: {fileID: 3748198326500764329}
   - component: {fileID: 8479443696361295315}
   - component: {fileID: 8341598267129824289}
+  - component: {fileID: 2264750819432662606}
   m_Layer: 13
   m_Name: Rocks8_LOD0
   m_TagString: Untagged
@@ -478,3 +482,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2264750819432662606
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6552533651774322697}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 6548893548648587820, guid: 6c83a806296da294299d6317bf35fd11, type: 3}

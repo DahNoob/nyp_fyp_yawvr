@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5895758180121058019}
   - component: {fileID: 2043533735176386920}
   - component: {fileID: 2324644454696112362}
+  - component: {fileID: 4264013544998101244}
   m_Layer: 13
   m_Name: Rocks3_LOD3
   m_TagString: Untagged
@@ -77,6 +78,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &4264013544998101244
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2813058197979982264}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4301343803145161143, guid: fc34e418403400146ac138a52793d6f6, type: 3}
 --- !u!1 &4356360898748325437
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +103,7 @@ GameObject:
   - component: {fileID: 4108729284716215402}
   - component: {fileID: 2192261269637507741}
   - component: {fileID: 5771136549582511762}
-  - component: {fileID: 7569844409846877137}
+  - component: {fileID: 4787489155595919101}
   m_Layer: 13
   m_Name: Rocks3_LOD0
   m_TagString: Untagged
@@ -155,8 +170,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7569844409846877137
-BoxCollider:
+--- !u!64 &4787489155595919101
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -165,9 +180,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.7916443, y: 5.1058717, z: 1.7073548}
-  m_Center: {x: -0.10450289, y: 1.0835085, z: 0.12853795}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -8407700155666645600, guid: fc34e418403400146ac138a52793d6f6, type: 3}
 --- !u!1 &6314130687631696139
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +274,7 @@ GameObject:
   - component: {fileID: 7771204671206262659}
   - component: {fileID: 2402849143611021972}
   - component: {fileID: 6449738319486193607}
-  - component: {fileID: 4028749541131916211}
+  - component: {fileID: 5896261636365548187}
   m_Layer: 13
   m_Name: Rocks3_LOD2
   m_TagString: Untagged
@@ -325,8 +341,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4028749541131916211
-BoxCollider:
+--- !u!64 &5896261636365548187
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -335,9 +351,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.822581, y: 5.1039195, z: 1.6090367}
-  m_Center: {x: -0.13566545, y: 1.0775561, z: 0.08600342}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 3789589113843214712, guid: fc34e418403400146ac138a52793d6f6, type: 3}
 --- !u!1 &7287554706210289890
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +394,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7287554706210289890}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99e4ce1b1a0417b4bbb61a64867202a0, type: 3}
   m_Name: 
@@ -398,7 +415,7 @@ GameObject:
   - component: {fileID: 3909158493398744904}
   - component: {fileID: 5787518078401669008}
   - component: {fileID: 7962559902898555929}
-  - component: {fileID: 1937749267574453218}
+  - component: {fileID: 6544430028097671865}
   m_Layer: 13
   m_Name: Rocks3_LOD1
   m_TagString: Untagged
@@ -465,8 +482,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1937749267574453218
-BoxCollider:
+--- !u!64 &6544430028097671865
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -475,6 +492,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.7947633, y: 5.1025543, z: 1.6242588}
-  m_Center: {x: -0.09064677, y: 1.0782387, z: 0.08698991}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -2196319643331818049, guid: fc34e418403400146ac138a52793d6f6, type: 3}
