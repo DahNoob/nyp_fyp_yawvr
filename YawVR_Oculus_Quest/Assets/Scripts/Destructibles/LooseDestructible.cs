@@ -10,15 +10,25 @@ public class LooseDestructible : BaseEntity
     [SerializeField]
     protected bool isRooted = true;
 
-    void Start()
+    void Awake()
     {
-        gameObject.GetComponent<Rigidbody>().constraints = isRooted ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
+        //gameObject.GetComponent<Rigidbody>().constraints = isRooted ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
         transform.localScale *= Random.Range(m_destructibleInfo.scaleVariancyMin, m_destructibleInfo.scaleVariancyMax);
         health = m_destructibleInfo.maxHealth + m_destructibleInfo.additionalHealth;
         int modelIndex = Random.Range(0, m_destructibleInfo.meshVariants.Length);
         GetComponent<MeshFilter>().mesh = m_destructibleInfo.meshVariants[modelIndex];
         GetComponent<MeshRenderer>().material = m_destructibleInfo.materialVariants[modelIndex];
-        GetComponent<MeshCollider>().sharedMesh = m_destructibleInfo.meshVariants[modelIndex];
+        if (GetComponent<MeshCollider>())
+            DestroyImmediate(GetComponent<MeshCollider>());
+        var mc = gameObject.AddComponent<MeshCollider>();
+        mc.convex = true;
+        mc.sharedMesh = m_destructibleInfo.meshVariants[modelIndex];
+    }
+
+    void Start()
+    {
+        
+        //GetComponent<MeshCollider>().sharedMesh = m_destructibleInfo.meshVariants[modelIndex];
     }
 
     public override void Die()
