@@ -370,10 +370,7 @@ public class GUIManager : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
     }
-
-
     #endregion
-
 
     private void Game_onObjectiveStarted(ObjectiveInfo _objectiveInfo)
     {
