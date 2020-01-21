@@ -13,10 +13,10 @@ public class TriGatlingGun : MechGunWeapon
     {
         follower.m_followSpeed = m_followerSpeed;
         m_gatlingAnimator.SetBool("Shooting", true);
-        foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
-        {
-            asd.Play();
-        }
+        //foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
+        //{
+        //    asd.Play();
+        //}
         //m_laserPointer.gameObject.SetActive(true);
         return true;
     }
@@ -24,10 +24,10 @@ public class TriGatlingGun : MechGunWeapon
     public override bool Stop(OVRInput.Controller _controller)
     {
         m_gatlingAnimator.SetBool("Shooting", false);
-        foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
-        {
-            asd.Stop();
-        }
+        //foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
+        //{
+        //    asd.Stop();
+        //}
         // m_laserPointer.gameObject.SetActive(false);
         return true;
     }

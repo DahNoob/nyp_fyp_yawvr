@@ -27,7 +27,7 @@ public class ImpactSound : MonoBehaviour , IPooledObject
     }
     private void Update()
     {
-        if (startedPlaying && !GetComponent<AudioSource>().isPlaying)
+        if (startedPlaying && !GetComponent<ParticleSystem>().isEmitting)
         {
             OnObjectDestroy();
         }
