@@ -25,6 +25,8 @@ public class GUIManager : MonoBehaviour
     private Transform m_cameraTransform;
     [SerializeField]
     private GameObject m_objectiveArrowPrefab;
+    [SerializeField]
+    private GameObject m_objectiveTextPanelPrefab;
 
     [Header("Experimental Resources")]
     [SerializeField]
@@ -50,6 +52,10 @@ public class GUIManager : MonoBehaviour
     [SerializeField]
     private GUIWeaponInfo m_weaponInfo;
 
+    [Header("UI Panels")]
+    [SerializeField]
+    private RectTransform m_objectiveListPanel;
+
 
     //Local variables
     int frameCount = 0;
@@ -67,6 +73,9 @@ public class GUIManager : MonoBehaviour
 
     void Start()
     {
+        Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
+        Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
+        print("GUIManager events +attached+ successfully!");
         //transform.position = m_cameraTransform.position;
         //transform.eulerAngles = new Vector3(0, m_cameraTransform.eulerAngles.y, 0);
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
@@ -77,13 +86,10 @@ public class GUIManager : MonoBehaviour
         EnableReticle(OVRInput.Controller.LTouch, false);
         EnableReticle(OVRInput.Controller.RTouch, false);
 
-        var objectives = Game.instance.m_objectives;
-        //System.Array.Resize(ref minimapArrows, objectives.Length);
-        //for (int i = 0; i < minimapArrows.Length; ++i)
-        //{
-        //    RectTransform arrowUI = Instantiate(m_objectiveArrowPrefab, m_minimap.rectTransform).GetComponent<RectTransform>();
-        //    minimapArrows[i] = arrowUI;
-        //}
+        foreach (Transform obj in m_objectiveListPanel)
+        {
+            Destroy(obj.gameObject);
+        }
     }
 
     void Update()
@@ -198,6 +204,19 @@ public class GUIManager : MonoBehaviour
         //{
         //    objectiveArrow[i].gameObject.SetActive(_index == i);
         //}
+    }
+    public void AddObjectiveToPanel(ref ObjectiveInfo _objectiveInfo)
+    {
+        Text panel = Instantiate(m_objectiveTextPanelPrefab, m_objectiveListPanel.transform).GetComponent<Text>();
+        _objectiveInfo.m_panelUI = panel;
+        if(_objectiveInfo.type == VariedObjectives.TYPE.BOUNTYHUNT)//hhhhhhhhhhhhh this is such garbage code fajfjofifaoopzpovzxda
+        {
+            panel.text = "- Bounty Hunt";
+        }
+        else if(_objectiveInfo.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+        {
+            panel.text = "- Defend structure";
+        }
     }
 
 
@@ -355,4 +374,31 @@ public class GUIManager : MonoBehaviour
 
     #endregion
 
+
+    private void Game_onObjectiveStarted(ObjectiveInfo _objectiveInfo)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void Game_onObjectiveFinished(ObjectiveInfo _objectiveInfo, bool _succeeded)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void OnEnable()
+    {
+        if(Game.instance)
+        {
+            Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
+            Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
+            print("GUIManager events +attached+ successfully!");
+        }
+    }
+
+    void OnDisable()
+    {
+        Game.instance.onObjectiveStarted -= Game_onObjectiveStarted;
+        Game.instance.onObjectiveFinished -= Game_onObjectiveFinished;
+        print("GUIManager events -detached- successfully!");
+    }
 }

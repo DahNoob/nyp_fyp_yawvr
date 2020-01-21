@@ -20,6 +20,9 @@ using UnityEngine.AI;
 *******************************/
 public class Light_Enemy_1 : EnemyBase, IPooledObject
 {
+    [Header("Light Mech 1 Resources")]
+    [SerializeField]
+    public ParticleSystem m_alertParticleSystem;
     public enum _EnemyState
     {
         CHASE,
