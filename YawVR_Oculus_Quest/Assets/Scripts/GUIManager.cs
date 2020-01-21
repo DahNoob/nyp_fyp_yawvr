@@ -62,7 +62,7 @@ public class GUIManager : MonoBehaviour
     float dt = 0.0f;
     float fps = 0.0f;
     float updateRate = 4.0f;  // 4 updates per sec.
-    private Transform objectiveTarget;
+    private ObjectiveInfo activeObjective;
 
     void Awake()
     {
@@ -136,17 +136,27 @@ public class GUIManager : MonoBehaviour
         //}
         if (m_objectiveArrow.gameObject.activeInHierarchy)
         {
-            if (objectiveTarget == null)
+            if (activeObjective == null)
                 m_objectiveArrow.gameObject.SetActive(false);
             else
             {
-                Vector3 displacement = Vector3.Scale(objectiveTarget.position - PlayerHandler.instance.transform.position, new Vector3(1, 0, 1));
+                Vector3 displacement = Vector3.Scale(activeObjective.m_highlight.position - PlayerHandler.instance.transform.position, new Vector3(1, 0, 1));
                 Vector3 bap = displacement.normalized;
-                float lol = Mathf.Atan2(bap.x, bap.z) * Mathf.Rad2Deg;
+                float dist = displacement.magnitude;
+                float lol = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
                 m_objectiveArrow.localPosition = Vector3.zero;
-                m_objectiveArrow.eulerAngles = new Vector3(0, lol, 0);
-                m_objectiveArrow.Rotate(90, 0, 0);
+                m_objectiveArrow.localEulerAngles = new Vector3(0, 0, lol + PlayerHandler.instance.transform.eulerAngles.y + 180); 
+                //m_objectiveArrow.Rotate(90, 0, 0);
                 m_objectiveArrow.Translate(0, Mathf.Min(0.14f, displacement.sqrMagnitude * 0.00005f), 0);
+                string additionalInfo = activeObjective.m_inProgress ? "Time left : " + ((int)activeObjective.m_timeLeft) : "Proximity : " + ((int)dist);
+                if (activeObjective.type == VariedObjectives.TYPE.BOUNTYHUNT)//hhhhhhhhhhhhh this is such garbage code fajfjofifaoopzpovzxda
+                {
+                    activeObjective.m_panelUI.text = string.Format("- Bounty hunt\n{0}", additionalInfo);
+                }
+                else if (activeObjective.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+                {
+                    activeObjective.m_panelUI.text = string.Format("- Defend structure\n{0}", additionalInfo);
+                }
             }
         }
     }
@@ -195,15 +205,23 @@ public class GUIManager : MonoBehaviour
         OVRManager.display.RecenterPose();
         PlayerHandler.instance.ResetPose();
     }
-    public void SetActiveObjective(Transform _target)
+    public void SetActiveObjective(ObjectiveInfo _objectiveInfo = null)
     {
-        if (_target)
+        if (_objectiveInfo != null)
             m_objectiveArrow.gameObject.SetActive(true);
-        objectiveTarget = _target;
-        //for (int i = 0; i < objectiveArrow.Length; ++i)
-        //{
-        //    objectiveArrow[i].gameObject.SetActive(_index == i);
-        //}
+        if(activeObjective!=null && !activeObjective.m_completed)
+        {
+            if (activeObjective.type == VariedObjectives.TYPE.BOUNTYHUNT)//srsly fuckin garbage
+            {
+                activeObjective.m_panelUI.text = "- Bounty Hunt";
+            }
+            else if (activeObjective.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+            {
+                activeObjective.m_panelUI.text = "- Defend structure";
+            }
+
+        }
+        activeObjective = _objectiveInfo;
     }
     public void AddObjectiveToPanel(ref ObjectiveInfo _objectiveInfo)
     {
@@ -374,12 +392,31 @@ public class GUIManager : MonoBehaviour
 
     private void Game_onObjectiveStarted(ObjectiveInfo _objectiveInfo)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     private void Game_onObjectiveFinished(ObjectiveInfo _objectiveInfo, bool _succeeded)
     {
-        throw new System.NotImplementedException();
+        if (_objectiveInfo.type == VariedObjectives.TYPE.BOUNTYHUNT)//srsly fuckin garbage
+        {
+            _objectiveInfo.m_panelUI.text = "- Bounty Hunt";
+        }
+        else if (_objectiveInfo.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+        {
+            _objectiveInfo.m_panelUI.text = "- Defend structure";
+        }
+        
+        if(_succeeded)
+        {
+            _objectiveInfo.m_panelUI.color = Color.green;
+            _objectiveInfo.m_panelUI.text += "\nSuccess!";
+        }
+        else
+        {
+            _objectiveInfo.m_panelUI.color = Color.red;
+            _objectiveInfo.m_panelUI.text += "\nFailed!";
+        }
+        Game.instance.SetRandomObjective();
     }
 
     void OnEnable()
