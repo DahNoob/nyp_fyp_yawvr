@@ -4,21 +4,6 @@ using UnityEngine;
 
 public class PlayerUIManager : MonoBehaviour
 {
-    [System.Serializable]
-    public struct SystemFluffMessage
-    {
-        public string message;
-        public float delay;
-        public float messageSpeed;
-
-        public SystemFluffMessage(string _message, float _delay, float _messageSpeed)
-        {
-            message = _message;
-            delay = _delay;
-            messageSpeed = _messageSpeed;
-        }
-    }
-
     //Honestly liek idk what is this tbh liek if i have time i will get back to this but...
     public static PlayerUIManager instance;
 
@@ -45,7 +30,7 @@ public class PlayerUIManager : MonoBehaviour
     //Local variables
     Queue<SystemFluffMessage> m_systemQueue = new Queue<SystemFluffMessage>();
     Queue<SystemFluffMessage> m_processingQueue = new Queue<SystemFluffMessage>();
-    static int MAX_SYSTEM_QUEUE_COUNT = 3;
+    static int MAX_SYSTEM_QUEUE_COUNT = 12;
     private int m_systemFluffCount = 0;
     private string m_previousSystemText;
     private bool isAlreadyTyping = false;
@@ -113,7 +98,7 @@ public class PlayerUIManager : MonoBehaviour
             AddStringToSystemQueue(fluffs);
     }
 
-    public bool AddStringToSystemQueue(SystemFluffMessage fluffs)
+    bool AddStringToSystemQueue(SystemFluffMessage fluffs)
     {
         fluffs.message = FormatFluff(fluffs.message);
         if (m_systemFluffCount < MAX_SYSTEM_QUEUE_COUNT)
@@ -179,5 +164,20 @@ public class PlayerUIManager : MonoBehaviour
     string FormatFluff(string message)
     {
         return "-" + message + "\n";
+    }
+}
+
+[System.Serializable]
+public class SystemFluffMessage
+{
+    public string message;
+    public float delay;
+    public float messageSpeed;
+
+    public SystemFluffMessage(string _message, float _delay, float _messageSpeed)
+    {
+        message = _message;
+        delay = _delay;
+        messageSpeed = _messageSpeed;
     }
 }
