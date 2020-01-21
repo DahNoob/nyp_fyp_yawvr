@@ -79,7 +79,18 @@ public class Game : MonoBehaviour
         currObj.m_timer += Time.deltaTime;
         if(currObj.type == VariedObjectives.TYPE.BOUNTYHUNT)
         {
-            if (currObj.m_highlight == null)
+            if (currObj.m_timer > currObj.m_spawnTime)
+            {
+                currObj.m_timer -= currObj.m_spawnTime;
+                print("Spawn Enemies!");
+                for (int i = 0; i < 3; ++i)
+                {
+                    //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                    EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
+                    derp.m_target = PlayerHandler.instance.transform;
+                }
+            }
+            if (!currObj.m_highlight.gameObject.activeInHierarchy)
             {
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
@@ -102,6 +113,17 @@ public class Game : MonoBehaviour
         }
         else if(currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
         {
+            if(currObj.m_timer > currObj.m_spawnTime)
+            {
+                currObj.m_timer -= currObj.m_spawnTime;
+                print("Spawn Enemies!");
+                for (int i = 0; i < 3; ++i)
+                {
+                    //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+                    EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
+                    derp.m_target = Random.Range(0, 100) > 50 ? currObj.m_highlight : PlayerHandler.instance.transform;
+                }
+            }
             if (currObj.m_highlight == null)
             {
                 print("Current Objective ended with status <Failed objective>!");
@@ -123,25 +145,6 @@ public class Game : MonoBehaviour
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, true);
                 return;
-            }
-        }
-        
-        if (currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE && currObj.m_timer > currObj.m_spawnTime)
-        {
-            if(currObj.m_highlight == null)
-            {
-                print("Current Objective ended with status!");
-                currObj.m_completed = true;
-                currentObjectiveIndex = -1;
-                return;
-            }
-            currObj.m_timer -= currObj.m_spawnTime;
-            print("Spawn Enemies!");
-            for (int i = 0; i < 3; ++i)
-            {
-                //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
-                EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
-                derp.m_target = Random.Range(0,100) > 50 ? currObj.m_highlight : PlayerHandler.instance.transform;
             }
         }
     }
@@ -235,13 +238,14 @@ public class Game : MonoBehaviour
                 continue;
             for (int i = 0; i < m_objectives.Length; ++i)
             {
-                if(CustomUtility.IsHitRadius(m_objectives[i].m_highlight.position, PlayerHandler.instance.transform.position, 50.0f))
+                if(!m_objectives[i].m_completed && CustomUtility.IsHitRadius(m_objectives[i].m_highlight.position, PlayerHandler.instance.transform.position, 50.0f))
                 {
                     currentObjectiveIndex = i;
                     if(m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
                     {
                         //should make it pick a random enemy but even more buffed up, and randomise wher it spawns???????? idk
                         EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, m_objectives[i].m_highlight.position, Quaternion.identity).GetComponent<EnemyBase>();
+                        enemy.SetMaxHealthMultiplier(5);
                         Destroy(m_objectives[i].m_highlight.gameObject);
                         m_objectives[i].m_highlight = enemy.transform;
                         //SpriteRenderer enemyMarker = enemy.GetComponentInChildren<SpriteRenderer>();
