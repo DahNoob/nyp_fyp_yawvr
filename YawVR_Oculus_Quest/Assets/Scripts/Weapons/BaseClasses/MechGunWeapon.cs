@@ -17,6 +17,8 @@ abstract public class MechGunWeapon : MechBaseWeapon
     [SerializeField]
     protected GameObject m_muzzleFlash;
     [SerializeField]
+    protected ParticleSystem m_bulletCasings;
+    [SerializeField]
     protected AudioSource m_shootAudioSource;
     [SerializeField]
     protected AudioClip[] m_shootAudioClips;
@@ -33,6 +35,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
 
     //Local variables
     protected float shootTick;
+    protected ParticleSystem[] shootParticles;
 
     virtual protected void Start()
     {
@@ -45,6 +48,8 @@ abstract public class MechGunWeapon : MechBaseWeapon
 
         GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo);
 
+
+        shootParticles = m_muzzleFlash.GetComponentsInChildren<ParticleSystem>();
         //Update ammo in GUI first
         //GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
     }
@@ -102,6 +107,11 @@ abstract public class MechGunWeapon : MechBaseWeapon
                 {
                     SpawnProjectile();
                     Vibe();
+                    m_bulletCasings.Emit(1);
+                    for (int i = 0; i < shootParticles.Length; i++)
+                    {
+                        shootParticles[i].Emit(1);
+                    }
                     follower.Bump(m_recoilPosition, m_recoilRotation);
                     //VibrationManager.SetControllerVibration(m_controller, vibeClip);
                     m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];

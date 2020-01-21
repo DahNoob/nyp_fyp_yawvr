@@ -5,6 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class Game : MonoBehaviour
 {
+    public delegate void ObjectiveStarted(ObjectiveInfo _objectiveInfo);
+    public delegate void ObjectiveFinished(ObjectiveInfo _objectiveInfo, bool _succeeded);
+    public event ObjectiveStarted onObjectiveStarted;
+    public event ObjectiveFinished onObjectiveFinished;
+
     public static Game instance { get; private set; }
 
     [System.Serializable]
@@ -20,17 +25,6 @@ public class Game : MonoBehaviour
         }
     }
 
-    [System.Serializable]
-    public class ObjectiveInfo
-    {
-        public VariedObjectives.TYPE type;//dis is cancerous but wutever
-        public Transform m_highlight;
-        public bool m_completed = false;
-        public float m_timeLeft = 30;
-        public float m_timer = 0;
-        public float m_spawnTime = 7;
-    }
-
     [Header("Default Mech Loadouts")]
     [SerializeField]
     private GameObject[] m_rightArmModules;
@@ -43,13 +37,13 @@ public class Game : MonoBehaviour
     [SerializeField]
     private GameObject[] m_structures;
 
-    [Header("Game Variables")]
-    [SerializeField]
-    public int m_objectivesLeft = 0;
-    [SerializeField]
+    //[Header("Game Variables")]
+    [HideInInspector]
     public ObjectiveInfo[] m_objectives;
 
     [Header("Game Configuration")]
+    [SerializeField]
+    private int m_maxObjectives = 3;
     [SerializeField]
     private Color m_bountyHuntEnemyColor;
     [SerializeField]
@@ -119,45 +113,74 @@ public class Game : MonoBehaviour
     private void ApplyObjectives()
     {
         MapPointsHandler mph = MapPointsHandler.instance;
-        System.Array.Resize(ref m_objectives, mph.m_variedObjectives.possibleObjectivePoints.Length);
-        for (int i = 0; i < m_objectives.Length; ++i)
+        List<int> allocatedPoints = new List<int>();
+        //System.Array.Resize(ref m_objectives, mph.m_variedObjectives.possibleObjectivePoints.Length);
+        System.Array.Resize(ref m_objectives, m_maxObjectives);
+        int currObjectivesCount = 0;
+        while (currObjectivesCount < m_maxObjectives)
         {
-            var objIndex = mph.m_variedObjectives.possibleObjectivePoints[i];
+            int randomisedPoint = Random.Range(0, mph.m_variedObjectives.possibleObjectivePoints.Length);
+            if (allocatedPoints.Contains(randomisedPoint))
+                continue;
+            var objIndex = mph.m_variedObjectives.possibleObjectivePoints[randomisedPoint];
             Vector3 objectivePos = mph.m_mapPoints[objIndex];
-            m_objectives[i] = new ObjectiveInfo();
-            m_objectives[i].type = Random.Range(0, 1000) > 500 ? VariedObjectives.TYPE.BOUNTYHUNT : VariedObjectives.TYPE.DEFEND_STRUCTURE;
-            if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
+            m_objectives[currObjectivesCount] = new ObjectiveInfo();
+            m_objectives[currObjectivesCount].type = Random.Range(0, 1000) > 500 ? VariedObjectives.TYPE.BOUNTYHUNT : VariedObjectives.TYPE.DEFEND_STRUCTURE;
+            if (m_objectives[currObjectivesCount].type == VariedObjectives.TYPE.BOUNTYHUNT)
             {
                 //Debug.Log(m_enemies[2].nameInPool);
                 // EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
                 GameObject marker = Instantiate(m_bountyHuntObjectivePrefab, objectivePos, Quaternion.identity, Persistent.instance.GO_STATIC.transform);
-                m_objectivesLeft++;
-                m_objectives[i].m_highlight = marker.transform;
+                m_objectives[currObjectivesCount].m_highlight = marker.transform;
                 print("Objective deployed : Bounty Hunt @ " + objIndex);
             }
-            else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+            else if (m_objectives[currObjectivesCount].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
             {
                 RaycastHit hit;
                 Physics.Raycast(objectivePos, -Vector3.up, out hit);
                 BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
                 structure.onEntityDie += Structure_onEntityDie;
-                m_objectivesLeft++;
-                m_objectives[i].m_highlight = structure.transform;
+                m_objectives[currObjectivesCount].m_highlight = structure.transform;
                 print("Objective deployed : Defend Structure @ " + objIndex);
             }
+            GUIManager.instance.AddObjectiveToPanel(ref m_objectives[currObjectivesCount]);
+            allocatedPoints.Add(randomisedPoint);
+            currObjectivesCount++;
         }
+        //for (int i = 0; i < m_objectives.Length; ++i)
+        //{
+        //    var objIndex = mph.m_variedObjectives.possibleObjectivePoints[i];
+        //    Vector3 objectivePos = mph.m_mapPoints[objIndex];
+        //    m_objectives[i] = new ObjectiveInfo();
+        //    m_objectives[i].type = Random.Range(0, 1000) > 500 ? VariedObjectives.TYPE.BOUNTYHUNT : VariedObjectives.TYPE.DEFEND_STRUCTURE;
+        //    if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
+        //    {
+        //        //Debug.Log(m_enemies[2].nameInPool);
+        //        // EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
+        //        GameObject marker = Instantiate(m_bountyHuntObjectivePrefab, objectivePos, Quaternion.identity, Persistent.instance.GO_STATIC.transform);
+        //        m_objectives[i].m_highlight = marker.transform;
+        //        print("Objective deployed : Bounty Hunt @ " + objIndex);
+        //    }
+        //    else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+        //    {
+        //        RaycastHit hit;
+        //        Physics.Raycast(objectivePos, -Vector3.up, out hit);
+        //        BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
+        //        structure.onEntityDie += Structure_onEntityDie;
+        //        m_objectives[i].m_highlight = structure.transform;
+        //        print("Objective deployed : Defend Structure @ " + objIndex);
+        //    }
+        //}
     }
 
     private void Enemy_onEntityDie(BaseEntity _entity)
     {
         _entity.onEntityDie -= Enemy_onEntityDie;
-        m_objectivesLeft--;
     }
 
     private void Structure_onEntityDie(BaseEntity _entity)
     {
         _entity.onEntityDie -= Structure_onEntityDie;
-        m_objectivesLeft--;
     }
 
     IEnumerator checkObjectives()
