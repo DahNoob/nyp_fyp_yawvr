@@ -77,18 +77,60 @@ public class Game : MonoBehaviour
         ObjectiveInfo currObj = m_objectives[currentObjectiveIndex];
         currObj.m_timeLeft -= Time.deltaTime;
         currObj.m_timer += Time.deltaTime;
-        if (currObj.m_timeLeft <= 0)
+        if(currObj.type == VariedObjectives.TYPE.BOUNTYHUNT)
         {
-            print("Current Objective ended!");
-            currObj.m_completed = true;
-            currentObjectiveIndex = -1;
-            return;
+            if (currObj.m_highlight == null)
+            {
+                print("Current Objective ended with status <Succeeded objective>!");
+                currObj.m_completed = true;
+                currObj.m_panelUI.color = Color.green;
+                currentObjectiveIndex = -1;
+                currObj.m_inProgress = false;
+                onObjectiveFinished?.Invoke(currObj, true);
+                return;
+            }
+            else if (currObj.m_timeLeft <= 0)
+            {
+                print("Current Objective ended with status <Failed objective>!");
+                currObj.m_completed = true;
+                currObj.m_panelUI.color = Color.red;
+                currentObjectiveIndex = -1;
+                currObj.m_inProgress = false;
+                onObjectiveFinished?.Invoke(currObj, false);
+                return;
+            }
         }
+        else if(currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+        {
+            if (currObj.m_highlight == null)
+            {
+                print("Current Objective ended with status <Failed objective>!");
+                currObj.m_completed = true;
+                currObj.m_panelUI.color = Color.red;
+                currentObjectiveIndex = -1;
+                currObj.m_inProgress = false;
+                onObjectiveFinished?.Invoke(currObj, false);
+
+                return;
+
+            }
+            else if (currObj.m_timeLeft <= 0)
+            {
+                print("Current Objective ended with status <Succeeded objective>!");
+                currObj.m_completed = true;
+                currObj.m_panelUI.color = Color.green;
+                currentObjectiveIndex = -1;
+                currObj.m_inProgress = false;
+                onObjectiveFinished?.Invoke(currObj, true);
+                return;
+            }
+        }
+        
         if (currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE && currObj.m_timer > currObj.m_spawnTime)
         {
             if(currObj.m_highlight == null)
             {
-                print("Current Objective ended!");
+                print("Current Objective ended with status!");
                 currObj.m_completed = true;
                 currentObjectiveIndex = -1;
                 return;
@@ -147,6 +189,7 @@ public class Game : MonoBehaviour
             allocatedPoints.Add(randomisedPoint);
             currObjectivesCount++;
         }
+        GUIManager.instance.SetActiveObjective(m_objectives[0]);
         //for (int i = 0; i < m_objectives.Length; ++i)
         //{
         //    var objIndex = mph.m_variedObjectives.possibleObjectivePoints[i];
@@ -210,6 +253,10 @@ public class Game : MonoBehaviour
                         enemy.SetIconColor(m_bountyHuntEnemyColor);
                         enemy.SetIconSprite(Persistent.instance.MINIMAP_ICON_OBJECTIVE);
                     }
+                    GUIManager.instance.SetActiveObjective(m_objectives[i]);
+                    m_objectives[i].m_inProgress = true;
+                    m_objectives[i].m_panelUI.color = Color.yellow;
+                    onObjectiveStarted?.Invoke(m_objectives[i]);
                     print("Current Objective started! : " + i);
                     break;
                 }
@@ -224,5 +271,19 @@ public class Game : MonoBehaviour
             yield return new WaitForSeconds(3);
             m_environmentParticles.transform.position = PlayerHandler.instance.transform.position;
         }
+    }
+
+    public bool SetRandomObjective()
+    {
+        for (int i=0;i<m_objectives.Length;++i)
+        {
+            if(!m_objectives[i].m_completed)
+            {
+                GUIManager.instance.SetActiveObjective(m_objectives[i]);
+                return true;
+            }
+        }
+        GUIManager.instance.SetActiveObjective();
+        return false;
     }
 }
