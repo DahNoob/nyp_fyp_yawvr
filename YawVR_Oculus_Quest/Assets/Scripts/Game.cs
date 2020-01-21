@@ -38,7 +38,6 @@ public class Game : MonoBehaviour
     private GameObject[] m_structures;
 
     //[Header("Game Variables")]
-    [HideInInspector]
     public ObjectiveInfo[] m_objectives;
 
     [Header("Game Configuration")]
@@ -92,28 +91,32 @@ public class Game : MonoBehaviour
             }
             if (!currObj.m_highlight.gameObject.activeInHierarchy)
             {
+                GUIManager.instance.UpdateObjectiveProgress(ref currObj, currentObjectiveIndex);
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
                 currObj.m_panelUI.color = Color.green;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, true);
+
                 return;
             }
             else if (currObj.m_timeLeft <= 0)
             {
+                GUIManager.instance.FailedObjectiveGUI(ref currObj, currentObjectiveIndex);
                 print("Current Objective ended with status <Failed objective>!");
                 currObj.m_completed = true;
                 currObj.m_panelUI.color = Color.red;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, false);
+
                 return;
             }
         }
         else if(currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
         {
-            if(currObj.m_timer > currObj.m_spawnTime)
+            if (currObj.m_timer > currObj.m_spawnTime)
             {
                 currObj.m_timer -= currObj.m_spawnTime;
                 print("Spawn Enemies!");
@@ -126,26 +129,32 @@ public class Game : MonoBehaviour
             }
             if (currObj.m_highlight == null)
             {
+                GUIManager.instance.FailedObjectiveGUI(ref currObj, currentObjectiveIndex);
                 print("Current Objective ended with status <Failed objective>!");
                 currObj.m_completed = true;
                 currObj.m_panelUI.color = Color.red;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, false);
+                //Update UI on fail
+
 
                 return;
 
             }
             else if (currObj.m_timeLeft <= 0)
             {
+                GUIManager.instance.UpdateObjectiveProgress(ref currObj, currentObjectiveIndex);
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
                 currObj.m_panelUI.color = Color.green;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, true);
+
                 return;
             }
+            GUIManager.instance.UpdateObjectiveProgress(ref currObj, currentObjectiveIndex);
         }
     }
 
@@ -188,7 +197,7 @@ public class Game : MonoBehaviour
                 m_objectives[currObjectivesCount].m_highlight = structure.transform;
                 print("Objective deployed : Defend Structure @ " + objIndex);
             }
-            GUIManager.instance.AddObjectiveToPanel(ref m_objectives[currObjectivesCount]);
+            GUIManager.instance.AddObjectiveToPanel(ref m_objectives[currObjectivesCount], currObjectivesCount);
             allocatedPoints.Add(randomisedPoint);
             currObjectivesCount++;
         }
