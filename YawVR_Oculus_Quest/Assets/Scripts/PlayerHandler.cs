@@ -131,6 +131,7 @@ public class PlayerHandler : BaseEntity
     //Hidden variables
     private float _health, _armor;
     private float m_uiHealth, m_uiArmor;
+    private float m_warningTimer;
 
     //Getters/Setters
     public new float health {
@@ -239,16 +240,16 @@ public class PlayerHandler : BaseEntity
 
         if(health < m_maxHealth * 0.5f)
         {
-            kms += Time.deltaTime * warningUIFadeSpeed;
+            m_warningTimer += Time.deltaTime * warningUIFadeSpeed;
             for(int i =0; i < m_warningUI.Length; ++i)
             {
                 Color color = m_warningUI[i].color;
-                color.a = Mathf.PingPong(kms, 1);
+                color.a = Mathf.PingPong(m_warningTimer, 1);
                 m_warningUI[i].color = color;
             }
         }
         else
-        {
+        {   
             for (int i = 0; i < m_warningUI.Length; ++i)
             {
                 Color color = m_warningUI[i].color;
@@ -260,7 +261,6 @@ public class PlayerHandler : BaseEntity
 
     }
 
-    private float kms = 0;
     private void FixedUpdate()
     {
         if (isShaking && ++shakeInterval % 2 == 0 && shakeElapsed > 0)
