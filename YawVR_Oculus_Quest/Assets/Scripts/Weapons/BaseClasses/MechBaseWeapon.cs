@@ -23,7 +23,7 @@ abstract public class MechBaseWeapon : BaseMechModule
     protected bool m_enabled = true;
     [SerializeField]
     [Range(0.0f, 1.0f)]
-    protected float m_followerSpeed = 0.1f;
+    protected float m_followerSpeed = 0.12f;
     [SerializeField]
     protected OVRInput.Controller m_controller;
     [SerializeField]

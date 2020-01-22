@@ -29,4 +29,9 @@ public abstract class BaseEntity : DynamicQuadTreeObject
     {
         onEntityDie?.Invoke(this);
     }
+
+    public int GetHealth()
+    {
+        return health;
+    }
 }

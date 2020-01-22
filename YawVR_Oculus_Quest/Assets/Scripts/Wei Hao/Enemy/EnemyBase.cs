@@ -135,11 +135,6 @@ abstract public class EnemyBase : BaseEntity
         return (int)(m_enemyInfo.damage * damageMultiplier);
     }
 
-    public int GetHealth ()
-    {
-        return health;
-    }
-
     public int GetMaxHealth()
     {
         return (int)(m_enemyInfo.maxHealth * maxHealthMultiplier);

@@ -36,7 +36,7 @@ public class GenericProjectile : BaseProjectile, IPooledObject
     {
         if (_transform != null)
             transform.SetPositionAndRotation(_transform.position, _transform.rotation);
-       m_rigidbody.AddForce(transform.forward * m_projectileInfo.speed);
+        m_rigidbody.AddForce(transform.forward * m_projectileInfo.speed);
         StartCoroutine(delayDestroy());
     }
 
@@ -48,10 +48,12 @@ public class GenericProjectile : BaseProjectile, IPooledObject
         //efx.GetComponent<ParticleSystem>().Emit(6);
         if (collision.collider)
         {
-            BaseEntity eb = collision.collider.GetComponent<BaseEntity>() ?? collision.collider.GetComponentInChildren<BaseEntity>();
+            BaseEntity eb = collision.collider.GetComponent<BaseEntity>();
             if (eb)
             {
+                print(m_projectileInfo.projectileName + " damage is " + m_projectileInfo.damage);
                 eb.takeDamage(m_projectileInfo.damage);
+                print(eb.name + " is " + eb.GetHealth());
             }
         }
         OnObjectDestroy();
@@ -61,7 +63,8 @@ public class GenericProjectile : BaseProjectile, IPooledObject
     protected IEnumerator delayDestroy()
     {
         yield return new WaitForSeconds(m_projectileInfo.lifeTime);
+        if(gameObject.activeSelf)
+            OnObjectDestroy();
         //Destroy(gameObject);
-        OnObjectDestroy();
     }
 }

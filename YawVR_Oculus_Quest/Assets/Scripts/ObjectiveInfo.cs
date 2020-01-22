@@ -11,8 +11,8 @@ public class ObjectiveInfo
     public Transform m_highlight;
     public bool m_completed = false;
     public bool m_inProgress = false;
-    public float m_timeLeft = 30;
-    public float m_initialTime = 30;
+    public float m_timeLeft = 60;
+    public float m_initialTime = 60;
     public float m_timer = 0;
     public float m_spawnTime = 7;
     // public UnityEngine.UI.Text m_panelUI;

@@ -46,6 +46,7 @@ public class NormalArmWeapon : MechBaseWeapon
     override public bool Selected()
     {
         isSelected = true;
+        follower.m_followSpeed = m_followerSpeed;
         return true;
     }
 
