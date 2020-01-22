@@ -12,6 +12,7 @@ public class EnemyProjectile : BaseProjectile, IPooledObject
     private Rigidbody m_rigidbody;
     [SerializeField]
     private TrailRenderer m_trailRenderer;
+    private float bulletDamage = 2.0f;
 
     public void OnObjectSpawn()
     {
@@ -43,6 +44,7 @@ public class EnemyProjectile : BaseProjectile, IPooledObject
             efx.transform.position = collision.GetContact(0).point;
             efx.GetComponent<ParticleSystem>().Emit(6);
             OnObjectDestroy();
+            PlayerHandler.instance.takeDamage((int)bulletDamage);
         }
     }
 

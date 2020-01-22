@@ -94,8 +94,7 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
             anim.SetFloat("AnimSpeed", 0);
             return;
         }
-        anim.SetFloat("AnimSpeed", GetComponent<NavMeshAgent>().velocity.magnitude / GetComponent<NavMeshAgent>().speed);
-        
+        anim.SetFloat("AnimSpeed", GetComponent<NavMeshAgent>().velocity.magnitude / GetComponent<NavMeshAgent>().speed);       
     }
 
     void OnCollisionEnter(Collision collision)
@@ -112,7 +111,7 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         if (collision.gameObject.tag == "Bullet")
         {
             takeDamage(10);
-            collision.gameObject.SetActive(false);
+            //collision.gameObject.SetActive(false);
         }
     }
 
