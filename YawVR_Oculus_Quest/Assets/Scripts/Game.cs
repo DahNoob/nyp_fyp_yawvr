@@ -158,6 +158,10 @@ public class Game : MonoBehaviour
                 currObj.panelInfo.panelText.color = Color.green;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
+                if (currObj.m_highlight.Find("Crown"))
+                    Destroy(currObj.m_highlight.Find("Crown").gameObject);
+                if (currObj.m_highlight.Find("Beacon"))
+                    Destroy(currObj.m_highlight.Find("Beacon").gameObject);
                 onObjectiveFinished?.Invoke(currObj, true);
 
                 return;
