@@ -66,6 +66,10 @@ public class PlayerHandler : BaseEntity
     private Slider m_armorBar;
     [SerializeField]
     private UnityEngine.UI.Image m_vignette;
+    [SerializeField]
+    private float healthLerpSpeed = 5;
+    [SerializeField]
+    private float armorLerpSpeed = 5;
 
     [Header("Configuration")]
     [SerializeField]
@@ -120,6 +124,7 @@ public class PlayerHandler : BaseEntity
 
     //Hidden variables
     private float _health, _armor;
+    private float m_uiHealth, m_uiArmor;
 
     //Getters/Setters
     public new float health {
@@ -158,6 +163,8 @@ public class PlayerHandler : BaseEntity
         m_armorBar.maxValue = m_maxArmor;
         rightHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
         leftHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
+        m_uiHealth = health; //initial values
+        m_uiArmor = armor; //initial values
         print("PlayerHandler started!");
     }
     
@@ -211,6 +218,11 @@ public class PlayerHandler : BaseEntity
         if (Input.GetKeyDown(KeyCode.G))
             Shake(0.2f);
 #endif
+
+        ////update ui
+        //m_healthBar.value = Mathf.Lerp(m_uiHealth, _health, Time.deltaTime * healthLerpSpeed);
+        //m_armorBar.value = Mathf.Lerp(m_uiArmor, _armor, Time.deltaTime * armorLerpSpeed);
+
     }
 
     private void FixedUpdate()
@@ -262,6 +274,9 @@ public class PlayerHandler : BaseEntity
         transform.SetPositionAndRotation(origPos, origRot);
         GetComponent<CharacterController>().enabled = true;
         m_camScreenFade.FadeIn();
+        //Fix the thingy
+        health = m_maxHealth;
+        armor = m_maxArmor;
         isResettingPose = false;
     }
 
