@@ -336,6 +336,13 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
             //currentState = _EnemyState.DIE;
             //m_Animator.SetBool("Explode", true);
         }
+
+        if (collision.gameObject.tag == "Bullet")
+        {
+            takeDamage(40);
+            //collision.gameObject.SetActive(false);
+            collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
+        }
     }
 
     //public float GetMoveSpeed()

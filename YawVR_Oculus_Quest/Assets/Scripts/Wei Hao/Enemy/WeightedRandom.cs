@@ -48,6 +48,12 @@ public class WeightedRandom : MonoBehaviour
         weights[Rarity.omega] = 7;
         weights[Rarity.alpha] = 5;
 
+        //weights[Rarity.noRarity] = 1;
+        //weights[Rarity.delta] = 1;
+        //weights[Rarity.beta] = 1;
+        //weights[Rarity.omega] = 1;
+        //weights[Rarity.alpha] = 50;
+
         weightTotal = 0;
         foreach (int w in weights)
         {

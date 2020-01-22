@@ -223,6 +223,9 @@ public class LightMech2 : EnemyBase , IPooledObject
 
         //Add to Quadtree
         AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
+
+        //Debug.Log("HP = " + health);
+        //Debug.Log("DMG = " + );
     }
 
     // Update is called once per frame
@@ -325,7 +328,7 @@ public class LightMech2 : EnemyBase , IPooledObject
 
         if (collision.gameObject.tag == "Bullet")
         {
-            takeDamage(1);
+            takeDamage(40);
             //collision.gameObject.SetActive(false);
             collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
         }
