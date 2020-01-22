@@ -56,7 +56,7 @@ public class NormalArmWeapon : MechBaseWeapon
 
     public override bool UpdateUI()
     {
-        GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, 0, 0);
+        GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, 0, 0,1);
         return true;
     }
 

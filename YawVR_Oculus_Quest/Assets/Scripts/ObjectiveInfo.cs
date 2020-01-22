@@ -15,15 +15,16 @@ public class ObjectiveInfo
     public float m_initialTime = 30;
     public float m_timer = 0;
     public float m_spawnTime = 7;
-   // public UnityEngine.UI.Text m_panelUI;
-    public TextMeshProUGUI m_panelUI;
+    // public UnityEngine.UI.Text m_panelUI;
+    public ObjectivesGUIInfo panelInfo;
 }
 
 [System.Serializable]
 public class ObjectivesGUIInfo
 {
     public TextMeshProUGUI panelText;
-    public UnityEngine.UI.Image panelFirstFill;
-    public UnityEngine.UI.Image panelSecondFill;
     public TextMeshProUGUI panelProgress;
+    public UnityEngine.UI.Image firstFill;
+    public UnityEngine.UI.Image secondFill;
+    public UnityEngine.UI.Image objectiveResult; //temporary solution
 }

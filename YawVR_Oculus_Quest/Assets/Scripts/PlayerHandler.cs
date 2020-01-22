@@ -65,11 +65,15 @@ public class PlayerHandler : BaseEntity
     [SerializeField]
     private Slider m_armorBar;
     [SerializeField]
+    private Image[] m_warningUI;
+    [SerializeField]
     private UnityEngine.UI.Image m_vignette;
     [SerializeField]
     private float healthLerpSpeed = 5;
     [SerializeField]
     private float armorLerpSpeed = 5;
+    [SerializeField]
+    private float warningUIFadeSpeed = 5;
 
     [Header("Configuration")]
     [SerializeField]
@@ -223,8 +227,30 @@ public class PlayerHandler : BaseEntity
         //m_healthBar.value = Mathf.Lerp(m_uiHealth, _health, Time.deltaTime * healthLerpSpeed);
         //m_armorBar.value = Mathf.Lerp(m_uiArmor, _armor, Time.deltaTime * armorLerpSpeed);
 
+        if(health < m_maxHealth * 0.5f)
+        {
+            kms += Time.deltaTime * warningUIFadeSpeed;
+            for(int i =0; i < m_warningUI.Length; ++i)
+            {
+                Color color = m_warningUI[i].color;
+                color.a = Mathf.PingPong(kms, 1);
+                m_warningUI[i].color = color;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < m_warningUI.Length; ++i)
+            {
+                Color color = m_warningUI[i].color;
+                color.a = Mathf.Lerp(color.a, 0, Time.deltaTime * warningUIFadeSpeed);
+                m_warningUI[i].color = color;
+            }
+        }
+
+
     }
 
+    private float kms = 0;
     private void FixedUpdate()
     {
         if (isShaking && ++shakeInterval % 2 == 0 && shakeElapsed > 0)
@@ -360,4 +386,5 @@ public class PlayerHandler : BaseEntity
         InvokeDie();
         ResetPose();
     }
+
 }

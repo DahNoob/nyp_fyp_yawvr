@@ -91,10 +91,10 @@ public class Game : MonoBehaviour
             }
             if (!currObj.m_highlight.gameObject.activeInHierarchy)
             {
-                GUIManager.instance.UpdateObjectiveProgress(ref currObj, currentObjectiveIndex);
+                GUIManager.instance.SucceededObjectiveGUI(ref currObj, currentObjectiveIndex);
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
-                currObj.m_panelUI.color = Color.green;
+                currObj.panelInfo.panelText.color = Color.green;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, true);
@@ -106,7 +106,7 @@ public class Game : MonoBehaviour
                 GUIManager.instance.FailedObjectiveGUI(ref currObj, currentObjectiveIndex);
                 print("Current Objective ended with status <Failed objective>!");
                 currObj.m_completed = true;
-                currObj.m_panelUI.color = Color.red;
+                currObj.panelInfo.panelText.color = Color.red;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, false);
@@ -132,7 +132,7 @@ public class Game : MonoBehaviour
                 GUIManager.instance.FailedObjectiveGUI(ref currObj, currentObjectiveIndex);
                 print("Current Objective ended with status <Failed objective>!");
                 currObj.m_completed = true;
-                currObj.m_panelUI.color = Color.red;
+                currObj.panelInfo.panelText.color = Color.red;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, false);
@@ -144,10 +144,10 @@ public class Game : MonoBehaviour
             }
             else if (currObj.m_timeLeft <= 0)
             {
-                GUIManager.instance.UpdateObjectiveProgress(ref currObj, currentObjectiveIndex);
+                GUIManager.instance.SucceededObjectiveGUI(ref currObj, currentObjectiveIndex);
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
-                currObj.m_panelUI.color = Color.green;
+                currObj.panelInfo.panelText.color = Color.green;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
                 onObjectiveFinished?.Invoke(currObj, true);
@@ -268,7 +268,7 @@ public class Game : MonoBehaviour
                     }
                     GUIManager.instance.SetActiveObjective(m_objectives[i]);
                     m_objectives[i].m_inProgress = true;
-                    m_objectives[i].m_panelUI.color = Color.yellow;
+                    m_objectives[i].panelInfo.panelText.color = Color.yellow;
                     onObjectiveStarted?.Invoke(m_objectives[i]);
                     print("Current Objective started! : " + i);
                     break;
