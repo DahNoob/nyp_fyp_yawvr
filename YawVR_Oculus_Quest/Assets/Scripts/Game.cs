@@ -97,6 +97,10 @@ public class Game : MonoBehaviour
                 currObj.panelInfo.panelText.color = Color.green;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
+                if (currObj.m_highlight.Find("Crown"))
+                    Destroy(currObj.m_highlight.Find("Crown").gameObject);
+                if (currObj.m_highlight.Find("Beacon"))
+                    Destroy(currObj.m_highlight.Find("Beacon").gameObject);
                 onObjectiveFinished?.Invoke(currObj, true);
 
                 return;
@@ -109,6 +113,10 @@ public class Game : MonoBehaviour
                 currObj.panelInfo.panelText.color = Color.red;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
+                if (currObj.m_highlight.Find("Crown"))
+                    Destroy(currObj.m_highlight.Find("Crown").gameObject);
+                if (currObj.m_highlight.Find("Beacon"))
+                    Destroy(currObj.m_highlight.Find("Beacon").gameObject);
                 onObjectiveFinished?.Invoke(currObj, false);
 
                 return;
@@ -272,6 +280,7 @@ public class Game : MonoBehaviour
                         //should make it pick a random enemy but even more buffed up, and randomise wher it spawns???????? idk
                         EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, m_objectives[i].m_highlight.position, Quaternion.identity).GetComponent<EnemyBase>();
                         AttachBeacon(enemy.transform, m_bountyHuntEnemyColor);
+                        AttachCrown(enemy.transform);
                         enemy.SetMaxHealthMultiplier(2);
                         Destroy(m_objectives[i].m_highlight.gameObject);
                         m_objectives[i].m_highlight = enemy.transform;
@@ -283,6 +292,10 @@ public class Game : MonoBehaviour
                         //}
                         enemy.SetIconColor(m_bountyHuntEnemyColor);
                         enemy.SetIconSprite(Persistent.instance.MINIMAP_ICON_OBJECTIVE);
+                    }
+                    else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+                    {
+                        AttachCrown(m_objectives[i].m_highlight.transform);
                     }
                     GUIManager.instance.SetActiveObjective(m_objectives[i]);
                     m_objectives[i].m_inProgress = true;
@@ -324,5 +337,11 @@ public class Game : MonoBehaviour
         beacon.GetComponent<LineRenderer>().endColor = _color;
         beacon.name = "Beacon";
         return beacon;
+    }
+    private GameObject AttachCrown(Transform _transform)
+    {
+        GameObject crown = Instantiate(Persistent.instance.PREFAB_CROWN, _transform);
+        crown.name = "Crown";
+        return crown;
     }
 }

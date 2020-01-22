@@ -25,6 +25,7 @@ public class Persistent : MonoBehaviour
 
     public GameObject PREFAB_MODULE_ICON;
     public GameObject PREFAB_BEACON;
+    public GameObject PREFAB_CROWN;
     public Sprite MINIMAP_ICON_ENEMY;
     public Sprite MINIMAP_ICON_OBJECTIVE;
 
