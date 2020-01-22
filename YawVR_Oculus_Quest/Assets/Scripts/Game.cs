@@ -91,7 +91,7 @@ public class Game : MonoBehaviour
             }
             if (!currObj.m_highlight.gameObject.activeInHierarchy)
             {
-                GUIManager.instance.SucceededObjectiveGUI(ref currObj, currentObjectiveIndex);
+                GUIManager.instance.SucceededObjectiveGUI(ref currObj);
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
                 currObj.panelInfo.panelText.color = Color.green;
@@ -107,7 +107,7 @@ public class Game : MonoBehaviour
             }
             else if (currObj.m_timeLeft <= 0)
             {
-                GUIManager.instance.FailedObjectiveGUI(ref currObj, currentObjectiveIndex);
+                GUIManager.instance.FailedObjectiveGUI(ref currObj);
                 print("Current Objective ended with status <Failed objective>!");
                 currObj.m_completed = true;
                 currObj.panelInfo.panelText.color = Color.red;
@@ -137,7 +137,7 @@ public class Game : MonoBehaviour
             }
             if (currObj.m_highlight == null)
             {
-                GUIManager.instance.FailedObjectiveGUI(ref currObj, currentObjectiveIndex);
+                GUIManager.instance.FailedObjectiveGUI(ref currObj);
                 print("Current Objective ended with status <Failed objective>!");
                 currObj.m_completed = true;
                 currObj.panelInfo.panelText.color = Color.red;
@@ -152,7 +152,7 @@ public class Game : MonoBehaviour
             }
             else if (currObj.m_timeLeft <= 0)
             {
-                GUIManager.instance.SucceededObjectiveGUI(ref currObj, currentObjectiveIndex);
+                GUIManager.instance.SucceededObjectiveGUI(ref currObj);
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
                 currObj.panelInfo.panelText.color = Color.green;
@@ -166,7 +166,7 @@ public class Game : MonoBehaviour
 
                 return;
             }
-            GUIManager.instance.UpdateObjectiveProgress(ref currObj, currentObjectiveIndex);
+            GUIManager.instance.UpdateObjectiveProgress(ref currObj);
         }
     }
 
