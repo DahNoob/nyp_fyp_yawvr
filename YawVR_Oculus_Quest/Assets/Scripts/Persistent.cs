@@ -29,9 +29,15 @@ public class Persistent : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            instance.GO_STATIC = GameObject.Find("Static");
+            instance.GO_DYNAMIC = GameObject.Find("Dynamic");
+            return;
+        }
+        instance = this;
         DontDestroyOnLoad(this);
-        if (instance == null)
-            instance = this;
         GO_STATIC = GameObject.Find("Static");
         GO_DYNAMIC = GameObject.Find("Dynamic");
         print("Persistent awake!");
