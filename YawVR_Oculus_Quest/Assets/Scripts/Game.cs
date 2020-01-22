@@ -82,7 +82,7 @@ public class Game : MonoBehaviour
             {
                 currObj.m_timer -= currObj.m_spawnTime;
                 print("Spawn Enemies!");
-                for (int i = 0; i < 3; ++i)
+                for (int i = 0; i < Random.Range(1, 4); ++i)
                 {
                     //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
                     EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
@@ -120,7 +120,7 @@ public class Game : MonoBehaviour
             {
                 currObj.m_timer -= currObj.m_spawnTime;
                 print("Spawn Enemies!");
-                for (int i = 0; i < 3; ++i)
+                for (int i = 0; i < Random.Range(1, 4); ++i)
                 {
                     //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
                     EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
@@ -166,7 +166,9 @@ public class Game : MonoBehaviour
 
     private void ApplyObjectives()
     {
+        
         MapPointsHandler mph = MapPointsHandler.instance;
+        //SortedDictionary<int, float> distances = new SortedDictionary<int, float>();
         List<int> allocatedPoints = new List<int>();
         //System.Array.Resize(ref m_objectives, mph.m_variedObjectives.possibleObjectivePoints.Length);
         System.Array.Resize(ref m_objectives, m_maxObjectives);
@@ -185,6 +187,7 @@ public class Game : MonoBehaviour
                 //Debug.Log(m_enemies[2].nameInPool);
                 // EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
                 GameObject marker = Instantiate(m_bountyHuntObjectivePrefab, objectivePos, Quaternion.identity, Persistent.instance.GO_STATIC.transform);
+                AttachBeacon(marker.transform, Color.red);
                 m_objectives[currObjectivesCount].m_highlight = marker.transform;
                 print("Objective deployed : Bounty Hunt @ " + objIndex);
             }
@@ -193,14 +196,28 @@ public class Game : MonoBehaviour
                 RaycastHit hit;
                 Physics.Raycast(objectivePos, -Vector3.up, out hit);
                 BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
+                AttachBeacon(structure.transform, Color.blue);
                 structure.onEntityDie += Structure_onEntityDie;
                 m_objectives[currObjectivesCount].m_highlight = structure.transform;
                 print("Objective deployed : Defend Structure @ " + objIndex);
             }
             GUIManager.instance.AddObjectiveToPanel(ref m_objectives[currObjectivesCount], currObjectivesCount);
+            //distances.Add(currObjectivesCount, (m_objectives[currObjectivesCount].m_highlight.position - PlayerHandler.instance.transform.position).sqrMagnitude);
             allocatedPoints.Add(randomisedPoint);
             currObjectivesCount++;
         }
+        //for (int i = 0; i < m_maxObjectives; ++i)
+        //{
+        //    if(tempderp[i] == distances[i])
+        //    {
+        //        if (i == 0)
+        //            m_objectives[i].m_highlight.Find("Beacon").GetComponent<LineRenderer>().endColor = Color.green;
+        //        else if (i == 1)
+        //            m_objectives[i].m_highlight.Find("Beacon").GetComponent<LineRenderer>().endColor = new Color(1, 0.6f, 0);
+        //        else
+        //            m_objectives[i].m_highlight.Find("Beacon").GetComponent<LineRenderer>().endColor = Color.red;
+        //    }
+        //}
         GUIManager.instance.SetActiveObjective(m_objectives[0]);
         //for (int i = 0; i < m_objectives.Length; ++i)
         //{
@@ -254,7 +271,8 @@ public class Game : MonoBehaviour
                     {
                         //should make it pick a random enemy but even more buffed up, and randomise wher it spawns???????? idk
                         EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, m_objectives[i].m_highlight.position, Quaternion.identity).GetComponent<EnemyBase>();
-                        enemy.SetMaxHealthMultiplier(5);
+                        AttachBeacon(enemy.transform, m_bountyHuntEnemyColor);
+                        enemy.SetMaxHealthMultiplier(2);
                         Destroy(m_objectives[i].m_highlight.gameObject);
                         m_objectives[i].m_highlight = enemy.transform;
                         //SpriteRenderer enemyMarker = enemy.GetComponentInChildren<SpriteRenderer>();
@@ -298,5 +316,13 @@ public class Game : MonoBehaviour
         }
         GUIManager.instance.SetActiveObjective();
         return false;
+    }
+
+    private GameObject AttachBeacon(Transform _transform, Color _color)
+    {
+        GameObject beacon = Instantiate(Persistent.instance.PREFAB_BEACON, _transform);
+        beacon.GetComponent<LineRenderer>().endColor = _color;
+        beacon.name = "Beacon";
+        return beacon;
     }
 }
