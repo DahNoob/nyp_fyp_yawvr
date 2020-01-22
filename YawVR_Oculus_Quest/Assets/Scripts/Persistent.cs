@@ -24,6 +24,7 @@ public class Persistent : MonoBehaviour
     public GameObject GO_DYNAMIC { get; private set; }
 
     public GameObject PREFAB_MODULE_ICON;
+    public GameObject PREFAB_BEACON;
     public Sprite MINIMAP_ICON_ENEMY;
     public Sprite MINIMAP_ICON_OBJECTIVE;
 
