@@ -5011,10 +5011,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6089654258507672792}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.55
+  m_Radius: 1.59
   m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!114 &4365341723221442510
 MonoBehaviour:
@@ -5372,6 +5372,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rolly
       objectReference: {fileID: 0}
+    - target: {fileID: 2971194477118118590, guid: c44291a3ad082c44b9de2eb70633fb74,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688954112297802926, guid: c44291a3ad082c44b9de2eb70633fb74,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2239837789073014445, guid: c44291a3ad082c44b9de2eb70633fb74,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5425,16 +5435,6 @@ PrefabInstance:
     - target: {fileID: 2239837789073014445, guid: c44291a3ad082c44b9de2eb70633fb74,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2971194477118118590, guid: c44291a3ad082c44b9de2eb70633fb74,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1688954112297802926, guid: c44291a3ad082c44b9de2eb70633fb74,
-        type: 3}
-      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

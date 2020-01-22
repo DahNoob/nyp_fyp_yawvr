@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using OVR;
 
 /******************************  
@@ -125,6 +126,7 @@ public class PlayerHandler : BaseEntity
     private bool isShaking = false;
     private float armorRegenElapsed = 0;
     private bool startedRecharge = false;
+    private float DEV_resetLevelTimer = 0;
 
     //Hidden variables
     private float _health, _armor;
@@ -222,7 +224,15 @@ public class PlayerHandler : BaseEntity
         if (Input.GetKeyDown(KeyCode.G))
             Shake(0.2f);
 #endif
-
+        if(Input.GetKey(KeyCode.R) || (OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown, OVRInput.Controller.RTouch) && OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown, OVRInput.Controller.LTouch)))
+        {
+            DEV_resetLevelTimer += Time.deltaTime;
+            if (DEV_resetLevelTimer > 2)
+            {
+                DEV_resetLevelTimer = -9999999;
+                StartCoroutine(SetNextLevel("NewDesertMap"));
+            }
+        }
         ////update ui
         //m_healthBar.value = Mathf.Lerp(m_uiHealth, _health, Time.deltaTime * healthLerpSpeed);
         //m_armorBar.value = Mathf.Lerp(m_uiArmor, _armor, Time.deltaTime * armorLerpSpeed);
@@ -304,6 +314,14 @@ public class PlayerHandler : BaseEntity
         health = m_maxHealth;
         armor = m_maxArmor;
         isResettingPose = false;
+    }
+
+    public IEnumerator SetNextLevel(string _sceneName)
+    {
+        isResettingPose = true;
+        m_camScreenFade.FadeOut();
+        yield return new WaitForSeconds(m_camScreenFade.fadeTime + 0.1f);
+        SceneManager.LoadScene(_sceneName);
     }
 
     public PilotController GetRightPilotController() { return m_rightController; }
