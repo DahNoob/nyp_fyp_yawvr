@@ -245,7 +245,7 @@ public class GUIManager : MonoBehaviour
         //Set the reticle position based on raycasted position
         SetReticlePosition(_controller, hitPoint);
         //Set hit object name by accessing the object
-        SetHitObjectName(_controller, hitObject);
+        //SetHitObjectName(_controller, hitObject);
         //Set the hit color by accessing the layer of the object
         SetReticleColor(_controller, hitObject, useTag);
         //Scale the reticle to be correct scale
