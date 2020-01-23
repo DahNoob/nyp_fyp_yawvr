@@ -39,6 +39,14 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
     [SerializeField]
     protected Transform m_spawnPivotLeft;
     [SerializeField]
+    protected ParticleSystem m_effectRight_Wind;
+    [SerializeField]
+    protected ParticleSystem m_effectLeft_Wind;
+    [SerializeField]
+    protected ParticleSystem m_effectRight_Spawn;
+    [SerializeField]
+    protected ParticleSystem m_effectLeft_Spawn;
+    [SerializeField]
     protected GameObject m_lesserEnemy;
 
     //Local variables
@@ -137,6 +145,8 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
             Physics.IgnoreCollision(col, ignoredColliders[i], false);
         }
         ignoredColliders.Clear();
+        m_effectLeft_Wind.Stop();
+        m_effectRight_Wind.Stop();
     }
 
     public void SpawnEnemy()
@@ -148,6 +158,10 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         Physics.IgnoreCollision(GetComponent<Collider>(), newEnemy, true);
         ignoredColliders.Add(newEnemy);
         newEnemy.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 500000.0f, 1200000.0f));
+        if (activeSideIsRight)
+            m_effectRight_Spawn.Emit(1);
+        else
+            m_effectLeft_Spawn.Emit(1);
     }
     public void FlipActiveSide()
     {
@@ -163,6 +177,10 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
             activeSideIsRight = hittedRight;
         }
         anim.SetFloat("Blend", activeSideIsRight ? 1.0f : 0.0f);
+        if (activeSideIsRight)
+            m_effectRight_Wind.Play();
+        else
+            m_effectLeft_Wind.Play();
         //activeSideIsRight = !activeSideIsRight;
     }
 }
