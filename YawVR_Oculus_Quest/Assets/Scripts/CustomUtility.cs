@@ -36,4 +36,5 @@ public class CustomUtility
         return _val.x < _EPSILON && _val.x > -_EPSILON &&
                _val.y < _EPSILON && _val.y > -_EPSILON;
     }
+    public static Vector2 ToVector2(Vector3 _vector3) => new Vector2(_vector3.x, _vector3.z);
 }
