@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class FM3_Spawn : SMB_BaseEnemyState
 {
-    [Header("FM3 Spawn State Configuration")]
-    [SerializeField]
-    protected int m_spawnIterations = 3;
+    //[Header("FM3 Spawn State Configuration")]
+    //[SerializeField]
+    //protected int m_spawnIterations = 3;
 
-    //Local variables
-    protected int m_currentIteration = 0;
+    ////Local variables
+    //protected int m_currentIteration = 0;
 
     private Rigidbody rb;
 
@@ -63,9 +63,7 @@ public class FM3_Spawn : SMB_BaseEnemyState
 
     private IEnumerator DropCargo(Animator animator)
     {
-        yield return new WaitForSeconds(animationTime);
-
-        
+        yield return new WaitForSeconds(animationTime);       
     }
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
