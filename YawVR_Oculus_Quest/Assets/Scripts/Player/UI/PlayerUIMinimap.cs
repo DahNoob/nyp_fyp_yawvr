@@ -54,14 +54,18 @@ public class PlayerUIMinimap
     [SerializeField]
     private float m_minimapPollRate;
 
+    public GameObject lmao;
+
 
     //Local variables
     private Transform m_playerReference;
     private Vector3 desiredPosition;
     private Vector3 previousDesiredPosition;
     private float lerpTime;
+    //Minimap ranges
+    private float customRange = 20;
+    private float customRangeTwo = 0.1f;
 
-    private Dictionary<GameObject, bool> minimapPairDictionary = new Dictionary<GameObject, bool>();
 
     // Start is called before the first frame update
     public void Start()
@@ -134,8 +138,6 @@ public class PlayerUIMinimap
         return true;
     }
 
-    public GameObject lmao;
-
     public IEnumerator UpdateMinimap()
     {
         while (true)
@@ -145,21 +147,27 @@ public class PlayerUIMinimap
             
             if(queries.Count >0 && queries[0] != null)
             {
-                
+                lmao.SetActive(true);
                 RectTransform lmaoTransform = lmao.GetComponent<RectTransform>();
-                Vector2 thisPosition = CustomUtility.ToVector2(m_playerReference.transform.position);
-                Vector2 thatPosition = CustomUtility.ToVector2(queries[0].transform.position);
-                Vector3 displacement = Vector3.Scale(queries[0].transform.position - m_playerReference.transform.position, new Vector3(1, 0, 1));
+                //Vector3 displacement = Vector3.Scale(queries[0].transform.position - m_playerReference.transform.position, new Vector3(1, 0, 1));
+                Vector3 displacement = (queries[0].transform.position - m_playerReference.transform.position);
                 Vector3 bap = displacement.normalized;
-                float dist = displacement.magnitude;
                 float lol = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
                 lmaoTransform.localPosition = Vector3.zero;
                 lmaoTransform.localEulerAngles = new Vector3(0, 0, lol + PlayerHandler.instance.transform.eulerAngles.y + 180);
                 RectTransform childTransform = lmaoTransform.GetChild(0).GetComponent<RectTransform>();
                 childTransform.rotation = Quaternion.Euler(new Vector3(0, PlayerHandler.instance.transform.eulerAngles.y, 0));
-                lmaoTransform.Translate(0, Mathf.Min(0.14f, displacement.sqrMagnitude * 0.00005f), 0);
+
+                float displacementMagnitude = displacement.magnitude;
+                float normalized = CustomUtility.Normalize(displacementMagnitude, 0, 15);
+                float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
+                lmaoTransform.Translate(0, normalizedCustomRange, 0);
             }
-            yield return null;
+            else
+            {
+                lmao.SetActive(false);
+            }
+            yield return new WaitForEndOfFrame();
             //yield return new WaitForSeconds(m_minimapPollRate);
         }
     }

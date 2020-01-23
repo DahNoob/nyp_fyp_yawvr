@@ -44,7 +44,7 @@ public class CustomUtility
         return (inFloat - min) / (max - min);
     }
 
-    float NormalizeCustomRange(float inFloat, float minRange, float maxRange)
+    public static float NormalizeCustomRange(float inFloat, float minRange, float maxRange)
     {
         return minRange + (maxRange - minRange) * inFloat;
     }

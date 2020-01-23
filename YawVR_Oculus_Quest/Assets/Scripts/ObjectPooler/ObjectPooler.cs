@@ -253,6 +253,16 @@ public class ObjectPooler : MonoBehaviour
 
     }
 
+    public int AmountActiveInt(PoolObject.OBJECTTYPES type)
+    {
+        int tag = (int)(type);
+
+        if (poolDictionary == null || poolDictionary[tag] == null)
+            return -1;
+
+        return poolDictionary[tag].Count;
+    }
+
     public void DisableInPool(PoolObject.OBJECTTYPES type)
     {
         //Guaranteed type, dont need to check, i hope.
