@@ -81,7 +81,7 @@ public class ControllerFollower : MonoBehaviour
 
     public void Bump(Vector3 _posOffset, Vector3 _rotOffset = new Vector3())
     {
-        currPosition += _posOffset;
+        currPosition += Vector3.RotateTowards(_posOffset, transform.forward, 0.0f, 0.0f);
         currRotation *= Quaternion.Euler(_rotOffset);
     }
 

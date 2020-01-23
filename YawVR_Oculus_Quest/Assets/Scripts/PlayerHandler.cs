@@ -225,7 +225,7 @@ public class PlayerHandler : BaseEntity
         if (Input.GetKeyDown(KeyCode.G))
             Shake(0.2f);
 #endif
-        if(Input.GetKey(KeyCode.R) || (OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown, OVRInput.Controller.RTouch) && OVRInput.Get(OVRInput.Button.PrimaryThumbstickDown, OVRInput.Controller.LTouch)))
+        if(Input.GetKey(KeyCode.R) || (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.RTouch) && OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.LTouch)))
         {
             DEV_resetLevelTimer += Time.deltaTime;
             if (DEV_resetLevelTimer > 2)
@@ -233,6 +233,10 @@ public class PlayerHandler : BaseEntity
                 DEV_resetLevelTimer = -9999999;
                 StartCoroutine(SetNextLevel("NewDesertMap"));
             }
+        }
+        else
+        {
+            DEV_resetLevelTimer = 0;
         }
         ////update ui
         //m_healthBar.value = Mathf.Lerp(m_uiHealth, _health, Time.deltaTime * healthLerpSpeed);

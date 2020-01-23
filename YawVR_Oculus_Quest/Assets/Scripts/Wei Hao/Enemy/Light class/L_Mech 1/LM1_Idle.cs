@@ -6,15 +6,17 @@ public class LM1_Idle : SMB_BaseEnemyState
 {
     [Header("Enemy Walk State Configuration")]
     [SerializeField]
-    protected float m_detectRange = 70.0f;
-    //[SerializeField]
-    //protected float m_fieldOfViewAngle = 60.0f;
+    protected float m_detectRange = 10.0f;
+    [SerializeField]
+    protected float m_detectLongRange = 80.0f;
+    [SerializeField]
+    protected float m_fieldOfViewAngle = 60.0f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void Check(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //PlayerHandler player = PlayerHandler.instance;
-        animator.SetBool("Alert", CustomUtility.IsHitRadius(enemy.m_target.position, enemy.transform.position, m_detectRange));
+        bool isInViewRange = Vector2.Angle(CustomUtility.ToVector2(enemy.transform.forward), CustomUtility.ToVector2(enemy.m_target.position - enemy.transform.position)) < m_fieldOfViewAngle;
+        animator.SetBool("Alert", CustomUtility.IsHitRadius(enemy.m_target.position, enemy.transform.position, isInViewRange ? m_detectLongRange : m_detectRange));
         //Debug.Log("Is the LM1's target nearby? " + animator.GetBool("Alert"));
     }
 
