@@ -11,7 +11,7 @@ public class LM1_Alert : SMB_BaseEnemyState
 
     public override void Enter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemy.GetComponent<Light_Enemy_1>().m_alertParticleSystem.Emit(1);
+        enemy.GetComponent<Light_Enemy_1>().alertParticleSystem.Emit(1);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

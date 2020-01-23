@@ -5,25 +5,24 @@ using UnityEngine.AI;
 
 public class LM1_Shoot : SMB_BaseEnemyState
 {
-    public Transform projectile;
-    private Transform PlayerTransform;
-    private Transform m_projectileOriginL;
-    private Transform m_projectileOriginR;
-
-    public NavMeshAgent navMeshAgent;
-
-    // Time taken before attack is activated
-    private float attackWindUp = 0.0f;
-
-    private bool shoot = false;
-
-    [SerializeField]
     // Dodge Check
+    [SerializeField]
     private float dodgeCheck = 2.0f;
     [SerializeField]
     protected float m_DodgeDetectRange = 10.0f;
     [SerializeField]
     protected float m_detectRange = 15.0f;
+
+
+    
+    [Header("LM1 Shoot State Configuration")]
+    [SerializeField]
+    protected NavMeshAgent navMeshAgent;
+
+    // Time taken before attack is activated
+    private float attackWindUp = 0.0f;
+
+    private bool shoot = false;
 
     public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
@@ -38,16 +37,12 @@ public class LM1_Shoot : SMB_BaseEnemyState
     public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //animator.SetBool("Shoot", false);
-        PlayerTransform = PlayerHandler.instance.transform;
-        m_projectileOriginL = animator.transform.Find("LBlaster Projectile Origin");
-        m_projectileOriginR = animator.transform.Find("RBlaster Projectile Origin");
-        navMeshAgent = animator.GetComponent<NavMeshAgent>();
-        navMeshAgent.isStopped = true;
+        //navMeshAgent.isStopped = true;
     }
 
     public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        Vector3 relativePos = PlayerTransform.position - animator.transform.position;
+        Vector3 relativePos = enemy.m_target.position - animator.transform.position;
 
         Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
         animator.transform.rotation = Quaternion.Lerp(animator.transform.rotation, toRotation, animator.GetComponent<Light_Enemy_1>().GetRotationSpeed() * Time.deltaTime);
@@ -58,7 +53,7 @@ public class LM1_Shoot : SMB_BaseEnemyState
             shoot = true;
             if (shoot)
             {
-                animator.GetComponent<Light_Enemy_1>().StartCoroutine(EnemyShoot(animator));
+                animator.GetComponent<Light_Enemy_1>().Shoot_Async();//StartCoroutine(EnemyShoot(animator));
                 attackWindUp = 2.0f;
                 shoot = false;
             }
@@ -87,23 +82,21 @@ public class LM1_Shoot : SMB_BaseEnemyState
         //navMeshAgent.isStopped = true;
     }
 
-    IEnumerator EnemyShoot(Animator animator)
-    {
-        //Debug.Log("Fire start");
-        //BaseProjectile _projectileL = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        //BaseProjectile _projectileL = Instantiate(projectile, m_projectileOriginL.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        BaseProjectile _projectileL = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, m_projectileOriginL.position, Quaternion.identity).GetComponent<BaseProjectile>();
-        m_projectileOriginL.LookAt(enemy.m_target);
-        _projectileL.Init(m_projectileOriginL);
+    //IEnumerator EnemyShoot(Animator animator)
+    //{
+    //    Light_Enemy_1 lm1 = enemy.GetComponent<Light_Enemy_1>();
+    //    //Debug.Log("Fire start");
+    //    BaseProjectile _projectileL = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, lm1.leftProjectileOrigin.position, Quaternion.identity).GetComponent<BaseProjectile>();
+    //    lm1.leftProjectileOrigin.LookAt(enemy.m_target);
+    //    _projectileL.Init(lm1.leftProjectileOrigin);
 
-        yield return new WaitForSeconds(0.2f);
+    //    yield return new WaitForSeconds(0.2f);
 
-        //Debug.Log("2nd Fire start");
-        //BaseProjectile _projectileR = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        BaseProjectile _projectileR = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, m_projectileOriginR.position, Quaternion.identity).GetComponent<BaseProjectile>();
-        m_projectileOriginR.LookAt(enemy.m_target);
-        _projectileR.Init(m_projectileOriginR);
-    }
+    //    //Debug.Log("2nd Fire start");
+    //    BaseProjectile _projectileR = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, lm1.rightProjectileOrigin.position, Quaternion.identity).GetComponent<BaseProjectile>();
+    //    lm1.rightProjectileOrigin.LookAt(enemy.m_target);
+    //    _projectileR.Init(lm1.rightProjectileOrigin);
+    //}
 
     //public static bool IsOutsideHitRadius(Vector3 _pos1, Vector3 _pos2, float _radius)
     //{

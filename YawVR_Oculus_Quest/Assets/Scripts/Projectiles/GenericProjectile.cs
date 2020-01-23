@@ -51,9 +51,9 @@ public class GenericProjectile : BaseProjectile, IPooledObject
             BaseEntity eb = collision.collider.GetComponent<BaseEntity>();
             if (eb)
             {
-                print(m_projectileInfo.projectileName + " damage is " + m_projectileInfo.damage);
+                //print(m_projectileInfo.projectileName + " damage is " + m_projectileInfo.damage);
                 eb.takeDamage(m_projectileInfo.damage);
-                print(eb.name + " is " + eb.GetHealth());
+                //print(eb.name + " is " + eb.GetHealth());
             }
         }
         OnObjectDestroy();

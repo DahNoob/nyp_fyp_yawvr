@@ -44,6 +44,9 @@ public class Game : MonoBehaviour
     [SerializeField]
     private int m_maxObjectives = 3;
     [SerializeField]
+    [Range(0.0f, 100.0f)]
+    private float m_enemySpawnProbability = 20;
+    [SerializeField]
     private Color m_bountyHuntEnemyColor;
     [SerializeField]
     private GameObject m_bountyHuntObjectivePrefab;
@@ -231,30 +234,13 @@ public class Game : MonoBehaviour
         //    }
         //}
         GUIManager.instance.SetActiveObjective(m_objectives[0]);
-        //for (int i = 0; i < m_objectives.Length; ++i)
-        //{
-        //    var objIndex = mph.m_variedObjectives.possibleObjectivePoints[i];
-        //    Vector3 objectivePos = mph.m_mapPoints[objIndex];
-        //    m_objectives[i] = new ObjectiveInfo();
-        //    m_objectives[i].type = Random.Range(0, 1000) > 500 ? VariedObjectives.TYPE.BOUNTYHUNT : VariedObjectives.TYPE.DEFEND_STRUCTURE;
-        //    if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
-        //    {
-        //        //Debug.Log(m_enemies[2].nameInPool);
-        //        // EnemyBase enemy = Instantiate(m_enemies[2].enemy, objectivePos, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
-        //        GameObject marker = Instantiate(m_bountyHuntObjectivePrefab, objectivePos, Quaternion.identity, Persistent.instance.GO_STATIC.transform);
-        //        m_objectives[i].m_highlight = marker.transform;
-        //        print("Objective deployed : Bounty Hunt @ " + objIndex);
-        //    }
-        //    else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
-        //    {
-        //        RaycastHit hit;
-        //        Physics.Raycast(objectivePos, -Vector3.up, out hit);
-        //        BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
-        //        structure.onEntityDie += Structure_onEntityDie;
-        //        m_objectives[i].m_highlight = structure.transform;
-        //        print("Objective deployed : Defend Structure @ " + objIndex);
-        //    }
-        //}
+        for (int i = 0; i < MapPointsHandler.instance.m_mapPoints.Count; ++i)
+        {
+            if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability)
+            {
+                EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[Random.Range(0, m_enemies.Length)].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
+            }
+        }
     }
 
     private void Enemy_onEntityDie(BaseEntity _entity)

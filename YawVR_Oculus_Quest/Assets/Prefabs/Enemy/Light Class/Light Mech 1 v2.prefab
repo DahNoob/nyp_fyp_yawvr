@@ -98,7 +98,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 400
-  m_StoppingDistance: 0
+  m_StoppingDistance: 8.11
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -126,12 +126,15 @@ MonoBehaviour:
     type: 3}
   m_bodyTransform: {fileID: 3728063277056559000}
   m_minimapIcon: {fileID: 4819602024944468786}
+  m_navMeshAgent: {fileID: 8558538049834757912}
   showGizmos: 0
   queryBounds:
     m_position: {x: 0, y: 0, z: 0}
     m_width: 0
     m_height: 0
   m_alertParticleSystem: {fileID: 127418352710948151}
+  m_rightProjectileOrigin: {fileID: 8558538049064771934}
+  m_leftProjectileOrigin: {fileID: 8558538048228827961}
   projectile: {fileID: 0}
   poof: {fileID: 0}
   currentState: 0

@@ -22,7 +22,11 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
 {
     [Header("Light Mech 1 Resources")]
     [SerializeField]
-    public ParticleSystem m_alertParticleSystem;
+    private ParticleSystem m_alertParticleSystem;
+    [SerializeField]
+    private Transform m_rightProjectileOrigin;
+    [SerializeField]
+    private Transform m_leftProjectileOrigin;
     public enum _EnemyState
     {
         CHASE,
@@ -105,6 +109,23 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     private bool DMG;
     [SerializeField]
     private bool MS;
+
+    //Getters/setters
+    public ParticleSystem alertParticleSystem
+    {
+        get { return m_alertParticleSystem; }
+        private set { alertParticleSystem = value; }
+    }
+    public Transform rightProjectileOrigin
+    {
+        get { return m_rightProjectileOrigin; }
+        private set { m_rightProjectileOrigin = value; }
+    }
+    public Transform leftProjectileOrigin
+    {
+        get { return m_leftProjectileOrigin; }
+        private set { m_leftProjectileOrigin = value; }
+    }
 
     public void OnObjectSpawn()
     {
@@ -327,6 +348,11 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         return selectedBuff;
     }
 
+    public void Shoot_Async()
+    {
+        StartCoroutine(EnemyShoot());
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
@@ -337,12 +363,12 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
             //m_Animator.SetBool("Explode", true);
         }
 
-        if (collision.gameObject.tag == "Bullet")
-        {
-            takeDamage(40);
-            //collision.gameObject.SetActive(false);
-            collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
-        }
+        //if (collision.gameObject.tag == "Bullet")
+        //{
+        //    takeDamage(40);
+        //    //collision.gameObject.SetActive(false);
+        //    collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
+        //}
     }
 
     //public float GetMoveSpeed()
@@ -355,4 +381,21 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         return rotationSpeed;
     }
 
+    IEnumerator EnemyShoot()
+    {
+        //Debug.Log("Fire start");
+        //BaseProjectile _projectileL = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        //BaseProjectile _projectileL = Instantiate(projectile, m_projectileOriginL.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        BaseProjectile _projectileL = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, m_leftProjectileOrigin.position, Quaternion.identity).GetComponent<BaseProjectile>();
+        m_leftProjectileOrigin.LookAt(m_target);
+        _projectileL.Init(m_leftProjectileOrigin);
+
+        yield return new WaitForSeconds(0.2f);
+
+        //Debug.Log("2nd Fire start");
+        //BaseProjectile _projectileR = Instantiate(projectile, animator.transform.position + (PlayerTransform.position - animator.transform.position).normalized, Quaternion.LookRotation(PlayerTransform.position - animator.transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
+        BaseProjectile _projectileR = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, m_rightProjectileOrigin.position, Quaternion.identity).GetComponent<BaseProjectile>();
+        m_rightProjectileOrigin.LookAt(m_target);
+        _projectileR.Init(m_rightProjectileOrigin);
+    }
 }

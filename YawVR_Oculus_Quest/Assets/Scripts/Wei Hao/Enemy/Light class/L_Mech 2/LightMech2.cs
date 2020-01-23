@@ -326,12 +326,12 @@ public class LightMech2 : EnemyBase , IPooledObject
             m_Animator.SetBool("Explode", true);
         }
 
-        if (collision.gameObject.tag == "Bullet")
-        {
-            takeDamage(40);
-            //collision.gameObject.SetActive(false);
-            collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
-        }
+        //if (collision.gameObject.tag == "Bullet")
+        //{
+        //    takeDamage(40);
+        //    //collision.gameObject.SetActive(false);
+        //    collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
+        //}
     }
     //void OnCollisionEnter(Collision collision)
     //{

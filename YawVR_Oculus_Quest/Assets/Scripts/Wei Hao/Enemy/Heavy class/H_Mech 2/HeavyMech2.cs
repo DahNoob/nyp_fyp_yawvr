@@ -108,11 +108,11 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         //    m_Animator.SetBool("Explode", true);
         //}
 
-        if (collision.gameObject.tag == "Bullet")
-        {
-            takeDamage(10);
-            //collision.gameObject.SetActive(false);
-        }
+        //if (collision.gameObject.tag == "Bullet")
+        //{
+        //    takeDamage(10);
+        //    //collision.gameObject.SetActive(false);
+        //}
     }
 
     //shite implementation but wutever

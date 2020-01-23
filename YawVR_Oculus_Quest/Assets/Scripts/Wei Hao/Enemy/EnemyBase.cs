@@ -40,7 +40,10 @@ abstract public class EnemyBase : BaseEntity
     protected Transform m_bodyTransform;
     [SerializeField]
     protected SpriteRenderer m_minimapIcon;
+    [SerializeField]
+    protected UnityEngine.AI.NavMeshAgent m_navMeshAgent;
 
+    //Getters/setters
     public Transform m_target {
         get {
             if (_m_target == null)
@@ -49,6 +52,11 @@ abstract public class EnemyBase : BaseEntity
             return _m_target;
         }
         set { _m_target = value; }
+    }
+    public UnityEngine.AI.NavMeshAgent navMeshAgent
+    {
+        get { return m_navMeshAgent; }
+        private set { m_navMeshAgent = value; }
     }
 
     //Hidden variables
