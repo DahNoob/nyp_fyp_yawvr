@@ -12,11 +12,6 @@ public class PlayerUIManager : MonoBehaviour
     [Tooltip("Player's Minimap Component")]
     private PlayerUIMinimap m_playerMinimap;
 
-    [Header("Minimap Icon Configuration")]
-    [SerializeField]
-    [Tooltip("Player Minimap Icons Configuration")]
-    private PlayerUIMinimapIcons m_playerMinimapIcons;
-
     [Header("Player HUD Configuration")]
     //Will move to class later if there is time
     [SerializeField]
@@ -41,21 +36,12 @@ public class PlayerUIManager : MonoBehaviour
         get { return m_playerMinimap; }
         private set { }
     }
-    //Get stuff
-    public PlayerUIMinimapIcons playerMinimapIcons
-    {
-        get { return m_playerMinimapIcons; }
-        private set { }
-    }
 
     private void Awake()
     {
         if (instance == null)
             instance = this;
 
-        m_playerMinimapIcons.Awake();
-        //Check null functio nfor the icons
-        StartCoroutine(m_playerMinimapIcons.CheckNull());
     }
 
     // Start is called before the first frame update
@@ -68,26 +54,25 @@ public class PlayerUIManager : MonoBehaviour
             AddStringToProcessingQueue(startingFluffs);
         }
 
+        StartCoroutine(m_playerMinimap.UpdateMinimap());
+
     }
     // Update is called once per frame
     void Update()
     {
         m_playerMinimap.Update();
-        m_playerMinimapIcons.Update();
 
         if (m_processingQueue.Count > 0 && !isAlreadyTyping)
         {
             AddStringToSystemQueue(m_processingQueue.Dequeue());
-        }
-        else if (m_processingQueue.Count == 0 && !isAlreadyTyping)
-        {
-
         }
 
         //if (Input.GetKeyDown(KeyCode.R))
         //{
         //    AddStringToProcessingQueue(FormatFluff("Interesting, to say the least."));
         //}
+
+        m_playerMinimap.m_minimapBounds.position = transform.position;
     }
 
     public void AddStringToProcessingQueue(SystemFluffMessage fluffs)
@@ -164,6 +149,14 @@ public class PlayerUIManager : MonoBehaviour
     string FormatFluff(string message)
     {
         return "-" + message + "\n";
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+
+        Gizmos.DrawWireCube(m_playerMinimap.m_minimapBounds.position,
+            m_playerMinimap.m_minimapBounds.GetWidth() * 2);
     }
 }
 

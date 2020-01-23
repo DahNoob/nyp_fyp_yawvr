@@ -32,10 +32,9 @@ public class PoolObject
         LIGHT_MECH2,
         HEAVY_MECH2,
         LIGHT_MECH1,
-        TEST_PROJECTILE,
+        MINIMAP_ICONS,
         TOTAL_TYPES
     }
-
 
     public PoolObject(OBJECTTYPES types, GameObject _objToPool, int _amountToPool, int _amountToExpand)
     {

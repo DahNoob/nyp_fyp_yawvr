@@ -37,4 +37,17 @@ public class CustomUtility
                _val.y < _EPSILON && _val.y > -_EPSILON;
     }
     public static Vector2 ToVector2(Vector3 _vector3) => new Vector2(_vector3.x, _vector3.z);
+
+
+    public static float Normalize(float inFloat, float min, float max)
+    {
+        return (inFloat - min) / (max - min);
+    }
+
+    float NormalizeCustomRange(float inFloat, float minRange, float maxRange)
+    {
+        return minRange + (maxRange - minRange) * inFloat;
+    }
+
+
 }
