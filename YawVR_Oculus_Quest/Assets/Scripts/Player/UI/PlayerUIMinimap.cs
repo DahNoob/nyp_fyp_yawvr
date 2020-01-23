@@ -114,6 +114,9 @@ public class PlayerUIMinimap
             m_minimapCamera.transform.localPosition = Vector3.Lerp(m_minimapCamera.transform.localPosition, desiredPosition, lerpTime);
         }
 
+        m_minimapBounds.width = m_minimapCamera.orthographicSize;
+        m_minimapBounds.height = m_minimapCamera.orthographicSize;
+
     }
     bool AnimatedMinimap()
     {
@@ -159,7 +162,7 @@ public class PlayerUIMinimap
                 childTransform.rotation = Quaternion.Euler(new Vector3(0, PlayerHandler.instance.transform.eulerAngles.y, 0));
 
                 float displacementMagnitude = displacement.magnitude;
-                float normalized = CustomUtility.Normalize(displacementMagnitude, 0, 15);
+                float normalized = CustomUtility.Normalize(displacementMagnitude, 0, m_minimapCamera.orthographicSize);
                 float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
                 lmaoTransform.Translate(0, normalizedCustomRange, 0);
             }
