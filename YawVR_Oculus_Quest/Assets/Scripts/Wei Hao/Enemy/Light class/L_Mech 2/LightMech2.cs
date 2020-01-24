@@ -73,13 +73,15 @@ public class LightMech2 : EnemyBase , IPooledObject
     [SerializeField]
     private _Rarity rarity;
 
-    [Header("Roll Particle Systems")]
+    [Header("Particle Systems")]
     [SerializeField]
     private ParticleSystem m_dustEffect;
     [SerializeField]
     private ParticleSystem m_swirlEffect;
     [SerializeField]
     private ParticleSystem m_whirlwindEffect;
+    [SerializeField]
+    private ParticleSystem m_alertEffect;
 
     [Header("Death Particle Effect")]
     [SerializeField]
@@ -310,12 +312,14 @@ public class LightMech2 : EnemyBase , IPooledObject
             m_dustEffect.Play();
             m_swirlEffect.Play();
             m_whirlwindEffect.Play();
+            m_alertEffect.Play();
         }
         else
         {
             m_dustEffect.Stop();
             m_swirlEffect.Stop();
             m_whirlwindEffect.Stop();
+            m_alertEffect.Stop();
         }
     }
 
