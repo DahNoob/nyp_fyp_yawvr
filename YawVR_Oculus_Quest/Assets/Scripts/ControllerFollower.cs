@@ -18,7 +18,6 @@ public class ControllerFollower : MonoBehaviour
 {
     [Header("Settings")]
     public bool m_enabled = false;
-    public bool m_followCameraRotation = true;
 
     [Header("Configuration")]
     public OVRInput.Controller m_controller;
@@ -52,7 +51,7 @@ public class ControllerFollower : MonoBehaviour
         }
         else
         {
-            float camRot = (m_followCameraRotation ? Camera.main.transform.localEulerAngles.y : 0.0f);
+            float camRot = Camera.main.transform.localEulerAngles.y;
             Transform t = GetComponent<Transform>();
             goalPosition = /*Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * */m_origin.localPosition;
             goalRotation = m_origin.localRotation;
@@ -84,16 +83,4 @@ public class ControllerFollower : MonoBehaviour
         currPosition += Vector3.RotateTowards(_posOffset, transform.forward, 0.0f, 0.0f);
         currRotation *= Quaternion.Euler(_rotOffset);
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (prevPosition != gameObject.transform.localPosition)
-    //    {
-    //        float magnitude = CalculateFollowerSpeed();
-    //        float shakeStrength = Mathf.Lerp(0.0f, 1.0f, magnitude);
-    //        //print("shakeStrength : " + shakeStrength);
-    //        //VibrationManager.SetControllerVibration(m_controller, 8, 4, shakeStrength);
-    //        VibrationManager.SetControllerVibration(m_controller, 0.01f, magnitude);
-    //    }
-    //}
 }

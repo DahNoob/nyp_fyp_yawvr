@@ -339,6 +339,12 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     //    explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
     //}
 
+    public override void takeDamage(int damage)
+    {
+        base.takeDamage(damage);
+        print("bruh");
+        m_Animator.SetBool("Alert", true);
+    }
     public string StartBuff()
     {
         System.Random random = new System.Random();

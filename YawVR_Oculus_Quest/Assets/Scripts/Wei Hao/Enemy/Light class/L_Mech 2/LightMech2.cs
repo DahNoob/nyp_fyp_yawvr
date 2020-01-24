@@ -78,6 +78,8 @@ public class LightMech2 : EnemyBase , IPooledObject
     private ParticleSystem m_dustEffect;
     [SerializeField]
     private ParticleSystem m_swirlEffect;
+    [SerializeField]
+    private ParticleSystem m_whirlwindEffect;
 
     [Header("Death Particle Effect")]
     [SerializeField]
@@ -307,11 +309,13 @@ public class LightMech2 : EnemyBase , IPooledObject
         {
             m_dustEffect.Play();
             m_swirlEffect.Play();
+            m_whirlwindEffect.Play();
         }
         else
         {
             m_dustEffect.Stop();
             m_swirlEffect.Stop();
+            m_whirlwindEffect.Stop();
         }
     }
 

@@ -15,14 +15,18 @@ public class LM1_Idle : SMB_BaseEnemyState
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void Check(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        bool isInViewRange = Vector2.Angle(CustomUtility.ToVector2(enemy.transform.forward), CustomUtility.ToVector2(enemy.m_target.position - enemy.transform.position)) < m_fieldOfViewAngle;
-        animator.SetBool("Alert", CustomUtility.IsHitRadius(enemy.m_target.position, enemy.transform.position, isInViewRange ? m_detectLongRange : m_detectRange));
+        if(!animator.GetBool("Alert"))
+        {
+            bool isInViewRange = Vector2.Angle(CustomUtility.ToVector2(enemy.transform.forward), CustomUtility.ToVector2(enemy.m_target.position - enemy.transform.position)) < m_fieldOfViewAngle;
+            animator.SetBool("Alert", CustomUtility.IsHitRadius(enemy.m_target.position, enemy.transform.position, isInViewRange ? m_detectLongRange : m_detectRange));
+        }
+        
         //Debug.Log("Is the LM1's target nearby? " + animator.GetBool("Alert"));
     }
 
     public override void Enter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        animator.SetBool("Alert", false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
