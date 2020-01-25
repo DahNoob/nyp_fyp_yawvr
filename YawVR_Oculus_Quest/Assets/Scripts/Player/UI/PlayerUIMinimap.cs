@@ -56,6 +56,9 @@ public class PlayerUIMinimap
 
     public GameObject lmao;
 
+    [SerializeField]
+    private List<GameObject> minimapIconsList = new List<GameObject>();
+
 
     //Local variables
     private Transform m_playerReference;
@@ -63,8 +66,8 @@ public class PlayerUIMinimap
     private Vector3 previousDesiredPosition;
     private float lerpTime;
     //Minimap ranges
-    private float customRange = 20;
-    private float customRangeTwo = 0.1f;
+    public float customRange = 20;
+    public float customRangeTwo = 0.1f;
 
 
     // Start is called before the first frame update
@@ -140,20 +143,28 @@ public class PlayerUIMinimap
 
         return true;
     }
+    public List<GameObject> queries;
 
     public IEnumerator UpdateMinimap()
     {
         while (true)
         {
+            queries = QuadTreeManager.instance.QueryDynamicObjects(m_minimapBounds, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
+            //int queriesCount = queries.Count;
+            //Debug.Log(queriesCount + "/" + minimapIconsList.Count);
+            //while(minimapIconsList.Count < queriesCount)
+            //{
+            //    //Instantiate that thingy and do stuff
+            //    GameObject minimapIconObject = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.MINIMAP_ICONS, Vector3.zero, Quaternion.identity);
+            //    minimapIconsList.Add(minimapIconObject);
+            //}
 
-            List<GameObject> queries = QuadTreeManager.instance.QueryDynamicObjects(m_minimapBounds, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
-            
             if(queries.Count >0 && queries[0] != null)
             {
                 lmao.SetActive(true);
                 RectTransform lmaoTransform = lmao.GetComponent<RectTransform>();
                 //Vector3 displacement = Vector3.Scale(queries[0].transform.position - m_playerReference.transform.position, new Vector3(1, 0, 1));
-                Vector3 displacement = (queries[0].transform.position - m_playerReference.transform.position);
+                Vector3 displacement = Vector3.Scale((queries[0].transform.position - m_playerReference.transform.position) , new Vector3(1,0,1));
                 Vector3 bap = displacement.normalized;
                 float lol = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
                 lmaoTransform.localPosition = Vector3.zero;
@@ -162,7 +173,7 @@ public class PlayerUIMinimap
                 childTransform.rotation = Quaternion.Euler(new Vector3(0, PlayerHandler.instance.transform.eulerAngles.y, 0));
 
                 float displacementMagnitude = displacement.magnitude;
-                float normalized = CustomUtility.Normalize(displacementMagnitude, 0, m_minimapCamera.orthographicSize);
+                float normalized = CustomUtility.Normalize(displacementMagnitude, 0, m_minimapCamera.orthographicSize + customRange);
                 float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
                 lmaoTransform.Translate(0, normalizedCustomRange, 0);
             }

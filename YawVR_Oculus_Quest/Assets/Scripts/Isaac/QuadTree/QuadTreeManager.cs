@@ -236,11 +236,11 @@ public class QuadTreeManager : MonoBehaviour
     {
         if (referenceObject == null)
             return false;
-
         if (InsertDynamicObject(referenceObject, types))
         {
             if (!dynamicList.Contains(referenceObject))
             {
+
                 dynamicList.Add(referenceObject);
                 return true;
             }
@@ -342,7 +342,6 @@ public class QuadTreeManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(updateTick);
 
             ResetDynamicTrees();
 
@@ -357,8 +356,8 @@ public class QuadTreeManager : MonoBehaviour
                 }
 
                 dynamicList.Remove(dynamicList[i]);
-
             }
+            yield return new WaitForSeconds(updateTick);
         }
     }
 
