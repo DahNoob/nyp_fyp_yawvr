@@ -18,7 +18,7 @@ public class LM2_Chase : SMB_BaseEnemyState
     [HideInInspector]
     public NavMeshAgent navMeshAgent;
 
-    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //animator.SetBool("Explode", CustomUtility.IsHitRadius(enemy.transform.position, enemy.m_target.transform.position, 5.0f));
         Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, m_detectRange);
@@ -37,7 +37,7 @@ public class LM2_Chase : SMB_BaseEnemyState
         navMeshAgent.SetDestination(enemy.m_target.transform.position);
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = animator.GetComponent<NavMeshAgent>();
@@ -47,7 +47,7 @@ public class LM2_Chase : SMB_BaseEnemyState
         enemy.GetComponent<LightMech2>().SetRollingEffect(true);
     }
 
-    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
 
         //relativePos = PlayerTransform.position - animator.transform.position;
@@ -58,7 +58,7 @@ public class LM2_Chase : SMB_BaseEnemyState
         //animator.transform.position += animator.transform.forward * moveSpeed * Time.deltaTime;
     }
 
-    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<LightMech2>().SetRollingEffect(false);
     }

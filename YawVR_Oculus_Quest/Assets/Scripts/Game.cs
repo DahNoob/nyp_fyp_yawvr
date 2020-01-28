@@ -47,6 +47,9 @@ public class Game : MonoBehaviour
     [Range(0.0f, 100.0f)]
     private float m_enemySpawnProbability = 20;
     [SerializeField]
+    [Range(0.0f, 500.0f)]
+    private float m_enemySpawnDeadzone = 80.0f;
+    [SerializeField]
     private Color m_bountyHuntEnemyColor;
     [SerializeField]
     private GameObject m_bountyHuntObjectivePrefab;
@@ -236,7 +239,7 @@ public class Game : MonoBehaviour
         GUIManager.instance.SetActiveObjective(m_objectives[0]);
         for (int i = 0; i < MapPointsHandler.instance.m_mapPoints.Count; ++i)
         {
-            if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability)
+            if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability && !CustomUtility.IsHitRadius(MapPointsHandler.instance.m_mapPoints[i], PlayerHandler.instance.transform.position, m_enemySpawnDeadzone))
             {
                 EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[Random.Range(0, m_enemies.Length)].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
             }
@@ -333,5 +336,15 @@ public class Game : MonoBehaviour
         GameObject crown = Instantiate(Persistent.instance.PREFAB_CROWN, _transform);
         crown.name = "Crown";
         return crown;
+    }
+
+    void OnDrawGizmos()
+    {
+        GameObject p = GameObject.Find("Player");
+        if(p)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(p.transform.position, m_enemySpawnDeadzone);
+        }
     }
 }

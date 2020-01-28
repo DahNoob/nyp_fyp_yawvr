@@ -7,12 +7,12 @@ public class FM2_Cooldown : SMB_BaseEnemyState
     Vector3 currPos;
     private float timer = 1.0f;
 
-    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         animator.SetBool("Attack", false);
         currPos = new Vector3(animator.transform.position.x, animator.transform.position.y, animator.transform.position.z);
@@ -20,7 +20,7 @@ public class FM2_Cooldown : SMB_BaseEnemyState
     }
 
 
-    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         timer -= 1.0f * Time.deltaTime;
         if (timer > 0.0f)
@@ -35,7 +35,7 @@ public class FM2_Cooldown : SMB_BaseEnemyState
         }
     }
 
-    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //animator.SetBool("Chase", true);
         //animator.GetComponent<Rigidbody>().velocity = Vector3.zero;

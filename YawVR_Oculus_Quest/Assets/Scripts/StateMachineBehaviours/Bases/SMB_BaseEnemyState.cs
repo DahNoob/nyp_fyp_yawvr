@@ -30,27 +30,27 @@ abstract public class SMB_BaseEnemyState : StateMachineBehaviour
         if (enemy == null)
             enemy = animator.GetComponent<EnemyBase>();
         checkTimer = 0;
-        Enter(animator, animatorStateInfo, layerIndex);
+        EnterState(animator, animatorStateInfo, layerIndex);
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         checkTimer += Time.deltaTime;
-        Update(animator, animatorStateInfo, layerIndex);
+        UpdateState(animator, animatorStateInfo, layerIndex);
         if(checkTimer > m_checkIntervals)
         {
             checkTimer -= m_checkIntervals;
-            Check(animator, animatorStateInfo, layerIndex);
+            CheckState(animator, animatorStateInfo, layerIndex);
         }
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        Exit(animator, animatorStateInfo, layerIndex);
+        ExitState(animator, animatorStateInfo, layerIndex);
     }
 
-    abstract public void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Logic check for setting it to the next state
-    abstract public void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Function that is automatically called when the state is entered
-    abstract public void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Function that is automatically called every update
-    abstract public void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Function that is automatically called when the state is exiting
+    abstract public void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Logic check for setting it to the next state
+    abstract public void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Function that is automatically called when the state is entered
+    abstract public void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Function that is automatically called every update
+    abstract public void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex);//Function that is automatically called when the state is exiting
 }

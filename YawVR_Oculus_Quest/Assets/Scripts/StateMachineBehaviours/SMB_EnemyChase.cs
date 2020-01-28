@@ -25,7 +25,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
 
     protected float inRangeSqr, outRangeSqr;
 
-    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         float distanceSqr = CustomUtility.HitCheckRadius(enemy.m_target.transform.position, enemy.transform.position);
         enemy.GetComponent<NavMeshAgent>().SetDestination(enemy.m_target.transform.position);
@@ -35,7 +35,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
             animator.SetBool("Chase_OutRange", true);
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = false;
         animator.SetBool("Chase_InRange", false);
@@ -45,7 +45,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
         enemy.GetComponent<NavMeshAgent>().SetDestination(enemy.m_target.transform.position);
     }
 
-    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //relativePos = PlayerHandler.instance.transform.position - animator.transform.position;
 
@@ -57,7 +57,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
 
     }
 
-    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }
