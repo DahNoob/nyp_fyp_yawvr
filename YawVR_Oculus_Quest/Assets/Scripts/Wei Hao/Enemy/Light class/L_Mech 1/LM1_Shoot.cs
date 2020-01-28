@@ -24,7 +24,7 @@ public class LM1_Shoot : SMB_BaseEnemyState
 
     private bool shoot = false;
 
-    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         PlayerHandler player = PlayerHandler.instance;
         //animator.SetBool("Dodge", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_DodgeDetectRange));
@@ -34,13 +34,13 @@ public class LM1_Shoot : SMB_BaseEnemyState
         Debug.Log("Is Player still near you? " + animator.GetBool("Shoot"));
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //animator.SetBool("Shoot", false);
         //navMeshAgent.isStopped = true;
     }
 
-    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         Vector3 relativePos = enemy.m_target.position - animator.transform.position;
 
@@ -77,7 +77,7 @@ public class LM1_Shoot : SMB_BaseEnemyState
 
     }
 
-    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //navMeshAgent.isStopped = true;
     }

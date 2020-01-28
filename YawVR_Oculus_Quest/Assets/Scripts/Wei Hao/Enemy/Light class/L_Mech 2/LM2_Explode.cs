@@ -11,19 +11,19 @@ public class LM2_Explode : SMB_BaseEnemyState
     // Time taken before attack is activated
     private float attackWindUp = 1.0f;
 
-    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
 
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         Player = PlayerHandler.instance.transform;
         animator.GetComponent<Rigidbody>().velocity = Vector3.zero;
         animator.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
     }
 
-    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         attackWindUp -= 1.0f * Time.deltaTime;
 
@@ -47,7 +47,7 @@ public class LM2_Explode : SMB_BaseEnemyState
         }
     }
 
-    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
     }
 

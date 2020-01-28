@@ -75,9 +75,13 @@ public class LightMech2 : EnemyBase , IPooledObject
 
     [Header("Particle Systems")]
     [SerializeField]
+    private ParticleSystem m_swirlEffect;
+    [SerializeField]
+    public ParticleSystem m_swirlLinesEffect;  
+    [SerializeField]
     private ParticleSystem m_dustEffect;
     [SerializeField]
-    private ParticleSystem m_swirlEffect;
+    private ParticleSystem m_vrrrrEffect;
     [SerializeField]
     private ParticleSystem m_whirlwindEffect;
     [SerializeField]
@@ -309,15 +313,18 @@ public class LightMech2 : EnemyBase , IPooledObject
     {
         if(_isActive)
         {
-            m_dustEffect.Play();
             m_swirlEffect.Play();
+            m_dustEffect.Play();
+            m_vrrrrEffect.Play();
             m_whirlwindEffect.Play();
             m_alertEffect.Play();
         }
         else
         {
-            m_dustEffect.Stop();
             m_swirlEffect.Stop();
+            m_swirlLinesEffect.Stop();
+            m_vrrrrEffect.Stop();
+            m_dustEffect.Stop();
             m_whirlwindEffect.Stop();
             m_alertEffect.Stop();
         }

@@ -11,19 +11,19 @@ public class LM1_Walk : SMB_BaseEnemyState
     protected float m_fieldOfViewAngle = 60.0f;
     
 
-    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         PlayerHandler player = PlayerHandler.instance;
         animator.SetBool("Chase_InRange", CustomUtility.IsHitRadius(player.transform.position, enemy.transform.position, m_detectRange));
         Debug.Log("Is there a player nearby? " + animator.GetBool("Chase_InRange"));
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         animator.SetBool("Walk_HasDetected", false);
     }
 
-    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //checkTimer += Time.deltaTime;
         //Update(animator, animatorStateInfo, layerIndex);
@@ -34,7 +34,7 @@ public class LM1_Walk : SMB_BaseEnemyState
         //}
     }
 
-    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         
     }

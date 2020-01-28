@@ -5,7 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class AmmoModule
 {
+    public delegate void StartReload();
     public delegate void FinishReload();
+    public event StartReload onStartReload;
     public event FinishReload onFinishReload;
 
     [Header("Ammo Setup")]
@@ -124,6 +126,7 @@ public class AmmoModule
             if (!m_isReloading)
             {
                 m_isReloading = true;
+                onStartReload?.Invoke();
                 while (true)
                 {
                     yield return new WaitForSeconds(m_reloadTime);

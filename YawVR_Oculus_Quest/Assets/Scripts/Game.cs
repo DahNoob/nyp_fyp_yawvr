@@ -44,8 +44,14 @@ public class Game : MonoBehaviour
     [SerializeField]
     private int m_maxObjectives = 3;
     [SerializeField]
+    [Range(1.0f, 100.0f)]
+    private float m_objectiveActivationRadius = 50.0f;
+    [SerializeField]
     [Range(0.0f, 100.0f)]
     private float m_enemySpawnProbability = 20;
+    [SerializeField]
+    [Range(0.0f, 500.0f)]
+    private float m_enemySpawnDeadzone = 80.0f;
     [SerializeField]
     private Color m_bountyHuntEnemyColor;
     [SerializeField]
@@ -161,12 +167,10 @@ public class Game : MonoBehaviour
                 currObj.panelInfo.panelText.color = Color.green;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
-                if (currObj.m_highlight.Find("Crown"))
-                    Destroy(currObj.m_highlight.Find("Crown").gameObject);
                 if (currObj.m_highlight.Find("Beacon"))
                     Destroy(currObj.m_highlight.Find("Beacon").gameObject);
+                currObj.m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(false);
                 onObjectiveFinished?.Invoke(currObj, true);
-
                 return;
             }
             GUIManager.instance.UpdateObjectiveProgress(ref currObj);
@@ -181,7 +185,6 @@ public class Game : MonoBehaviour
 
     private void ApplyObjectives()
     {
-        
         MapPointsHandler mph = MapPointsHandler.instance;
         //SortedDictionary<int, float> distances = new SortedDictionary<int, float>();
         List<int> allocatedPoints = new List<int>();
@@ -212,6 +215,7 @@ public class Game : MonoBehaviour
                 Physics.Raycast(objectivePos, -Vector3.up, out hit);
                 BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
                 AttachBeacon(structure.transform, Color.blue);
+                structure.GetComponent<ObjectiveStructure>().SetRingRadius(m_objectiveActivationRadius);
                 structure.onEntityDie += Structure_onEntityDie;
                 m_objectives[currObjectivesCount].m_highlight = structure.transform;
                 print("Objective deployed : Defend Structure @ " + objIndex);
@@ -236,7 +240,7 @@ public class Game : MonoBehaviour
         GUIManager.instance.SetActiveObjective(m_objectives[0]);
         for (int i = 0; i < MapPointsHandler.instance.m_mapPoints.Count; ++i)
         {
-            if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability)
+            if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability && !CustomUtility.IsHitRadius(MapPointsHandler.instance.m_mapPoints[i], PlayerHandler.instance.transform.position, m_enemySpawnDeadzone))
             {
                 EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[Random.Range(0, m_enemies.Length)].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
             }
@@ -285,7 +289,8 @@ public class Game : MonoBehaviour
                     }
                     else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
                     {
-                        AttachCrown(m_objectives[i].m_highlight.transform);
+                        //AttachCrown(m_objectives[i].m_highlight.transform);
+                        m_objectives[i].m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(true);
                     }
                     GUIManager.instance.SetActiveObjective(m_objectives[i]);
                     m_objectives[i].m_inProgress = true;
@@ -333,5 +338,15 @@ public class Game : MonoBehaviour
         GameObject crown = Instantiate(Persistent.instance.PREFAB_CROWN, _transform);
         crown.name = "Crown";
         return crown;
+    }
+
+    void OnDrawGizmos()
+    {
+        GameObject p = GameObject.Find("Player");
+        if(p)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(p.transform.position, m_enemySpawnDeadzone);
+        }
     }
 }

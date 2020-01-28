@@ -13,7 +13,7 @@ public class LM1_Idle : SMB_BaseEnemyState
     protected float m_fieldOfViewAngle = 60.0f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    public override void Check(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if(!animator.GetBool("Alert"))
         {
@@ -24,19 +24,19 @@ public class LM1_Idle : SMB_BaseEnemyState
         //Debug.Log("Is the LM1's target nearby? " + animator.GetBool("Alert"));
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("Alert", false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    public override void Update(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //animator.SetBool("Walk", true);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    public override void Exit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
     }

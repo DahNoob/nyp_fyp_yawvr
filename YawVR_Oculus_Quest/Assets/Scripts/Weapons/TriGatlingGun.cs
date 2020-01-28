@@ -15,39 +15,43 @@ public class TriGatlingGun : MechGunWeapon
     protected float m_windUpTime = 0.35f;
 
     protected float windUpElapsed = 0;
+    protected bool isActivated = false;
 
-    //protected override void Start()
-    //{
-    //    base.Start();
-    //    ammoModule.onFinishReload += _AmmoModule_onFinishReload_Gatling;
-    //}
+    protected override void Start()
+    {
+        base.Start();
+        ammoModule.onStartReload += _AmmoModule_onStartReload_Gatling;
+        ammoModule.onFinishReload += _AmmoModule_onFinishReload_Gatling;
+    }
 
-    //private void _AmmoModule_onFinishReload_Gatling()
-    //{
-    //    print("hi" + m_gatlingAnimator.GetBool("Shooting"));
-    //    if (m_gatlingAnimator.GetBool("Shooting"))
-    //    {
-    //        m_barrelWhirlWindEffect.Play();
-    //        print("bruhmoment");
-    //    }
-    //}
+    private void _AmmoModule_onStartReload_Gatling()
+    {
+        m_gatlingAnimator.SetBool("Shooting", false);
+        m_barrelWhirlWindEffect.Stop();
+    }
 
-    //private void OnDestroy()
-    //{
-    //    ammoModule.onFinishReload -= _AmmoModule_onFinishReload_Gatling;
-    //}
+    private void _AmmoModule_onFinishReload_Gatling()
+    {
+        if(isActivated)
+        {
+            m_gatlingAnimator.SetBool("Shooting", true);
+            m_barrelWhirlWindEffect.Play();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        ammoModule.onStartReload -= _AmmoModule_onStartReload_Gatling;
+        ammoModule.onFinishReload -= _AmmoModule_onFinishReload_Gatling;
+    }
 
     public override bool Activate(OVRInput.Controller _controller)
     {
+        isActivated = true;
         follower.m_followSpeed = m_followerSpeed;
         windUpElapsed = 0;
         m_gatlingAnimator.SetBool("Shooting", true);
         m_barrelWhirlWindEffect.Play();
-        //foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
-        //{
-        //    asd.Play();
-        //}
-        //m_laserPointer.gameObject.SetActive(true);
         return true;
     }
 
@@ -58,20 +62,14 @@ public class TriGatlingGun : MechGunWeapon
         {
             base.Hold(_controller);
         }
-        m_gatlingAnimator.SetBool("Shooting", true);
         return true;
     }
 
     public override bool Stop(OVRInput.Controller _controller)
     {
+        isActivated = false;
         m_gatlingAnimator.SetBool("Shooting", false);
-        //foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
-        //{
-        //    asd.Stop();
-        //}
-        // m_laserPointer.gameObject.SetActive(false);
         m_barrelWhirlWindEffect.Stop();
-
         return true;
     }
 }

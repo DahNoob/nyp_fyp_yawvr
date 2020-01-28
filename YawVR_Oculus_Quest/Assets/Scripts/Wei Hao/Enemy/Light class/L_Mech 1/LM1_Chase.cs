@@ -30,7 +30,7 @@ public class LM1_Chase : SMB_BaseEnemyState
 
     private bool shoot = false;
 
-    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //PlayerHandler player = PlayerHandler.instance;
 
@@ -63,7 +63,7 @@ public class LM1_Chase : SMB_BaseEnemyState
         //Debug.Log("Stand and shoot? " + animator.GetBool("Shoot"));
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //animator.SetBool("Chase_InRange", false);
         //animator.SetBool("Chase_OutRange", false);
@@ -76,7 +76,7 @@ public class LM1_Chase : SMB_BaseEnemyState
         
     }
 
-    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         //navMeshAgent.SetDestination(enemy.m_target.position);
         //relativePos = PlayerTransform.position - animator.transform.position;
@@ -119,7 +119,7 @@ public class LM1_Chase : SMB_BaseEnemyState
         //}
     }
 
-    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         
     }

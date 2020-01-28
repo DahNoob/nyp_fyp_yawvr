@@ -25,7 +25,7 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
 
     protected float fleeDetectRSqr;
 
-    public override void Check(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void CheckState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         float distanceSqr = CustomUtility.HitCheckRadius(PlayerHandler.instance.transform.position, enemy.transform.position);
         if (distanceSqr > fleeDetectRSqr)
@@ -34,7 +34,7 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
             CalculateFlee();
     }
 
-    public override void Enter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = false;
         fleeDetectRSqr = m_fleeDetectRange * m_fleeDetectRange;
@@ -42,12 +42,12 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
         CalculateFlee();
     }
 
-    public override void Update(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
 
     }
 
-    public override void Exit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
     }
