@@ -114,15 +114,18 @@ public class MapPointsHandler : MonoBehaviour
     void Start()
     {
 #if !UNITY_EDITOR
+        
+        m_showGizmos = false;
+#endif
         foreach (Transform t in transform)
         {
             Destroy(t.gameObject);
         }
-        m_showGizmos = false;
-#endif
         for (int i = 0; i < m_mapPoints.Count; ++i)
         {
             GameObject ayyy = new GameObject();
+            ayyy.name = string.Format("{0}{1}{2}", " (", i.ToString(), ")");
+            ayyy.transform.SetParent(transform);
             ayyy.transform.position = m_mapPoints[i];
             ayyy.AddComponent<MapPointObject>();
 
