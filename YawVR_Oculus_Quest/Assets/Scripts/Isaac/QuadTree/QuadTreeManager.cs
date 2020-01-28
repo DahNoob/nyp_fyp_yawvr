@@ -342,9 +342,7 @@ public class QuadTreeManager : MonoBehaviour
     {
         while (true)
         {
-
-            ResetDynamicTrees();
-
+            //ResetDynamicTrees();
             //Reset the moving tree
             for (int i = 0; i < dynamicList.Count; i++)
             {
@@ -355,7 +353,7 @@ public class QuadTreeManager : MonoBehaviour
                     continue;
                 }
 
-                dynamicList.Remove(dynamicList[i]);
+               dynamicList.Remove(dynamicList[i]);
             }
             yield return new WaitForSeconds(updateTick);
         }

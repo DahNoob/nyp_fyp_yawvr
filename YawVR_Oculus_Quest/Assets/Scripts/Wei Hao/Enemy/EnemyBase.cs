@@ -59,6 +59,12 @@ abstract public class EnemyBase : BaseEntity
         private set { m_navMeshAgent = value; }
     }
 
+    public EnemyInfo enemyInfo
+    {
+        get { return m_enemyInfo; }
+        private set { m_enemyInfo = value; }
+    }
+
     //Hidden variables
     private Transform _m_target;
 

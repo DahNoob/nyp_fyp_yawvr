@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerUIMinimapIcons : MonoBehaviour
+[System.Serializable]
+public class PlayerUIMinimapIcons 
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //For sorting in the editor, and for some reference
+    public string dataName;
+    //Pair of iconss
+    public EnemyInfo.ENEMY_TYPE enemyType;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //Sprite stuff for the appropriate stuff
+    public Sprite m_circleSprite;
+    public Sprite m_iconSprite;
+
+    //Colors
+    public Color lineRendererStartColor;
+    public Color lineRendererEndColor;
+    public Color m_circleTint;
+    public Color m_iconTint;
 }
