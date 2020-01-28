@@ -24,8 +24,6 @@ public class DynamicQuadTreeObject : MonoBehaviour
         m_type = type;
         if (QuadTreeManager.instance.AddToDynamicQuadTree(referenceObject, type))
         {
-            Debug.Log("Added " + this.gameObject.name + "to stupid tree");
-
         }
 
     }
@@ -36,7 +34,6 @@ public class DynamicQuadTreeObject : MonoBehaviour
         {
             if (QuadTreeManager.instance.RemoveDynamicObject(referenceObject, m_type))
             {
-                Debug.Log("Removed " + this.gameObject.name + "from stupid tree");
             }
         }
     }
