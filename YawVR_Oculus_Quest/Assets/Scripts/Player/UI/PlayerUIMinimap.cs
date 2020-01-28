@@ -57,6 +57,8 @@ public class PlayerUIMinimap
     [SerializeField]
     private GameObject m_minimapParent;
     [SerializeField]
+    private GameObject m_playerIcon;
+
     private List<GameObject> minimapIconsList = new List<GameObject>();
 
     [Header("Minimap Icons Configuration")]
@@ -189,6 +191,12 @@ public class PlayerUIMinimap
                 //Set all to false, then set back everything
                 minimapIconsList[i].SetActive(false);
             }
+            
+
+            //Calculate the scale of everything
+            float normalizedScale = CustomUtility.Normalize(80 - m_minimapZoom, 0, 80);
+            normalizedScale = CustomUtility.NormalizeCustomRange(normalizedScale, minScaleRange, maxScaleRange);
+            m_playerIcon.transform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
 
             //Set it back with the appopriate calculations.
             for (int i = 0; i < queries.Count; ++i)
@@ -220,9 +228,7 @@ public class PlayerUIMinimap
                     //Translate the rectTransform based on eulers
                     rectTransform.Translate(0, normalizedCustomRange, 0);
 
-                    //Calculate the scale of everything
-                    float normalizedScale = CustomUtility.Normalize(80 - m_minimapZoom, 0, 80);
-                    normalizedScale = CustomUtility.NormalizeCustomRange(normalizedScale, minScaleRange, maxScaleRange);
+
                     rectTransform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
 
 
