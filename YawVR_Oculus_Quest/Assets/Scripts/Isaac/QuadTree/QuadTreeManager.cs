@@ -185,14 +185,6 @@ public class QuadTreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Remove all null entires
-        //staticList.RemoveAll(item => item == null);
-
-
-        //queryBounds.position = playerTransform.position;
-        //nearbyTransforms = QueryStaticObjects(queryBounds, STATIC_TYPES.MAP_POINTS);
-
-
         if (enableVisualizations)
         {
             //Initialise the values
@@ -236,11 +228,11 @@ public class QuadTreeManager : MonoBehaviour
     {
         if (referenceObject == null)
             return false;
+
         if (InsertDynamicObject(referenceObject, types))
         {
             if (!dynamicList.Contains(referenceObject))
             {
-
                 dynamicList.Add(referenceObject);
                 return true;
             }
@@ -337,24 +329,33 @@ public class QuadTreeManager : MonoBehaviour
 
     }
 
+    public List<GameObject> BROSENDHELP = new List<GameObject>();
+    public List<GameObject> BROSENDHELPAFTER = new List<GameObject>();
+
     //Updates tree
     IEnumerator UpdateDynamicQuadTree()
     {
         while (true)
         {
-            //ResetDynamicTrees();
+            BROSENDHELP.Clear();
+            dynamicTrees[DYNAMIC_TYPES.ENEMIES].GetObjects(ref BROSENDHELP);
+            ResetDynamicTrees();
+
             //Reset the moving tree
             for (int i = 0; i < dynamicList.Count; i++)
             {
-                if (dynamicList[i] != null)
+                if (dynamicList[i] != null && dynamicList[i].activeInHierarchy)
                 {
                     DynamicQuadTreeObject dynamicObject = dynamicList[i].GetComponent<DynamicQuadTreeObject>();
-                    dynamicObject.AddToQuadTree(dynamicList[i].gameObject, dynamicObject.Type);
+                    dynamicObject.AddToQuadTree(dynamicObject.gameObject, dynamicObject.Type);
+
                     continue;
                 }
 
-               dynamicList.Remove(dynamicList[i]);
+                dynamicList.Remove(dynamicList[i]);
             }
+            BROSENDHELPAFTER.Clear();
+            dynamicTrees[DYNAMIC_TYPES.ENEMIES].GetObjects(ref BROSENDHELPAFTER);
             yield return new WaitForSeconds(updateTick);
         }
     }
@@ -455,7 +456,6 @@ public class QuadTreeManager : MonoBehaviour
             if (dynamicTree.Value != null)
                 dynamicTree.Value.Clear();
         }
-
         return true;
     }
 
@@ -466,7 +466,6 @@ public class QuadTreeManager : MonoBehaviour
             if (staticTree.Value != null)
                 staticTree.Value.Clear();
         }
-
         return true;
     }
 

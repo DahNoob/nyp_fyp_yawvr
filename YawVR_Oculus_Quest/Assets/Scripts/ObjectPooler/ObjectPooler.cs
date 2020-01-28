@@ -51,7 +51,7 @@ public class ObjectPooler : MonoBehaviour
     //Instance object
     public static ObjectPooler instance;
     //Dictionary to store the queues
-    private Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
+    private  Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
     //Another dictionary to store data for future instancing
     private Dictionary<int, PoolObject> pooledObjectData = new Dictionary<int, PoolObject>();
     //List of objects to instantiate
