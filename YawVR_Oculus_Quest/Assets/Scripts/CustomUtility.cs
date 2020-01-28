@@ -48,6 +48,4 @@ public class CustomUtility
     {
         return minRange + (maxRange - minRange) * inFloat;
     }
-
-
 }

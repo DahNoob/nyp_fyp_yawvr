@@ -44,6 +44,9 @@ public class Game : MonoBehaviour
     [SerializeField]
     private int m_maxObjectives = 3;
     [SerializeField]
+    [Range(1.0f, 100.0f)]
+    private float m_objectiveActivationRadius = 50.0f;
+    [SerializeField]
     [Range(0.0f, 100.0f)]
     private float m_enemySpawnProbability = 20;
     [SerializeField]
@@ -164,12 +167,10 @@ public class Game : MonoBehaviour
                 currObj.panelInfo.panelText.color = Color.green;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
-                if (currObj.m_highlight.Find("Crown"))
-                    Destroy(currObj.m_highlight.Find("Crown").gameObject);
                 if (currObj.m_highlight.Find("Beacon"))
                     Destroy(currObj.m_highlight.Find("Beacon").gameObject);
+                currObj.m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(false);
                 onObjectiveFinished?.Invoke(currObj, true);
-
                 return;
             }
             GUIManager.instance.UpdateObjectiveProgress(ref currObj);
@@ -184,7 +185,6 @@ public class Game : MonoBehaviour
 
     private void ApplyObjectives()
     {
-        
         MapPointsHandler mph = MapPointsHandler.instance;
         //SortedDictionary<int, float> distances = new SortedDictionary<int, float>();
         List<int> allocatedPoints = new List<int>();
@@ -215,6 +215,7 @@ public class Game : MonoBehaviour
                 Physics.Raycast(objectivePos, -Vector3.up, out hit);
                 BaseStructure structure = Instantiate(m_structures[0], hit.point, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseStructure>();
                 AttachBeacon(structure.transform, Color.blue);
+                structure.GetComponent<ObjectiveStructure>().SetRingRadius(m_objectiveActivationRadius);
                 structure.onEntityDie += Structure_onEntityDie;
                 m_objectives[currObjectivesCount].m_highlight = structure.transform;
                 print("Objective deployed : Defend Structure @ " + objIndex);
@@ -288,7 +289,8 @@ public class Game : MonoBehaviour
                     }
                     else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
                     {
-                        AttachCrown(m_objectives[i].m_highlight.transform);
+                        //AttachCrown(m_objectives[i].m_highlight.transform);
+                        m_objectives[i].m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(true);
                     }
                     GUIManager.instance.SetActiveObjective(m_objectives[i]);
                     m_objectives[i].m_inProgress = true;
