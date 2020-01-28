@@ -131,18 +131,20 @@ abstract public class EnemyBase : BaseEntity
         {
             for (int i = 0; i < meshes.Length; ++i)
             {
-                meshes[i].material.EnableKeyword("_EMISSION");
-                meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
-                meshes[i].material.SetColor("_EmissionColor", Color.white);
+                //meshes[i].material.EnableKeyword("_EMISSION");
+                //meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+                //meshes[i].material.SetColor("_EmissionColor", Color.white);
+                meshes[i].material = Persistent.instance.MAT_WHITE;
             }
         }
         else
         {
             for (int i = 0; i < meshes.Length; ++i)
             {
-                meshes[i].material.DisableKeyword("_EMISSION");
-                meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
-                meshes[i].material.SetColor("_EmissionColor", Color.black);
+                //meshes[i].material.DisableKeyword("_EMISSION");
+                //meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
+                //meshes[i].material.SetColor("_EmissionColor", Color.black);
+                meshes[i].material = Persistent.instance.MAT_ENEMYMECH;
             }
         }
     }

@@ -28,6 +28,8 @@ public class Persistent : MonoBehaviour
     public GameObject PREFAB_CROWN;
     public Sprite MINIMAP_ICON_ENEMY;
     public Sprite MINIMAP_ICON_OBJECTIVE;
+    public Material MAT_WHITE;
+    public Material MAT_ENEMYMECH;
 
     private void Awake()
     {
