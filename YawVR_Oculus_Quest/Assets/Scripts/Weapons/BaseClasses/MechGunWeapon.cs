@@ -100,7 +100,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
         {
             if (shootTick > m_shootInterval)
             {
-                shootTick = 0;
+                shootTick -= m_shootInterval;
 
                 //If can decrease ammo, then shoot
                 if (ammoModule.DecreaseAmmo(1))
