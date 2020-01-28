@@ -237,8 +237,9 @@ public class LightMech2 : EnemyBase , IPooledObject
     }
 
     // Update is called once per frame
-    void Update()
+    override protected void Update()
     {
+        base.Update();
         //Vector3 relativePos = Player.transform.position - transform.position;
 
         // Debugging distance
@@ -294,9 +295,6 @@ public class LightMech2 : EnemyBase , IPooledObject
         //        }
         //        break;
         //}
-
-        //Update the bounds
-        queryBounds.position = transform.position;
     }
 
     public string StartBuff()

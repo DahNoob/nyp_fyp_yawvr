@@ -253,8 +253,9 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     }
 
     // Update is called once per frame
-    void Update()
+    override protected void Update()
     {
+        base.Update();
         //Vector3 relativePos = target.position - transform.position;
 
         //// Debugging distance
@@ -330,8 +331,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         //    break;
         //}
 
-        //Update the bounds position to the transform.position
-        queryBounds.position = transform.position;
+        
     }
 
     //void PlayDeathParticle()
@@ -342,7 +342,6 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     public override void takeDamage(int damage)
     {
         base.takeDamage(damage);
-        print("bruh");
         m_Animator.SetBool("Alert", true);
     }
     public string StartBuff()

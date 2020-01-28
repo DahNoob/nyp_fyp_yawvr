@@ -43,6 +43,9 @@ abstract public class EnemyBase : BaseEntity
     [SerializeField]
     protected UnityEngine.AI.NavMeshAgent m_navMeshAgent;
 
+    //Base variables
+    protected int flashTick = 0;
+
     //Getters/setters
     public Transform m_target {
         get {
@@ -108,13 +111,47 @@ abstract public class EnemyBase : BaseEntity
     }
 
     // Update is called once per frame
-    void Update()
+    virtual protected void Update()
     {
+        //Update the bounds position to the transform.position
+        queryBounds.position = transform.position;
 
+        if (flashTick > 0)
+        {
+            --flashTick;
+            if (flashTick <= 0)
+                SetFlash(false);
+        }
+    }
+
+    public void SetFlash(bool _flashing)
+    {
+        MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
+        if(_flashing)
+        {
+            for (int i = 0; i < meshes.Length; ++i)
+            {
+                meshes[i].material.EnableKeyword("_EMISSION");
+                meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+                meshes[i].material.SetColor("_EmissionColor", Color.white);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < meshes.Length; ++i)
+            {
+                meshes[i].material.DisableKeyword("_EMISSION");
+                meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
+                meshes[i].material.SetColor("_EmissionColor", Color.black);
+            }
+        }
     }
 
     public override void takeDamage(int damage)
     {
+        if (flashTick <= 0)
+            SetFlash(true);
+        flashTick = 2;
         health -= damage;
         if (health <= 0)
             Die();
@@ -123,6 +160,8 @@ abstract public class EnemyBase : BaseEntity
     public override void Die()
     {
         //gameObject.SetActive(false);
+        flashTick = 0;
+        SetFlash(false);
         InvokeDie();
         GetComponent<IPooledObject>().OnObjectDestroy();
         //gameObject.GetComponent<ParticleSystem>().Play();

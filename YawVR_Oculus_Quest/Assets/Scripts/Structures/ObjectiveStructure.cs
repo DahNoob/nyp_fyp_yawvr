@@ -18,11 +18,16 @@ public class ObjectiveStructure : BaseStructure
 
     void Update()
     {
-        if(isCurrentObjective)
+        if(m_objectiveRing)
+        {
+            //m_objectiveRing.material.SetTextureOffset("_BaseMap", new Vector2(Time.time * 0.05f, 0));
+            m_objectiveRing.transform.Rotate(0, 5 * Time.deltaTime, 0);
+        }
+        if (isCurrentObjective)
         {
             float cos = Mathf.Cos(Time.time);
             m_objectiveRing.transform.localPosition = new Vector3(0, ringOrigHeight + cos, 0);
-            m_objectiveRing.transform.Rotate(0, 5 * Time.deltaTime, 0);
+            //m_objectiveRing.transform.Rotate(0, 5 * Time.deltaTime, 0);
             m_objectiveRing.material.SetColor("_BaseColor", new Color(0.4f, 1, 0.17f, cos.Remap(-1.0f, 1.0f, 0.2f, 1)));
         }
     }
@@ -40,6 +45,7 @@ public class ObjectiveStructure : BaseStructure
         }
         else
         {
+            isCurrentObjective = false;
             StartCoroutine(fadeOutRing());
         }
     }

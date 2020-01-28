@@ -92,8 +92,9 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES); 
     }
 
-    void Update()
+    override protected void Update()
     {
+        base.Update();
         bool spawnRecharged = Time.time > spawnRechargeTimer;
         anim.SetBool("Flee_Done", spawnRecharged);
         anim.SetBool("Walk_DoFlee", !spawnRecharged);
