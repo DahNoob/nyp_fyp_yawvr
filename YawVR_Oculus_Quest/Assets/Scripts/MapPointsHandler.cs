@@ -120,6 +120,13 @@ public class MapPointsHandler : MonoBehaviour
         }
         m_showGizmos = false;
 #endif
+        for (int i = 0; i < m_mapPoints.Count; ++i)
+        {
+            GameObject ayyy = new GameObject();
+            ayyy.transform.position = m_mapPoints[i];
+            ayyy.AddComponent<MapPointObject>();
+
+        }
         print("MapPointsHandler Start!");
     }
 

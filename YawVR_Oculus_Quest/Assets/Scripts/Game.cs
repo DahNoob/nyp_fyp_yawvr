@@ -93,7 +93,7 @@ public class Game : MonoBehaviour
                 print("Spawn Enemies!");
                 for (int i = 0; i < Random.Range(1, 4); ++i)
                 {
-                    QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 75);
+                    QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 9999);
                     Vector3 newEnemyPos = MapPointsHandler.instance.GetClosestPoint(newQuadRect);
                     EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, newEnemyPos, Quaternion.identity).GetComponent<EnemyBase>();
                     derp.m_target = PlayerHandler.instance.transform;
@@ -140,8 +140,9 @@ public class Game : MonoBehaviour
                 print("Spawn Enemies!");
                 for (int i = 0; i < Random.Range(1, 4); ++i)
                 {
-                    //EnemyBase derp = Instantiate(m_enemies[i].enemy, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform).GetComponent<EnemyBase>();
-                    EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), Quaternion.identity).GetComponent<EnemyBase>();
+                    QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 9999);
+                    Vector3 newEnemyPos = MapPointsHandler.instance.GetClosestPoint(newQuadRect);
+                    EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, newEnemyPos, Quaternion.identity).GetComponent<EnemyBase>();
                     derp.m_target = Random.Range(0, 100) > 50 ? currObj.m_highlight : PlayerHandler.instance.transform;
                 }
             }

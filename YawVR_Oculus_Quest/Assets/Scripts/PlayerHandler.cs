@@ -102,6 +102,9 @@ public class PlayerHandler : BaseEntity
     [SerializeField]
     [Range(0.0f,0.2f)]
     private float m_camSwayIntensity = 0.1f;
+    [SerializeField]
+    [Range(0.0f, 0.2f)]
+    private float m_damageShake = 0.08f;
 
     [Header("Armor Configuration")]
     [SerializeField]
@@ -245,7 +248,7 @@ public class PlayerHandler : BaseEntity
         if(health < m_maxHealth * 0.5f)
         {
             m_warningTimer += Time.deltaTime * warningUIFadeSpeed;
-            for(int i =0; i < m_warningUI.Length; ++i)
+            for (int i = 0; i < m_warningUI.Length; ++i)
             {
                 Color color = m_warningUI[i].color;
                 color.a = Mathf.PingPong(m_warningTimer, 1);
@@ -269,7 +272,7 @@ public class PlayerHandler : BaseEntity
     {
         if (isShaking && ++shakeInterval % 2 == 0 && shakeElapsed > 0)
         {
-            cameraShake = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Random.Range(-0.15f, 0.15f), Random.Range(-0.15f, 0.15f)), shakeElapsed);
+            cameraShake = Vector3.LerpUnclamped(Vector3.zero, new Vector3(Random.Range(-m_damageShake, m_damageShake), Random.Range(-m_damageShake, m_damageShake)), shakeElapsed);
         }
         else if (isShaking && shakeElapsed < 0)
         {
@@ -277,7 +280,8 @@ public class PlayerHandler : BaseEntity
             cameraShake = Vector3.zero;
         }
         m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f) + cameraShake;
-        m_vignette.color = Color.LerpUnclamped(m_vignette.color, Persistent.instance.COLOR_TRANSPARENT, 0.05f);
+        if (m_vignette.color.a > 0)
+            m_vignette.color = Color.LerpUnclamped(m_vignette.color, Persistent.instance.COLOR_TRANSPARENT, 0.05f);
         
         //rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
         //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
