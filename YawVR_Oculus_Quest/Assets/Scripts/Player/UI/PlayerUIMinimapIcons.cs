@@ -19,4 +19,30 @@ public class PlayerUIMinimapIcons
     public Color lineRendererEndColor;
     public Color m_circleTint;
     public Color m_iconTint;
+
+    //Scale stuff
+    public float scaleOffset;
+
+}
+
+[System.Serializable]
+public class PlayerUIMinimapObjectiveIcons
+{
+    //For sorting in the editor, and for some reference
+    public string dataName;
+    //Pair of iconss
+    public VariedObjectives.TYPE objectiveType;
+
+    //Sprite stuff for the appropriate stuff
+    public Sprite m_circleSprite;
+    public Sprite m_iconSprite;
+
+    //Colors
+    public Color lineRendererStartColor;
+    public Color lineRendererEndColor;
+    public Color m_circleTint;
+    public Color m_iconTint;
+
+    //Scale stuff
+    public float scaleOffset;
 }
