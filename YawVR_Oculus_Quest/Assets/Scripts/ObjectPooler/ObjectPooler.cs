@@ -50,6 +50,7 @@ public class ObjectPooler : MonoBehaviour
 {
     //Instance object
     public static ObjectPooler instance;
+  
     //Dictionary to store the queues
     private  Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
     //Another dictionary to store data for future instancing
