@@ -100,15 +100,14 @@ abstract public class MechGunWeapon : MechBaseWeapon
         {
             if (shootTick > m_shootInterval)
             {
-                shootTick -= m_shootInterval;
-
+                shootTick = 0 + Time.deltaTime;
                 //If can decrease ammo, then shoot
                 if (ammoModule.DecreaseAmmo(1))
                 {
                     SpawnProjectile();
                     Vibe();
                     m_bulletCasings.Emit(1);
-                    for (int i = 0; i < shootParticles.Length; i++)
+                    for (int i = 0; i < shootParticles.Length; ++i)
                     {
                         shootParticles[i].Emit(1);
                     }

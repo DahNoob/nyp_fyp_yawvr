@@ -45,6 +45,7 @@ abstract public class EnemyBase : BaseEntity
 
     //Base variables
     protected int flashTick = 0;
+    protected MeshRenderer[] meshRenderers;
 
     //Getters/setters
     public Transform m_target {
@@ -108,6 +109,7 @@ abstract public class EnemyBase : BaseEntity
             m_target = PlayerHandler.instance.transform;
         health = GetMaxHealth();
         GetComponent<UnityEngine.AI.NavMeshAgent>().speed = GetSpeed();
+        meshRenderers = GetComponentsInChildren<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -126,25 +128,25 @@ abstract public class EnemyBase : BaseEntity
 
     public void SetFlash(bool _flashing)
     {
-        MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
+        //MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
         if(_flashing)
         {
-            for (int i = 0; i < meshes.Length; ++i)
+            for (int i = 0; i < meshRenderers.Length; ++i)
             {
                 //meshes[i].material.EnableKeyword("_EMISSION");
                 //meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
                 //meshes[i].material.SetColor("_EmissionColor", Color.white);
-                meshes[i].material = Persistent.instance.MAT_WHITE;
+                meshRenderers[i].material = Persistent.instance.MAT_WHITE;
             }
         }
         else
         {
-            for (int i = 0; i < meshes.Length; ++i)
+            for (int i = 0; i < meshRenderers.Length; ++i)
             {
                 //meshes[i].material.DisableKeyword("_EMISSION");
                 //meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
                 //meshes[i].material.SetColor("_EmissionColor", Color.black);
-                meshes[i].material = Persistent.instance.MAT_ENEMYMECH;
+                meshRenderers[i].material = Persistent.instance.MAT_ENEMYMECH;
             }
         }
     }
@@ -153,7 +155,7 @@ abstract public class EnemyBase : BaseEntity
     {
         if (flashTick <= 0)
             SetFlash(true);
-        flashTick = 2;
+        flashTick = 3;
         health -= damage;
         if (health <= 0)
             Die();

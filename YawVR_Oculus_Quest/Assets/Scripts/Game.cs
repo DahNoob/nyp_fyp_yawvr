@@ -224,7 +224,7 @@ public class Game : MonoBehaviour
             }
             GUIManager.instance.AddObjectiveToPanel(ref m_objectives[currObjectivesCount], currObjectivesCount);
             //distances.Add(currObjectivesCount, (m_objectives[currObjectivesCount].m_highlight.position - PlayerHandler.instance.transform.position).sqrMagnitude);
-            allocatedPoints.Add(randomisedPoint);
+            allocatedPoints.Add(objIndex);
             currObjectivesCount++;
         }
         //for (int i = 0; i < m_maxObjectives; ++i)
@@ -242,9 +242,12 @@ public class Game : MonoBehaviour
         GUIManager.instance.SetActiveObjective(m_objectives[0]);
         for (int i = 0; i < MapPointsHandler.instance.m_mapPoints.Count; ++i)
         {
+            bool loadloadaald = !allocatedPoints.Contains(i);
+            print("adsadasd " + loadloadaald);
             if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability && !CustomUtility.IsHitRadius(MapPointsHandler.instance.m_mapPoints[i], PlayerHandler.instance.transform.position, m_enemySpawnDeadzone))
             {
                 EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[Random.Range(0, m_enemies.Length)].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
+                print("Enemy deployed at point " + i);
             }
         }
     }

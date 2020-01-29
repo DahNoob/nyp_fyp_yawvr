@@ -5,5 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Structure Info", menuName = "Entity Info/Structure Info")]
 public class StructureInfo : EntityInfo
 {
-    //[Header("Base Structure Info")]
+    [Header("Base Structure Info")]
+    public Material material;
 }
