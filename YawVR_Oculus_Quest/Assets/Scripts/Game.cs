@@ -243,11 +243,11 @@ public class Game : MonoBehaviour
         for (int i = 0; i < MapPointsHandler.instance.m_mapPoints.Count; ++i)
         {
             bool loadloadaald = !allocatedPoints.Contains(i);
-            print("adsadasd " + loadloadaald);
+            //print("adsadasd " + loadloadaald);
             if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability && !CustomUtility.IsHitRadius(MapPointsHandler.instance.m_mapPoints[i], PlayerHandler.instance.transform.position, m_enemySpawnDeadzone))
             {
                 EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[Random.Range(0, m_enemies.Length)].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
-                print("Enemy deployed at point " + i);
+                //print("Enemy deployed at point " + i);
             }
         }
     }
