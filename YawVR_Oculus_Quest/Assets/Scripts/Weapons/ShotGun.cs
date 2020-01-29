@@ -42,11 +42,17 @@ public class ShotGun : MechGunWeapon
         return true;
     }
 
+    override protected void Vibe()
+    {
+        VibrationManager.SetControllerVibration(m_controller, 0.02f, 0.7f);
+    }
+
     override protected void SpawnProjectile()
     {
         for (int i = 0; i < m_projectileAmount; ++i)
         {
             base.SpawnProjectile();
         }
+        PlayerHandler.instance.Shake(0.06f);
     }
 }

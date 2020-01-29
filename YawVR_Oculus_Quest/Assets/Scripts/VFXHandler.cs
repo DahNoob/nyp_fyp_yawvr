@@ -9,6 +9,7 @@ public class VFXHandler : MonoBehaviour , IPooledObject
     public enum VFX_TYPE
     {
         BOOMBOOMS,
+        BULLET_IMPACT_B,
         TOTAL_TYPE
     }
 
@@ -26,6 +27,9 @@ public class VFXHandler : MonoBehaviour , IPooledObject
         {
             case VFX_TYPE.BOOMBOOMS:
                 ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT);
+                break;
+            case VFX_TYPE.BULLET_IMPACT_B:
+                ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE_BIG);
                 break;
             case VFX_TYPE.TOTAL_TYPE:
                 break;

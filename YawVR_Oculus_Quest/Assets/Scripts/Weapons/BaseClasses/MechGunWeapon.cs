@@ -6,12 +6,12 @@ abstract public class MechGunWeapon : MechBaseWeapon
 {
     [Header("Base Gun Configuration")]
     [SerializeField]
-    protected GameObject m_projectilePrefab;
+    protected PoolObject.OBJECTTYPES m_projectileType;
     [SerializeField]
     protected Transform m_projectileOrigin;
     [SerializeField]
     protected float m_shootInterval = 0.1f;
-    [Range(0.0f, 5.0f)]
+    [Range(0.0f, 8.0f)]
     [SerializeField]
     protected float m_shootDeviation = 1.0f;
     [SerializeField]
@@ -39,8 +39,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
 
     virtual protected void Start()
     {
-        if (!CustomUtility.IsObjectPrefab(m_projectilePrefab))
-            throw new System.Exception("Error! Member <m_projectilePrefab> is not a prefab!");
         //Set the fill amount to be the normalized value of the ammo left
         ammoModule.Init();
         ammoModule.onFinishReload += _AmmoModule_onFinishReload;
@@ -116,6 +114,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
                     if(m_shootAudioSource)
                     {
                         m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
+                        m_shootAudioSource.pitch = Random.Range(0.9f, 1.1f);
                         m_shootAudioSource.Play();
                     }
                     //Triggered
@@ -148,7 +147,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     virtual protected void SpawnProjectile()
     {
         //BaseProjectile derp = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-        BaseProjectile derp = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE, m_projectileOrigin.position, m_projectileOrigin.rotation * Quaternion.Euler(Random.Range(-m_shootDeviation, m_shootDeviation), Random.Range(-m_shootDeviation, m_shootDeviation), 0)).GetComponent<BaseProjectile>();
+        BaseProjectile derp = ObjectPooler.instance.SpawnFromPool(m_projectileType, m_projectileOrigin.position, m_projectileOrigin.rotation * Quaternion.Euler(Random.Range(-m_shootDeviation, m_shootDeviation), Random.Range(-m_shootDeviation, m_shootDeviation), 0)).GetComponent<BaseProjectile>();
         derp.Init();
     }
 

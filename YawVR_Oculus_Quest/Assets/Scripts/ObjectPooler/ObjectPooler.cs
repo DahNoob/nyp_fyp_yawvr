@@ -33,6 +33,8 @@ public class PoolObject
         HEAVY_MECH2,
         LIGHT_MECH1,
         MINIMAP_ICONS,
+        BULLET_IMPACT_B_EFFECT,
+        PLAYER_PROJECTILE_BIG,
         TOTAL_TYPES
     }
 
@@ -70,7 +72,7 @@ public class ObjectPooler : MonoBehaviour
         poolParent = new GameObject("Object Pools");
         //poolParent.transform.parent = Persistent.instance.GO_DYNAMIC.transform;
         poolParent.transform.parent = transform;
-        int totalCount = 0;
+        //int totalCount = 0;
         foreach (PoolObject poolObject in poolList)
         {
             Queue<GameObject> resultPool = new Queue<GameObject>();
@@ -88,10 +90,10 @@ public class ObjectPooler : MonoBehaviour
             //MAke sure the reference to the gameObject parent is saved
             poolObject.parentInHierachy = parent;
 
-            poolDictionary.Add(totalCount, resultPool);
-            pooledObjectData.Add(totalCount, poolObject);
+            poolDictionary.Add((int)poolObject.poolType, resultPool);
+            pooledObjectData.Add((int)poolObject.poolType, poolObject);
 
-            totalCount++;
+            //totalCount++;
         }
     }
 

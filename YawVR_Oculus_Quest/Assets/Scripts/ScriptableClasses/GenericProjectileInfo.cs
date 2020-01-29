@@ -6,9 +6,11 @@ using UnityEngine;
 public class GenericProjectileInfo : ScriptableObject
 {
     [Header("Generic Projectile Info")]
+    public PoolObject.OBJECTTYPES projectileType;
     public string projectileName;
     public float speed = 19000;
     public float lifeTime = 1.5f;
-    public GameObject impactEffect;
+    //public GameObject impactEffect;
+    public PoolObject.OBJECTTYPES impactType;
     public int damage = 5;
 }
