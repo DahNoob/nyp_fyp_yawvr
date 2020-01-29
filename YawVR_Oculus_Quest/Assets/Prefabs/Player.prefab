@@ -11777,6 +11777,7 @@ MonoBehaviour:
     m_minimapParent: {fileID: 0}
     m_playerIcon: {fileID: 0}
     minimapIconListData: []
+    minimapIconObjectivesListData: []
     minScaleRange: 0
     maxScaleRange: 0
     customRange: 20
@@ -117074,7 +117075,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: -243320773602546439, guid: 8f3e5e960b3c4c843966df6967b1979f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -9088515068143522428, guid: 8f3e5e960b3c4c843966df6967b1979f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8f3e5e960b3c4c843966df6967b1979f, type: 3}
 --- !u!95 &2350519142026771878 stripped
 Animator:
@@ -117230,6 +117237,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HandModel
       objectReference: {fileID: 0}
+    - target: {fileID: -243320773602546439, guid: b56d9437e6063ca48a82dfa64bd98e0a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: b56d9437e6063ca48a82dfa64bd98e0a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -117290,7 +117302,8 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2c999a9feab7d9f46b3fbb8161c4db2b, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -9088515068143522428, guid: b56d9437e6063ca48a82dfa64bd98e0a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b56d9437e6063ca48a82dfa64bd98e0a, type: 3}
 --- !u!4 &7584669271150562702 stripped
 Transform:
