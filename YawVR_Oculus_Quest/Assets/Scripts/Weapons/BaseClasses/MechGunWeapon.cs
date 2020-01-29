@@ -113,8 +113,11 @@ abstract public class MechGunWeapon : MechBaseWeapon
                     }
                     follower.Bump(m_recoilPosition, m_recoilRotation);
                     //VibrationManager.SetControllerVibration(m_controller, vibeClip);
-                    m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
-                    m_shootAudioSource.Play();
+                    if(m_shootAudioSource)
+                    {
+                        m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
+                        m_shootAudioSource.Play();
+                    }
                     //Triggered
                     GUIManager.instance.Triggered(_controller);
                     //Set weapon info ammo

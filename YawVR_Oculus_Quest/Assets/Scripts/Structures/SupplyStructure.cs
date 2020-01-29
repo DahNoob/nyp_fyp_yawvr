@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootStructure : BaseStructure
+public class SupplyStructure : BaseStructure
 {
     void Awake()
     {

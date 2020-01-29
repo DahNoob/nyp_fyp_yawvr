@@ -111,8 +111,8 @@ public class Game : MonoBehaviour
                     Destroy(currObj.m_highlight.Find("Crown").gameObject);
                 if (currObj.m_highlight.Find("Beacon"))
                     Destroy(currObj.m_highlight.Find("Beacon").gameObject);
+                Instantiate(Persistent.instance.PREFAB_SUPPLYCRATE_DROP, currObj.m_highlight.position, Quaternion.Euler(0, Random.Range(0, 360), 0), Persistent.instance.GO_STATIC.transform);
                 onObjectiveFinished?.Invoke(currObj, true);
-
                 return;
             }
             else if (currObj.m_timeLeft <= 0)
@@ -172,6 +172,7 @@ public class Game : MonoBehaviour
                 if (currObj.m_highlight.Find("Beacon"))
                     Destroy(currObj.m_highlight.Find("Beacon").gameObject);
                 currObj.m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(false);
+                Instantiate(Persistent.instance.PREFAB_SUPPLYCRATE_DROP, currObj.m_highlight.position, Quaternion.Euler(0, Random.Range(0, 360), 0), Persistent.instance.GO_STATIC.transform);
                 onObjectiveFinished?.Invoke(currObj, true);
                 return;
             }
@@ -242,8 +243,6 @@ public class Game : MonoBehaviour
         GUIManager.instance.SetActiveObjective(m_objectives[0]);
         for (int i = 0; i < MapPointsHandler.instance.m_mapPoints.Count; ++i)
         {
-            bool loadloadaald = !allocatedPoints.Contains(i);
-            print("adsadasd " + loadloadaald);
             if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability && !CustomUtility.IsHitRadius(MapPointsHandler.instance.m_mapPoints[i], PlayerHandler.instance.transform.position, m_enemySpawnDeadzone))
             {
                 EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[Random.Range(0, m_enemies.Length)].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
@@ -280,7 +279,7 @@ public class Game : MonoBehaviour
                         EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, m_objectives[i].m_highlight.position, Quaternion.identity).GetComponent<EnemyBase>();
                         AttachBeacon(enemy.transform, m_bountyHuntEnemyColor);
                         AttachCrown(enemy.transform);
-                        enemy.SetMaxHealthMultiplier(2);
+                        enemy.SetMaxHealthMultiplier(3);
                         Destroy(m_objectives[i].m_highlight.gameObject);
                         m_objectives[i].m_highlight = enemy.transform;
                         //SpriteRenderer enemyMarker = enemy.GetComponentInChildren<SpriteRenderer>();

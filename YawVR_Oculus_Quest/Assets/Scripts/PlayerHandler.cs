@@ -241,6 +241,10 @@ public class PlayerHandler : BaseEntity
         {
             DEV_resetLevelTimer = 0;
         }
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            Instantiate(Persistent.instance.PREFAB_SUPPLYCRATE_DROP, transform.position + Vector3.up * -4.5f + transform.forward * 4, Quaternion.Euler(0, Random.Range(0, 360), 0), Persistent.instance.GO_STATIC.transform);
+        }
         ////update ui
         //m_healthBar.value = Mathf.Lerp(m_uiHealth, _health, Time.deltaTime * healthLerpSpeed);
         //m_armorBar.value = Mathf.Lerp(m_uiArmor, _armor, Time.deltaTime * armorLerpSpeed);
