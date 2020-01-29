@@ -59,6 +59,7 @@ public class PlayerUIMinimap
     [SerializeField]
     private GameObject m_playerIcon;
 
+    [SerializeField]
     private List<GameObject> minimapIconsList = new List<GameObject>();
 
     [Header("Normal Minimap Icons Configuration")]
@@ -176,21 +177,22 @@ public class PlayerUIMinimap
     }
     public List<GameObject> queries;
 
+    //WILL IMPROVISE LATER
     public IEnumerator UpdateMinimap()
     {
         while (true)
         {
             //Fill up the list once more
             queries = QuadTreeManager.instance.QueryDynamicObjects(m_minimapBounds, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
+ 
+            //Amount of enemies
             int queriesCount = queries.Count;
-
             //Get objectives count
             int objectiveCount = Game.instance.m_objectives.Length;
 
             int totalCount = objectiveCount + queriesCount;
 
-
-
+            //Spawn from pool 
             if (minimapIconsList.Count != totalCount)
             {
                 //Instantiate all the way to the count
@@ -206,11 +208,11 @@ public class PlayerUIMinimap
             }
 
             //Set active false all
-            for (int i = 0; i < minimapIconsList.Count; ++i)
-            {
-                //Set all to false, then set back everything
-                minimapIconsList[i].SetActive(false);
-            }
+            //for (int i = 0; i < minimapIconsList.Count; ++i)
+            //{
+            //    //Set all to false, then set back everything
+            //    minimapIconsList[i].SetActive(false);
+            //}
             
             //Calculate the scale of everything
             float normalizedScale = CustomUtility.Normalize(80 - m_minimapZoom, 0, 80);
@@ -359,7 +361,17 @@ public class PlayerUIMinimap
 
 
             }
-            yield return new WaitForEndOfFrame();
+
+            //Set active the rest
+            if(minimapIconsList.Count > totalCount)
+            {
+                for(int i = totalCount; i < minimapIconsList.Count; ++i)
+                {
+                    minimapIconsList[i].SetActive(false);
+                }
+            }
+           
+            yield return new WaitForSeconds(m_minimapPollRate);
             //yield return new WaitForSeconds(m_minimapPollRate);
         }
     }
