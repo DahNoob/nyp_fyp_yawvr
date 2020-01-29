@@ -9,6 +9,7 @@ public class GenericProjectileInfo : ScriptableObject
     public PoolObject.OBJECTTYPES projectileType;
     public string projectileName;
     public float speed = 19000;
+    public float speedVariancy = 0;
     public float lifeTime = 1.5f;
     //public GameObject impactEffect;
     public PoolObject.OBJECTTYPES impactType;

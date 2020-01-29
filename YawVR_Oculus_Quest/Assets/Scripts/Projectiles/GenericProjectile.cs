@@ -36,7 +36,7 @@ public class GenericProjectile : BaseProjectile, IPooledObject
     {
         if (_transform != null)
             transform.SetPositionAndRotation(_transform.position, _transform.rotation);
-        m_rigidbody.AddForce(transform.forward * m_projectileInfo.speed);
+        m_rigidbody.AddForce(transform.forward * (m_projectileInfo.speed + Random.Range(-m_projectileInfo.speedVariancy,m_projectileInfo.speedVariancy)));
         StartCoroutine(delayDestroy());
     }
 
