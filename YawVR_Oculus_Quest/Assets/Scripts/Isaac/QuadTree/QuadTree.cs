@@ -109,7 +109,7 @@ public class QuadTree
                 }
             }
 
-            Debug.Log("Failed to remove the object");
+            //Debug.Log("Failed to remove the object");
             return false;
 
         }
