@@ -18,6 +18,10 @@ using UnityEngine;
 [System.Serializable]
 abstract public class MechBaseWeapon : BaseMechModule
 {
+    public delegate void FadedOut();
+    public delegate void FadedIn();
+    public event FadedOut onFadedOut;
+    public event FadedIn onFadedIn;
     [Header("Base Weapon Configuration")]
     [SerializeField]
     protected bool m_enabled = true;
@@ -118,6 +122,7 @@ abstract public class MechBaseWeapon : BaseMechModule
             {
                 isFullyVisible = true;
                 SetModelFade(99999);
+                onFadedIn?.Invoke();
                 break;
             }
         }
@@ -125,6 +130,7 @@ abstract public class MechBaseWeapon : BaseMechModule
     }
     IEnumerator fadeOut()
     {
+        isFullyVisible = false;
         while (!isSelected || (forceFade && m_armObject.activeSelf))
         {
             yield return new WaitForFixedUpdate();
@@ -132,9 +138,9 @@ abstract public class MechBaseWeapon : BaseMechModule
             SetModelFade(fadeValue + m_armObject.transform.position.y);
             if(fadeValue < m_fadeOutThreshold)// && !isSelected)
             {
-                isFullyVisible = false;
                 SetModelFade(-99999);
                 m_armObject.SetActive(false);
+                onFadedOut?.Invoke();
                 break;
             }
         }

@@ -27,8 +27,16 @@ public class TriGatlingGun : MechGunWeapon
     protected override void Start()
     {
         base.Start();
+        onFadedIn += _TriGatlingGun_onFadedIn;
         ammoModule.onStartReload += _AmmoModule_onStartReload_Gatling;
-        ammoModule.onFinishReload += _AmmoModule_onFinishReload_Gatling;
+    }
+
+    private void _TriGatlingGun_onFadedIn()
+    {
+        if (isActivated)
+        {
+            Activate(m_controller);
+        }
     }
 
     private void _AmmoModule_onStartReload_Gatling()
@@ -38,23 +46,14 @@ public class TriGatlingGun : MechGunWeapon
         m_revUpAudioSource.Stop();
         m_revDownAudioSource.Play();
         m_loopedShootAudioSource.Stop();
+        windUpElapsed = shootTick = 0;
         isWindedUp = false;
-    }
-
-    private void _AmmoModule_onFinishReload_Gatling()
-    {
-        if(isActivated)
-        {
-            m_gatlingAnimator.SetBool("Shooting", true);
-            m_barrelWhirlWindEffect.Play();
-            m_revUpAudioSource.Play();
-        }
     }
 
     private void OnDestroy()
     {
         ammoModule.onStartReload -= _AmmoModule_onStartReload_Gatling;
-        ammoModule.onFinishReload -= _AmmoModule_onFinishReload_Gatling;
+        onFadedIn -= _TriGatlingGun_onFadedIn;
     }
 
     public override bool Activate(OVRInput.Controller _controller)
@@ -72,14 +71,17 @@ public class TriGatlingGun : MechGunWeapon
 
     public override bool Hold(OVRInput.Controller _controller)
     {
-        windUpElapsed += Time.deltaTime;
-        if(windUpElapsed > m_windUpTime)
+        if(!ammoModule.m_isReloading && isFullyVisible)
         {
-            base.Hold(_controller);
-            if(!isWindedUp)
+            windUpElapsed += Time.deltaTime;
+            if (windUpElapsed > m_windUpTime)
             {
-                isWindedUp = true;
-                m_loopedShootAudioSource.Play();
+                base.Hold(_controller);
+                if (!isWindedUp)
+                {
+                    isWindedUp = true;
+                    m_loopedShootAudioSource.Play();
+                }
             }
         }
         return true;

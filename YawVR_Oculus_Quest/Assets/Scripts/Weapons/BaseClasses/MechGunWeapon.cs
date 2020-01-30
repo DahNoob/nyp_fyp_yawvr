@@ -55,7 +55,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
         //GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
     }
 
-
     private void _AmmoModule_onFinishReload()
     {
         forceFade = false;

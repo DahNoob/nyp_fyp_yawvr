@@ -110,6 +110,7 @@ abstract public class EnemyBase : BaseEntity
         health = GetMaxHealth();
         GetComponent<UnityEngine.AI.NavMeshAgent>().speed = GetSpeed();
         meshRenderers = GetComponentsInChildren<MeshRenderer>();
+        SetFlash(false);
     }
 
     // Update is called once per frame
