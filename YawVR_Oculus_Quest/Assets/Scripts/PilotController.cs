@@ -280,7 +280,6 @@ public class PilotController : MonoBehaviour
             {
                 //VibrationManager.SetControllerVibration(m_controller, 16, 2, 100);
                 modules[currModuleIndex].Activate(m_controller);
-                print("derp");
             }
             else
             {

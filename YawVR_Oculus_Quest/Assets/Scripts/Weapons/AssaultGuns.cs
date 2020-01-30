@@ -6,6 +6,7 @@ public class AssaultGuns : MechGunWeapon
 {
     public override bool Activate(OVRInput.Controller _controller)
     {
+        //Not really calling the base's Activate function since AssaultGun is an auto gun
         follower.m_followSpeed = m_followerSpeed;
         //foreach (var asd in m_muzzleFlash.GetComponentsInChildren<ParticleSystem>())
         //{

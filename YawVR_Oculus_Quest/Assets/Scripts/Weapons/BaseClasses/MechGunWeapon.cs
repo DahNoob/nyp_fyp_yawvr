@@ -6,6 +6,9 @@ abstract public class MechGunWeapon : MechBaseWeapon
 {
     [Header("Base Gun Configuration")]
     [SerializeField]
+    [Tooltip("Is the gun a semi gun? Otherwise it's automatic.")]
+    protected bool m_semi = false;
+    [SerializeField]
     protected PoolObject.OBJECTTYPES m_projectileType;
     [SerializeField]
     protected Transform m_projectileOrigin;
@@ -77,6 +80,39 @@ abstract public class MechGunWeapon : MechBaseWeapon
         return true;
     }
 
+    public override bool Activate(OVRInput.Controller _controller)
+    {
+        follower.m_followSpeed = m_followerSpeed;
+        if (m_semi && isFullyVisible && !ammoModule.m_isReloading && shootTick > m_shootInterval)
+        {
+            shootTick = 0 + Time.deltaTime;
+            if (ammoModule.DecreaseAmmo(1))
+            {
+                SpawnProjectile();
+                Vibe();
+                m_bulletCasings.Emit(1);
+                for (int i = 0; i < shootParticles.Length; ++i)
+                {
+                    shootParticles[i].Emit(1);
+                }
+                follower.Bump(m_recoilPosition, m_recoilRotation);
+                //VibrationManager.SetControllerVibration(m_controller, vibeClip);
+                if (m_shootAudioSource)
+                {
+                    m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
+                    m_shootAudioSource.pitch = Random.Range(0.9f, 1.1f);
+                    m_shootAudioSource.Play();
+                }
+                //Triggered
+                GUIManager.instance.Triggered(_controller);
+                //Set weapon info ammo
+                GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo, ammoModule.ReturnNormalized());
+                return true;
+            }
+        }
+        return true;
+    }
+
     //Update UI
     public override bool UpdateUI()
     {
@@ -94,7 +130,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
             GUIManager.instance.SetWeaponInfoReloading(m_controller);
         }
         //If the ammo module is not reloading?
-        if (!ammoModule.m_isReloading && isFullyVisible)
+        if (!m_semi && !ammoModule.m_isReloading && isFullyVisible)
         {
             if (shootTick > m_shootInterval)
             {

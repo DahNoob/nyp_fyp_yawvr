@@ -29,11 +29,15 @@ abstract public class BaseStructure : BaseEntity
 
     public override void takeDamage(int damage)
     {
-        health -= damage;
-        if (health <= 0)
-            Die();
-        else if (!isShaking)
-            StartCoroutine(shake());
+        if(health > 0)
+        {
+            health -= damage;
+            if (health <= 0)
+                Die();
+            else if (!isShaking)
+                StartCoroutine(shake());
+        }
+        
     }
 
     void SetFlash(bool _isFlashing)

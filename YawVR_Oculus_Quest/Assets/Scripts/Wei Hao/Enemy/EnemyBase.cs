@@ -153,17 +153,21 @@ abstract public class EnemyBase : BaseEntity
 
     public override void takeDamage(int damage)
     {
-        if (flashTick <= 0)
-            SetFlash(true);
-        flashTick = 3;
-        health -= damage;
-        if (health <= 0)
-            Die();
+        if(health > 0)
+        {
+            if (flashTick <= 0)
+                SetFlash(true);
+            flashTick = 3;
+            health -= damage;
+            if (health <= 0)
+                Die();
+        }
     }
 
     public override void Die()
     {
         //gameObject.SetActive(false);
+        PlayerHandler.instance.AddCurrency(m_enemyInfo.currencyValue);
         flashTick = 0;
         SetFlash(false);
         InvokeDie();

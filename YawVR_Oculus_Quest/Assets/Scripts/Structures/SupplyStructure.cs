@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class SupplyStructure : BaseStructure
 {
-    void Awake()
+    public override void Die()
     {
-    }
-
-    void Update()
-    {
+        PlayerHandler.instance.AddCurrency(m_structureInfo.currencyValue);
+        base.Die();
     }
 }

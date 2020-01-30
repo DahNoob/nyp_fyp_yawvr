@@ -7,4 +7,5 @@ public class StructureInfo : EntityInfo
 {
     [Header("Base Structure Info")]
     public Material material;
+    public int currencyValue = 10;
 }

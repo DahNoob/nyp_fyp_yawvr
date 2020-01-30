@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 using OVR;
 
 /******************************  
@@ -70,6 +71,8 @@ public class PlayerHandler : BaseEntity
     [SerializeField]
     private UnityEngine.UI.Image m_vignette;
     [SerializeField]
+    private TextMeshProUGUI m_coinsText;
+    [SerializeField]
     private float healthLerpSpeed = 5;
     [SerializeField]
     private float armorLerpSpeed = 5;
@@ -133,6 +136,7 @@ public class PlayerHandler : BaseEntity
 
     //Hidden variables
     private float _health, _armor;
+    private int _currency;
     private float m_uiHealth, m_uiArmor;
     private float m_warningTimer;
 
@@ -151,6 +155,15 @@ public class PlayerHandler : BaseEntity
         {
             _armor = Mathf.Clamp(value, 0.0f, m_maxArmor);
             m_armorBar.value = _armor;
+        }
+    }
+    public int currency
+    {
+        get { return _currency; }
+        private set
+        {
+            _currency = value;
+            m_coinsText.SetText(_currency.ToString());
         }
     }
 
@@ -175,6 +188,7 @@ public class PlayerHandler : BaseEntity
         leftHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
         m_uiHealth = health; //initial values
         m_uiArmor = armor; //initial values
+        m_coinsText.text = "0";
         print("PlayerHandler started!");
     }
     
@@ -311,6 +325,11 @@ public class PlayerHandler : BaseEntity
         //GetComponent<CharacterController>().enabled = false;
         //transform.SetPositionAndRotation(origPos, origRot);
         //GetComponent<CharacterController>().enabled = true;
+    }
+
+    public void AddCurrency(int _amount)
+    {
+        currency += _amount;
     }
 
     public IEnumerator ResetPoseThread()

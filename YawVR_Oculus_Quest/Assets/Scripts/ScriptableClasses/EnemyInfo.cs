@@ -19,4 +19,5 @@ public class EnemyInfo : EntityInfo
     public int moveSpeed = 10;
     public GameObject dmgBuff, hpBuff, msBuff;
     public ENEMY_TYPE enemyType;
+    public int currencyValue = 10;
 }

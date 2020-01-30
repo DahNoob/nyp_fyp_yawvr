@@ -59,6 +59,7 @@ public class TriGatlingGun : MechGunWeapon
 
     public override bool Activate(OVRInput.Controller _controller)
     {
+        //Not really calling the base's Activate function since TriGatling is an auto gun
         isActivated = true;
         follower.m_followSpeed = m_followerSpeed;
         windUpElapsed = 0;
