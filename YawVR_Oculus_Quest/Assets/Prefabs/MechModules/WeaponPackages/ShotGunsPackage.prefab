@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4431664586389257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.122, y: 0.419, z: 2.447}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6500649960613381487}
@@ -5575,14 +5575,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ddbdaff8c06a240a4e3d1eb077c87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moduleName: Laser Shotgun
+  m_moduleName: Shot
   m_moduleIcon: {fileID: 21300000, guid: f6e6acbe07068e448ada3d7aaeb72562, type: 3}
   m_enabled: 1
   m_followerSpeed: 0.12
   m_controller: 1
   m_fadeInThreshold: 2
   m_fadeOutThreshold: -2
-  m_armObject: {fileID: 6373378977283585403}
+  m_gunObject: {fileID: 6373378977283585403}
   m_holoObject: {fileID: 3973024386062957811}
   m_holoMeshes:
   - {fileID: 768434503928597873}
@@ -5592,7 +5592,7 @@ MonoBehaviour:
   m_semi: 1
   m_projectileType: 9
   m_projectileOrigin: {fileID: 6217576178384257602}
-  m_shootInterval: 0.1
+  m_shootInterval: 0.4
   m_shootDeviation: 6
   m_muzzleFlash: {fileID: 8084415319021967028}
   m_bulletCasings: {fileID: 2858892624412306237}
@@ -5606,6 +5606,7 @@ MonoBehaviour:
     m_ammoInfo: {fileID: 11400000, guid: a927b158e7fb1b44097a8badb24dd9fc, type: 2}
     m_isReloading: 0
   m_projectileAmount: 10
+  m_cameraShakeAmount: 0.15
 --- !u!1 &2076951495236110701
 GameObject:
   m_ObjectHideFlags: 0
@@ -15065,14 +15066,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2ddbdaff8c06a240a4e3d1eb077c87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moduleName: Laser Shotgun
+  m_moduleName: Shot
   m_moduleIcon: {fileID: 21300000, guid: f6e6acbe07068e448ada3d7aaeb72562, type: 3}
   m_enabled: 1
   m_followerSpeed: 0.12
   m_controller: 2
   m_fadeInThreshold: 2
   m_fadeOutThreshold: -2
-  m_armObject: {fileID: 8133520886803770113}
+  m_gunObject: {fileID: 8133520886803770113}
   m_holoObject: {fileID: 8514972705571566328}
   m_holoMeshes:
   - {fileID: 6312296262394852136}
@@ -15082,7 +15083,7 @@ MonoBehaviour:
   m_semi: 1
   m_projectileType: 9
   m_projectileOrigin: {fileID: 6047700032929280933}
-  m_shootInterval: 0.1
+  m_shootInterval: 0.4
   m_shootDeviation: 6
   m_muzzleFlash: {fileID: 927219169764718647}
   m_bulletCasings: {fileID: 908248766992788446}
@@ -15096,6 +15097,7 @@ MonoBehaviour:
     m_ammoInfo: {fileID: 11400000, guid: a927b158e7fb1b44097a8badb24dd9fc, type: 2}
     m_isReloading: 0
   m_projectileAmount: 10
+  m_cameraShakeAmount: 0.15
 --- !u!1 &5562876149370975928
 GameObject:
   m_ObjectHideFlags: 0
@@ -17518,7 +17520,7 @@ GameObject:
   - component: {fileID: 7303836717019908764}
   - component: {fileID: 4108118052249356332}
   m_Layer: 8
-  m_Name: LeftArmObject
+  m_Name: LeftGunObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22659,7 +22661,7 @@ GameObject:
   - component: {fileID: 6500649960613381487}
   - component: {fileID: 3686589862024929163}
   m_Layer: 8
-  m_Name: RightArmObject
+  m_Name: RightGunObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22911,7 +22913,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8194582945179113165}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.122, y: 0.419, z: 2.447}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7303836717019908764}

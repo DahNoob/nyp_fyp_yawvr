@@ -22,6 +22,8 @@ public class ShotGun : MechGunWeapon
     [Header("Shot Gun Configuration")]
     [SerializeField]
     protected int m_projectileAmount = 4;
+    [SerializeField]
+    protected float m_cameraShakeAmount = 0.15f;
 
     public override bool Stop(OVRInput.Controller _controller)
     {
@@ -43,6 +45,6 @@ public class ShotGun : MechGunWeapon
         {
             base.SpawnProjectile();
         }
-        PlayerHandler.instance.Shake(0.15f);
+        PlayerHandler.instance.Shake(m_cameraShakeAmount);
     }
 }
