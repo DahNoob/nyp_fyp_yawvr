@@ -35,9 +35,9 @@ abstract public class MechBaseWeapon : BaseMechModule
     [SerializeField]
     protected float m_fadeOutThreshold = -2.0f;
 
-    [Header("Arm Object")]
+    [Header("Gun Object")]
     [SerializeField]
-    protected GameObject m_armObject;
+    protected GameObject m_gunObject;
 
     [Header("Holo Object")]
     [SerializeField]
@@ -46,7 +46,7 @@ abstract public class MechBaseWeapon : BaseMechModule
     public MeshRenderer[] m_holoMeshes;
 
     [HideInInspector]
-    public GameObject armObject { get { return m_armObject; } private set { m_armObject = value; } }
+    public GameObject gunObject { get { return m_gunObject; } private set { m_gunObject = value; } }
     [HideInInspector]
     public GameObject holoObject { get { return m_holoObject; } private set { m_holoObject = value; } }
     [HideInInspector]
@@ -64,11 +64,11 @@ abstract public class MechBaseWeapon : BaseMechModule
     {
         if (m_holoObject.transform.Find("HandReference"))
             Destroy(m_holoObject.transform.Find("HandReference").gameObject);
-        if (m_armObject.transform.Find("HandReference"))
-            Destroy(m_armObject.transform.Find("HandReference").gameObject);
+        if (m_gunObject.transform.Find("HandReference"))
+            Destroy(m_gunObject.transform.Find("HandReference").gameObject);
         name = m_moduleName;
-        holoObject.name = name + "Holo";
-        armObject.name = name + "Arm";
+        holoObject.name = name + "[Holo]";
+        gunObject.name = name + "[Gun]";
     }
 
     virtual public bool Selected()       // To be called when the player has selected the weapon as the current
@@ -95,7 +95,7 @@ abstract public class MechBaseWeapon : BaseMechModule
     }
     protected void SetModelFade(float _val)
     {
-        MeshRenderer[] ms = m_armObject.GetComponentsInChildren<MeshRenderer>();
+        MeshRenderer[] ms = m_gunObject.GetComponentsInChildren<MeshRenderer>();
         for (int i = 0; i < ms.Length; ++i)
         {
             ms[i].material.SetFloat("_Amount", _val);
@@ -112,12 +112,12 @@ abstract public class MechBaseWeapon : BaseMechModule
 
     IEnumerator fadeIn()
     {
-        m_armObject.SetActive(true);
+        m_gunObject.SetActive(true);
         while (isSelected || (forceFade && !isFullyVisible))
         {
             yield return new WaitForFixedUpdate();
             fadeValue += 0.05f;
-            SetModelFade(fadeValue + m_armObject.transform.position.y);
+            SetModelFade(fadeValue + m_gunObject.transform.position.y);
             if(fadeValue > m_fadeInThreshold)
             {
                 isFullyVisible = true;
@@ -131,15 +131,15 @@ abstract public class MechBaseWeapon : BaseMechModule
     IEnumerator fadeOut()
     {
         isFullyVisible = false;
-        while (!isSelected || (forceFade && m_armObject.activeSelf))
+        while (!isSelected || (forceFade && m_gunObject.activeSelf))
         {
             yield return new WaitForFixedUpdate();
             fadeValue -= 0.05f;
-            SetModelFade(fadeValue + m_armObject.transform.position.y);
+            SetModelFade(fadeValue + m_gunObject.transform.position.y);
             if(fadeValue < m_fadeOutThreshold)// && !isSelected)
             {
                 SetModelFade(-99999);
-                m_armObject.SetActive(false);
+                m_gunObject.SetActive(false);
                 onFadedOut?.Invoke();
                 break;
             }

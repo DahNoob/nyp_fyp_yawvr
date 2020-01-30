@@ -12461,14 +12461,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b76c8e3cf065af4597b292e4ec4d527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moduleName: TriGatlingGun
+  m_moduleName: TriGatling
   m_moduleIcon: {fileID: 21300000, guid: bdbd8a3ecf4a241499b36f4c13ded10b, type: 3}
   m_enabled: 1
   m_followerSpeed: 0.12
   m_controller: 1
   m_fadeInThreshold: 2
   m_fadeOutThreshold: -2
-  m_armObject: {fileID: 9083532595754135564}
+  m_gunObject: {fileID: 9083532595754135564}
   m_holoObject: {fileID: 1251717075614464388}
   m_holoMeshes:
   - {fileID: 3244196502821315267}
@@ -12477,8 +12477,8 @@ MonoBehaviour:
   - {fileID: 2552327066755246749}
   - {fileID: 391863541559186926}
   - {fileID: 3320709048279283228}
-  m_projectilePrefab: {fileID: 9208457272521591478, guid: ea8cc7d1e69bf764c8297c3231cebfe8,
-    type: 3}
+  m_semi: 0
+  m_projectileType: 0
   m_projectileOrigin: {fileID: 8085296391530940213}
   m_shootInterval: 0.1
   m_shootDeviation: 3
@@ -18083,7 +18083,7 @@ GameObject:
   - component: {fileID: 8956261213527982104}
   - component: {fileID: 1537028603663358716}
   m_Layer: 8
-  m_Name: RightArmObject
+  m_Name: RightGunObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22233,14 +22233,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b76c8e3cf065af4597b292e4ec4d527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moduleName: TriGatlingGun
+  m_moduleName: TriGatling
   m_moduleIcon: {fileID: 21300000, guid: bdbd8a3ecf4a241499b36f4c13ded10b, type: 3}
   m_enabled: 1
   m_followerSpeed: 0.12
   m_controller: 2
   m_fadeInThreshold: 2
   m_fadeOutThreshold: -2
-  m_armObject: {fileID: 6241400339407171190}
+  m_gunObject: {fileID: 6241400339407171190}
   m_holoObject: {fileID: 5789016830819973007}
   m_holoMeshes:
   - {fileID: 722598304029997559}
@@ -22249,8 +22249,8 @@ MonoBehaviour:
   - {fileID: 317841470293078441}
   - {fileID: 2482240972221877978}
   - {fileID: 655022622369115432}
-  m_projectilePrefab: {fileID: 9208457272521591478, guid: ea8cc7d1e69bf764c8297c3231cebfe8,
-    type: 3}
+  m_semi: 0
+  m_projectileType: 0
   m_projectileOrigin: {fileID: 8471347375920346834}
   m_shootInterval: 0.1
   m_shootDeviation: 3
@@ -26076,7 +26076,7 @@ GameObject:
   - component: {fileID: 4837299648065966059}
   - component: {fileID: 2269547267692432731}
   m_Layer: 8
-  m_Name: LeftArmObject
+  m_Name: LeftGunObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

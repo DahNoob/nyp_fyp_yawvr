@@ -172,7 +172,7 @@ public class PilotController : MonoBehaviour
                 holoArm.transform.SetParent(m_holos);
                 holoArm.transform.localPosition = Vector3.zero;
                 holoArm.transform.localRotation = Quaternion.identity;
-                GameObject armObject = armModuleAgain.armObject;
+                GameObject armObject = armModuleAgain.gunObject;
                 armObject.transform.SetParent(m_mechHand.weaponsTransform);
                 armObject.transform.localPosition = Vector3.zero;
                 armObject.transform.localRotation = Quaternion.identity;
