@@ -50,7 +50,6 @@ public class PlayerUIMinimap
     private float cameraLerpSpeed = 1;
 
     [Header("Main Minimap Configuration")]
-    [SerializeField]
     public QuadRect m_minimapBounds;
     [SerializeField]
     private float m_minimapPollRate;
@@ -59,25 +58,30 @@ public class PlayerUIMinimap
     [SerializeField]
     private GameObject m_playerIcon;
 
+    [Header("Main Minimap Settings")]
     [SerializeField]
-    private List<GameObject> minimapIconsList = new List<GameObject>();
+    [Tooltip("Check this if the camera's FOV/size will not change ever")]
+    private bool staticViewport;
+    [SerializeField]
+    private bool updateEnemies = true;
+    [SerializeField]
+    private bool updateObjectives = true;
 
-    [Header("Normal Minimap Icons Configuration")]
+
+    [Header("Global Minimap Icons Configuration")]
+    //Initializer Data
     private Dictionary<int, PlayerUIMinimapIcons> minimapIconDictionary = new Dictionary<int, PlayerUIMinimapIcons>();
     [SerializeField]
     private List<PlayerUIMinimapIcons> minimapIconListData;
 
-    [Header("Objective Icons Configuration")]
     private Dictionary<int, PlayerUIMinimapObjectiveIcons> minimapObjectiveDictionary = new Dictionary<int, PlayerUIMinimapObjectiveIcons>();
     [SerializeField]
     private List<PlayerUIMinimapObjectiveIcons> minimapIconObjectivesListData;
 
-    [Header("Global Minimap Icons Configuration")]
     [SerializeField]
     private float minScaleRange;
     [SerializeField]
     private float maxScaleRange;
-
 
     //Local variables
     private Transform m_playerReference;
@@ -89,6 +93,21 @@ public class PlayerUIMinimap
     public float customRangeTwo = 0.1f;
     public float rejectionRange = 3;
 
+    //Normalized scale
+    float normalizedScale;
+
+    public List<GameObject> queries;
+
+
+    private enum MINIMAP_ICONTYPE
+    {
+        ENEMIES,
+        OBJECTIVES,
+        TOTAL_ICONTYPE
+    }
+
+    //Storing list for the indexes
+    private Dictionary<int, List<GameObject>> minimapIcons = new Dictionary<int, List<GameObject>>();
 
     // Start is called before the first frame update
     public void Start()
@@ -103,9 +122,15 @@ public class PlayerUIMinimap
             minimapIconDictionary.Add((int)minimapIconListData[i].enemyType, minimapIconListData[i]);
         }
 
-        for(int i =0; i < minimapIconObjectivesListData.Count; ++i)
+        for (int i = 0; i < minimapIconObjectivesListData.Count; ++i)
         {
             minimapObjectiveDictionary.Add((int)minimapIconObjectivesListData[i].objectiveType, minimapIconObjectivesListData[i]);
+        }
+
+        //Update list stuffs
+        for (int i = 0; i < (int)MINIMAP_ICONTYPE.TOTAL_ICONTYPE; ++i)
+        {
+            minimapIcons.Add(i, new List<GameObject>());
         }
     }
 
@@ -152,6 +177,19 @@ public class PlayerUIMinimap
         m_minimapBounds.width = m_minimapCamera.orthographicSize;
         m_minimapBounds.height = m_minimapCamera.orthographicSize;
 
+        //Calculate the scale of everything
+        //Normalize value to range 0 and 1
+        normalizedScale = CustomUtility.Normalize(80 - m_minimapZoom, 0, 80);
+        //Normalize that value to another custom range
+        normalizedScale = CustomUtility.NormalizeCustomRange(normalizedScale, minScaleRange, maxScaleRange);
+        //Set scale of that.
+        m_playerIcon.transform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
+
+        if (updateEnemies)
+            UpdateEnemies();
+        if (updateObjectives)
+            UpdateObjectives();
+
     }
     bool AnimatedMinimap()
     {
@@ -175,208 +213,217 @@ public class PlayerUIMinimap
 
         return true;
     }
-    public List<GameObject> queries;
 
-    //WILL IMPROVISE LATER
-    public IEnumerator UpdateMinimap()
+    public bool UpdateEnemies()
     {
-        while (true)
+        //Update queries
+        queries = QuadTreeManager.instance.QueryDynamicObjects(m_minimapBounds, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
+        //Amount of enemies
+        int queriesCount = queries.Count;
+
+        int tag = (int)MINIMAP_ICONTYPE.ENEMIES;
+
+        List<GameObject> enemyList = minimapIcons[tag];
+
+        //Spawn from pool 
+        if (enemyList.Count != queriesCount)
         {
-            //Fill up the list once more
-            queries = QuadTreeManager.instance.QueryDynamicObjects(m_minimapBounds, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
- 
-            //Amount of enemies
-            int queriesCount = queries.Count;
-            //Get objectives count
-            int objectiveCount = Game.instance.m_objectives.Length;
-
-            int totalCount = objectiveCount + queriesCount;
-
-            //Spawn from pool 
-            if (minimapIconsList.Count != totalCount)
+            //Instantiate all the way to the count
+            while (enemyList.Count < queriesCount)
             {
-                //Instantiate all the way to the count
-                while (minimapIconsList.Count < totalCount)
-                {
-                    //Instantiate that thingy and do stuff
-                    GameObject minimapIconObject = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.MINIMAP_ICONS, Vector3.zero, Quaternion.identity);
-                    minimapIconsList.Add(minimapIconObject);
+                //Instantiate that thingy and do stuff
+                GameObject minimapIconObject = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.MINIMAP_ICONS, Vector3.zero, Quaternion.identity);
+                enemyList.Add(minimapIconObject);
 
-                    //Set the parent
-                    minimapIconObject.transform.SetParent(m_minimapParent.transform);
-                }
+                //Set the parent
+                minimapIconObject.transform.SetParent(m_minimapParent.transform);
             }
+        }
 
-            //Set active false all
-            //for (int i = 0; i < minimapIconsList.Count; ++i)
-            //{
-            //    //Set all to false, then set back everything
-            //    minimapIconsList[i].SetActive(false);
-            //}
-            
-            //Calculate the scale of everything
-            float normalizedScale = CustomUtility.Normalize(80 - m_minimapZoom, 0, 80);
-            normalizedScale = CustomUtility.NormalizeCustomRange(normalizedScale, minScaleRange, maxScaleRange);
-            m_playerIcon.transform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
+        //Loop through the list...
+        for (int i = 0; i < queriesCount; ++i)
+        {
+            Vector3 displacement = Vector3.Scale((queries[i].transform.position - m_playerReference.transform.position), new Vector3(1, 0, 1));
 
-            //Set it back with the appopriate calculations.
-            for (int i = 0; i < queriesCount; ++i)
+            //Normalized value of that distance between the max size (query bounds) and not
+            float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + customRange);
+            float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, rejectionRange);
+
+            if (normalizedRejection > rejectionRange)
             {
-                minimapIconsList[i].SetActive(true);
+                HandleActive(enemyList[i], false);
+            }
+            else
+            {
+                HandleActive(enemyList[i], true);
+
+                //Get angle in which the displacement is done
+                Vector3 bap = displacement.normalized;
+                float angle = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
+
+                //Calculate space in minimap
+                float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
+
                 //Loop through all the enemies, then set acctive based on the result
-                RectTransform rectTransform = minimapIconsList[i].GetComponent<RectTransform>();
-                //Vector3 displacement = Vector3.Scale(queries[0].transform.position - m_playerReference.transform.position, new Vector3(1, 0, 1));
-                Vector3 displacement = Vector3.Scale((queries[i].transform.position - m_playerReference.transform.position), new Vector3(1, 0, 1));
+                RectTransform rectTransform = enemyList[i].GetComponent<RectTransform>();
+                //Set the rect transform stuffs
+                rectTransform.localPosition = Vector3.zero;
+                rectTransform.localEulerAngles = new Vector3(0, 0, angle + PlayerHandler.instance.transform.eulerAngles.y + 180);
+                //Translate the rectTransform based on eulers
+                rectTransform.Translate(0, normalizedCustomRange, 0);
+                //Set scale
+                rectTransform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
 
-                //Normalized value of that distance between the max size (query bounds) and not
-                float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + customRange);
-                float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, rejectionRange);
+                //Set child transform values
+                RectTransform childTransform = rectTransform.GetChild(0).GetComponent<RectTransform>();
+                childTransform.rotation = Quaternion.Euler(new Vector3(0, PlayerHandler.instance.transform.eulerAngles.y, 0));
 
-                if (normalizedRejection > rejectionRange)
-                    minimapIconsList[i].SetActive(false);
-                else
+                //Get the current enemy stuff for their enemytype
+                EnemyInfo.ENEMY_TYPE enemyType = queries[i].GetComponent<EnemyBase>().enemyInfo.enemyType;
+
+                PlayerUIMinimapIcons currentData = GetMinimapData(enemyType);
+
+                if (currentData != null)
                 {
-                    //Get angle in which the displacement is done
-                    Vector3 bap = displacement.normalized;
-                    float angle = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
+                    LineRenderer lineRenderer = enemyList[i].GetComponent<LineRenderer>();
 
-                    //Calculate space in minimap
-                    float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
+                    //Set data lul
+                    lineRenderer.startColor = currentData.lineRendererStartColor;
+                    lineRenderer.endColor = currentData.lineRendererEndColor;
 
-                    //Set the rect transform stuffs
-                    rectTransform.localPosition = Vector3.zero;
-                    rectTransform.localEulerAngles = new Vector3(0, 0, angle + PlayerHandler.instance.transform.eulerAngles.y + 180);
-                    //Translate the rectTransform based on eulers
-                    rectTransform.Translate(0, normalizedCustomRange, 0);
+                    Image currImage = enemyList[i].GetComponent<Image>();
+                    currImage.color = currentData.m_circleTint;
+                    currImage.sprite = currentData.m_circleSprite;
+
+                    Image childImage = childTransform.GetComponent<Image>();
+                    childImage.color = currentData.m_iconTint;
+                    childImage.sprite = currentData.m_iconSprite;
+
+                    float newScale = normalizedScale + currentData.scaleOffset;
                     //Set scale
-                    rectTransform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
-
-                    //Set child transform values
-                    RectTransform childTransform = rectTransform.GetChild(0).GetComponent<RectTransform>();
-                    childTransform.rotation = Quaternion.Euler(new Vector3(0, PlayerHandler.instance.transform.eulerAngles.y, 0));
-
-                    LineRenderer lineRenderer = minimapIconsList[i].GetComponent<LineRenderer>();
-
-                    //Get the current enemy stuff for their enemytype
-                    EnemyInfo.ENEMY_TYPE enemyType = queries[i].GetComponent<EnemyBase>().enemyInfo.enemyType;
-
-                    PlayerUIMinimapIcons currentData = GetMinimapData(enemyType);
-
-                    if (currentData != null)
-                    {
-                        //Set data lul
-                        lineRenderer.startColor = currentData.lineRendererStartColor;
-                        lineRenderer.endColor = currentData.lineRendererEndColor;
-
-                        Image currImage = minimapIconsList[i].GetComponent<Image>();
-                        currImage.color = currentData.m_circleTint;
-                        currImage.sprite = currentData.m_circleSprite;
-
-                        Image childImage = childTransform.GetComponent<Image>();
-                        childImage.color = currentData.m_iconTint;
-                        childImage.sprite = currentData.m_iconSprite;
-
-                        float newScale = normalizedScale + currentData.scaleOffset;
-                        //Set scale
-                        rectTransform.localScale = new Vector3(newScale, newScale, newScale);
-                    }
+                    rectTransform.localScale = new Vector3(newScale, newScale, newScale);
                 }
-
-
             }
+        }
 
-            //Current count so I can re-use the same list
-            int currentCount = queriesCount;
-
-            //Idk i  will optimise later hopefully
-            for (int i = 0; i < Game.instance.m_objectives.Length; ++i)
+        if (enemyList.Count > queriesCount)
+        {
+            for (int i = queriesCount; i < enemyList.Count; ++i)
             {
-                //Ignore objective if the objective null or something
-                if (Game.instance.m_objectives[i] == null 
-                    || Game.instance.m_objectives[i].m_highlight == null
-                    || Game.instance.m_objectives[i].m_completed)
-                    continue;
-                
-                //Re-using the same list
-                int realIndex = i + currentCount;
-                minimapIconsList[realIndex].SetActive(true);
+                HandleActive(enemyList[i], false);
+            }
+        }
+
+        return true;
+
+    }
+
+    void UpdateObjectives()
+    {
+        //Get the appropriate list
+        int tag = (int)MINIMAP_ICONTYPE.OBJECTIVES;
+        List<GameObject> objectiveIconList = minimapIcons[tag];
+
+        int objectivesCount = Game.instance.m_objectives.Length;
+
+        //Spawn from pool 
+        if (objectiveIconList.Count != objectivesCount)
+        {
+            //Instantiate all the way to the count
+            while (objectiveIconList.Count < objectivesCount)
+            {
+                //Instantiate that thingy and do stuff
+                GameObject minimapIconObject = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.MINIMAP_ICONS, Vector3.zero, Quaternion.identity);
+                objectiveIconList.Add(minimapIconObject);
+
+                //Set the parent
+                minimapIconObject.transform.SetParent(m_minimapParent.transform);
+            }
+        }
+
+        //Idk i  will optimise later hopefully
+        for (int i = 0; i < objectivesCount; ++i)
+        {
+            //Ignore objective if the objective null or something
+            if (Game.instance.m_objectives[i] == null
+                || Game.instance.m_objectives[i].m_highlight == null
+                || Game.instance.m_objectives[i].m_completed)
+                continue;
+
+
+            Vector3 displacement = Vector3.Scale((Game.instance.m_objectives[i].m_highlight.position - m_playerReference.transform.position), new Vector3(1, 0, 1));
+
+            //Normalized value of that distance between the max size (query bounds) and not
+            float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + customRange);
+            float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, rejectionRange);
+
+            //Reject anything outside the range
+            if (normalizedRejection > rejectionRange)
+            {
+                HandleActive(objectiveIconList[i], false);
+            }
+            else
+            {
+                HandleActive(objectiveIconList[i], true);
+
+                //Get angle in which the displacement is done
+                Vector3 bap = displacement.normalized;
+                float angle = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
+
+                //Calculate space in minimap
+                float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
+
                 //Loop through all the objectives, then set acctive based on the result
-                RectTransform rectTransform = minimapIconsList[realIndex].GetComponent<RectTransform>();
-                Vector3 displacement = Vector3.Scale((Game.instance.m_objectives[i].m_highlight.position - m_playerReference.transform.position), new Vector3(1, 0, 1));
+                RectTransform rectTransform = objectiveIconList[i].GetComponent<RectTransform>();
+                //Set the rect transform stuffs
+                rectTransform.localPosition = Vector3.zero;
+                rectTransform.localEulerAngles = new Vector3(0, 0, angle + PlayerHandler.instance.transform.eulerAngles.y + 180);
+                //Translate the rectTransform based on eulers
+                rectTransform.Translate(0, normalizedCustomRange, 0);
+                //Set scale
+                rectTransform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
 
-                //Normalized value of that distance between the max size (query bounds) and not
-                float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + customRange);
-                float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, rejectionRange);
+                //Set child transform values
+                RectTransform childTransform = rectTransform.GetChild(0).GetComponent<RectTransform>();
+                childTransform.rotation = Quaternion.Euler(new Vector3(0, PlayerHandler.instance.transform.eulerAngles.y, 0));
 
-                //Reject anything outside the range
-                if (normalizedRejection > rejectionRange)
-                    minimapIconsList[realIndex].SetActive(false);
-                else
+                //Get the current enemy stuff for their enemytype
+                VariedObjectives.TYPE objectivesType = Game.instance.m_objectives[i].type;
+                //Get current objectives
+                PlayerUIMinimapObjectiveIcons currentData = GetMinimapData(objectivesType);
+
+                if (currentData != null)
                 {
-                    //Get angle in which the displacement is done
-                    Vector3 bap = displacement.normalized;
-                    float angle = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
+                    LineRenderer lineRenderer = objectiveIconList[i].GetComponent<LineRenderer>();
 
-                    //Calculate space in minimap
-                    float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
+                    //Set data lul
+                    lineRenderer.startColor = currentData.lineRendererStartColor;
+                    lineRenderer.endColor = currentData.lineRendererEndColor;
 
-                    //Set the rect transform stuffs
-                    rectTransform.localPosition = Vector3.zero;
-                    rectTransform.localEulerAngles = new Vector3(0, 0, angle + PlayerHandler.instance.transform.eulerAngles.y + 180);
-                    //Translate the rectTransform based on eulers
-                    rectTransform.Translate(0, normalizedCustomRange, 0);
+                    Image currImage = objectiveIconList[i].GetComponent<Image>();
+                    currImage.color = currentData.m_circleTint;
+                    currImage.sprite = currentData.m_circleSprite;
+
+                    Image childImage = childTransform.GetComponent<Image>();
+                    childImage.color = currentData.m_iconTint;
+                    childImage.sprite = currentData.m_iconSprite;
+
+                    float newScale = normalizedScale + currentData.scaleOffset;
                     //Set scale
-                    rectTransform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
-
-                    //Set child transform values
-                    RectTransform childTransform = rectTransform.GetChild(0).GetComponent<RectTransform>();
-                    childTransform.rotation = Quaternion.Euler(new Vector3(0, PlayerHandler.instance.transform.eulerAngles.y, 0));
-
-                    LineRenderer lineRenderer = minimapIconsList[realIndex].GetComponent<LineRenderer>();
-
-                    //Get the current enemy stuff for their enemytype
-                    VariedObjectives.TYPE objectivesType = Game.instance.m_objectives[i].type;
-
-                    PlayerUIMinimapObjectiveIcons currentData = GetMinimapData(objectivesType);
-
-                    if (currentData != null)
-                    {
-                        //Set data lul
-                        lineRenderer.startColor = currentData.lineRendererStartColor;
-                        lineRenderer.endColor = currentData.lineRendererEndColor;
-
-                        Image currImage = minimapIconsList[i].GetComponent<Image>();
-                        currImage.color = currentData.m_circleTint;
-                        currImage.sprite = currentData.m_circleSprite;
-
-                        Image childImage = childTransform.GetComponent<Image>();
-                        childImage.color = currentData.m_iconTint;
-                        childImage.sprite = currentData.m_iconSprite;
-
-                        float newScale = normalizedScale + currentData.scaleOffset;
-                        //Set scale
-                        rectTransform.localScale = new Vector3(newScale, newScale, newScale);
-                    }
-                }
-
-
-            }
-
-            //Set active the rest
-            if(minimapIconsList.Count > totalCount)
-            {
-                for(int i = totalCount; i < minimapIconsList.Count; ++i)
-                {
-                    minimapIconsList[i].SetActive(false);
+                    rectTransform.localScale = new Vector3(newScale, newScale, newScale);
                 }
             }
-           
-            yield return new WaitForSeconds(m_minimapPollRate);
-            //yield return new WaitForSeconds(m_minimapPollRate);
+
+
         }
     }
 
-    //Getter function for getting the sprites properly
+    void HandleActive(GameObject referenceObject, bool desiredActive)
+    {
+        if (referenceObject.activeInHierarchy != desiredActive)
+            referenceObject.SetActive(desiredActive);
+    }
+
     PlayerUIMinimapIcons GetMinimapData(EnemyInfo.ENEMY_TYPE enemyType)
     {
         int tag = (int)enemyType;

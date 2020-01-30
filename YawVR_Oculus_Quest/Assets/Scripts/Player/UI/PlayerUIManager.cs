@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerUIManager : MonoBehaviour
 {
@@ -11,6 +12,14 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     [Tooltip("Player's Minimap Component")]
     private PlayerUIMinimap m_playerMinimap;
+
+    [Header("Player MInimap Trail")]
+    [SerializeField]
+    private bool useTrail;
+    [SerializeField]
+    private GameObject minimapTrailFinderPrefab;
+    [SerializeField]
+    private float minimapTrailPollTime = 0.25f;
 
     [Header("Player HUD Configuration")]
     //Will move to class later if there is time
@@ -30,6 +39,11 @@ public class PlayerUIManager : MonoBehaviour
     private string m_previousSystemText;
     private bool isAlreadyTyping = false;
 
+    //Object used to find stuff
+    private GameObject minimapTrailFinder;
+    private LineRenderer minimapLineRenderer;
+    private NavMeshAgent minimapFinderNav;
+
     //Get stuff
     public PlayerUIMinimap playerMinimap
     {
@@ -44,35 +58,59 @@ public class PlayerUIManager : MonoBehaviour
 
     }
 
+    //Visualization
+    [SerializeField]
+    private Vector3[] minimapPath;
+
     // Start is called before the first frame update
     void Start()
     {
         m_playerMinimap.Start();
 
-        foreach (SystemFluffMessage startingFluffs in m_startingSystemFluffs)
+        if (useTrail)
         {
-            AddStringToProcessingQueue(startingFluffs);
+            minimapTrailFinder = Instantiate(minimapTrailFinderPrefab, transform.position, Quaternion.identity, this.transform);
+            minimapFinderNav = minimapTrailFinder.GetComponent<NavMeshAgent>();
+            minimapLineRenderer = minimapTrailFinder.GetComponent<LineRenderer>();
+            minimapFinderNav.Warp(minimapTrailFinder.transform.position);
         }
+        //foreach (SystemFluffMessage startingFluffs in m_startingSystemFluffs)
+        //{
+        //    AddStringToProcessingQueue(startingFluffs);
+        //}
 
-        StartCoroutine(m_playerMinimap.UpdateMinimap());
-
+        //StartCoroutine(m_playerMinimap.UpdateMinimap());
     }
+
+
     // Update is called once per frame
     void Update()
     {
         m_playerMinimap.Update();
+        m_playerMinimap.m_minimapBounds.position = transform.position;
 
-        if (m_processingQueue.Count > 0 && !isAlreadyTyping)
+        if (useTrail)
         {
-            AddStringToSystemQueue(m_processingQueue.Dequeue());
+            minimapFinderNav.updatePosition = true;
+            NavMeshPath navPath = new NavMeshPath();
+            minimapFinderNav.CalculatePath(Game.instance.m_objectives[0].m_highlight.position, navPath);
+
+            if (navPath.status != NavMeshPathStatus.PathPartial)
+            {
+                minimapPath = navPath.corners;
+            }
         }
+
+        //if (m_processingQueue.Count > 0 && !isAlreadyTyping)
+        //{
+        //    AddStringToSystemQueue(m_processingQueue.Dequeue());
+        //}
 
         //if (Input.GetKeyDown(KeyCode.R))
         //{
         //    AddStringToProcessingQueue(FormatFluff("Interesting, to say the least."));
         //}
 
-        m_playerMinimap.m_minimapBounds.position = transform.position;
     }
 
     public void AddStringToProcessingQueue(SystemFluffMessage fluffs)

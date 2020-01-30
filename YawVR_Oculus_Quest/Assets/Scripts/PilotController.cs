@@ -129,11 +129,7 @@ public class PilotController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
             SetCurrentModule(currModuleIndex + 1);
 #endif
-    }
-    void FixedUpdate()
-    {
-        if (!isAttached)
-            return;
+
         if (isHandTriggered)
         {
             currHoloInnerColor = Color.Lerp(currHoloInnerColor, PlayerHandler.instance.GetArmInnerColor(), 0.1f);
@@ -155,6 +151,12 @@ public class PilotController : MonoBehaviour
         {
             m_armModulesCanvas.transform.GetChild(i).GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, -currCanvasUIRotation);
         }
+    }
+    void FixedUpdate()
+    {
+        if (!isAttached)
+            return;
+
     }
 
     public void AttachArmModules(GameObject[] _armModulePackages)
