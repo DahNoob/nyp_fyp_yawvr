@@ -7,17 +7,17 @@ abstract public class BaseStructure : BaseEntity
     [Header("Structure Configuration")]
     [SerializeField]
     protected StructureInfo m_structureInfo;
+    [SerializeField]
+    protected MeshRenderer m_meshRenderer;
 
     //Local variables
     private Vector3 origPos;
-    private MeshRenderer[] meshRenderers;
     private bool isShaking;
 
     protected void Start()
     {
         health = m_structureInfo.maxHealth;
         origPos = transform.position;
-        meshRenderers = GetComponentsInChildren<MeshRenderer>();
         isShaking = false;
     }
     public override void Die()
@@ -44,17 +44,19 @@ abstract public class BaseStructure : BaseEntity
     {
         if (_isFlashing)
         {
-            for (int i = 0; i < meshRenderers.Length; ++i)
-            {
-                meshRenderers[i].material = Persistent.instance.MAT_WHITE;
-            }
+            //for (int i = 0; i < meshRenderers.Length; ++i)
+            //{
+            //    meshRenderers[i].material = Persistent.instance.MAT_WHITE;
+            //}
+            m_meshRenderer.material = Persistent.instance.MAT_WHITE;
         }
         else
         {
-            for (int i = 0; i < meshRenderers.Length; ++i)
-            {
-                meshRenderers[i].material = m_structureInfo.material;
-            }
+            //for (int i = 0; i < meshRenderers.Length; ++i)
+            //{
+            //    meshRenderers[i].material = m_structureInfo.material;
+            //}
+            m_meshRenderer.material = m_structureInfo.material;
         }
     }
 

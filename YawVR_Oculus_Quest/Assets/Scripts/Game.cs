@@ -280,7 +280,7 @@ public class Game : MonoBehaviour
                         EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, m_objectives[i].m_highlight.position, Quaternion.identity).GetComponent<EnemyBase>();
                         AttachBeacon(enemy.transform, m_bountyHuntEnemyColor);
                         AttachCrown(enemy.transform);
-                        enemy.SetMaxHealthMultiplier(3);
+                        enemy.SetMaxHealthMultiplier(5);
                         Destroy(m_objectives[i].m_highlight.gameObject);
                         m_objectives[i].m_highlight = enemy.transform;
                         //SpriteRenderer enemyMarker = enemy.GetComponentInChildren<SpriteRenderer>();

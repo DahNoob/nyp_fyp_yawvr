@@ -157,7 +157,7 @@ abstract public class EnemyBase : BaseEntity
         {
             if (flashTick <= 0)
                 SetFlash(true);
-            flashTick = 3;
+            flashTick = 2;
             health -= damage;
             if (health <= 0)
                 Die();

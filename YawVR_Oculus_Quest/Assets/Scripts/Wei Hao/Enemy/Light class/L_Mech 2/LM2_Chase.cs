@@ -45,6 +45,7 @@ public class LM2_Chase : SMB_BaseEnemyState
         navMeshAgent.isStopped = false;
         navMeshAgent.speed = enemy.GetSpeed();
         enemy.GetComponent<LightMech2>().SetRollingEffect(true);
+        navMeshAgent.updatePosition = navMeshAgent.updateRotation = true;
     }
 
     public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
