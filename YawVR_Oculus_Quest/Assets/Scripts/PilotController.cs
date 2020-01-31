@@ -108,13 +108,13 @@ public class PilotController : MonoBehaviour
         }
 #endif
 
-        if (OVRInput.GetDown(OVRInput.Button.One, m_controller))
+        if (OVRInput.GetDown(OVRInput.Button.Two, m_controller))
         {
             SetCurrentModule(currModuleIndex + 1);
         }
-        else if (OVRInput.GetDown(OVRInput.Button.Two, m_controller))
+        if(OVRInput.GetDown(OVRInput.Button.One, m_controller))
         {
-            SetCurrentModule(currModuleIndex - 1);
+            modules[currModuleIndex].GetComponent<MechGunWeapon>()?.Reload();
         }
 
         if (IsModuleActivated())
@@ -128,6 +128,11 @@ public class PilotController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
             SetCurrentModule(currModuleIndex + 1);
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            modules[currModuleIndex].GetComponent<MechGunWeapon>()?.Reload();
+        }
 #endif
 
         if (isHandTriggered)
