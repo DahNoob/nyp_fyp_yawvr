@@ -35,6 +35,7 @@ public class PoolObject
         MINIMAP_ICONS,
         BULLET_IMPACT_B_EFFECT,
         PLAYER_PROJECTILE_BIG,
+        PLAYER_PROJECTILE_BIGGER,
         TOTAL_TYPES
     }
 

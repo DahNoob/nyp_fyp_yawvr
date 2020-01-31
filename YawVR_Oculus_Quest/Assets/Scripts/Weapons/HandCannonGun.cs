@@ -17,15 +17,13 @@ using UnityEngine;
 ** 2    ????                    DahNoob   forgot lol
 ** 3    16/01/2020, 10:23AM     DahNoob   Renamed it from LaserBlaster to ShotGun
 *******************************/
-public class ShotGun : MechGunWeapon
+public class HandCannonGun : MechGunWeapon
 {
-    [Header("Shot Gun Configuration")]
+    [Header("Hand Cannon Gun Configuration")]
     [SerializeField]
-    protected Animator m_shotGunAnimator;
+    protected Animator m_handCannonAnimator;
     [SerializeField]
-    protected int m_projectileAmount = 4;
-    [SerializeField]
-    protected float m_cameraShakeAmount = 0.15f;
+    protected float m_cameraShakeAmount = 0.07f;
 
     public override bool Stop(OVRInput.Controller _controller)
     {
@@ -39,11 +37,7 @@ public class ShotGun : MechGunWeapon
 
     override protected void SpawnProjectile()
     {
-        for (int i = 0; i < m_projectileAmount; ++i)
-        {
-            base.SpawnProjectile();
-        }
-        PlayerHandler.instance.Shake(m_cameraShakeAmount);
-        m_shotGunAnimator.Play("ShotGun_Shoot");
+        base.SpawnProjectile();
+        m_handCannonAnimator.Play("HandCannonGun_Shoot");
     }
 }
