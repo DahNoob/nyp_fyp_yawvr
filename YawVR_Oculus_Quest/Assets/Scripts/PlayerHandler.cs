@@ -133,6 +133,7 @@ public class PlayerHandler : BaseEntity
     private float armorRegenElapsed = 0;
     private bool startedRecharge = false;
     private float DEV_resetLevelTimer = 0;
+    private float prevHeight;
 
     //Hidden variables
     private float _health, _armor;
@@ -189,6 +190,7 @@ public class PlayerHandler : BaseEntity
         m_uiHealth = health; //initial values
         m_uiArmor = armor; //initial values
         m_coinsText.text = "0";
+        prevHeight = transform.position.y;
         print("PlayerHandler started!");
     }
     
@@ -297,10 +299,10 @@ public class PlayerHandler : BaseEntity
             isShaking = false;
             cameraShake = Vector3.zero;
         }
-        m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset, 0.12f) + cameraShake;
+        m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset + new Vector3(0, prevHeight - transform.position.y, 0) * 0.15f, 0.12f) + cameraShake;
         if (m_vignette.color.a > 0)
             m_vignette.color = Color.LerpUnclamped(m_vignette.color, Persistent.instance.COLOR_TRANSPARENT, 0.05f);
-        
+        prevHeight = transform.position.y;
         //rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
         //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }
