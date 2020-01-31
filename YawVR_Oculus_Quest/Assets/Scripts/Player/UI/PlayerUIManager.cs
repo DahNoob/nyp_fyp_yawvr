@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+
 
 public class PlayerUIManager : MonoBehaviour
 {
@@ -12,37 +12,57 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     [Tooltip("Player's Minimap Component")]
     private PlayerUIMinimap m_playerMinimap;
+    [SerializeField]
+    [Tooltip("The camera rendering this minimap")]
+    private Camera m_minimapCamera;
+    [SerializeField]
+    [Tooltip("The rect transform that holds the minimap")]
+    private RectTransform m_minimapMask;
+    //Minimap ranges
 
-    [Header("Player MInimap Trail")]
-    [SerializeField]
-    private bool useTrail;
-    [SerializeField]
-    private GameObject minimapTrailFinderPrefab;
-    [SerializeField]
-    private float minimapTrailPollTime = 0.25f;
+    [Header("Player Minimap Ranges")]
+    public float m_customRange = 20;
+    public float m_customRangeTwo = 0.1f;
+    public float m_rejectionRange = 3;
 
-    [Header("Player HUD Configuration")]
-    //Will move to class later if there is time
+    [Header("Player Minimap Trail Configuration")]
     [SerializeField]
-    [Tooltip("HUD Text")]
-    UnityEngine.UI.Text m_systemFluffs;
-
-    [SerializeField]
-    [Tooltip("Starting Fluffs")]
-    private List<SystemFluffMessage> m_startingSystemFluffs;
+    private PlayerUIMinimapTrail m_playerMinimapTrail;
 
     //Local variables
-    Queue<SystemFluffMessage> m_systemQueue = new Queue<SystemFluffMessage>();
-    Queue<SystemFluffMessage> m_processingQueue = new Queue<SystemFluffMessage>();
-    static int MAX_SYSTEM_QUEUE_COUNT = 12;
-    private int m_systemFluffCount = 0;
-    private string m_previousSystemText;
-    private bool isAlreadyTyping = false;
+    [HideInInspector]
+    //Normalized scale for the update of size between other things
+    public float normalizedScale;
 
-    //Object used to find stuff
-    private GameObject minimapTrailFinder;
-    private LineRenderer minimapLineRenderer;
-    private NavMeshAgent minimapFinderNav;
+    //[Header("Player HUD Configuration")]
+    ////Will move to class later if there is time
+    //[SerializeField]
+    //[Tooltip("HUD Text")]
+    //UnityEngine.UI.Text m_systemFluffs;
+
+    //[SerializeField]
+    //[Tooltip("Starting Fluffs")]
+    //private List<SystemFluffMessage> m_startingSystemFluffs;
+
+    ////Local variables
+    //Queue<SystemFluffMessage> m_systemQueue = new Queue<SystemFluffMessage>();
+    //Queue<SystemFluffMessage> m_processingQueue = new Queue<SystemFluffMessage>();
+    //static int MAX_SYSTEM_QUEUE_COUNT = 12;
+    //private int m_systemFluffCount = 0;
+    //private string m_previousSystemText;
+    //private bool isAlreadyTyping = false;
+
+    public Camera minimapCamera
+    {
+        get
+        {
+            return m_minimapCamera;
+        }
+        private set
+        {
+            m_minimapCamera = value;
+        }
+    }
 
     //Get stuff
     public PlayerUIMinimap playerMinimap
@@ -58,22 +78,16 @@ public class PlayerUIManager : MonoBehaviour
 
     }
 
-    //Visualization
-    [SerializeField]
-    private Vector3[] minimapPath;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_playerMinimap.Start();
+        //Set rejection range
+        m_rejectionRange = m_minimapMask.rect.width * 0.5f;
 
-        if (useTrail)
-        {
-            minimapTrailFinder = Instantiate(minimapTrailFinderPrefab, transform.position, Quaternion.identity, this.transform);
-            minimapFinderNav = minimapTrailFinder.GetComponent<NavMeshAgent>();
-            minimapLineRenderer = minimapTrailFinder.GetComponent<LineRenderer>();
-            minimapFinderNav.Warp(minimapTrailFinder.transform.position);
-        }
+        m_playerMinimap.Start();
+        m_playerMinimapTrail.Start();
+
         //foreach (SystemFluffMessage startingFluffs in m_startingSystemFluffs)
         //{
         //    AddStringToProcessingQueue(startingFluffs);
@@ -82,24 +96,13 @@ public class PlayerUIManager : MonoBehaviour
         //StartCoroutine(m_playerMinimap.UpdateMinimap());
     }
 
-
     // Update is called once per frame
     void Update()
     {
         m_playerMinimap.Update();
+        m_playerMinimapTrail.Update();
+
         m_playerMinimap.m_minimapBounds.position = transform.position;
-
-        if (useTrail)
-        {
-            minimapFinderNav.updatePosition = true;
-            NavMeshPath navPath = new NavMeshPath();
-            minimapFinderNav.CalculatePath(Game.instance.m_objectives[0].m_highlight.position, navPath);
-
-            if (navPath.status != NavMeshPathStatus.PathPartial)
-            {
-                minimapPath = navPath.corners;
-            }
-        }
 
         //if (m_processingQueue.Count > 0 && !isAlreadyTyping)
         //{
@@ -110,84 +113,83 @@ public class PlayerUIManager : MonoBehaviour
         //{
         //    AddStringToProcessingQueue(FormatFluff("Interesting, to say the least."));
         //}
-
     }
 
-    public void AddStringToProcessingQueue(SystemFluffMessage fluffs)
-    {
-        if (isAlreadyTyping)
-            m_processingQueue.Enqueue(fluffs);
-        else
-            AddStringToSystemQueue(fluffs);
-    }
+    //public void AddStringToProcessingQueue(SystemFluffMessage fluffs)
+    //{
+    //    if (isAlreadyTyping)
+    //        m_processingQueue.Enqueue(fluffs);
+    //    else
+    //        AddStringToSystemQueue(fluffs);
+    //}
 
-    bool AddStringToSystemQueue(SystemFluffMessage fluffs)
-    {
-        fluffs.message = FormatFluff(fluffs.message);
-        if (m_systemFluffCount < MAX_SYSTEM_QUEUE_COUNT)
-        {
-            m_systemQueue.Enqueue(fluffs);
-            //Add one more to the thingy
-            StartCoroutine(TypeNewSystemLine(fluffs));
-            m_systemFluffCount++;
-        }
-        else
-        {
-            m_systemQueue.Dequeue();
-            AssignLastText();
-            StartCoroutine(TypeNewSystemLine(fluffs));
-            m_systemQueue.Enqueue(fluffs);
-        }
+    //bool AddStringToSystemQueue(SystemFluffMessage fluffs)
+    //{
+    //    fluffs.message = FormatFluff(fluffs.message);
+    //    if (m_systemFluffCount < MAX_SYSTEM_QUEUE_COUNT)
+    //    {
+    //        m_systemQueue.Enqueue(fluffs);
+    //        //Add one more to the thingy
+    //        StartCoroutine(TypeNewSystemLine(fluffs));
+    //        m_systemFluffCount++;
+    //    }
+    //    else
+    //    {
+    //        m_systemQueue.Dequeue();
+    //        AssignLastText();
+    //        StartCoroutine(TypeNewSystemLine(fluffs));
+    //        m_systemQueue.Enqueue(fluffs);
+    //    }
 
-        return true;
-    }
+    //    return true;
+    //}
 
-    public string AssignLastText()
-    {
-        if (m_systemQueue.Count == 0)
-            return "";
+    //public string AssignLastText()
+    //{
+    //    if (m_systemQueue.Count == 0)
+    //        return "";
 
-        m_previousSystemText = "";
-        Queue<SystemFluffMessage> newQueue = new Queue<SystemFluffMessage>(m_systemQueue);
-        while (newQueue.Count > 0)
-        {
-            m_previousSystemText += newQueue.Dequeue().message;
-        }
+    //    m_previousSystemText = "";
+    //    Queue<SystemFluffMessage> newQueue = new Queue<SystemFluffMessage>(m_systemQueue);
+    //    while (newQueue.Count > 0)
+    //    {
+    //        m_previousSystemText += newQueue.Dequeue().message;
+    //    }
 
-        m_systemFluffs.text = m_previousSystemText + "\n";
+    //    m_systemFluffs.text = m_previousSystemText + "\n";
 
-        return m_previousSystemText;
-    }
+    //    return m_previousSystemText;
+    //}
 
-    IEnumerator TypeNewSystemLine(SystemFluffMessage fluff)
-    {
-        isAlreadyTyping = true;
+    //IEnumerator TypeNewSystemLine(SystemFluffMessage fluff)
+    //{
+    //    isAlreadyTyping = true;
 
-        yield return new WaitForSeconds(fluff.delay);
+    //    yield return new WaitForSeconds(fluff.delay);
 
-        foreach (char letter in fluff.message)
-        {
-            string previousText = "";
-            char[] systemFluffArray = m_systemFluffs.text.ToCharArray();
+    //    foreach (char letter in fluff.message)
+    //    {
+    //        string previousText = "";
+    //        char[] systemFluffArray = m_systemFluffs.text.ToCharArray();
 
-            for (int i = 0; i < systemFluffArray.Length - 1; ++i)
-            {
-                previousText += systemFluffArray[i];
-            }
-            m_systemFluffs.text = previousText;
+    //        for (int i = 0; i < systemFluffArray.Length - 1; ++i)
+    //        {
+    //            previousText += systemFluffArray[i];
+    //        }
+    //        m_systemFluffs.text = previousText;
 
-            m_systemFluffs.text += letter + "|";
-            //m_systemFluffs.text += letter;
-            yield return new WaitForSeconds(fluff.messageSpeed);
-        }
-        isAlreadyTyping = false;
-    }
+    //        m_systemFluffs.text += letter + "|";
+    //        //m_systemFluffs.text += letter;
+    //        yield return new WaitForSeconds(fluff.messageSpeed);
+    //    }
+    //    isAlreadyTyping = false;
+    //}
 
 
-    string FormatFluff(string message)
-    {
-        return "-" + message + "\n";
-    }
+    //string FormatFluff(string message)
+    //{
+    //    return "-" + message + "\n";
+    //}
 
     private void OnDrawGizmos()
     {
@@ -198,17 +200,17 @@ public class PlayerUIManager : MonoBehaviour
     }
 }
 
-[System.Serializable]
-public class SystemFluffMessage
-{
-    public string message;
-    public float delay;
-    public float messageSpeed;
+//[System.Serializable]
+//public class SystemFluffMessage
+//{
+//    public string message;
+//    public float delay;
+//    public float messageSpeed;
 
-    public SystemFluffMessage(string _message, float _delay, float _messageSpeed)
-    {
-        message = _message;
-        delay = _delay;
-        messageSpeed = _messageSpeed;
-    }
-}
+//    public SystemFluffMessage(string _message, float _delay, float _messageSpeed)
+//    {
+//        message = _message;
+//        delay = _delay;
+//        messageSpeed = _messageSpeed;
+//    }
+//}

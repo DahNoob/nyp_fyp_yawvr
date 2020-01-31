@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 [System.Serializable]
 public class PlayerUIMinimap
 {
@@ -10,9 +11,7 @@ public class PlayerUIMinimap
     [SerializeField]
     [Tooltip("Allow animations to be handled")]
     private bool doAnimations = true;
-    [SerializeField]
-    [Tooltip("The camera rendering this minimap")]
-    private Camera m_minimapCamera;
+
     [SerializeField]
     private float m_minimapOffset;
     [SerializeField]
@@ -67,16 +66,15 @@ public class PlayerUIMinimap
     [SerializeField]
     private bool updateObjectives = true;
 
-
     [Header("Global Minimap Icons Configuration")]
     //Initializer Data
-    private Dictionary<int, PlayerUIMinimapIcons> minimapIconDictionary = new Dictionary<int, PlayerUIMinimapIcons>();
     [SerializeField]
     private List<PlayerUIMinimapIcons> minimapIconListData;
+    private Dictionary<int, PlayerUIMinimapIcons> minimapIconDictionary = new Dictionary<int, PlayerUIMinimapIcons>();
 
-    private Dictionary<int, PlayerUIMinimapObjectiveIcons> minimapObjectiveDictionary = new Dictionary<int, PlayerUIMinimapObjectiveIcons>();
     [SerializeField]
     private List<PlayerUIMinimapObjectiveIcons> minimapIconObjectivesListData;
+    private Dictionary<int, PlayerUIMinimapObjectiveIcons> minimapObjectiveDictionary = new Dictionary<int, PlayerUIMinimapObjectiveIcons>();
 
     [SerializeField]
     private float minScaleRange;
@@ -88,16 +86,14 @@ public class PlayerUIMinimap
     private Vector3 desiredPosition;
     private Vector3 previousDesiredPosition;
     private float lerpTime;
-    //Minimap ranges
-    public float customRange = 20;
-    public float customRangeTwo = 0.1f;
-    public float rejectionRange = 3;
+
+    //Minimap camera
+    private Camera m_minimapCamera;
 
     //Normalized scale
     float normalizedScale;
 
-    public List<GameObject> queries;
-
+    private List<GameObject> queries;
 
     private enum MINIMAP_ICONTYPE
     {
@@ -114,6 +110,7 @@ public class PlayerUIMinimap
     {
         //Assign the players reference
         m_playerReference = PlayerHandler.instance.transform;
+        m_minimapCamera = PlayerUIManager.instance.minimapCamera;
 
         //Initialise all things into dictionary
 
@@ -132,6 +129,8 @@ public class PlayerUIMinimap
         {
             minimapIcons.Add(i, new List<GameObject>());
         }
+
+
     }
 
     // Update is called once per frame
@@ -177,11 +176,15 @@ public class PlayerUIMinimap
         m_minimapBounds.width = m_minimapCamera.orthographicSize;
         m_minimapBounds.height = m_minimapCamera.orthographicSize;
 
-        //Calculate the scale of everything
-        //Normalize value to range 0 and 1
-        normalizedScale = CustomUtility.Normalize(80 - m_minimapZoom, 0, 80);
-        //Normalize that value to another custom range
-        normalizedScale = CustomUtility.NormalizeCustomRange(normalizedScale, minScaleRange, maxScaleRange);
+
+        if (!staticViewport)
+        {
+            normalizedScale = CustomUtility.Normalize(80 - m_minimapZoom, 0, 80);
+            //Normalize that value to another custom range
+            normalizedScale = CustomUtility.NormalizeCustomRange(normalizedScale, minScaleRange, maxScaleRange);
+
+            PlayerUIManager.instance.normalizedScale = normalizedScale;
+        }
         //Set scale of that.
         m_playerIcon.transform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
 
@@ -189,6 +192,8 @@ public class PlayerUIMinimap
             UpdateEnemies();
         if (updateObjectives)
             UpdateObjectives();
+
+
 
     }
     bool AnimatedMinimap()
@@ -246,10 +251,10 @@ public class PlayerUIMinimap
             Vector3 displacement = Vector3.Scale((queries[i].transform.position - m_playerReference.transform.position), new Vector3(1, 0, 1));
 
             //Normalized value of that distance between the max size (query bounds) and not
-            float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + customRange);
-            float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, rejectionRange);
+            float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + PlayerUIManager.instance.m_customRange);
+            float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_rejectionRange);
 
-            if (normalizedRejection > rejectionRange)
+            if (normalizedRejection > PlayerUIManager.instance.m_rejectionRange)
             {
                 HandleActive(enemyList[i], false);
             }
@@ -262,7 +267,7 @@ public class PlayerUIMinimap
                 float angle = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
 
                 //Calculate space in minimap
-                float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
+                float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_customRangeTwo);
 
                 //Loop through all the enemies, then set acctive based on the result
                 RectTransform rectTransform = enemyList[i].GetComponent<RectTransform>();
@@ -354,11 +359,11 @@ public class PlayerUIMinimap
             Vector3 displacement = Vector3.Scale((Game.instance.m_objectives[i].m_highlight.position - m_playerReference.transform.position), new Vector3(1, 0, 1));
 
             //Normalized value of that distance between the max size (query bounds) and not
-            float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + customRange);
-            float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, rejectionRange);
+            float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + PlayerUIManager.instance.m_customRange);
+            float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_rejectionRange);
 
             //Reject anything outside the range
-            if (normalizedRejection > rejectionRange)
+            if (normalizedRejection > PlayerUIManager.instance.m_rejectionRange)
             {
                 HandleActive(objectiveIconList[i], false);
             }
@@ -371,7 +376,7 @@ public class PlayerUIMinimap
                 float angle = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
 
                 //Calculate space in minimap
-                float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, customRangeTwo);
+                float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_customRangeTwo);
 
                 //Loop through all the objectives, then set acctive based on the result
                 RectTransform rectTransform = objectiveIconList[i].GetComponent<RectTransform>();

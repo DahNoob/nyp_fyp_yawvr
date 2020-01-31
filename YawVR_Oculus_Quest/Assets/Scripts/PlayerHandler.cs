@@ -203,7 +203,7 @@ public class PlayerHandler : BaseEntity
             armor = Mathf.Min(m_maxArmor, armor + m_armorRegenRate * Time.deltaTime);
             if(startedRecharge)
             {
-                PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Recharging shields...", 0.1f, 0.05f));
+                //PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Recharging shields...", 0.1f, 0.05f));
                 startedRecharge = false;
             }
         }
@@ -405,20 +405,20 @@ public class PlayerHandler : BaseEntity
             armor = armor - damage;
             m_vignette.color = Color.cyan;
 
-            if (armor < m_maxArmor * 0.10f)
-                PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Shields critical!", 0.1f, 0.05f));
-            else if(armor <=0)
-                PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Shields broken!", 0.1f, 0.05f));
+            //if (armor < m_maxArmor * 0.10f)
+            //    PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Shields critical!", 0.1f, 0.05f));
+            //else if(armor <=0)
+            //    PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Shields broken!", 0.1f, 0.05f));
         }
         else
         {
             health -= damage;
             m_vignette.color = Color.red;
 
-            if (health < m_maxHealth * 0.10f)
-                PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Hull strength critical!", 0.1f, 0.05f));
-            else if (health <= 0)
-                PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("System failure!", 0.1f, 0.05f));
+            //if (health < m_maxHealth * 0.10f)
+            //    PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Hull strength critical!", 0.1f, 0.05f));
+            //else if (health <= 0)
+            //    PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("System failure!", 0.1f, 0.05f));
         }
         armorRegenElapsed = 0;
         float intensity = Mathf.Min(damage * 0.05f, 0.5f);
