@@ -49,6 +49,7 @@ public class PlayerUIMinimap
     private float cameraLerpSpeed = 1;
 
     [Header("Main Minimap Configuration")]
+    [HideInInspector]
     public QuadRect m_minimapBounds;
     [SerializeField]
     private float m_minimapPollRate;
@@ -86,14 +87,12 @@ public class PlayerUIMinimap
     private Vector3 desiredPosition;
     private Vector3 previousDesiredPosition;
     private float lerpTime;
-
+    //Normalized scale // higher minimap zoom lower icon size to give sense of depth
+    float normalizedScale;
     //Minimap camera
     private Camera m_minimapCamera;
 
-    //Normalized scale
-    float normalizedScale;
-
-    private List<GameObject> queries;
+    private float minimapTimer = 0;
 
     private enum MINIMAP_ICONTYPE
     {
@@ -130,7 +129,12 @@ public class PlayerUIMinimap
             minimapIcons.Add(i, new List<GameObject>());
         }
 
+        //Initialise normalized Scale
+        normalizedScale = CustomUtility.Normalize(80 - m_minimapZoom, 0, 80);
+        //Normalize that value to another custom range
+        normalizedScale = CustomUtility.NormalizeCustomRange(normalizedScale, minScaleRange, maxScaleRange);
 
+        PlayerUIManager.instance.normalizedScale = normalizedScale;
     }
 
     // Update is called once per frame
@@ -141,41 +145,12 @@ public class PlayerUIMinimap
         //Size of camera
         m_minimapCamera.orthographicSize = m_minimapZoom;
 
-        //Do raycast upwards onto terrain to bring it down if needed.
-        Ray ray = new Ray(m_playerReference.transform.position, Vector3.up);
-        RaycastHit hit;
-        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
-        if (Physics.Raycast(ray.origin, ray.direction, out hit, float.MaxValue, LayerMask.GetMask("Terrain")))
-        {
-            //Fake kinda of camera stuff for the minimap
-            float desired = hit.distance * cameraMultiplier;
-            if (desired < m_minimapOffset)
-                desiredPosition.y = desired;
-        }
-        else
-        {
-            //Calculate the offsets for minimaps and stuff
-            desiredPosition = m_minimapCamera.transform.localPosition;
-            desiredPosition.y = m_minimapOffset;
-        }
-
-        if (previousDesiredPosition != desiredPosition)
-        {
-            previousDesiredPosition = desiredPosition;
-            lerpTime = 0;
-        }
-
-        if (lerpTime != 1)
-        {
-            lerpTime += Time.deltaTime * cameraLerpSpeed;
-            lerpTime = Mathf.Min(lerpTime, 1f);
-            //Lerp towards the desiredPosition always
-            m_minimapCamera.transform.localPosition = Vector3.Lerp(m_minimapCamera.transform.localPosition, desiredPosition, lerpTime);
-        }
-
+        //Update minimapBounds
         m_minimapBounds.width = m_minimapCamera.orthographicSize;
         m_minimapBounds.height = m_minimapCamera.orthographicSize;
 
+        //Updates camera position
+        UpdateCameraPosition();
 
         if (!staticViewport)
         {
@@ -188,10 +163,20 @@ public class PlayerUIMinimap
         //Set scale of that.
         m_playerIcon.transform.localScale = new Vector3(normalizedScale, normalizedScale, normalizedScale);
 
-        if (updateEnemies)
-            UpdateEnemies();
-        if (updateObjectives)
-            UpdateObjectives();
+
+        if (minimapTimer < m_minimapPollRate)
+        {
+            minimapTimer += Time.smoothDeltaTime;
+        }
+        else
+        {
+            if (updateEnemies)
+                UpdateEnemies();
+            if (updateObjectives)
+                UpdateObjectives();
+
+            minimapTimer = 0;
+        }
 
 
 
@@ -222,7 +207,7 @@ public class PlayerUIMinimap
     public bool UpdateEnemies()
     {
         //Update queries
-        queries = QuadTreeManager.instance.QueryDynamicObjects(m_minimapBounds, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
+        List<GameObject> queries = QuadTreeManager.instance.QueryDynamicObjects(m_minimapBounds, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
         //Amount of enemies
         int queriesCount = queries.Count;
 
@@ -447,6 +432,42 @@ public class PlayerUIMinimap
             return minimapObjectiveDictionary[tag];
 
         return null;
+    }
+
+    void UpdateCameraPosition()
+    {
+        //Do raycast upwards onto terrain to bring it down if needed.
+        Ray ray = new Ray(m_playerReference.transform.position, Vector3.up);
+        RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, float.MaxValue, LayerMask.GetMask("Terrain")))
+        {
+            //Fake kinda of camera stuff for the minimap
+            float desired = hit.distance * cameraMultiplier;
+            if (desired < m_minimapOffset)
+                desiredPosition.y = desired;
+        }
+        else
+        {
+            //Calculate the offsets for minimaps and stuff
+            desiredPosition = m_minimapCamera.transform.localPosition;
+            desiredPosition.y = m_minimapOffset;
+        }
+
+        if (previousDesiredPosition != desiredPosition)
+        {
+            previousDesiredPosition = desiredPosition;
+            lerpTime = 0;
+        }
+
+        if (lerpTime != 1)
+        {
+            lerpTime += Time.deltaTime * cameraLerpSpeed;
+            lerpTime = Mathf.Min(lerpTime, 1f);
+            //Lerp towards the desiredPosition always
+            m_minimapCamera.transform.localPosition = Vector3.Lerp(m_minimapCamera.transform.localPosition, desiredPosition, lerpTime);
+        }
+
     }
 
 }
