@@ -4,14 +4,20 @@ ModelImporter:
   serializedVersion: 25
   internalIDToNameTable:
   - first:
-      74: -1089585484757878084
-    second: L_HandOpen
+      74: 1827226128182048838
+    second: L_Idle
+  - first:
+      74: 7874301148600551649
+    second: L_Clench
+  - first:
+      74: 5508439767308646238
+    second: L_HoldGun_Shoot
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert1
-    second: {fileID: 2100000, guid: cc2cba469e849f3498b8a7c606e8a8f1, type: 2}
+      name: StingrayPBS1
+    second: {fileID: 2100000, guid: 01b428a3278d4f74e82a6fa4ed315e60, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -40,11 +46,69 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: L_HandOpen
-      takeName: L_HandOpen
-      internalID: -1089585484757878084
+      name: L_Idle
+      takeName: Take 001
+      internalID: 1827226128182048838
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: L_Clench
+      takeName: Take 001
+      internalID: 7874301148600551649
       firstFrame: 1
-      lastFrame: 2
+      lastFrame: 3
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: L_HoldGun_Shoot
+      takeName: Take 001
+      internalID: 5508439767308646238
+      firstFrame: 9
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
