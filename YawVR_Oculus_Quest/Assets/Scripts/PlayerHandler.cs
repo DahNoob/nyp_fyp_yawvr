@@ -222,7 +222,7 @@ public class PlayerHandler : BaseEntity
         else if(state == STATE.WALK)
         {
             float walkMultiplier = GetComponent<MechMovement>().movementAlpha;
-            float time_mult = Time.time * 8;
+            float time_mult = GetComponent<MechMovement>().startWalkTime + Time.time * 5.6f;
             float sin = Mathf.Sin(time_mult * 2);
             if(walkHapticReady && sin < -0.85f)
             {
@@ -330,6 +330,11 @@ public class PlayerHandler : BaseEntity
     public void AddCurrency(int _amount)
     {
         currency += _amount;
+    }
+    
+    public void AddHealth(int _amount)
+    {
+        health += _armor;
     }
 
     public IEnumerator ResetPoseThread()

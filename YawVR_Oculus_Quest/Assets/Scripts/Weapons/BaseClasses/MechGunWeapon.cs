@@ -126,7 +126,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
         {
             //Call reloading function...
             Reload();
-            GUIManager.instance.SetWeaponInfoReloading(m_controller);
         }
         //If the ammo module is not reloading?
         if (!m_semi && !ammoModule.m_isReloading && isFullyVisible)
@@ -192,13 +191,14 @@ abstract public class MechGunWeapon : MechBaseWeapon
         VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
     }
 
-    virtual protected void Reload()
+    virtual public void Reload()
     {
-        if (ammoModule.m_isReloading)
+        if (ammoModule.m_isReloading || !isFullyVisible)
             return;
         forceFade = true;
         FadeOut();
         StartCoroutine(ammoModule.Reload());
+        GUIManager.instance.SetWeaponInfoReloading(m_controller);
     }
 
     void OnDestroy()
@@ -214,7 +214,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
         {
             //Call reloading function...
             Reload();
-            GUIManager.instance.SetWeaponInfoReloading(m_controller);
         }
 
     }

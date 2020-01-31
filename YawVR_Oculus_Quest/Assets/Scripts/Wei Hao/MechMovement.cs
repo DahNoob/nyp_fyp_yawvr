@@ -36,9 +36,22 @@ public class MechMovement : MonoBehaviour
     private Vector3 gravityVector;
     private float FallSpeed = 0.0f;
 
+    [Header("Audio Sources")]
+    [SerializeField]
+    private AudioSource m_rotationStartupAudio;
+    [SerializeField]
+    private AudioSource m_rotationLoopAudio;
+    [SerializeField]
+    private AudioSource m_rotationEndAudio;
+    [SerializeField]
+    private AudioSource m_mechWalkAudio;
+
     [Header("Visible variables")]
     public Vector3 movementDelta;
     public float movementAlpha;
+    public float startWalkTime = 0;
+    public bool isWalking = false;
+    public bool isRotating = false;
 
     [Header("Debug")]
     [SerializeField]
@@ -46,7 +59,9 @@ public class MechMovement : MonoBehaviour
     [SerializeField]
     Vector2 lStickDelta;
 
+    //Local variables
     private CharacterController cc;
+    private float rotationAxisSmoothedDelta_Current, rotationAxisSmoothedDelta_Goal = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +81,7 @@ public class MechMovement : MonoBehaviour
 
         // Player Movement
         movementDelta = Vector3.zero;
-        
+
         if (!CustomUtility.IsZero(primaryAxis))
         {
             speed = Mathf.Min(maxSpeed, speed + acceleration * Time.deltaTime);
@@ -80,6 +95,12 @@ public class MechMovement : MonoBehaviour
             PlayerHandler.instance.SetLegsAngle(primaryAxis.x, primaryAxis.y);
             //cc.Move(derp * Time.deltaTime);
             movementDelta = derp;
+            if (!isWalking)
+            {
+                startWalkTime = Time.time;
+                m_mechWalkAudio.Play();
+                isWalking = true;
+            }
             PlayerHandler.instance.SetState(PlayerHandler.STATE.WALK);
             //rb.MovePosition(newPos);
         }
@@ -87,28 +108,55 @@ public class MechMovement : MonoBehaviour
         {
             speed = Mathf.Max(minSpeed, speed - deceleration * Time.deltaTime);
             PlayerHandler.instance.SetState(PlayerHandler.STATE.IDLE);
+            if (isWalking)
+            {
+                m_mechWalkAudio.Stop();
+                isWalking = false;
+            }
         }
 
         cc.SimpleMove(movementDelta);
-        if(OVRInput.Get(OVRInput.Button.One, OVRInput.Controller.RTouch))
-        {
-            cc.Move(new Vector3(0, 5.0f * Time.deltaTime, 0));
-        }
+        //if (OVRInput.Get(OVRInput.Button.One, OVRInput.Controller.RTouch))
+        //{
+        //    cc.Move(new Vector3(0, 5.0f * Time.deltaTime, 0));
+        //}
 
         // Player Rotation
-        if (secondaryAxis.x != 0.0f)
+        if (Input.GetKey(KeyCode.X))
+            secondaryAxis.x += 1;
+        if (Input.GetKey(KeyCode.Z))
+            secondaryAxis.x -= 1;
+        rotationAxisSmoothedDelta_Goal = secondaryAxis.x;
+        if (isRotating)
         {
-            transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * secondaryAxis.x);
+            if (rotationAxisSmoothedDelta_Current == 0.0f)
+            {
+                m_rotationEndAudio.Play();
+                m_rotationLoopAudio.Stop();
+                isRotating = false;
+            }
+            else
+            {
+                transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * rotationAxisSmoothedDelta_Current);
+            }
+        }
+        else if (!isRotating && rotationAxisSmoothedDelta_Current != 0.0f)
+        {
+            isRotating = true;
+            m_rotationEndAudio.Stop();
+            m_rotationStartupAudio.Play();
+            m_rotationLoopAudio.Play(); 
+            transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * rotationAxisSmoothedDelta_Current);
         }
 
-        if(Input.GetKey(KeyCode.X))
-        {
-            transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * 1);
-        }
-        if (Input.GetKey(KeyCode.Z))
-        {
-            transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * -1);
-        }
+        //if(Input.GetKey(KeyCode.X))
+        //{
+        //    transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * 1);
+        //}
+        //if (Input.GetKey(KeyCode.Z))
+        //{
+        //    transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * -1);
+        //}
 
         movementAlpha = GetMovementAlpha();
 
@@ -124,6 +172,11 @@ public class MechMovement : MonoBehaviour
 
         ////Apply our move Vector , remeber to multiply by Time.delta
         //cc.Move(gravityVector * Time.deltaTime);
+    }
+
+    private void FixedUpdate()
+    {
+        rotationAxisSmoothedDelta_Current = Mathf.LerpUnclamped(rotationAxisSmoothedDelta_Current, rotationAxisSmoothedDelta_Goal, 0.2f);
     }
 
     public float GetMovementAlpha()
