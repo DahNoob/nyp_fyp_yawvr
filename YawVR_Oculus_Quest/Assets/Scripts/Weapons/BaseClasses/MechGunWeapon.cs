@@ -14,7 +14,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     protected Transform m_projectileOrigin;
     [SerializeField]
     protected float m_shootInterval = 0.1f;
-    [Range(0.0f, 8.0f)]
+    [Range(0.0f, 10.0f)]
     [SerializeField]
     protected float m_shootDeviation = 1.0f;
     [SerializeField]

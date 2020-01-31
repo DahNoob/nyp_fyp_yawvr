@@ -4,18 +4,16 @@ using UnityEngine;
 
 
 /******************************  
-** Name: Shot Gun
-** Desc: Mech's Shot Gun
+** Name: Hand Cannon Gun
+** Desc: Hand Cannon Gun
 ** Author: DahNoob
-** Date: 09/12/2019, 11:59AM
+** Date: 31/01/2020, 10:00 AM
 **************************
 ** Change History
 **************************
 ** PR   Date                    Author    Description 
 ** --   --------                -------   ------------------------------------
-** 1    09/12/2019, 11:59AM     DahNoob   Created
-** 2    ????                    DahNoob   forgot lol
-** 3    16/01/2020, 10:23AM     DahNoob   Renamed it from LaserBlaster to ShotGun
+** 1   31/01/2020, 10:00 AM     DahNoob   Created
 *******************************/
 public class HandCannonGun : MechGunWeapon
 {
