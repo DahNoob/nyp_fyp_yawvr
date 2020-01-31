@@ -338,7 +338,10 @@ public class PlayerUIMinimap
             if (Game.instance.m_objectives[i] == null
                 || Game.instance.m_objectives[i].m_highlight == null
                 || Game.instance.m_objectives[i].m_completed)
+            {
+                HandleActive(objectiveIconList[i], false);
                 continue;
+            }
 
 
             Vector3 displacement = Vector3.Scale((Game.instance.m_objectives[i].m_highlight.position - m_playerReference.transform.position), new Vector3(1, 0, 1));

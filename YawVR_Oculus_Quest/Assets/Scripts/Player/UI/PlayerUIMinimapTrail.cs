@@ -33,7 +33,11 @@ public class PlayerUIMinimapTrail
     private GameObject minimapTrailFinder;
     private NavMeshAgent minimapFinderNav;
     private Camera m_minimapCamera;
+    //Timer for updating the minimap trail
     private float minimapTrailTimer;
+
+    //Path variable
+    private NavMeshPath navPath;
 
     //Path for debugging
     //Visualization
@@ -53,7 +57,11 @@ public class PlayerUIMinimapTrail
             minimapTrailFinder = GameObject.Instantiate(minimapTrailFinderPrefab, PlayerHandler.instance.transform.position, Quaternion.identity, PlayerHandler.instance.transform);
             minimapFinderNav = minimapTrailFinder.GetComponent<NavMeshAgent>();
             minimapFinderNav.Warp(minimapTrailFinder.transform.position);
+            minimapFinderNav.updatePosition = true;
         }
+
+        //Initialise nav path
+        navPath = new NavMeshPath();
     }
 
     // Update is called once per frame
@@ -67,100 +75,132 @@ public class PlayerUIMinimapTrail
             minimapTrailTimer += Time.smoothDeltaTime;
         }
         else
-        {
+        {           
             //Reset timer
             minimapTrailTimer = 0;
             //Calculate path towards stuff
             minimapFinderNav.Warp(PlayerHandler.instance.transform.position);
-            minimapFinderNav.updatePosition = true;
-            NavMeshPath navPath = new NavMeshPath();
-            minimapFinderNav.CalculatePath(Game.instance.m_objectives[0].m_highlight.position, navPath);
 
-            //Check if path is valid
-            if (navPath.status != NavMeshPathStatus.PathPartial)
+            //Find path towards current objective
+            //ObjectiveInfo currObj = Game.instance.GetCurrentObjectiveInfo();
+            ObjectiveInfo nearestObjective = Game.instance.ReturnNearestObjectiveToPlayer();
+
+            if(IsObjectiveValid(nearestObjective))
             {
-                //Set the path for easier access or something
-                minimapPath = navPath.corners;
-                int minimapPathLength = minimapPath.Length;
-                if (enableMinimapTrail)
+                minimapFinderNav.CalculatePath(nearestObjective.m_highlight.position, navPath);
+
+                //Check if path is valid
+                if (navPath.status != NavMeshPathStatus.PathPartial)
                 {
-                    //Use the line renderer
-                    if (minimapLineRenderer != null)
-                    {
-                        // minimapLineRenderer.positionCount = (minimapPath.Length);
-                        minimapLineRenderer.positionCount = minimapPathLength;
-
-                        //Set the width based on the normalized scale
-                        minimapLineRenderer.startWidth = PlayerUIManager.instance.normalizedScale - minimapTrailSizeOffset;
-                        minimapLineRenderer.endWidth = PlayerUIManager.instance.normalizedScale - minimapTrailSizeOffset;
-
-                        for (int i = 0; i < minimapPathLength; ++i)
-                        {
-                            //Check if this point is inside the viewport
-                            Vector3 displacement = Vector3.Scale((minimapPath[i] - PlayerHandler.instance.transform.position), new Vector3(1, 0, 1));
-                            Vector3 displacementNormalized = displacement.normalized;
-                            //Normalized value of that distance between the max size (query bounds) and not
-                            float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + PlayerUIManager.instance.m_customRange);
-                            float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_rejectionRange);
-
-                            //Get angle in which the displacement is done
-                            Vector3 bap = displacement.normalized;
-                            float angle = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
-
-                            //Set the rect transform stuffs
-                            minimapTransformChecker.localPosition = Vector3.zero;
-                            minimapTransformChecker.localEulerAngles = new Vector3(0, 0, angle + PlayerHandler.instance.transform.eulerAngles.y + 180);
-
-                            //If any index is outside, we can safely assume that nothing else will be rendered, and we can keep the cost of the line renderer down
-                            if (normalizedRejection > PlayerUIManager.instance.m_rejectionRange)
-                            {
-                                //Translate the rectTransform based on eulers
-                                minimapTransformChecker.Translate(0, PlayerUIManager.instance.m_customRangeTwo, 0);
-                                //Prevent any more points from rendering
-                                minimapLineRenderer.positionCount = i + 1;
-                                //Can start the break from here, else we just continue as usual.
-                                minimapLineRenderer.SetPosition(i, minimapTransformChecker.localPosition);
-                                break;
-                            }
-                            else
-                            {
-                                float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_customRangeTwo);
-                                //Translate the rectTransform based on eulers
-                                minimapTransformChecker.Translate(0, normalizedCustomRange, 0);
-                            }
-
-                            //Set position of new line to new calculated position on the map
-                            minimapLineRenderer.SetPosition(i, minimapTransformChecker.localPosition);
-                        }
-                    }
-                }
-                else
-                {
-                    if (minimapLineRenderer.gameObject.activeInHierarchy)
-                        minimapLineRenderer.gameObject.SetActive(false);
-                }
-
-                if (enableSecondaryTrail)
-                {
-                    if (!minimapLineRendererVisualization.gameObject.activeInHierarchy)
-                        minimapLineRendererVisualization.gameObject.SetActive(true);
-
-                    if (minimapLineRendererVisualization != null)
-                    {
-                        minimapLineRendererVisualization.positionCount = minimapPathLength;
-
-                        for (int i = 0; i < minimapPathLength; ++i)
-                        {
-                            minimapLineRendererVisualization.SetPosition(i, minimapPath[i] + lineOffset);
-                        }
-                    }
-                }
-                else
-                {
-                    if (minimapLineRendererVisualization.gameObject.activeInHierarchy)
-                        minimapLineRendererVisualization.gameObject.SetActive(false);
+                    //Set the path for easier access or something
+                    minimapPath = navPath.corners;
+                    int minimapPathLength = minimapPath.Length;
+                    FirstTrail(minimapPathLength);
+                    SecondTrail(minimapPathLength);
                 }
             }
+            else
+            {
+                //Disable the renderers
+                HandleActive(minimapLineRenderer.gameObject, false);
+                HandleActive(minimapLineRendererVisualization.gameObject, false);
+            }
+          
         }
+    }
+
+    public void FirstTrail(int minimapPathLength)
+    {
+        if (!enableMinimapTrail)
+        {
+            HandleActive(minimapLineRenderer.gameObject, false);
+            return;
+        }
+
+        HandleActive(minimapLineRenderer.gameObject, true);
+
+        if (minimapLineRenderer != null)
+        {
+            // minimapLineRenderer.positionCount = (minimapPath.Length);
+            minimapLineRenderer.positionCount = minimapPathLength;
+
+            //Set the width based on the normalized scale
+            minimapLineRenderer.startWidth = PlayerUIManager.instance.normalizedScale - minimapTrailSizeOffset;
+            minimapLineRenderer.endWidth = PlayerUIManager.instance.normalizedScale - minimapTrailSizeOffset;
+
+            for (int i = 0; i < minimapPathLength; ++i)
+            {
+                //Check if this point is inside the viewport
+                Vector3 displacement = Vector3.Scale((minimapPath[i] - PlayerHandler.instance.transform.position), new Vector3(1, 0, 1));
+                Vector3 displacementNormalized = displacement.normalized;
+                //Normalized value of that distance between the max size (query bounds) and not
+                float normalized = CustomUtility.Normalize(displacement.magnitude, 0, m_minimapCamera.orthographicSize + PlayerUIManager.instance.m_customRange);
+                float normalizedRejection = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_rejectionRange);
+
+                //Get angle in which the displacement is done
+                Vector3 bap = displacement.normalized;
+                float angle = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
+
+                //Set the rect transform stuffs
+                minimapTransformChecker.localPosition = Vector3.zero;
+                minimapTransformChecker.localEulerAngles = new Vector3(0, 0, angle + PlayerHandler.instance.transform.eulerAngles.y + 180);
+
+                //If any index is outside, we can safely assume that nothing else will be rendered, and we can keep the cost of the line renderer down
+                if (normalizedRejection > PlayerUIManager.instance.m_rejectionRange)
+                {
+                    //Translate the rectTransform based on eulers
+                    minimapTransformChecker.Translate(0, PlayerUIManager.instance.m_customRangeTwo, 0);
+                    //Prevent any more points from rendering
+                    minimapLineRenderer.positionCount = i + 1;
+                    //Can start the break from here, else we just continue as usual.
+                    minimapLineRenderer.SetPosition(i, minimapTransformChecker.localPosition);
+                    break;
+                }
+                else
+                {
+                    float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_customRangeTwo);
+                    //Translate the rectTransform based on eulers
+                    minimapTransformChecker.Translate(0, normalizedCustomRange, 0);
+                }
+
+                //Set position of new line to new calculated position on the map
+                minimapLineRenderer.SetPosition(i, minimapTransformChecker.localPosition);
+            }
+        }
+
+    }
+
+    public void SecondTrail(int minimapPathLength)
+    {
+        if(!enableSecondaryTrail)
+        {
+            HandleActive(minimapLineRendererVisualization.gameObject, false);
+            return;
+        }
+
+        HandleActive(minimapLineRendererVisualization.gameObject, true);
+
+        if (minimapLineRendererVisualization != null)
+        {
+            minimapLineRendererVisualization.positionCount = minimapPathLength;
+
+            for (int i = 0; i < minimapPathLength; ++i)
+            {
+                minimapLineRendererVisualization.SetPosition(i, minimapPath[i] + lineOffset);
+            }
+        }
+
+    }
+
+    public void HandleActive(GameObject go, bool active)
+    {
+        if (go.activeInHierarchy != active)
+            go.SetActive(active);
+
+    }
+
+    public bool IsObjectiveValid(ObjectiveInfo referenceInfo)
+    {
+        return !(referenceInfo == null || referenceInfo.m_highlight == null || referenceInfo.m_completed);
     }
 }

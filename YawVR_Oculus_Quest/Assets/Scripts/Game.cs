@@ -85,7 +85,7 @@ public class Game : MonoBehaviour
         ObjectiveInfo currObj = m_objectives[currentObjectiveIndex];
         currObj.m_timeLeft -= Time.deltaTime;
         currObj.m_timer += Time.deltaTime;
-        if(currObj.type == VariedObjectives.TYPE.BOUNTYHUNT)
+        if (currObj.type == VariedObjectives.TYPE.BOUNTYHUNT)
         {
             if (currObj.m_timer > currObj.m_spawnTime)
             {
@@ -132,7 +132,7 @@ public class Game : MonoBehaviour
                 return;
             }
         }
-        else if(currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+        else if (currObj.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
         {
             if (currObj.m_timer > currObj.m_spawnTime)
             {
@@ -244,7 +244,7 @@ public class Game : MonoBehaviour
         for (int i = 0; i < MapPointsHandler.instance.m_mapPoints.Count; ++i)
         {
             bool loadloadaald = !allocatedPoints.Contains(i);
-            if(!allocatedPoints.Contains(i) && Random.Range(0.0f,100.0f) < m_enemySpawnProbability && !CustomUtility.IsHitRadius(MapPointsHandler.instance.m_mapPoints[i], PlayerHandler.instance.transform.position, m_enemySpawnDeadzone))
+            if (!allocatedPoints.Contains(i) && Random.Range(0.0f, 100.0f) < m_enemySpawnProbability && !CustomUtility.IsHitRadius(MapPointsHandler.instance.m_mapPoints[i], PlayerHandler.instance.transform.position, m_enemySpawnDeadzone))
             {
                 EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[Random.Range(0, m_enemies.Length)].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
                 //print("Enemy deployed at point " + i);
@@ -271,10 +271,10 @@ public class Game : MonoBehaviour
                 continue;
             for (int i = 0; i < m_objectives.Length; ++i)
             {
-                if(!m_objectives[i].m_completed && CustomUtility.IsHitRadius(m_objectives[i].m_highlight.position, PlayerHandler.instance.transform.position, 50.0f))
+                if (!m_objectives[i].m_completed && CustomUtility.IsHitRadius(m_objectives[i].m_highlight.position, PlayerHandler.instance.transform.position, 50.0f))
                 {
                     currentObjectiveIndex = i;
-                    if(m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
+                    if (m_objectives[i].type == VariedObjectives.TYPE.BOUNTYHUNT)
                     {
                         //should make it pick a random enemy but even more buffed up, and randomise wher it spawns???????? idk
                         EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[2].poolType, m_objectives[i].m_highlight.position, Quaternion.identity).GetComponent<EnemyBase>();
@@ -292,7 +292,7 @@ public class Game : MonoBehaviour
                         enemy.SetIconColor(m_bountyHuntEnemyColor);
                         enemy.SetIconSprite(Persistent.instance.MINIMAP_ICON_OBJECTIVE);
                     }
-                    else if(m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+                    else if (m_objectives[i].type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
                     {
                         //AttachCrown(m_objectives[i].m_highlight.transform);
                         m_objectives[i].m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(true);
@@ -319,9 +319,9 @@ public class Game : MonoBehaviour
 
     public bool SetRandomObjective()
     {
-        for (int i=0;i<m_objectives.Length;++i)
+        for (int i = 0; i < m_objectives.Length; ++i)
         {
-            if(!m_objectives[i].m_completed)
+            if (!m_objectives[i].m_completed)
             {
                 GUIManager.instance.SetActiveObjective(m_objectives[i]);
                 return true;
@@ -348,10 +348,40 @@ public class Game : MonoBehaviour
     void OnDrawGizmos()
     {
         GameObject p = GameObject.Find("Player");
-        if(p)
+        if (p)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(p.transform.position, m_enemySpawnDeadzone);
         }
+    }
+
+    public ObjectiveInfo GetCurrentObjectiveInfo()
+    {
+        if (currentObjectiveIndex == -1) return null;
+        ObjectiveInfo currObj = m_objectives[currentObjectiveIndex];
+        return currObj;
+    }
+
+    public ObjectiveInfo ReturnNearestObjectiveToPlayer()
+    {
+        float maxDistance = float.MaxValue;
+        ObjectiveInfo nearest = new ObjectiveInfo();
+        for (int i = 0; i < m_objectives.Length; ++i)
+        {
+            if (m_objectives[i] == null
+                || m_objectives[i].m_highlight == null
+                || m_objectives[i].m_completed)
+                continue;
+
+            Vector3 offset = m_objectives[i].m_highlight.position - PlayerHandler.instance.transform.position;
+            float sqrLen = offset.sqrMagnitude;
+
+            if (sqrLen < maxDistance)
+            {
+                maxDistance = sqrLen;
+                nearest = m_objectives[i];
+            }
+        }
+        return nearest;
     }
 }
