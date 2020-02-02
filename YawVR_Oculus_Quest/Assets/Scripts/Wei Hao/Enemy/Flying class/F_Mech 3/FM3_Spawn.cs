@@ -13,6 +13,7 @@ public class FM3_Spawn : SMB_BaseEnemyState
     //protected int m_currentIteration = 0;
 
     private Rigidbody rb;
+    GameObject Cargo;
 
     protected float animationTime;
 
@@ -36,20 +37,28 @@ public class FM3_Spawn : SMB_BaseEnemyState
         animator.SetBool("Chase_InRange", false);
 
         Transform pTransform = GameObject.Find(animator.name).GetComponent<Transform>();
-        foreach (Transform trs in pTransform)
-        {
-            if (trs.gameObject.name == "Cargo")
-            {
-                trs.gameObject.AddComponent<Rigidbody>();
-                rb = trs.gameObject.GetComponent<Rigidbody>();
-                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
-                break;
-            }
-        }
+        Cargo = pTransform.Find("Flying_Mech_Master/Container").gameObject;
+        Cargo.gameObject.AddComponent<Rigidbody>();
+        rb = Cargo.gameObject.GetComponent<Rigidbody>();
+        //rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        //foreach (Transform trs in pTransform)
+        //{
+        //    if (trs.gameObject.name == "Container")
+        //    {
+        //        trs.gameObject.AddComponent<Rigidbody>();
+        //        rb = trs.gameObject.GetComponent<Rigidbody>();
+        //        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        //        break;
+        //    }
+        //}
 
-        //StartCoroutine(DropCargo(animator));
+        //DropCargo(animator);
         //enemy.GetComponent<HeavyMech2>().EnterSpawn();
-        
+    }
+
+    private void StartCoroutine(IEnumerator enumerator)
+    {
+        throw new NotImplementedException();
     }
 
     public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -60,11 +69,15 @@ public class FM3_Spawn : SMB_BaseEnemyState
     {
 
     }
-
-    private IEnumerator DropCargo(Animator animator)
-    {
-        yield return new WaitForSeconds(animationTime);       
-    }
+    
+    //private void DropCargo(Animator animator)
+    //{
+    //    animationTime -= 1.0f * Time.deltaTime;
+    //    if(animationTime <= 0.0f)
+    //    {
+    //        Destroy(Cargo.gameObject);
+    //    }
+    //}
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

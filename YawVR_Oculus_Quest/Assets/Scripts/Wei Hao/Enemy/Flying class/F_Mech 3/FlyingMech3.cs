@@ -176,7 +176,7 @@ public class FlyingMech3 : EnemyBase
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Vector3 relativePos = Player.transform.position - transform.position;
 
@@ -249,21 +249,21 @@ public class FlyingMech3 : EnemyBase
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
-        {
-            Debug.Log("Hit");
-            //transformX = transform.position;
-            //currentState = _GameStates.EXPLODE;
-            m_Animator.SetBool("Chase", false);
-            m_Animator.SetBool("Explode", true);
-        }
+        //if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
+        //{
+        //    Debug.Log("Hit");
+        //    //transformX = transform.position;
+        //    //currentState = _GameStates.EXPLODE;
+        //    m_Animator.SetBool("Chase", false);
+        //    m_Animator.SetBool("Explode", true);
+        //}
 
-        if (collision.gameObject.tag == "Bullet")
-        {
-            takeDamage(1);
-            Debug.Log("Parent Object collided");
-            //collision.gameObject.SetActive(false);
-        }
+        //if (collision.gameObject.tag == "Bullet")
+        //{
+        //    takeDamage(1);
+        //    Debug.Log("Parent Object collided");
+        //    //collision.gameObject.SetActive(false);
+        //}
     }
     //void OnCollisionEnter(Collision collision)
     //{
@@ -284,14 +284,14 @@ public class FlyingMech3 : EnemyBase
     //}
 
     public void CollisionDetected(WeakPoint child)
-    {       
-        takeDamage(5);
+    {
+        //takeDamage(5);
         Debug.Log("Child object collided");
     }
 
 
     //private void OnCollisionEnterChild(Collision collision)
     //{
-        
+
     //}
 }

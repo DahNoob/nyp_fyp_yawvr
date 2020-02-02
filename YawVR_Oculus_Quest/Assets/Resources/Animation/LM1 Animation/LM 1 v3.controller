@@ -214,22 +214,6 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!114 &1748067742813438945
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3bd31e611720d54fb3c75f0ce647894, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_checkIntervals: 1.5
-  dodgeCheck: 2
-  rotationSpeed: 6
-  moveSpeed: 7
 --- !u!1107 &2111685549683839290
 AnimatorStateMachine:
   serializedVersion: 5
@@ -245,9 +229,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 5309050669806545762}
     m_Position: {x: -50, y: 310, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 2918544711632438101}
-    m_Position: {x: 260, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6415529971963685767}
     m_Position: {x: 450, y: 360, z: 0}
@@ -289,33 +270,6 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: -4684844648568760929, guid: 5b6dd2044bf3faa4ba552b31ee9aed8f,
     type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &2918544711632438101
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Dodge
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours:
-  - {fileID: 1748067742813438945}
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 17c8db722d87277418d978a70cb1c901, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

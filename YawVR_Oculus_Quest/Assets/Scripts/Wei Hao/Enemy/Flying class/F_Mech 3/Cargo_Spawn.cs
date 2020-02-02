@@ -19,6 +19,8 @@ public class Cargo_Spawn : MonoBehaviour
     Material m_Material;
     protected float alphaVal = 1.0f;
 
+    protected float animationTime = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,11 +66,18 @@ public class Cargo_Spawn : MonoBehaviour
         {
             SpawnEnemy();
             stopSpawn = true;
+            StartCoroutine(DestroyCargo());
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         //Debug.Log("ayy");
+    }
+
+    private IEnumerator DestroyCargo()
+    {
+        yield return new WaitForSeconds(animationTime);
+        Destroy(gameObject);
     }
 }
