@@ -81,31 +81,47 @@ public class PlayerUIMinimapTrail
             //Calculate path towards stuff
             minimapFinderNav.Warp(PlayerHandler.instance.transform.position);
 
-            //Find path towards current objective
-            //ObjectiveInfo currObj = Game.instance.GetCurrentObjectiveInfo();
-            ObjectiveInfo nearestObjective = Game.instance.ReturnNearestObjectiveToPlayer();
 
-            if(IsObjectiveValid(nearestObjective))
+            ObjectiveInfo currObj = Game.instance.GetCurrentObjectiveInfo();
+            if (currObj != null)
             {
-                minimapFinderNav.CalculatePath(nearestObjective.m_highlight.position, navPath);
-
-                //Check if path is valid
-                if (navPath.status != NavMeshPathStatus.PathPartial)
-                {
-                    //Set the path for easier access or something
-                    minimapPath = navPath.corners;
-                    int minimapPathLength = minimapPath.Length;
-                    FirstTrail(minimapPathLength);
-                    SecondTrail(minimapPathLength);
-                }
+                PathfindToObjective(currObj);
             }
             else
             {
-                //Disable the renderers
-                HandleActive(minimapLineRenderer.gameObject, false);
-                HandleActive(minimapLineRendererVisualization.gameObject, false);
+                //Curr obj is null, find nearest one
+                //Find path towards current objective
+                //ObjectiveInfo currObj = Game.instance.GetCurrentObjectiveInfo();
+                ObjectiveInfo nearestObjective = Game.instance.ReturnNearestObjectiveToPlayer();
+                PathfindToObjective(nearestObjective);
             }
-          
+
+
+        }
+    }
+
+    public void PathfindToObjective(ObjectiveInfo referenceObj)
+    {
+
+        if (IsObjectiveValid(referenceObj))
+        {
+            minimapFinderNav.CalculatePath(referenceObj.m_highlight.position, navPath);
+
+            //Check if path is valid
+            if (navPath.status != NavMeshPathStatus.PathPartial)
+            {
+                //Set the path for easier access or something
+                minimapPath = navPath.corners;
+                int minimapPathLength = minimapPath.Length;
+                FirstTrail(minimapPathLength);
+                SecondTrail(minimapPathLength);
+            }
+        }
+        else
+        {
+            //Disable the renderers
+            HandleActive(minimapLineRenderer.gameObject, false);
+            HandleActive(minimapLineRendererVisualization.gameObject, false);
         }
     }
 
@@ -150,10 +166,15 @@ public class PlayerUIMinimapTrail
                 {
                     //Translate the rectTransform based on eulers
                     minimapTransformChecker.Translate(0, PlayerUIManager.instance.m_customRangeTwo, 0);
+                    //float normalizedCustomRange = CustomUtility.NormalizeCustomRange(normalized, 0, PlayerUIManager.instance.m_customRangeTwo);
+                    ////Translate the rectTransform based on eulers
+                    //minimapTransformChecker.Translate(0, normalizedCustomRange, 0);
+
                     //Prevent any more points from rendering
                     minimapLineRenderer.positionCount = i + 1;
                     //Can start the break from here, else we just continue as usual.
                     minimapLineRenderer.SetPosition(i, minimapTransformChecker.localPosition);
+                    Debug.Log(minimapTransformChecker.localPosition);
                     break;
                 }
                 else
