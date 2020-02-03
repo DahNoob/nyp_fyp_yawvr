@@ -128,7 +128,7 @@ public class MechMovement : MonoBehaviour
             if(Time.time > startFallTime)
             {
                 m_mechLandAudio.Play();
-                PlayerHandler.instance.Shake(0.15f);
+                PlayerHandler.instance.Shake(0.2f);
                 VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.03f, 0.5f, false, 0.02f);
                 VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, 0.5f, false, 0.02f);
             }

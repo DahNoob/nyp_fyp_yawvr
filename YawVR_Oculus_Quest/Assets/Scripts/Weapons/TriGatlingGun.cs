@@ -41,7 +41,7 @@ public class TriGatlingGun : MechGunWeapon
 
     private void _AmmoModule_onStartReload_Gatling()
     {
-        VibrationManager.SetControllerVibration(m_controller, 0.0f, 0.0f);
+        VibrationManager.StopHapticPulse(m_controller);
         m_gatlingAnimator.SetBool("Shooting", false);
         m_barrelWhirlWindEffect.Stop();
         m_revUpAudioSource.Stop();
@@ -98,7 +98,7 @@ public class TriGatlingGun : MechGunWeapon
         m_barrelWhirlWindEffect.Stop();
         m_revUpAudioSource.Stop();
         m_loopedShootAudioSource.Stop();
-        VibrationManager.SetControllerVibration(m_controller, 0.0f, 0.0f);
+        VibrationManager.StopHapticPulse(m_controller);
         return true;
     }
 

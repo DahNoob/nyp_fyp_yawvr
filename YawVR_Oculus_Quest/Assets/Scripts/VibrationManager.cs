@@ -32,8 +32,8 @@ public class VibrationManager : MonoBehaviour
     private static VibrationManager instance;
 
     //Local variables
-    protected IEnumerator asyncHapticPulse;
-    protected bool keepAlive = false;
+    protected IEnumerator asyncHapticPulseRight, asyncHapticPulseLeft;
+    protected bool keepAliveRight = false, keepAliveLeft = false;
 
 
     void Awake()
@@ -80,25 +80,43 @@ public class VibrationManager : MonoBehaviour
     //Basic haptic pulse function
     protected IEnumerator HapticPulse(OVRInput.Controller _controller, float totalDuration, float intensity, bool isContinuous = false, float pulseDuration = 0.01f, float intervalDuration = 0.01f)
     {
-        keepAlive = isContinuous;
-
-        while (totalDuration > 0 || keepAlive)
+        if(_controller == OVRInput.Controller.RTouch && !keepAliveRight)
         {
-            OVRInput.SetControllerVibration(.1f, intensity, _controller);
-            yield return new WaitForSeconds(pulseDuration);
+            keepAliveRight = isContinuous;
+            while (totalDuration > 0 || keepAliveRight)
+            {
+                OVRInput.SetControllerVibration(.1f, intensity, _controller);
+                yield return new WaitForSeconds(pulseDuration);
+                OVRInput.SetControllerVibration(0, 0, _controller);
+                yield return new WaitForSeconds(intervalDuration);
 
-            OVRInput.SetControllerVibration(0, 0, _controller);
-            yield return new WaitForSeconds(intervalDuration);
+                if (!keepAliveRight) totalDuration -= pulseDuration + intervalDuration;
+            }
+            asyncHapticPulseRight = null;
 
-            if (!keepAlive) totalDuration -= pulseDuration + intervalDuration;
         }
+        else if(_controller == OVRInput.Controller.LTouch && !keepAliveLeft)
+        {
+            keepAliveLeft = isContinuous;
+            while (totalDuration > 0 || keepAliveLeft)
+            {
+                OVRInput.SetControllerVibration(.1f, intensity, _controller);
+                yield return new WaitForSeconds(pulseDuration);
+                OVRInput.SetControllerVibration(0, 0, _controller);
+                yield return new WaitForSeconds(intervalDuration);
 
-        asyncHapticPulse = null;
+                if (!keepAliveLeft) totalDuration -= pulseDuration + intervalDuration;
+            }
+            asyncHapticPulseLeft = null;
+        }
     }
 
-    protected void StopHapticPulse()
+    public static void StopHapticPulse(OVRInput.Controller _controller)
     {
-        keepAlive = false;
+        if (_controller == OVRInput.Controller.RTouch)
+            instance.keepAliveRight = false;
+        else if (_controller == OVRInput.Controller.LTouch)
+            instance.keepAliveLeft = false;
     }
 
     //public static void SetControllerVibration(OVRInput.Controller _controller, )
