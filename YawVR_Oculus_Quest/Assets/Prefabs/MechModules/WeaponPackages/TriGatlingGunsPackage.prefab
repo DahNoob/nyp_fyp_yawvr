@@ -12305,27 +12305,24 @@ MonoBehaviour:
   m_semi: 0
   m_projectileType: 0
   m_projectileOrigin: {fileID: 8085296391530940213}
-  m_shootInterval: 0.05
+  m_shootInterval: 0.1
   m_shootDeviation: 3
   m_muzzleFlash: {fileID: 4550724544423918905}
   m_bulletCasings: {fileID: 717286777723845609}
-  m_shootSound:
-    soundFXName: Default Sound
+  m_shootAudioSource: {fileID: 0}
+  m_shootAudioClips: []
   m_laserPointer: {fileID: 1998106151244196207}
-  m_recoilPosition: {x: 0, y: 0.02, z: -0.05}
-  m_recoilRotation: {x: -0.5, y: 0, z: 0}
+  m_recoilPosition: {x: 0, y: 0.04, z: -0.1}
+  m_recoilRotation: {x: -1, y: 0, z: 0}
   ammoModule:
     m_ammoInfo: {fileID: 11400000, guid: f6ff7d7c008d188499325f9cc3bb9178, type: 2}
     m_isReloading: 0
   m_gatlingAnimator: {fileID: 5201308400826977222}
   m_barrelWhirlWindEffect: {fileID: 7344206164236843042}
   m_windUpTime: 1
-  m_revUpSound:
-    soundFXName: Gatling_RevUp
-  m_revDownSound:
-    soundFXName: Gatling_RevDown
-  m_loopedShootSound:
-    soundFXName: Gatling_LoopedShoot
+  m_revUpAudioSource: {fileID: 1628810478316186121}
+  m_loopedShootAudioSource: {fileID: 1437061704584923764}
+  m_revDownAudioSource: {fileID: 3523343588021596987}
 --- !u!1 &4251376465459645007
 GameObject:
   m_ObjectHideFlags: 0
@@ -21779,27 +21776,24 @@ MonoBehaviour:
   m_semi: 0
   m_projectileType: 0
   m_projectileOrigin: {fileID: 8471347375920346834}
-  m_shootInterval: 0.05
+  m_shootInterval: 0.1
   m_shootDeviation: 3
   m_muzzleFlash: {fileID: 1671391813897614537}
   m_bulletCasings: {fileID: 4119427468466474839}
-  m_shootSound:
-    soundFXName: Default Sound
+  m_shootAudioSource: {fileID: 0}
+  m_shootAudioClips: []
   m_laserPointer: {fileID: 3319813133089985601}
-  m_recoilPosition: {x: 0, y: 0.02, z: -0.05}
-  m_recoilRotation: {x: -0.5, y: 0, z: 0}
+  m_recoilPosition: {x: 0, y: 0.04, z: -0.1}
+  m_recoilRotation: {x: -1, y: 0, z: 0}
   ammoModule:
     m_ammoInfo: {fileID: 11400000, guid: f6ff7d7c008d188499325f9cc3bb9178, type: 2}
     m_isReloading: 0
   m_gatlingAnimator: {fileID: 1799485001286350294}
   m_barrelWhirlWindEffect: {fileID: 7370847333471538363}
   m_windUpTime: 1
-  m_revUpSound:
-    soundFXName: Gatling_RevUp
-  m_revDownSound:
-    soundFXName: Gatling_RevDown
-  m_loopedShootSound:
-    soundFXName: Gatling_LoopedShoot
+  m_revUpAudioSource: {fileID: 8262978177528148905}
+  m_loopedShootAudioSource: {fileID: 2729270863718432358}
+  m_revDownAudioSource: {fileID: 6261414057320797996}
 --- !u!1 &7759979483029970353
 GameObject:
   m_ObjectHideFlags: 0
@@ -26151,11 +26145,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4837299648065966059}
     m_Modifications:
-    - target: {fileID: 3521391228891531065, guid: 616c5f4115e402d4981a6337b3613e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: Muzzle Flash
-      objectReference: {fileID: 0}
     - target: {fileID: 3521391228891531064, guid: 616c5f4115e402d4981a6337b3613e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26210,6 +26199,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3521391228891531065, guid: 616c5f4115e402d4981a6337b3613e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: Muzzle Flash
       objectReference: {fileID: 0}
     - target: {fileID: 3521391229220231882, guid: 616c5f4115e402d4981a6337b3613e3f,
         type: 3}
@@ -26394,11 +26388,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8956261213527982104}
     m_Modifications:
-    - target: {fileID: 3521391228891531065, guid: 616c5f4115e402d4981a6337b3613e3f,
-        type: 3}
-      propertyPath: m_Name
-      value: Muzzle Flash
-      objectReference: {fileID: 0}
     - target: {fileID: 3521391228891531064, guid: 616c5f4115e402d4981a6337b3613e3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26454,6 +26443,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3521391228891531065, guid: 616c5f4115e402d4981a6337b3613e3f,
+        type: 3}
+      propertyPath: m_Name
+      value: Muzzle Flash
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 616c5f4115e402d4981a6337b3613e3f, type: 3}
 --- !u!1 &1671391813897614537 stripped
@@ -26475,11 +26469,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4868558906464576761}
     m_Modifications:
-    - target: {fileID: 2259210748304180521, guid: a402a5c3b6599ab4ba7be21d85ffadd2,
-        type: 3}
-      propertyPath: m_Name
-      value: Whirlwind
-      objectReference: {fileID: 0}
     - target: {fileID: 6203039016469577881, guid: a402a5c3b6599ab4ba7be21d85ffadd2,
         type: 3}
       propertyPath: moveWithTransform
@@ -26594,6 +26583,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259210748304180521, guid: a402a5c3b6599ab4ba7be21d85ffadd2,
+        type: 3}
+      propertyPath: m_Name
+      value: Whirlwind
       objectReference: {fileID: 0}
     - target: {fileID: 5015744401587496034, guid: a402a5c3b6599ab4ba7be21d85ffadd2,
         type: 3}
@@ -26665,11 +26659,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6576621598981943642}
     m_Modifications:
-    - target: {fileID: 2259210748304180521, guid: a402a5c3b6599ab4ba7be21d85ffadd2,
-        type: 3}
-      propertyPath: m_Name
-      value: Whirlwind
-      objectReference: {fileID: 0}
     - target: {fileID: 6203039016469577881, guid: a402a5c3b6599ab4ba7be21d85ffadd2,
         type: 3}
       propertyPath: moveWithTransform
@@ -26785,6 +26774,11 @@ PrefabInstance:
       propertyPath: InitialModule.startSize.minScalar
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 2259210748304180521, guid: a402a5c3b6599ab4ba7be21d85ffadd2,
+        type: 3}
+      propertyPath: m_Name
+      value: Whirlwind
+      objectReference: {fileID: 0}
     - target: {fileID: 5015744401587496034, guid: a402a5c3b6599ab4ba7be21d85ffadd2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26855,11 +26849,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8956261213527982104}
     m_Modifications:
-    - target: {fileID: 8669532353011990425, guid: e768445050640e84cb83ab39e289cd9e,
-        type: 3}
-      propertyPath: m_Name
-      value: MechLaserPointer
-      objectReference: {fileID: 0}
     - target: {fileID: 5738186106373145509, guid: e768445050640e84cb83ab39e289cd9e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26924,6 +26913,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_controller
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669532353011990425, guid: e768445050640e84cb83ab39e289cd9e,
+        type: 3}
+      propertyPath: m_Name
+      value: MechLaserPointer
       objectReference: {fileID: 0}
     - target: {fileID: 379676672660280570, guid: e768445050640e84cb83ab39e289cd9e,
         type: 3}
@@ -27072,11 +27066,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3084042802621397961}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
-        type: 3}
-      propertyPath: m_Name
-      value: Model
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27147,22 +27136,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.08864059
       objectReference: {fileID: 0}
+    - target: {fileID: -282387320894940959, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
     - target: {fileID: 6489476073032247186, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-    - target: {fileID: 5767974960422501358, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-    - target: {fileID: -724986317299964592, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-    - target: {fileID: -282387320894940959, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+    - target: {fileID: 8172602320256271456, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -27172,7 +27156,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-    - target: {fileID: 8172602320256271456, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+    - target: {fileID: -927199367670048503, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+        type: 3}
+      propertyPath: m_Name
+      value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: -724986317299964592, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
+    - target: {fileID: 5767974960422501358, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -27228,11 +27222,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8956261213527982104}
     m_Modifications:
-    - target: {fileID: 2832993507768210431, guid: a37a4f94fba344d49a43af3426fae423,
-        type: 3}
-      propertyPath: m_Name
-      value: BulletCasings
-      objectReference: {fileID: 0}
     - target: {fileID: 8481417623209315387, guid: a37a4f94fba344d49a43af3426fae423,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27293,6 +27282,11 @@ PrefabInstance:
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2832993507768210431, guid: a37a4f94fba344d49a43af3426fae423,
+        type: 3}
+      propertyPath: m_Name
+      value: BulletCasings
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a37a4f94fba344d49a43af3426fae423, type: 3}
 --- !u!198 &4119427468466474839 stripped
@@ -27314,11 +27308,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8554845882662399990}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
-        type: 3}
-      propertyPath: m_Name
-      value: Model
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27389,22 +27378,17 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.08864059
       objectReference: {fileID: 0}
+    - target: {fileID: -282387320894940959, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
     - target: {fileID: 6489476073032247186, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-    - target: {fileID: 5767974960422501358, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-    - target: {fileID: -724986317299964592, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-    - target: {fileID: -282387320894940959, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+    - target: {fileID: 8172602320256271456, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -27414,7 +27398,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
-    - target: {fileID: 8172602320256271456, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+    - target: {fileID: -927199367670048503, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+        type: 3}
+      propertyPath: m_Name
+      value: Model
+      objectReference: {fileID: 0}
+    - target: {fileID: -724986317299964592, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3615c91733c42ec40ac12ac05ece5e68, type: 2}
+    - target: {fileID: 5767974960422501358, guid: 1d56cd13ae1a7ba4fbf18fd47c4dbb3f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -27470,11 +27464,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4837299648065966059}
     m_Modifications:
-    - target: {fileID: 2832993507768210431, guid: a37a4f94fba344d49a43af3426fae423,
-        type: 3}
-      propertyPath: m_Name
-      value: BulletCasings
-      objectReference: {fileID: 0}
     - target: {fileID: 8481417623209315387, guid: a37a4f94fba344d49a43af3426fae423,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27535,6 +27524,11 @@ PrefabInstance:
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2832993507768210431, guid: a37a4f94fba344d49a43af3426fae423,
+        type: 3}
+      propertyPath: m_Name
+      value: BulletCasings
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a37a4f94fba344d49a43af3426fae423, type: 3}
 --- !u!198 &717286777723845609 stripped
@@ -27556,11 +27550,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4837299648065966059}
     m_Modifications:
-    - target: {fileID: 8669532353011990425, guid: e768445050640e84cb83ab39e289cd9e,
-        type: 3}
-      propertyPath: m_Name
-      value: MechLaserPointer
-      objectReference: {fileID: 0}
     - target: {fileID: 5738186106373145509, guid: e768445050640e84cb83ab39e289cd9e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27625,6 +27614,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_maxDistance
       value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669532353011990425, guid: e768445050640e84cb83ab39e289cd9e,
+        type: 3}
+      propertyPath: m_Name
+      value: MechLaserPointer
       objectReference: {fileID: 0}
     - target: {fileID: 379676672660280570, guid: e768445050640e84cb83ab39e289cd9e,
         type: 3}
