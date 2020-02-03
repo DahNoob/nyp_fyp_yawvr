@@ -49,7 +49,6 @@ abstract public class MechGunWeapon : MechBaseWeapon
 
         GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo,ammoModule.ReturnNormalized());
 
-
         shootParticles = m_muzzleFlash.GetComponentsInChildren<ParticleSystem>();
         //Update ammo in GUI first
         //GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
