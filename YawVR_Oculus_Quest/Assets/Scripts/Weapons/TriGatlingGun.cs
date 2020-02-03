@@ -41,6 +41,7 @@ public class TriGatlingGun : MechGunWeapon
 
     private void _AmmoModule_onStartReload_Gatling()
     {
+        VibrationManager.SetControllerVibration(m_controller, 0.0f, 0.0f);
         m_gatlingAnimator.SetBool("Shooting", false);
         m_barrelWhirlWindEffect.Stop();
         m_revUpAudioSource.Stop();
@@ -81,6 +82,7 @@ public class TriGatlingGun : MechGunWeapon
                 {
                     isWindedUp = true;
                     m_loopedShootAudioSource.Play();
+                    VibrationManager.SetControllerVibration(m_controller, 0.1f, 0.7f, true, 0.02f, 0.04f);
                 }
             }
         }
@@ -96,6 +98,12 @@ public class TriGatlingGun : MechGunWeapon
         m_barrelWhirlWindEffect.Stop();
         m_revUpAudioSource.Stop();
         m_loopedShootAudioSource.Stop();
+        VibrationManager.SetControllerVibration(m_controller, 0.0f, 0.0f);
         return true;
+    }
+
+    protected override void Vibe()
+    {
+        //none becuz im putting an auto vibration ratehr than vibrating every bullet shot
     }
 }

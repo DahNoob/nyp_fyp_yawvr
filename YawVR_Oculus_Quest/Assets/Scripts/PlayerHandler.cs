@@ -229,9 +229,9 @@ public class PlayerHandler : BaseEntity
             if(walkHapticReady && sin < -0.85f)
             {
                 walkHapticReady = false;
-                float strength = 0.15f * walkMultiplier;
-                VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.03f, strength, false, 0.005f);
-                VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, strength, false, 0.005f);
+                float strength = 0.65f * walkMultiplier;
+                VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.03f, strength, false, 0.02f);
+                VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, strength, false, 0.02f);
             }
             else if(!walkHapticReady && sin > 0.5f)
             {
