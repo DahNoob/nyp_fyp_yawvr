@@ -10,15 +10,15 @@ public class PlayerUIManager : MonoBehaviour
 
     [Header("Player Minimap")]
     [SerializeField]
-    [Tooltip("Player's Minimap Component")]
-    private PlayerUIMinimap m_playerMinimap;
-    [SerializeField]
     [Tooltip("The camera rendering this minimap")]
     private Camera m_minimapCamera;
     [SerializeField]
     [Tooltip("The rect transform that holds the minimap")]
     private RectTransform m_minimapMask;
     //Minimap ranges
+    [SerializeField]
+    [Tooltip("Player's Minimap Component")]
+    private PlayerUIMinimap m_playerMinimap;
 
     [Header("Player Minimap Ranges")]
     public float m_customRange = 20;
@@ -28,6 +28,10 @@ public class PlayerUIManager : MonoBehaviour
     [Header("Player Minimap Trail Configuration")]
     [SerializeField]
     private PlayerUIMinimapTrail m_playerMinimapTrail;
+
+    [Header("Player UI Sounds Configuration")]
+    [SerializeField]
+    private PlayerUISounds m_playerUISounds;
 
     //Local variables
     [HideInInspector]
@@ -87,6 +91,8 @@ public class PlayerUIManager : MonoBehaviour
 
         m_playerMinimap.Start();
         m_playerMinimapTrail.Start();
+        m_playerUISounds.Start();
+
 
         //foreach (SystemFluffMessage startingFluffs in m_startingSystemFluffs)
         //{
@@ -103,6 +109,14 @@ public class PlayerUIManager : MonoBehaviour
         m_playerMinimapTrail.Update();
 
         m_playerMinimap.m_minimapBounds.position = transform.position;
+
+        for(int i = 49; i < 56; ++i)
+        {
+            if (Input.GetKeyDown((KeyCode)i))
+            {
+                PlaySoundOnce(i - 49);
+            }
+        }
 
         //if (m_processingQueue.Count > 0 && !isAlreadyTyping)
         //{
@@ -197,6 +211,26 @@ public class PlayerUIManager : MonoBehaviour
 
         Gizmos.DrawWireCube(m_playerMinimap.m_minimapBounds.position,
             m_playerMinimap.m_minimapBounds.GetWidth() * 2);
+    }
+
+    public void PlaySound(PlayerUISounds.UI_SOUNDTYPE soundType)
+    {
+        m_playerUISounds.PlaySound(soundType);
+    }
+
+    public void PlaySound(int soundType)
+    {
+        m_playerUISounds.PlaySound((PlayerUISounds.UI_SOUNDTYPE)soundType);
+    }
+
+    public void PlaySoundOnce(PlayerUISounds.UI_SOUNDTYPE soundType)
+    {
+        m_playerUISounds.PlayOnce(soundType);
+    }
+
+    public void PlaySoundOnce(int soundType)
+    {
+        m_playerUISounds.PlayOnce((PlayerUISounds.UI_SOUNDTYPE)soundType);
     }
 }
 
