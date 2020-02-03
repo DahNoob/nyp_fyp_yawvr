@@ -21,10 +21,12 @@ abstract public class MechGunWeapon : MechBaseWeapon
     protected GameObject m_muzzleFlash;
     [SerializeField]
     protected ParticleSystem m_bulletCasings;
+    //[SerializeField]
+    //protected AudioSource m_shootAudioSource;
+    //[SerializeField]
+    //protected AudioClip[] m_shootAudioClips;
     [SerializeField]
-    protected AudioSource m_shootAudioSource;
-    [SerializeField]
-    protected AudioClip[] m_shootAudioClips;
+    protected OVR.SoundFXRef m_shootSound;
     [SerializeField]
     protected MechLaserPointer m_laserPointer;
     [SerializeField]
@@ -95,12 +97,13 @@ abstract public class MechGunWeapon : MechBaseWeapon
                 }
                 follower.Bump(m_recoilPosition, m_recoilRotation);
                 //VibrationManager.SetControllerVibration(m_controller, vibeClip);
-                if (m_shootAudioSource)
-                {
-                    m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
-                    m_shootAudioSource.pitch = Random.Range(0.9f, 1.1f);
-                    m_shootAudioSource.Play();
-                }
+                //if (m_shootAudioSource)
+                //{
+                //    m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
+                //    m_shootAudioSource.pitch = Random.Range(0.9f, 1.1f);
+                //    m_shootAudioSource.Play();
+                //}
+                m_shootSound.PlaySound();
                 //Triggered
                 GUIManager.instance.Triggered(_controller);
                 //Set weapon info ammo
@@ -144,12 +147,13 @@ abstract public class MechGunWeapon : MechBaseWeapon
                     }
                     follower.Bump(m_recoilPosition, m_recoilRotation);
                     //VibrationManager.SetControllerVibration(m_controller, vibeClip);
-                    if(m_shootAudioSource)
-                    {
-                        m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
-                        m_shootAudioSource.pitch = Random.Range(0.9f, 1.1f);
-                        m_shootAudioSource.Play();
-                    }
+                    //if(m_shootAudioSource)
+                    //{
+                    //    m_shootAudioSource.clip = m_shootAudioClips[Random.Range(0, m_shootAudioClips.Length - 1)];
+                    //    m_shootAudioSource.pitch = Random.Range(0.9f, 1.1f);
+                    //    m_shootAudioSource.Play();
+                    //}
+                    m_shootSound.PlaySound();
                     //Triggered
                     GUIManager.instance.Triggered(_controller);
                     //Set weapon info ammo
