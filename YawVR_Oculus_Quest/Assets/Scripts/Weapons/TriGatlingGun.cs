@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using OVR;
 
 public class TriGatlingGun : MechGunWeapon
 {
@@ -14,20 +13,12 @@ public class TriGatlingGun : MechGunWeapon
     [SerializeField]
     [Range(0.0f, 1.0f)]
     protected float m_windUpTime = 0.35f;
-    //[SerializeField]
-    //protected AudioSource m_revUpAudioSource;
-    //[SerializeField]
-    //protected AudioSource m_loopedShootAudioSource;
-    //[SerializeField]
-    //protected AudioSource m_revDownAudioSource;
-
     [SerializeField]
-    SoundFXRef m_revUpSound;
+    protected AudioSource m_revUpAudioSource;
     [SerializeField]
-    SoundFXRef m_revDownSound;
+    protected AudioSource m_loopedShootAudioSource;
     [SerializeField]
-    SoundFXRef m_loopedShootSound;
-
+    protected AudioSource m_revDownAudioSource;
 
     protected float windUpElapsed = 0;
     protected bool isActivated = false;
@@ -52,12 +43,9 @@ public class TriGatlingGun : MechGunWeapon
     {
         m_gatlingAnimator.SetBool("Shooting", false);
         m_barrelWhirlWindEffect.Stop();
-        //m_revUpAudioSource.Stop();
-        //m_revDownAudioSource.Play();
-        //m_loopedShootAudioSource.Stop();
-        m_revUpSound.StopSound();
-        m_revDownSound.PlaySound();
-        m_loopedShootSound.StopSound();
+        m_revUpAudioSource.Stop();
+        m_revDownAudioSource.Play();
+        m_loopedShootAudioSource.Stop();
         windUpElapsed = shootTick = 0;
         isWindedUp = false;
     }
@@ -76,10 +64,8 @@ public class TriGatlingGun : MechGunWeapon
         windUpElapsed = 0;
         m_gatlingAnimator.SetBool("Shooting", true);
         m_barrelWhirlWindEffect.Play();
-        //m_revUpAudioSource.Play();
-        //m_revDownAudioSource.Stop();
-        m_revUpSound.PlaySound();
-        m_revDownSound.StopSound();
+        m_revUpAudioSource.Play();
+        m_revDownAudioSource.Stop();
         return true;
     }
 
@@ -94,9 +80,7 @@ public class TriGatlingGun : MechGunWeapon
                 if (!isWindedUp)
                 {
                     isWindedUp = true;
-                    //m_loopedShootAudioSource.Play();
-                    m_loopedShootSound.PlaySound();
-                    m_loopedShootSound.AttachToParent(Camera.main.transform);
+                    m_loopedShootAudioSource.Play();
                 }
             }
         }
@@ -105,17 +89,13 @@ public class TriGatlingGun : MechGunWeapon
 
     public override bool Stop(OVRInput.Controller _controller)
     {
-        if (isWindedUp)
-            m_revDownSound.PlaySound();
-            //m_revDownAudioSource.Play();
+        if(isWindedUp)
+            m_revDownAudioSource.Play();
         isActivated = isWindedUp = false;
         m_gatlingAnimator.SetBool("Shooting", false);
         m_barrelWhirlWindEffect.Stop();
-        //m_revUpAudioSource.Stop();
-        //m_loopedShootAudioSource.Stop();
-        m_revUpSound.StopSound();
-        m_loopedShootSound.DetachFromParent();
-        m_loopedShootSound.StopSound();
+        m_revUpAudioSource.Stop();
+        m_loopedShootAudioSource.Stop();
         return true;
     }
 }
