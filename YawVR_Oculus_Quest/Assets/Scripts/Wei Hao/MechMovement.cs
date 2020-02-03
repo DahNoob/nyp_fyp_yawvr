@@ -129,6 +129,8 @@ public class MechMovement : MonoBehaviour
             {
                 m_mechLandAudio.Play();
                 PlayerHandler.instance.Shake(0.15f);
+                VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.03f, 0.5f, false, 0.02f);
+                VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, 0.5f, false, 0.02f);
             }
         }
         else if(!isFalling && !cc.isGrounded)
