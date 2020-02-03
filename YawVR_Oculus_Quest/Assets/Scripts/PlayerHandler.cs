@@ -265,7 +265,7 @@ public class PlayerHandler : BaseEntity
         //m_healthBar.value = Mathf.Lerp(m_uiHealth, _health, Time.deltaTime * healthLerpSpeed);
         //m_armorBar.value = Mathf.Lerp(m_uiArmor, _armor, Time.deltaTime * armorLerpSpeed);
 
-        if(health < m_maxHealth * 0.5f)
+        if(health < m_maxHealth * 0.5f && armor <= 0f)
         {
             m_warningTimer += Time.deltaTime * warningUIFadeSpeed;
             for (int i = 0; i < m_warningUI.Length; ++i)
