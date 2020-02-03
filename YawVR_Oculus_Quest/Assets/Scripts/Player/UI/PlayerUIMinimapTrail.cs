@@ -174,7 +174,6 @@ public class PlayerUIMinimapTrail
                     minimapLineRenderer.positionCount = i + 1;
                     //Can start the break from here, else we just continue as usual.
                     minimapLineRenderer.SetPosition(i, minimapTransformChecker.localPosition);
-                    Debug.Log(minimapTransformChecker.localPosition);
                     break;
                 }
                 else

@@ -110,13 +110,15 @@ public class PlayerUIManager : MonoBehaviour
 
         m_playerMinimap.m_minimapBounds.position = transform.position;
 
-        for(int i = 49; i < 56; ++i)
+#if UNITY_EDITOR
+        for (int i = 49; i < 56; ++i)
         {
             if (Input.GetKeyDown((KeyCode)i))
             {
                 PlaySoundOnce(i - 49);
             }
         }
+#endif
 
         //if (m_processingQueue.Count > 0 && !isAlreadyTyping)
         //{

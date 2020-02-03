@@ -174,6 +174,7 @@ public class GUIManager : MonoBehaviour
         m_armRotationValue.text = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch).eulerAngles.ToString();
         //transform.Rotate(Vector3.up, m_cameraTransform.rotation.y);
 
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.L))
         {
             SpawnLightMech1();
@@ -182,6 +183,7 @@ public class GUIManager : MonoBehaviour
         {
             SpawnHeavyMech2();
         }
+#endif
     }
 
     public void SpawnCubes()
