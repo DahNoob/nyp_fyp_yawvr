@@ -45,7 +45,7 @@ abstract public class EnemyBase : BaseEntity
 
     //Base variables
     protected int flashTick = 0;
-    protected MeshRenderer[] meshRenderers;
+    public MeshRenderer[] meshRenderers;
 
     //Getters/setters
     public Transform m_target {

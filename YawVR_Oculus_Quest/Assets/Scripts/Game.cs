@@ -61,6 +61,7 @@ public class Game : MonoBehaviour
 
     //Local variables
     public int currentObjectiveIndex { private set; get; } = -1;
+    private List<int> allocatedPoints;
 
     void Awake()
     {
@@ -91,12 +92,16 @@ public class Game : MonoBehaviour
             {
                 currObj.m_timer -= currObj.m_spawnTime;
                 print("Spawn Enemies!");
-                for (int i = 0; i < Random.Range(1, 4); ++i)
+                int i = 0, max = Random.Range(1, m_enemies.Length);
+                while (i < max)
                 {
                     QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 9999);
                     Vector3 newEnemyPos = MapPointsHandler.instance.GetClosestPoint(newQuadRect);
+                    if (newEnemyPos == currObj.m_mapPointPosition)
+                        continue;
                     EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, newEnemyPos, Quaternion.identity).GetComponent<EnemyBase>();
                     derp.m_target = PlayerHandler.instance.transform;
+                    ++i;
                 }
             }
             if (!currObj.m_highlight.gameObject.activeInHierarchy)
@@ -138,12 +143,16 @@ public class Game : MonoBehaviour
             {
                 currObj.m_timer -= currObj.m_spawnTime;
                 print("Spawn Enemies!");
-                for (int i = 0; i < Random.Range(1, 4); ++i)
+                int i = 0, max = Random.Range(1, m_enemies.Length);
+                while (i < max)
                 {
                     QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 9999);
                     Vector3 newEnemyPos = MapPointsHandler.instance.GetClosestPoint(newQuadRect);
+                    if (newEnemyPos == currObj.m_mapPointPosition)
+                        continue;
                     EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, newEnemyPos, Quaternion.identity).GetComponent<EnemyBase>();
                     derp.m_target = Random.Range(0, 100) > 50 ? currObj.m_highlight : PlayerHandler.instance.transform;
+                    ++i;
                 }
             }
             if (currObj.m_highlight == null)
@@ -190,18 +199,19 @@ public class Game : MonoBehaviour
     {
         MapPointsHandler mph = MapPointsHandler.instance;
         //SortedDictionary<int, float> distances = new SortedDictionary<int, float>();
-        List<int> allocatedPoints = new List<int>();
+        allocatedPoints = new List<int>();
         //System.Array.Resize(ref m_objectives, mph.m_variedObjectives.possibleObjectivePoints.Length);
         System.Array.Resize(ref m_objectives, m_maxObjectives);
         int currObjectivesCount = 0;
         while (currObjectivesCount < m_maxObjectives)
         {
             int randomisedPoint = Random.Range(0, mph.m_variedObjectives.possibleObjectivePoints.Length);
-            if (allocatedPoints.Contains(randomisedPoint))
-                continue;
             var objIndex = mph.m_variedObjectives.possibleObjectivePoints[randomisedPoint];
+            if (allocatedPoints.Contains(objIndex))
+                continue;
             Vector3 objectivePos = mph.m_mapPoints[objIndex];
             m_objectives[currObjectivesCount] = new ObjectiveInfo();
+            m_objectives[currObjectivesCount].m_mapPointPosition = objectivePos;
             m_objectives[currObjectivesCount].type = Random.Range(0, 1000) > 500 ? VariedObjectives.TYPE.BOUNTYHUNT : VariedObjectives.TYPE.DEFEND_STRUCTURE;
             if (m_objectives[currObjectivesCount].type == VariedObjectives.TYPE.BOUNTYHUNT)
             {

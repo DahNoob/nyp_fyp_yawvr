@@ -23,6 +23,8 @@ public class ShotGun : MechGunWeapon
     [SerializeField]
     protected Animator m_shotGunAnimator;
     [SerializeField]
+    protected ParticleSystem m_whirlWindParticle;
+    [SerializeField]
     protected int m_projectileAmount = 4;
     [SerializeField]
     protected float m_cameraShakeAmount = 0.15f;
@@ -45,5 +47,6 @@ public class ShotGun : MechGunWeapon
         }
         PlayerHandler.instance.Shake(m_cameraShakeAmount);
         m_shotGunAnimator.Play("ShotGun_Shoot");
+        m_whirlWindParticle.Emit(1);
     }
 }

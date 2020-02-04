@@ -117,6 +117,7 @@ public class LightMech2 : EnemyBase , IPooledObject
     public void OnObjectDestroy()
     {     
         //Reset velocity
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, transform.position + GetComponent<SphereCollider>().center, Quaternion.identity);
         rb.velocity = new Vector3(0f, 0f, 0f);
         rb.angularVelocity = new Vector3(0f, 0f, 0f);
         //Set bool i suppose if it actually dead
@@ -124,7 +125,6 @@ public class LightMech2 : EnemyBase , IPooledObject
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);
         ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.LIGHT_MECH2);
-        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, m_bodyTransform.position, Quaternion.identity);
     }
 
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9208457271817768014}
   - component: {fileID: 9208457271817767984}
   - component: {fileID: 9208457271817767985}
-  - component: {fileID: 9208457271817767987}
+  - component: {fileID: 687673991195453350}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!96 &9208457271817767987
+--- !u!96 &687673991195453350
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
@@ -96,7 +96,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d0c3a0da497dbcc488332030809c65ad, type: 2}
+  - {fileID: 2100000, guid: 248dbe6e35c94a14bb68b7b29856f4e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,7 +125,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.12074018
+        value: 0.26762798
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -146,8 +146,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 0}
+      key0: {r: 1, g: 0.8716252, b: 0.3915094, a: 1}
+      key1: {r: 0.9960785, g: 0.8745099, b: 0.40000004, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -162,7 +162,7 @@ TrailRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 0
+      atime0: 32960
       atime1: 65535
       atime2: 0
       atime3: 0
@@ -260,4 +260,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_projectileInfo: {fileID: 11400000, guid: 448d974ec584acc4f8b7773ce0b1137b, type: 2}
   m_rigidbody: {fileID: 9208457272521591482}
-  m_trailRenderer: {fileID: 9208457271817767987}
+  m_trailRenderer: {fileID: 687673991195453350}

@@ -72,11 +72,11 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
 
     public void OnObjectDestroy()
     {
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, transform.position + GetComponent<SphereCollider>().center, Quaternion.identity);
         anim.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);
         ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.HEAVY_MECH2);
-        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, m_bodyTransform.position, Quaternion.identity);
     }
 
     // Start is called before the first frame update

@@ -9,6 +9,7 @@ public class ObjectiveInfo
 {
     public VariedObjectives.TYPE type;//dis is cancerous but wutever
     public Transform m_highlight;
+    public Vector3 m_mapPointPosition;
     public bool m_completed = false;
     public bool m_inProgress = false;
     public float m_timeLeft = 60;

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8558538049834757910}
   - component: {fileID: 8558538049834757912}
   - component: {fileID: 8558538049834757911}
-  - component: {fileID: 8296172667824522869}
   - component: {fileID: 8296172667824522870}
   m_Layer: 16
   m_Name: Light Mech 1 v2
@@ -127,6 +126,7 @@ MonoBehaviour:
   m_bodyTransform: {fileID: 3728063277056559000}
   m_minimapIcon: {fileID: 4819602024944468786}
   m_navMeshAgent: {fileID: 8558538049834757912}
+  meshRenderers: []
   showGizmos: 0
   queryBounds:
     m_position: {x: 0, y: 0, z: 0}
@@ -150,19 +150,6 @@ MonoBehaviour:
   HP: 0
   DMG: 0
   MS: 0
---- !u!65 &8296172667824522869
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 425559466754471307}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.7244568, y: 0.8672409, z: 2.2297974}
-  m_Center: {x: -0.014968872, y: 0.46673965, z: -0.015319824}
 --- !u!65 &8296172667824522870
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -174,8 +161,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.36, y: 2.0221481, z: 2.0861206}
-  m_Center: {x: -0.025238037, y: 1.9975319, z: 0.008728027}
+  m_Size: {x: 3.03, y: 2.83, z: 2.0861206}
+  m_Center: {x: 0, y: 1.6, z: 0}
 --- !u!1 &471367257274650761
 GameObject:
   m_ObjectHideFlags: 0
@@ -2863,11 +2850,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3728063277056559000}
     m_Modifications:
-    - target: {fileID: 1496807876057475286, guid: 318411c8df66b3842bca41ce8586447f,
-        type: 3}
-      propertyPath: m_Name
-      value: Alert
-      objectReference: {fileID: 0}
     - target: {fileID: 4027847810754393469, guid: 318411c8df66b3842bca41ce8586447f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2922,6 +2904,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496807876057475286, guid: 318411c8df66b3842bca41ce8586447f,
+        type: 3}
+      propertyPath: m_Name
+      value: Alert
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 318411c8df66b3842bca41ce8586447f, type: 3}
