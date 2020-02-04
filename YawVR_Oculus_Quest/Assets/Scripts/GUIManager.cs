@@ -237,6 +237,9 @@ public class GUIManager : MonoBehaviour
         }
         //Play sound
         PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_TRIGGER);
+        //Trigger the target acquired thingy
+
+
 
         activeObjective = _objectiveInfo;
     }

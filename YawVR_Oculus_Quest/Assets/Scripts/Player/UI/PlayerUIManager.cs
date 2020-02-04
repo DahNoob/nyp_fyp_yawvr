@@ -29,6 +29,17 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     private PlayerUIMinimapTrail m_playerMinimapTrail;
 
+    [Header("Player Objectives UI Configuration")]
+    [SerializeField]
+    private List<RectTransform> m_objectiveTransformList;
+    [SerializeField]
+    private RectTransform m_objectiveHex;
+
+    [SerializeField]
+    private Animator targetAcquiredAnimator;
+    [SerializeField]
+    private Animator objectiveHexAnimator;
+
     //Local variables
     [HideInInspector]
     //Normalized scale for the update of size between other things
@@ -114,6 +125,19 @@ public class PlayerUIManager : MonoBehaviour
             {
                 PlayerUISoundManager.instance.PlaySound((PlayerUISoundManager.UI_SOUNDTYPE)i - 49);
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            objectiveHexAnimator.Play("ObjectiveHexFadeIn");
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            objectiveHexAnimator.Play("ObjectiveHexExpand");
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            objectiveHexAnimator.Play("Default");
         }
 #endif
 
