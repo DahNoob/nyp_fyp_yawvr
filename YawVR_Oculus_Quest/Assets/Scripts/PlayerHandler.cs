@@ -141,6 +141,9 @@ public class PlayerHandler : BaseEntity
     private float m_uiHealth, m_uiArmor;
     private float m_warningTimer;
 
+    //For sounds? Idk maybe better way later on
+    bool isPlayHealthSound = false;
+
     //Getters/Setters
     public new float health {
         get { return _health; }
@@ -274,6 +277,12 @@ public class PlayerHandler : BaseEntity
                 color.a = Mathf.PingPong(m_warningTimer, 1);
                 m_warningUI[i].color = color;
             }
+
+            if(!isPlayHealthSound)
+            {
+                isPlayHealthSound = true;
+                PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.LOW_HEALTH);
+            }
         }
         else
         {   
@@ -283,9 +292,10 @@ public class PlayerHandler : BaseEntity
                 color.a = Mathf.Lerp(color.a, 0, Time.deltaTime * warningUIFadeSpeed);
                 m_warningUI[i].color = color;
             }
+
+            //else play sound = false
+            isPlayHealthSound = false;
         }
-
-
     }
 
     private void FixedUpdate()
@@ -441,6 +451,7 @@ public class PlayerHandler : BaseEntity
         health = m_maxHealth;
         InvokeDie();
         ResetPose();
+
     }
 
 }

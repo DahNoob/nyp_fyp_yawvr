@@ -235,6 +235,9 @@ public class GUIManager : MonoBehaviour
             _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(true);
             _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(true);
         }
+        //Play sound
+        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_TRIGGER);
+
         activeObjective = _objectiveInfo;
     }
     public void AddObjectiveToPanel(ref ObjectiveInfo _objectiveInfo, int index)
@@ -293,11 +296,13 @@ public class GUIManager : MonoBehaviour
         _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(false);
         _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(false);
 
+        //Play sound that failed
+        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_FAILED);
         //m_objectivesGUI[index].panelFirstFill.color = Color.red;
         //m_objectivesGUI[index].panelSecondFill.color = Color.red;
         ////Set to 100%
         //m_objectivesGUI[index].panelProgress.color = Color.red;
-     
+
     }
 
     public void SucceededObjectiveGUI(ref ObjectiveInfo _objectiveInfo)
@@ -309,6 +314,9 @@ public class GUIManager : MonoBehaviour
 
         _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(false);
         _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(false);
+
+        //Play sound that suceed
+        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_SUCCESS);
     }
 
 
@@ -482,11 +490,17 @@ public class GUIManager : MonoBehaviour
         {
             _objectiveInfo.panelInfo.panelText.color = Color.green;
             _objectiveInfo.panelInfo.panelText.text += "\nSuccess!";
+            //Update UI
+            SucceededObjectiveGUI(ref _objectiveInfo);
         }
         else
         {
             _objectiveInfo.panelInfo.panelText.color = Color.red;
             _objectiveInfo.panelInfo.panelText.text += "\nFailed!";
+
+            //Update UI
+            FailedObjectiveGUI(ref _objectiveInfo);
+
         }
         Game.instance.SetRandomObjective();
     }

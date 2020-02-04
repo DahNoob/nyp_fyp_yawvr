@@ -101,7 +101,7 @@ public class Game : MonoBehaviour
             }
             if (!currObj.m_highlight.gameObject.activeInHierarchy)
             {
-                GUIManager.instance.SucceededObjectiveGUI(ref currObj);
+                //GUIManager.instance.SucceededObjectiveGUI(ref currObj);
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
                 currObj.panelInfo.panelText.color = Color.green;
@@ -117,7 +117,7 @@ public class Game : MonoBehaviour
             }
             else if (currObj.m_timeLeft <= 0)
             {
-                GUIManager.instance.FailedObjectiveGUI(ref currObj);
+                //GUIManager.instance.FailedObjectiveGUI(ref currObj);
                 print("Current Objective ended with status <Failed objective>!");
                 currObj.m_completed = true;
                 currObj.panelInfo.panelText.color = Color.red;

@@ -29,10 +29,6 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     private PlayerUIMinimapTrail m_playerMinimapTrail;
 
-    [Header("Player UI Sounds Configuration")]
-    [SerializeField]
-    private PlayerUISounds m_playerUISounds;
-
     //Local variables
     [HideInInspector]
     //Normalized scale for the update of size between other things
@@ -80,6 +76,8 @@ public class PlayerUIManager : MonoBehaviour
         if (instance == null)
             instance = this;
 
+        //Load sounds so it can be used immediately
+        //m_playerUISounds.Awake();
     }
 
 
@@ -91,7 +89,6 @@ public class PlayerUIManager : MonoBehaviour
 
         m_playerMinimap.Start();
         m_playerMinimapTrail.Start();
-        m_playerUISounds.Start();
 
 
         //foreach (SystemFluffMessage startingFluffs in m_startingSystemFluffs)
@@ -111,11 +108,11 @@ public class PlayerUIManager : MonoBehaviour
         m_playerMinimap.m_minimapBounds.position = transform.position;
 
 #if UNITY_EDITOR
-        for (int i = 49; i < 56; ++i)
+        for (int i = 49; i < 58; ++i)
         {
             if (Input.GetKeyDown((KeyCode)i))
             {
-                PlaySoundOnce(i - 49);
+                PlayerUISoundManager.instance.PlaySound((PlayerUISoundManager.UI_SOUNDTYPE)i - 49);
             }
         }
 #endif
@@ -213,26 +210,6 @@ public class PlayerUIManager : MonoBehaviour
 
         Gizmos.DrawWireCube(m_playerMinimap.m_minimapBounds.position,
             m_playerMinimap.m_minimapBounds.GetWidth() * 2);
-    }
-
-    public void PlaySound(PlayerUISounds.UI_SOUNDTYPE soundType)
-    {
-        m_playerUISounds.PlaySound(soundType);
-    }
-
-    public void PlaySound(int soundType)
-    {
-        m_playerUISounds.PlaySound((PlayerUISounds.UI_SOUNDTYPE)soundType);
-    }
-
-    public void PlaySoundOnce(PlayerUISounds.UI_SOUNDTYPE soundType)
-    {
-        m_playerUISounds.PlayOnce(soundType);
-    }
-
-    public void PlaySoundOnce(int soundType)
-    {
-        m_playerUISounds.PlayOnce((PlayerUISounds.UI_SOUNDTYPE)soundType);
     }
 }
 

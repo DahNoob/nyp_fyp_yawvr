@@ -11889,8 +11889,9 @@ GameObject:
   m_Component:
   - component: {fileID: 756605538046042364}
   - component: {fileID: 756605538046042365}
-  - component: {fileID: 756605538046042339}
   - component: {fileID: 5802277514052396054}
+  - component: {fileID: 2882603950234108035}
+  - component: {fileID: 756605538046042339}
   - component: {fileID: 2490811769729633238}
   m_Layer: 8
   m_Name: Player
@@ -11982,40 +11983,6 @@ MonoBehaviour:
   m_armorRegenRate: 10
   m_armorRegenDelay: 3
   overrideControllers: 0
---- !u!114 &756605538046042339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 756605538046042366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db0872edc239a314c86ac24116fe9863, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  minSpeed: 2
-  maxSpeed: 10
-  acceleration: 9
-  deceleration: 10
-  rotationSpeed: 110
-  m_rotationStartupAudio: {fileID: 9086435630679470152}
-  m_rotationLoopAudio: {fileID: 377197013679392758}
-  m_rotationEndAudio: {fileID: 7789575266354725959}
-  m_mechWalkAudio: {fileID: 8515044503683956255}
-  m_mechLandAudio: {fileID: 6668885542522149534}
-  movementDelta: {x: 0, y: 0, z: 0}
-  movementAlpha: 0
-  startWalkTime: 0
-  startFallTime: 0
-  isWalking: 0
-  isRotating: 0
-  isFalling: 0
-  rStickDelta: {x: 0, y: 0}
-  lStickDelta: {x: 0, y: 0}
-  rotationAxisSmoothedDelta_Current: 0
-  rotationAxisSmoothedDelta_Goal: 0
 --- !u!114 &5802277514052396054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12118,39 +12085,90 @@ MonoBehaviour:
     lineOffset: {x: 0, y: 5, z: 0}
     minimapTrailSizeOffset: 0.1
     minimapPath: []
-  m_playerUISounds:
-    m_soundData:
-    - m_audioName: ObjectiveSuccess
-      m_soundType: 0
-      m_audioClip: {fileID: 8300000, guid: 0a8a205370969c049b27bd7d036fb0d0, type: 3}
-    - m_audioName: ObjectiveFailed
-      m_soundType: 1
-      m_audioClip: {fileID: 8300000, guid: ab0a1d9dab9e98d4ba136fb50203c816, type: 3}
-    - m_audioName: ObjectiveTrigger
-      m_soundType: 2
-      m_audioClip: {fileID: 8300000, guid: 19b18d0a6a8825648bc98e0e00a28581, type: 3}
-    - m_audioName: Proximity
-      m_soundType: 5
-      m_audioClip: {fileID: 8300000, guid: 699ecb2611b4b4943a6ee32b4f69f3df, type: 3}
-    - m_audioName: TimeRunningOut
-      m_soundType: 6
-      m_audioClip: {fileID: 8300000, guid: a24affc628df79e4f99f6d9def9ef163, type: 3}
-    - m_audioName: WaypointPing
-      m_soundType: 7
-      m_audioClip: {fileID: 8300000, guid: 827fa7877c374ba4ba33598e3b7420c8, type: 3}
-    - m_audioName: DeathSound
-      m_soundType: 3
-      m_audioClip: {fileID: 8300000, guid: 1d0477df936004844a7e20cfcaac55d2, type: 3}
-    - m_audioName: HitMarker
-      m_soundType: 4
-      m_audioClip: {fileID: 8300000, guid: 8a810d4d576931d41b70fff05af9a23f, type: 3}
-    - m_audioName: LowHealth
-      m_soundType: 8
-      m_audioClip: {fileID: 8300000, guid: a09e6ebb043a42a4983eb382f7991022, type: 3}
-    m_audioPrefab: {fileID: 0}
-    m_audioParent: {fileID: 0}
-    m_audioSourceList: []
   normalizedScale: 0
+--- !u!114 &2882603950234108035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756605538046042366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a9b87fff711d24e9123f1093aa1a0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_soundData:
+  - m_audioName: ObjectiveSuccess
+    m_soundType: 0
+    m_audioRef:
+      soundFXName: ObjectiveSuccess
+  - m_audioName: ObjectiveFail
+    m_soundType: 1
+    m_audioRef:
+      soundFXName: ObjectiveFail
+  - m_audioName: ObjectiveTrigger
+    m_soundType: 2
+    m_audioRef:
+      soundFXName: ObjectiveTrigger
+  - m_audioName: DeathSound
+    m_soundType: 3
+    m_audioRef:
+      soundFXName: DeathSound
+  - m_audioName: HitMarker
+    m_soundType: 4
+    m_audioRef:
+      soundFXName: HitMarker
+  - m_audioName: Proximity
+    m_soundType: 5
+    m_audioRef:
+      soundFXName: Proximity
+  - m_audioName: TimeRunningOut
+    m_soundType: 6
+    m_audioRef:
+      soundFXName: TimeRunningOut
+  - m_audioName: WaypointPing
+    m_soundType: 7
+    m_audioRef:
+      soundFXName: Waypoint Ping
+  - m_audioName: LowHealth
+    m_soundType: 8
+    m_audioRef:
+      soundFXName: Low Health
+--- !u!114 &756605538046042339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756605538046042366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db0872edc239a314c86ac24116fe9863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  minSpeed: 2
+  maxSpeed: 10
+  acceleration: 9
+  deceleration: 10
+  rotationSpeed: 110
+  m_rotationStartupAudio: {fileID: 9086435630679470152}
+  m_rotationLoopAudio: {fileID: 377197013679392758}
+  m_rotationEndAudio: {fileID: 7789575266354725959}
+  m_mechWalkAudio: {fileID: 8515044503683956255}
+  m_mechLandAudio: {fileID: 6668885542522149534}
+  movementDelta: {x: 0, y: 0, z: 0}
+  movementAlpha: 0
+  startWalkTime: 0
+  startFallTime: 0
+  isWalking: 0
+  isRotating: 0
+  isFalling: 0
+  rStickDelta: {x: 0, y: 0}
+  lStickDelta: {x: 0, y: 0}
+  rotationAxisSmoothedDelta_Current: 0
+  rotationAxisSmoothedDelta_Goal: 0
 --- !u!143 &2490811769729633238
 CharacterController:
   m_ObjectHideFlags: 0
@@ -118714,15 +118732,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -9088515068143522428, guid: 8f3e5e960b3c4c843966df6967b1979f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8f3e5e960b3c4c843966df6967b1979f, type: 3}
---- !u!4 &5626327947495755996 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 8f3e5e960b3c4c843966df6967b1979f,
-    type: 3}
-  m_PrefabInstance: {fileID: 823613081678511046}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &2350519142026771878 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 8f3e5e960b3c4c843966df6967b1979f,
+    type: 3}
+  m_PrefabInstance: {fileID: 823613081678511046}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5626327947495755996 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 8f3e5e960b3c4c843966df6967b1979f,
     type: 3}
   m_PrefabInstance: {fileID: 823613081678511046}
   m_PrefabAsset: {fileID: 0}
@@ -118988,16 +119006,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5990171743555303083}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: b56d9437e6063ca48a82dfa64bd98e0a,
-        type: 3}
-      propertyPath: m_Name
-      value: HandModel
-      objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: b56d9437e6063ca48a82dfa64bd98e0a,
         type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: cc6420a0b4e78464bacf8c861b4755c7, type: 2}
+    - target: {fileID: -927199367670048503, guid: b56d9437e6063ca48a82dfa64bd98e0a,
+        type: 3}
+      propertyPath: m_Name
+      value: HandModel
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: b56d9437e6063ca48a82dfa64bd98e0a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -119061,15 +119079,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -9088515068143522428, guid: b56d9437e6063ca48a82dfa64bd98e0a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b56d9437e6063ca48a82dfa64bd98e0a, type: 3}
---- !u!4 &7584669271150562702 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b56d9437e6063ca48a82dfa64bd98e0a,
-    type: 3}
-  m_PrefabInstance: {fileID: 3186468581434566292}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &560745732782727412 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: b56d9437e6063ca48a82dfa64bd98e0a,
+    type: 3}
+  m_PrefabInstance: {fileID: 3186468581434566292}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7584669271150562702 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: b56d9437e6063ca48a82dfa64bd98e0a,
     type: 3}
   m_PrefabInstance: {fileID: 3186468581434566292}
   m_PrefabAsset: {fileID: 0}
@@ -119369,15 +119387,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39ba5ee659284c942b72f011f8c4c388, type: 3}
---- !u!95 &1660539561907178953 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
-    type: 3}
-  m_PrefabInstance: {fileID: 4394348716823727017}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8755393700263190707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 39ba5ee659284c942b72f011f8c4c388,
+    type: 3}
+  m_PrefabInstance: {fileID: 4394348716823727017}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1660539561907178953 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
     type: 3}
   m_PrefabInstance: {fileID: 4394348716823727017}
   m_PrefabAsset: {fileID: 0}
@@ -119888,15 +119906,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 570a45d6a26883541ab055fc0c799f22, type: 3}
---- !u!4 &1770371689036765733 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 570a45d6a26883541ab055fc0c799f22,
-    type: 3}
-  m_PrefabInstance: {fileID: 6767550579404730687}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &8510567901863180127 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 570a45d6a26883541ab055fc0c799f22,
+    type: 3}
+  m_PrefabInstance: {fileID: 6767550579404730687}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1770371689036765733 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 570a45d6a26883541ab055fc0c799f22,
     type: 3}
   m_PrefabInstance: {fileID: 6767550579404730687}
   m_PrefabAsset: {fileID: 0}
