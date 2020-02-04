@@ -173,7 +173,7 @@ abstract public class EnemyBase : BaseEntity
         SetFlash(false);
         InvokeDie();
         GetComponent<IPooledObject>().OnObjectDestroy();
-        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.DEATH_SOUND);
+        PlayerUISoundManager.instance.PlaySoundAt(PlayerUISoundManager.UI_SOUNDTYPE.DEATH_SOUND, transform.position);
         //gameObject.GetComponent<ParticleSystem>().Play();
     }
 

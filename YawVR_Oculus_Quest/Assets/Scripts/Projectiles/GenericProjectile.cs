@@ -55,7 +55,7 @@ public class GenericProjectile : BaseProjectile, IPooledObject
                 //print(m_projectileInfo.projectileName + " damage is " + m_projectileInfo.damage);
                 eb.takeDamage(m_projectileInfo.damage);
                 //print(eb.name + " is " + eb.GetHealth());
-                PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.HIT_MARKER, 0, 0.1f);
+               // PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.HIT_MARKER, 0, 0.1f);
             }
         }
         OnObjectDestroy();
