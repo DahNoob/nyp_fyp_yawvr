@@ -43,8 +43,8 @@ public class EnemyProjectile : BaseProjectile, IPooledObject
             GameObject efx = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE_IMPACT, collision.GetContact(0).point, Quaternion.identity);
             efx.transform.position = collision.GetContact(0).point;
             efx.GetComponent<ParticleSystem>().Emit(6);
-            OnObjectDestroy();
             PlayerHandler.instance.takeDamage((int)bulletDamage);
+            OnObjectDestroy();
         }
     }
 

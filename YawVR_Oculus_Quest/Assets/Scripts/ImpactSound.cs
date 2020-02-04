@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OVR;
 
 public class ImpactSound : MonoBehaviour , IPooledObject
 {
@@ -19,7 +20,6 @@ public class ImpactSound : MonoBehaviour , IPooledObject
 
     public void OnObjectSpawn()
     {
-        Start();
     }
 
     public void OnObjectDestroy()
@@ -29,25 +29,29 @@ public class ImpactSound : MonoBehaviour , IPooledObject
         gameObject.SetActive(false);
     }
 
-    void Start()
+    public void StartImpact()
     {
         AudioClip[] clips;
         if (impactType == IMPACT_TYPE.METAL)
         {
-            clips = m_metalImpactInfo.m_audioClips;
+            //clips = m_metalImpactInfo.m_audioClips;
+            m_metalImpactInfo.m_sound.PlaySoundAt(transform.position);
         }
         else if (impactType == IMPACT_TYPE.ROCK)
         {
-            clips = m_rockImpactInfo.m_audioClips;
+            //clips = m_rockImpactInfo.m_audioClips;
+            m_rockImpactInfo.m_sound.PlaySoundAt(transform.position);
         }
         else
         {
-            clips = m_sandImpactInfo.m_audioClips;
+            //clips = m_sandImpactInfo.m_audioClips;
+            m_sandImpactInfo.m_sound.PlaySoundAt(transform.position);
         }
-        GetComponent<AudioSource>().clip = clips[Random.Range(0, clips.Length)];
-        GetComponent<AudioSource>().Play();
+        //GetComponent<AudioSource>().clip = clips[Random.Range(0, clips.Length)];
+        //GetComponent<AudioSource>().Play();
         startedPlaying = true;
     }
+
     private void Update()
     {
         if (startedPlaying && !GetComponent<ParticleSystem>().isEmitting)

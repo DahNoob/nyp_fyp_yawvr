@@ -194,6 +194,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     {
         if (ammoModule.m_isReloading || !isFullyVisible)
             return;
+        Persistent.instance.SOUND_RELOAD.PlaySound();
         forceFade = true;
         FadeOut();
         StartCoroutine(ammoModule.Reload());

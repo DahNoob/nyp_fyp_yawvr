@@ -41,6 +41,8 @@ public class VFXHandler : MonoBehaviour , IPooledObject
 
     void Start()
     {
+        if (vfx_Type == VFX_TYPE.BOOMBOOMS)
+            Persistent.instance.SOUND_EXPLODE.PlaySoundAt(transform.position);
         StartCoroutine(Destroy());
     }
 

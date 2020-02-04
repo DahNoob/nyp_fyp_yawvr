@@ -45,7 +45,8 @@ public class TriGatlingGun : MechGunWeapon
         m_gatlingAnimator.SetBool("Shooting", false);
         m_barrelWhirlWindEffect.Stop();
         m_revUpAudioSource.Stop();
-        m_revDownAudioSource.Play();
+        if (isActivated)
+            m_revDownAudioSource.Play();
         m_loopedShootAudioSource.Stop();
         windUpElapsed = shootTick = 0;
         isWindedUp = false;

@@ -44,6 +44,7 @@ public class GenericProjectile : BaseProjectile, IPooledObject
     {
         //GameObject efx = Instantiate(m_projectileInfo.impactEffect, Persistent.instance.GO_DYNAMIC.transform);
         GameObject efx = ObjectPooler.instance.SpawnFromPool(m_projectileInfo.impactType, collision.GetContact(0).point, Quaternion.identity);
+        efx.GetComponent<ImpactSound>()?.StartImpact();
         //efx.transform.position = collision.GetContact(0).point;
         //efx.GetComponent<ParticleSystem>().Emit(6);
         if (collision.collider)

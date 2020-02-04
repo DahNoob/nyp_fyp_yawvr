@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OVR;
 
 /******************************  
 ** Name: Persistent Behaviour
@@ -32,6 +33,8 @@ public class Persistent : MonoBehaviour
     public Sprite MINIMAP_ICON_OBJECTIVE;
     public Material MAT_WHITE;
     public Material MAT_ENEMYMECH;
+    public SoundFXRef SOUND_EXPLODE;
+    public SoundFXRef SOUND_RELOAD;
 
     private void Awake()
     {

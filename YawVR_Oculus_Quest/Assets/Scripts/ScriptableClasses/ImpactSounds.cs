@@ -7,4 +7,5 @@ public class ImpactSoundInfo : ScriptableObject
 {
     [Header("Impact Sound Info")]
     public AudioClip[] m_audioClips;
+    public OVR.SoundFXRef m_sound;
 }

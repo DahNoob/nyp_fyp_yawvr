@@ -180,6 +180,451 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+--- !u!1 &3363879631156352589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8167153540515505145}
+  - component: {fileID: 8197346424330202671}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &8167153540515505145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363879631156352589}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4223577705387104068}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8197346424330202671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363879631156352589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1d30b41806244fca035fdae2896fb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  makePersistent: 1
+  enableSpatializedAudio: 1
+  enableSpatializedFastOverride: 0
+  audioMixer: {fileID: 0}
+  defaultMixerGroup: {fileID: 0}
+  reservedMixerGroup: {fileID: 0}
+  voiceChatMixerGroup: {fileID: 0}
+  verboseLogging: 0
+  maxSoundEmitters: 32
+  volumeSoundFX: 1
+  soundFxFadeSecs: 1
+  audioMinFallOffDistance: 1
+  audioMaxFallOffDistance: 25
+  soundGroupings:
+  - name: Impact
+    soundList:
+    - name: Sand
+      playback: 0
+      volume: 0.7
+      pitchVariance: {x: 0.79999995, y: 1.1999999}
+      falloffDistance: {x: 60, y: 250}
+      falloffCurve: 0
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0.02}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: c4e4c091735c1814eaf9b9669308b3f0, type: 3}
+      - {fileID: 8300000, guid: 0fac9f23e529f5a40880a3af538f4b51, type: 3}
+      - {fileID: 8300000, guid: 3f0c792303089e145a24b9c4936e76ee, type: 3}
+      - {fileID: 8300000, guid: a297c6fb5347886458228730dac4c36a, type: 3}
+      - {fileID: 8300000, guid: 97a6774105f1241458f4dcc2101e2137, type: 3}
+      - {fileID: 8300000, guid: cdb54a90cea5def4cb9182b8fee6f410, type: 3}
+      - {fileID: 8300000, guid: 90f830ca52c30e2408291fd161df6361, type: 3}
+      visibilityToggle: 1
+    - name: Rock
+      playback: 0
+      volume: 0.7
+      pitchVariance: {x: 0.79999995, y: 1.1999999}
+      falloffDistance: {x: 60, y: 250}
+      falloffCurve: 0
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 35d5b936e6d6ecc46bb598bbc4ef46c1, type: 3}
+      - {fileID: 8300000, guid: 1957c0a5dddce3c47ae9069f0fc9545e, type: 3}
+      - {fileID: 8300000, guid: 935dfb5165829ce42872139947a79f2c, type: 3}
+      - {fileID: 8300000, guid: c716fff2bcba276449b6690a9374a80c, type: 3}
+      - {fileID: 8300000, guid: 39bd3cc9bbf7ba24ca5941bb0751053c, type: 3}
+      - {fileID: 8300000, guid: 9490726a5e1d8e8438b55ba45580a46f, type: 3}
+      - {fileID: 8300000, guid: 1fab8e1d8e0e4ff48b3f92f1ed597fa3, type: 3}
+      - {fileID: 8300000, guid: 2bdc5c2ba92be704ca804161bb1e35ea, type: 3}
+      visibilityToggle: 1
+    - name: Metal
+      playback: 0
+      volume: 0.7
+      pitchVariance: {x: 0.79999995, y: 1.1999999}
+      falloffDistance: {x: 60, y: 250}
+      falloffCurve: 0
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0.02}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: b6a15093686feb54bbaeeb37daad5098, type: 3}
+      - {fileID: 8300000, guid: 54894d19d03c5b940803055cb3283817, type: 3}
+      - {fileID: 8300000, guid: 304be7e5f360893418dfda41c4430593, type: 3}
+      - {fileID: 8300000, guid: bfa3e294b06553f4c9e9c563d3ad874d, type: 3}
+      - {fileID: 8300000, guid: d988f848d9cb29d4b998bcf6959ec6e1, type: 3}
+      - {fileID: 8300000, guid: a0bda3c504c854e419fadabf9362817c, type: 3}
+      - {fileID: 8300000, guid: a0015f8eafa8e3b44acb0238c5d6d15a, type: 3}
+      visibilityToggle: 1
+    mixerGroup: {fileID: 0}
+    maxPlayingSounds: 0
+    preloadAudio: 0
+    volumeOverride: 1
+    playingSoundCount: 0
+  - name: Explosion
+    soundList:
+    - name: Single
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 0.79999995, y: 1.1}
+      falloffDistance: {x: 1, y: 250}
+      falloffCurve: 0
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 61dad03cf1bc486419a46a8d212caa53, type: 3}
+      - {fileID: 8300000, guid: 1c0a039c19015d743a7849da67bdc26d, type: 3}
+      - {fileID: 8300000, guid: c5a190b554abac041a259a089ee697be, type: 3}
+      visibilityToggle: 1
+    mixerGroup: {fileID: 0}
+    maxPlayingSounds: 0
+    preloadAudio: 0
+    volumeOverride: 2
+    playingSoundCount: 0
+  - name: Reload
+    soundList:
+    - name: Reload
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 0.9, y: 1.1}
+      falloffDistance: {x: 499, y: 500}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 83c427dd1e3bd334ebbe80d454bf8b4a, type: 3}
+      - {fileID: 8300000, guid: 1785426131a1eb24687ec25f881f6942, type: 3}
+      visibilityToggle: 1
+    mixerGroup: {fileID: 0}
+    maxPlayingSounds: 0
+    preloadAudio: 0
+    volumeOverride: 1
+    playingSoundCount: 0
 --- !u!1 &4223577705387104122
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +664,7 @@ Transform:
   - {fileID: 8084552151028959729}
   - {fileID: 2218244564894432549}
   - {fileID: 3586695329510785497}
+  - {fileID: 8167153540515505145}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -249,6 +695,10 @@ MonoBehaviour:
     type: 3}
   MAT_WHITE: {fileID: 2100000, guid: bc2f0b04fb2fd054aa0668ee0f238e56, type: 2}
   MAT_ENEMYMECH: {fileID: 2100000, guid: c09043ba01c9ec54b9164eb8c7eaa641, type: 2}
+  SOUND_EXPLODE:
+    soundFXName: Single
+  SOUND_RELOAD:
+    soundFXName: Reload
 --- !u!1 &4223577705490119046
 GameObject:
   m_ObjectHideFlags: 0
