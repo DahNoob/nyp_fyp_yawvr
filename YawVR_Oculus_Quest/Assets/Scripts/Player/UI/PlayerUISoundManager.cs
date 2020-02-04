@@ -63,7 +63,7 @@ public class PlayerUISoundManager : MonoBehaviour
 
     }
 
-    public void PlaySound(UI_SOUNDTYPE m_soundType, Vector3 position, float delaySecs = 0, float volume = 1, float pitchMultiplier = 1)
+    public void PlaySoundAt(UI_SOUNDTYPE m_soundType, Vector3 position, float delaySecs = 0, float volume = 1, float pitchMultiplier = 1)
     {
         if (m_soundType == UI_SOUNDTYPE.TOTAL_SOUNDTYPE)
             return;
