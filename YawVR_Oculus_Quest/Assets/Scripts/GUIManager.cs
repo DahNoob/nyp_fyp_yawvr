@@ -524,7 +524,7 @@ public class GUIManager : MonoBehaviour
                 rectTransform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
                 break;
             case MechGunWeapon.GUN_TYPE.HANDCANNON:
-                rectTransform.localScale = new Vector3(1, 1, 1);
+                rectTransform.localScale = new Vector3(1, 0.6f, 0.6f);
                 break;
             default:
                 break;
