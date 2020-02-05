@@ -28,6 +28,10 @@ public class PlayerUIMinimapTrail
     [SerializeField]
     private float minimapTrailSizeOffset = 0.1f;
 
+    [Header("Player Mech Movement")]
+    [SerializeField]
+    private MechMovement m_mechMovement;
+
     //Local variables
     //Object used to find stuff
     private GameObject minimapTrailFinder;
@@ -41,7 +45,6 @@ public class PlayerUIMinimapTrail
 
     //Path for debugging
     //Visualization
-    [SerializeField]
     private Vector3[] minimapPath;
 
 
@@ -70,39 +73,43 @@ public class PlayerUIMinimapTrail
         if (!componentEnabled)
             return;
 
+
         if (minimapTrailTimer < minimapTrailPollTime)
         {
             minimapTrailTimer += Time.smoothDeltaTime;
         }
         else
-        {           
+        {
             //Reset timer
-            minimapTrailTimer = 0;
+            minimapTrailTimer -= minimapTrailPollTime;
             //Calculate path towards stuff
-            minimapFinderNav.Warp(PlayerHandler.instance.transform.position);
 
-
-            ObjectiveInfo currObj = Game.instance.GetCurrentObjectiveInfo();
-            if (currObj != null)
-            {
-                PathfindToObjective(currObj);
-            }
-            else
-            {
-                //Curr obj is null, find nearest one
-                //Find path towards current objective
-                //ObjectiveInfo currObj = Game.instance.GetCurrentObjectiveInfo();
-                ObjectiveInfo nearestObjective = Game.instance.ReturnNearestObjectiveToPlayer();
-                PathfindToObjective(nearestObjective);
-            }
-
+            if (IsCharacterMoving())
+                Pathfind();
 
         }
     }
-
-    public void PathfindToObjective(ObjectiveInfo referenceObj)
+    public void Pathfind()
     {
+        minimapFinderNav.Warp(PlayerHandler.instance.transform.position);
 
+        ObjectiveInfo currObj = Game.instance.GetCurrentObjectiveInfo();
+        if (currObj != null)
+        {
+            PathfindToObjective(currObj);
+        }
+        else
+        {
+            //Curr obj is null, find nearest one
+            //Find path towards current objective
+            //ObjectiveInfo currObj = Game.instance.GetCurrentObjectiveInfo();
+            ObjectiveInfo nearestObjective = Game.instance.ReturnNearestObjectiveToPlayer();
+            PathfindToObjective(nearestObjective);
+        }
+    }
+
+    void PathfindToObjective(ObjectiveInfo referenceObj)
+    {
         if (IsObjectiveValid(referenceObj))
         {
             minimapFinderNav.CalculatePath(referenceObj.m_highlight.position, navPath);
@@ -192,7 +199,7 @@ public class PlayerUIMinimapTrail
 
     public void SecondTrail(int minimapPathLength)
     {
-        if(!enableSecondaryTrail)
+        if (!enableSecondaryTrail)
         {
             HandleActive(minimapLineRendererVisualization.gameObject, false);
             return;
@@ -222,5 +229,14 @@ public class PlayerUIMinimapTrail
     public bool IsObjectiveValid(ObjectiveInfo referenceInfo)
     {
         return !(referenceInfo == null || referenceInfo.m_highlight == null || referenceInfo.m_completed);
+    }
+
+    //Helper function
+    public bool IsCharacterMoving()
+    {
+        if (m_mechMovement == null)
+            return false;
+
+        return m_mechMovement.isWalking || m_mechMovement.rotationAxisSmoothedDelta_Current != 0 || m_mechMovement.isFalling;
     }
 }

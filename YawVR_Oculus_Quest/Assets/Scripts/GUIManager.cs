@@ -235,11 +235,6 @@ public class GUIManager : MonoBehaviour
             _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(true);
             _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(true);
         }
-        //Play sound
-        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_TRIGGER);
-        //Trigger the target acquired thingy
-
-
 
         activeObjective = _objectiveInfo;
     }

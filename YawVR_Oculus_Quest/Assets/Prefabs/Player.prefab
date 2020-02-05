@@ -1783,7 +1783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12085,7 +12085,7 @@ MonoBehaviour:
     minimapTrailPollTime: 0.25
     lineOffset: {x: 0, y: 5, z: 0}
     minimapTrailSizeOffset: 0.1
-    minimapPath: []
+    m_mechMovement: {fileID: 0}
   m_objectiveTransformList:
   - {fileID: 9131638839395090384}
   - {fileID: 233737652085519884}
@@ -12094,6 +12094,7 @@ MonoBehaviour:
   targetAcquiredAnimator: {fileID: 2303548526474268063}
   objectiveHexAnimator: {fileID: 8727390756858254143}
   normalizedScale: 0
+  desiredRectTransform: {fileID: 0}
 --- !u!114 &2882603950234108035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98556,7 +98557,7 @@ Animator:
   m_GameObject: {fileID: 7628598429282090519}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ad27a46bbd9027043b9d29ca639539bc, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

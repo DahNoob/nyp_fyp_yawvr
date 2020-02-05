@@ -308,6 +308,7 @@ public class Game : MonoBehaviour
                         m_objectives[i].m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(true);
                     }
                     GUIManager.instance.SetActiveObjective(m_objectives[i]);
+                    PlayerUIManager.instance.ObjectiveTriggered(i);
                     m_objectives[i].m_inProgress = true;
                     m_objectives[i].panelInfo.panelText.color = Color.yellow;
                     onObjectiveStarted?.Invoke(m_objectives[i]);

@@ -1696,6 +1696,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2075412785}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1803678295 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4749437561615355134, guid: 55918678b82f09947be0fcf0f3795567,
+    type: 3}
+  m_PrefabInstance: {fileID: 2075412785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db0872edc239a314c86ac24116fe9863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2075412785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1947,6 +1959,16 @@ PrefabInstance:
       propertyPath: m_playerMinimapTrail.minimapTrailPollTime
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2012177052878014475, guid: 55918678b82f09947be0fcf0f3795567,
+        type: 3}
+      propertyPath: m_playerMinimapTrail.m_mechMovement
+      value: 
+      objectReference: {fileID: 1803678295}
+    - target: {fileID: 2012177052878014475, guid: 55918678b82f09947be0fcf0f3795567,
+        type: 3}
+      propertyPath: lerpTimeOffset
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6829030461607326151, guid: 55918678b82f09947be0fcf0f3795567,
         type: 3}
       propertyPath: lmao
@@ -2004,6 +2026,11 @@ PrefabInstance:
     - target: {fileID: 8258187529718265028, guid: 55918678b82f09947be0fcf0f3795567,
         type: 3}
       propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6743914327760501603, guid: 55918678b82f09947be0fcf0f3795567,
+        type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
