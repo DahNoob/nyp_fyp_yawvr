@@ -23,6 +23,7 @@ public class SMB_EnemyStart : SMB_BaseEnemyState
 
     public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(enemy.transform.position);
         enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;
         animator.SetBool("Start_Ready", false);
     }
@@ -34,6 +35,7 @@ public class SMB_EnemyStart : SMB_BaseEnemyState
 
     public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(enemy.transform.position);
         enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = true;
     }
 }
