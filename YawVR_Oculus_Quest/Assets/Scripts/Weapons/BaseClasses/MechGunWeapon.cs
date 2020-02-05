@@ -4,12 +4,22 @@ using UnityEngine;
 
 abstract public class MechGunWeapon : MechBaseWeapon
 {
+    //For UI
+    public enum GUN_TYPE
+    {
+        SHOT_GUN,
+        TRIGATLING,
+        HANDCANNON,
+    }
+
     [Header("Base Gun Configuration")]
     [SerializeField]
     [Tooltip("Is the gun a semi gun? Otherwise it's automatic.")]
     protected bool m_semi = false;
     [SerializeField]
     protected PoolObject.OBJECTTYPES m_projectileType;
+    [SerializeField]
+    protected GUN_TYPE m_gunType;
     [SerializeField]
     protected Transform m_projectileOrigin;
     [SerializeField]
@@ -115,6 +125,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     public override bool UpdateUI()
     {
         GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo, ammoModule.ReturnNormalized());
+        GUIManager.instance.SetWeaponIconSprite(m_controller, m_moduleIcon, m_gunType );
         return true;
     }
 
