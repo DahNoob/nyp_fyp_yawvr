@@ -48,6 +48,10 @@ public class LightMech2 : EnemyBase , IPooledObject
     [SerializeField]
     // Time taken before attack is activated
     protected float attackWindUp = 2.0f;
+    [SerializeField]
+    public AudioSource m_chargeSound;
+    [SerializeField]
+    public AudioSource m_detonateSound;
 
     [Header("Current State")]
     [SerializeField]
@@ -316,6 +320,7 @@ public class LightMech2 : EnemyBase , IPooledObject
             m_vrrrrEffect.Play();
             m_whirlwindEffect.Play();
             m_alertEffect.Play();
+            m_walkSound.Play();
         }
         else
         {
@@ -325,6 +330,7 @@ public class LightMech2 : EnemyBase , IPooledObject
             m_dustEffect.Stop();
             m_whirlwindEffect.Stop();
             m_alertEffect.Stop();
+            m_walkSound.Stop();
         }
     }
 

@@ -44,7 +44,9 @@ public class MechMovement : MonoBehaviour
     [SerializeField]
     private AudioSource m_rotationEndAudio;
     [SerializeField]
-    private AudioSource m_mechWalkAudio;
+    private AudioSource m_mechLegStep1;
+    [SerializeField]
+    private AudioSource m_mechLegStep2;
     [SerializeField]
     private AudioSource m_mechLandAudio;
 
@@ -65,7 +67,8 @@ public class MechMovement : MonoBehaviour
 
     //Local variables
     private CharacterController cc;
-    public float rotationAxisSmoothedDelta_Current, rotationAxisSmoothedDelta_Goal = 0;
+    private bool stepAlternation = false;
+    private float rotationAxisSmoothedDelta_Current, rotationAxisSmoothedDelta_Goal = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -102,7 +105,6 @@ public class MechMovement : MonoBehaviour
             if (!isWalking)
             {
                 startWalkTime = Time.time;
-                m_mechWalkAudio.Play();
                 isWalking = true;
             }
             PlayerHandler.instance.SetState(PlayerHandler.STATE.WALK);
@@ -114,7 +116,6 @@ public class MechMovement : MonoBehaviour
             PlayerHandler.instance.SetState(PlayerHandler.STATE.IDLE);
             if (isWalking)
             {
-                m_mechWalkAudio.Stop();
                 isWalking = false;
             }
         }
@@ -197,5 +198,14 @@ public class MechMovement : MonoBehaviour
     public float GetMovementAlpha()
     {
         return speed / maxSpeed;
+    }
+
+    public void PlayStepSound()
+    {
+        stepAlternation = !stepAlternation;
+        if (stepAlternation)
+            m_mechLegStep1.Play();
+        else
+            m_mechLegStep2.Play();
     }
 }

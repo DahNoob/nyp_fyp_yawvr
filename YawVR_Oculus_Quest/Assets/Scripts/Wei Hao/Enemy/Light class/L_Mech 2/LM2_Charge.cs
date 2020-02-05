@@ -12,6 +12,7 @@ public class LM2_Charge : SMB_BaseEnemyState
     public override void EnterState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<LightMech2>().m_swirlLinesEffect.Play();
+        enemy.GetComponent<LightMech2>().m_chargeSound.Play();
     }
 
     public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

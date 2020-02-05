@@ -134,6 +134,7 @@ public class PlayerHandler : BaseEntity
     private bool startedRecharge = false;
     private float DEV_resetLevelTimer = 0;
     private float prevHeight;
+    private MechMovement mechMovement;
 
     //Hidden variables
     private float _health, _armor;
@@ -180,6 +181,7 @@ public class PlayerHandler : BaseEntity
 
     void Start()
     {
+        mechMovement = GetComponent<MechMovement>();
         m_vignette.color = Persistent.instance.COLOR_TRANSPARENT;
         m_camScreenFade.FadeIn();
         armor = m_maxArmor;
@@ -226,15 +228,16 @@ public class PlayerHandler : BaseEntity
         }
         else if(state == STATE.WALK)
         {
-            float walkMultiplier = GetComponent<MechMovement>().movementAlpha;
-            float time_mult = GetComponent<MechMovement>().startWalkTime + Time.time * 5.6f;
+            float walkMultiplier = mechMovement.movementAlpha;
+            float time_mult = mechMovement.startWalkTime + Time.time * 5.6f;
             float sin = Mathf.Sin(time_mult * 2);
-            if(walkHapticReady && sin < -0.85f)
+            if(walkHapticReady && sin < -0.45f)
             {
                 walkHapticReady = false;
                 float strength = 0.65f * walkMultiplier;
                 VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.03f, strength, false, 0.02f);
                 VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, strength, false, 0.02f);
+                mechMovement.PlayStepSound();
             }
             else if(!walkHapticReady && sin > 0.5f)
             {

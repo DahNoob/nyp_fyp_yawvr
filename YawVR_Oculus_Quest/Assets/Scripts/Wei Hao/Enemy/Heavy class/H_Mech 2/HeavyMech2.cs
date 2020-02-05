@@ -48,6 +48,10 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
     protected ParticleSystem m_effectLeft_Spawn;
     [SerializeField]
     protected GameObject m_lesserEnemy;
+    [SerializeField]
+    protected AudioSource m_spawnSpinSound;
+    [SerializeField]
+    protected AudioSource m_spawnSound;
 
     //Local variables
     protected _GameStates m_currentState = _GameStates.WALK;
@@ -130,9 +134,8 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         m_currentState = _GameStates.SPAWN;
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponent<NavMeshAgent>().obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-
+        m_spawnSpinSound.Play();
         FlipActiveSide();
-
     }
     public void ExitSpawn()
     {
@@ -148,6 +151,7 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         ignoredColliders.Clear();
         m_effectLeft_Wind.Stop();
         m_effectRight_Wind.Stop();
+        m_spawnSpinSound.Stop();
     }
 
     public void SpawnEnemy()
@@ -159,6 +163,7 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         Physics.IgnoreCollision(GetComponent<Collider>(), newEnemy, true);
         ignoredColliders.Add(newEnemy);
         newEnemy.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 500000.0f, 1200000.0f));
+        m_spawnSound.Play();
         if (activeSideIsRight)
             m_effectRight_Spawn.Emit(1);
         else

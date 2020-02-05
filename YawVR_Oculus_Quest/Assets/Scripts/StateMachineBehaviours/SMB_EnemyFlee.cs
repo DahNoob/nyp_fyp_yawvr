@@ -40,6 +40,7 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
         fleeDetectRSqr = m_fleeDetectRange * m_fleeDetectRange;
         animator.SetBool("Flee_Done", false);
         CalculateFlee();
+        enemy.m_walkSound.Play();
     }
 
     public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -50,6 +51,7 @@ public class SMB_EnemyFlee : SMB_BaseEnemyState
     public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
+        enemy.m_walkSound.Stop();
     }
 
     protected void CalculateFlee()

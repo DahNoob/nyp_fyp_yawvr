@@ -42,6 +42,8 @@ abstract public class EnemyBase : BaseEntity
     protected SpriteRenderer m_minimapIcon;
     [SerializeField]
     protected UnityEngine.AI.NavMeshAgent m_navMeshAgent;
+    [SerializeField]
+    public AudioSource m_walkSound;
 
     //Base variables
     protected int flashTick = 0;

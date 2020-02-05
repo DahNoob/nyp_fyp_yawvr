@@ -21,6 +21,7 @@ public class LM2_Explode : SMB_BaseEnemyState
         Player = PlayerHandler.instance.transform;
         animator.GetComponent<Rigidbody>().velocity = Vector3.zero;
         animator.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        enemy.GetComponent<LightMech2>().m_detonateSound.Play();
     }
 
     public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -30,7 +31,7 @@ public class LM2_Explode : SMB_BaseEnemyState
         if (attackWindUp <= 0.0f)
         {
             Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, m_explodeRange);
-            for (int i = 0; i < hitColliders.Length; i++)
+            for (int i = 0; i < hitColliders.Length; ++i)
             {
                 //if (hitColliders[i].gameObject.tag == "Player")
                 //{

@@ -43,6 +43,7 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
         inRangeSqr = m_inRange * m_inRange;
         outRangeSqr = m_outRange * m_outRange;
         enemy.GetComponent<NavMeshAgent>().SetDestination(enemy.m_target.transform.position);
+        enemy.m_walkSound.Play();
     }
 
     public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -60,5 +61,6 @@ public class SMB_EnemyChase : SMB_BaseEnemyState
     public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         enemy.GetComponent<NavMeshAgent>().isStopped = true;
+        enemy.m_walkSound.Stop();
     }
 }
