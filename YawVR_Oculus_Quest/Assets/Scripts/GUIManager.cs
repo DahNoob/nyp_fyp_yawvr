@@ -61,6 +61,12 @@ public class GUIManager : MonoBehaviour
     [SerializeField]
     private Sprite baseObjectiveImage;
 
+    [Header("Weapon Icon")]
+    [SerializeField]
+    private Image m_leftWeaponIcon;
+    [SerializeField]
+    private Image m_rightWeaponIcon;
+
     //Local variables
     int frameCount = 0;
     float dt = 0.0f;
@@ -235,11 +241,6 @@ public class GUIManager : MonoBehaviour
             _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(true);
             _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(true);
         }
-        //Play sound
-        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_TRIGGER);
-        //Trigger the target acquired thingy
-
-
 
         activeObjective = _objectiveInfo;
     }
@@ -506,6 +507,28 @@ public class GUIManager : MonoBehaviour
 
         }
         Game.instance.SetRandomObjective();
+    }
+
+    public void SetWeaponIconSprite(OVRInput.Controller m_controller, Sprite m_moduleIcon, MechGunWeapon.GUN_TYPE m_gunType)
+    {
+        Image resultantSprite = m_controller == OVRInput.Controller.RTouch ? m_rightWeaponIcon : m_leftWeaponIcon;
+        resultantSprite.sprite = m_moduleIcon;
+
+        RectTransform rectTransform = resultantSprite.GetComponent<RectTransform>();
+        switch (m_gunType)
+        {
+            case MechGunWeapon.GUN_TYPE.SHOT_GUN:
+                rectTransform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                break;
+            case MechGunWeapon.GUN_TYPE.TRIGATLING:
+                rectTransform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                break;
+            case MechGunWeapon.GUN_TYPE.HANDCANNON:
+                rectTransform.localScale = new Vector3(1, 1, 1);
+                break;
+            default:
+                break;
+        }
     }
 
     void OnEnable()

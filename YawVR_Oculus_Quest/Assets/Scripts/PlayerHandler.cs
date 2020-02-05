@@ -292,7 +292,7 @@ public class PlayerHandler : BaseEntity
             for (int i = 0; i < m_warningUI.Length; ++i)
             {
                 Color color = m_warningUI[i].color;
-                color.a = Mathf.Lerp(color.a, 0, Time.deltaTime * warningUIFadeSpeed);
+                color.a = Mathf.Lerp(color.a, 0, Time.deltaTime * warningUIFadeSpeed * 2);
                 m_warningUI[i].color = color;
             }
 

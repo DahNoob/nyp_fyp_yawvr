@@ -34,16 +34,25 @@ public class PlayerUIManager : MonoBehaviour
     private List<RectTransform> m_objectiveTransformList;
     [SerializeField]
     private RectTransform m_objectiveHex;
-
     [SerializeField]
     private Animator targetAcquiredAnimator;
     [SerializeField]
     private Animator objectiveHexAnimator;
+    [SerializeField]
+    [Range(0,1f)]
+    private float lerpTimeOffset;
 
     //Local variables
     [HideInInspector]
     //Normalized scale for the update of size between other things
     public float normalizedScale;
+    private float lerpTime;
+    //Desired rect
+    private RectTransform desiredRectTransform;
+    //Prev locations
+    private Vector3 prevPosition;
+    private Quaternion prevRotation;
+
 
     //[Header("Player HUD Configuration")]
     ////Will move to class later if there is time
@@ -87,6 +96,8 @@ public class PlayerUIManager : MonoBehaviour
         if (instance == null)
             instance = this;
 
+        prevPosition = m_objectiveHex.anchoredPosition3D;
+        prevRotation = m_objectiveHex.localRotation;
         //Load sounds so it can be used immediately
         //m_playerUISounds.Awake();
     }
@@ -100,7 +111,6 @@ public class PlayerUIManager : MonoBehaviour
 
         m_playerMinimap.Start();
         m_playerMinimapTrail.Start();
-
 
         //foreach (SystemFluffMessage startingFluffs in m_startingSystemFluffs)
         //{
@@ -117,28 +127,51 @@ public class PlayerUIManager : MonoBehaviour
         m_playerMinimapTrail.Update();
 
         m_playerMinimap.m_minimapBounds.position = transform.position;
+        //lerp the objective hex thing
 
+        //We have a target
+        if (desiredRectTransform != null)
+        {
+            if (AnimatorIsCurrentState(objectiveHexAnimator, "ObjectiveHexFadeIn")
+                && !AnimatorIsPlaying(objectiveHexAnimator, "ObjectiveHexFadeIn"))
+            {
+                //lerp towards the thing
+                lerpTime += Time.deltaTime;
+
+                m_objectiveHex.anchoredPosition3D = Vector3.Lerp(m_objectiveHex.anchoredPosition3D, desiredRectTransform.anchoredPosition3D, lerpTime);
+
+                m_objectiveHex.rotation = Quaternion.Lerp(m_objectiveHex.rotation, desiredRectTransform.rotation, lerpTime);
+
+                //Finished animation
+                if(lerpTime >= lerpTimeOffset)
+                {
+                    objectiveHexAnimator.Play("ObjectiveHexExpand");
+                }
+
+            }
+        }
 #if UNITY_EDITOR
         for (int i = 49; i < 58; ++i)
         {
             if (Input.GetKeyDown((KeyCode)i))
             {
-                PlayerUISoundManager.instance.PlaySound((PlayerUISoundManager.UI_SOUNDTYPE)i - 49);
+                //PlayerUISoundManager.instance.PlaySound((PlayerUISoundManager.UI_SOUNDTYPE)i - 49);
+                ObjectiveTriggered(i - 49);
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            objectiveHexAnimator.Play("ObjectiveHexFadeIn");
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            objectiveHexAnimator.Play("ObjectiveHexExpand");
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            objectiveHexAnimator.Play("Default");
-        }
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    objectiveHexAnimator.Play("ObjectiveHexFadeIn");
+        //}
+        //if (Input.GetKeyDown(KeyCode.G))
+        //{
+        //    objectiveHexAnimator.Play("ObjectiveHexExpand");
+        //}
+        //if (Input.GetKeyDown(KeyCode.B))
+        //{
+        //    objectiveHexAnimator.Play("Default");
+        //}
 #endif
 
         //if (m_processingQueue.Count > 0 && !isAlreadyTyping)
@@ -228,12 +261,39 @@ public class PlayerUIManager : MonoBehaviour
     //    return "-" + message + "\n";
     //}
 
+    public void ObjectiveTriggered(int objectiveIndex)
+    {
+        m_objectiveHex.anchoredPosition3D = prevPosition;
+        m_objectiveHex.localRotation = prevRotation;
+        //Reset lerp time
+        lerpTime = 0;
+        //Play the animator
+        objectiveHexAnimator.Play("ObjectiveHexFadeIn");
+        targetAcquiredAnimator.Play("TargetAcquiredFadeIn");
+
+        desiredRectTransform = m_objectiveTransformList[objectiveIndex];
+
+        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_TRIGGER);
+
+    }
+
+    bool AnimatorIsPlaying(Animator refAnimator, string stateName)
+    {
+        return refAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1;
+    }
+
+    bool AnimatorIsCurrentState(Animator refAnimator, string stateName)
+    {
+        return refAnimator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
+
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.cyan;
+        //Gizmos.color = Color.cyan;
 
-        Gizmos.DrawWireCube(m_playerMinimap.m_minimapBounds.position,
-            m_playerMinimap.m_minimapBounds.GetWidth() * 2);
+        //Gizmos.DrawWireCube(m_playerMinimap.m_minimapBounds.position,
+        //    m_playerMinimap.m_minimapBounds.GetWidth() * 2);
     }
 }
 

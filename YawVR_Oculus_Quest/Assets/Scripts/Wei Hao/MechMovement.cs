@@ -68,7 +68,7 @@ public class MechMovement : MonoBehaviour
     //Local variables
     private CharacterController cc;
     private bool stepAlternation = false;
-    private float rotationAxisSmoothedDelta_Current, rotationAxisSmoothedDelta_Goal = 0;
+    public float rotationAxisSmoothedDelta_Current, rotationAxisSmoothedDelta_Goal = 0;
 
     // Start is called before the first frame update
     void Start()
