@@ -139,7 +139,8 @@ abstract public class EnemyBase : BaseEntity
                 //meshes[i].material.EnableKeyword("_EMISSION");
                 //meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
                 //meshes[i].material.SetColor("_EmissionColor", Color.white);
-                meshRenderers[i].material = Persistent.instance.MAT_WHITE;
+                if(meshRenderers[i])
+                    meshRenderers[i].material = Persistent.instance.MAT_WHITE;
             }
         }
         else
@@ -149,7 +150,8 @@ abstract public class EnemyBase : BaseEntity
                 //meshes[i].material.DisableKeyword("_EMISSION");
                 //meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
                 //meshes[i].material.SetColor("_EmissionColor", Color.black);
-                meshRenderers[i].material = Persistent.instance.MAT_ENEMYMECH;
+                if(meshRenderers[i])
+                    meshRenderers[i].material = Persistent.instance.MAT_ENEMYMECH;
             }
         }
     }
