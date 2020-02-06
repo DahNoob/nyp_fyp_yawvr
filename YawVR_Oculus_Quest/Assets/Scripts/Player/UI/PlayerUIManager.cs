@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class PlayerUIManager : MonoBehaviour
@@ -33,6 +34,20 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     private UIObjectiveHandler m_playerUIObjectives;
 
+    [Header("Reticle UI Configuration")]
+    [SerializeField]
+    private UIReticleHandler m_reticleHandler;
+
+    [Header("Weapons UI/Info Configuration")]
+    [SerializeField]
+    private GUIWeaponInfo m_weaponInfo;
+    [SerializeField]
+    private Image m_leftWeaponIcon;
+    [SerializeField]
+    private Image m_rightWeaponIcon;
+
+
+
     //Local variables
     [HideInInspector]
     //Normalized scale for the update of size between other things
@@ -63,6 +78,7 @@ public class PlayerUIManager : MonoBehaviour
             instance = this;
 
         m_playerUIObjectives.Awake();
+        m_reticleHandler.Awake();
         //Load sounds so it can be used immediately
         //m_playerUISounds.Awake();
     }
@@ -76,6 +92,7 @@ public class PlayerUIManager : MonoBehaviour
 
         m_playerMinimap.Start();
         m_playerMinimapTrail.Start();
+        m_reticleHandler.Start();
 
         //foreach (SystemFluffMessage startingFluffs in m_startingSystemFluffs)
         //{
@@ -91,6 +108,7 @@ public class PlayerUIManager : MonoBehaviour
         m_playerMinimap.Update();
         m_playerMinimapTrail.Update();
         m_playerUIObjectives.Update();
+        m_reticleHandler.Update();
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -117,6 +135,78 @@ public class PlayerUIManager : MonoBehaviour
         if (m_playerUIObjectives != null)
             m_playerUIObjectives.ObjectiveTriggered(objectiveIndex);
     }
+
+    //Weapons stuff
+    public void SetWeaponIconSprite(OVRInput.Controller m_controller, Sprite m_moduleIcon, MechGunWeapon.GUN_TYPE m_gunType)
+    {
+        Image resultantSprite = m_controller == OVRInput.Controller.RTouch ? m_rightWeaponIcon : m_leftWeaponIcon;
+        resultantSprite.sprite = m_moduleIcon;
+
+        RectTransform rectTransform = resultantSprite.GetComponent<RectTransform>();
+        switch (m_gunType)
+        {
+            case MechGunWeapon.GUN_TYPE.SHOT_GUN:
+                rectTransform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                break;
+            case MechGunWeapon.GUN_TYPE.TRIGATLING:
+                rectTransform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                break;
+            case MechGunWeapon.GUN_TYPE.HANDCANNON:
+                rectTransform.localScale = new Vector3(1, 0.6f, 0.6f);
+                break;
+            default:
+                break;
+        }
+    }
+
+    #region WeaponPanelUpdates
+    public void SetWeaponInfo(OVRInput.Controller _controller,
+        Sprite m_weaponSprite,
+        string m_weaponName,
+        float m_currWeaponAmmo,
+        float m_maxWeaponAmmo,
+        float normalized)
+    {
+        GUIWeaponInfoConfig weaponInfo = _controller == OVRInput.Controller.RTouch ? m_weaponInfo.rightWeaponInfo : m_weaponInfo.leftWeaponInfo;
+
+        if (m_weaponSprite != null)
+            weaponInfo.weaponSprite.sprite = m_weaponSprite;
+
+        //weaponInfo.weaponNameText.text = m_weaponName;
+        //Format the string
+        //weaponInfo.weaponAmmoText.text = m_currWeaponAmmo.ToString() + "/" + m_maxWeaponAmmo.ToString();
+        weaponInfo.weaponAmmoText.text = m_currWeaponAmmo.ToString();
+        weaponInfo.weaponAmmoSlider.value = normalized;
+    }
+
+    public void SetWeaponInfoAmmo(OVRInput.Controller _controller, float m_currAmmo, float m_maxAmmo, float normalized)
+    {
+        GUIWeaponInfoConfig weaponInfo = _controller == OVRInput.Controller.RTouch ? m_weaponInfo.rightWeaponInfo : m_weaponInfo.leftWeaponInfo;
+        //Format the string
+        weaponInfo.weaponAmmoText.fontSize = 20;
+        //weaponInfo.weaponAmmoText.text = m_currAmmo.ToString() + "/" + m_maxAmmo.ToString();
+        weaponInfo.weaponAmmoText.text = m_currAmmo.ToString();
+        weaponInfo.weaponAmmoSlider.value = normalized;
+    }
+
+    public void SetWeaponInfoReloading(OVRInput.Controller _controller)
+    {
+        GUIWeaponInfoConfig weaponInfo = _controller == OVRInput.Controller.RTouch ? m_weaponInfo.rightWeaponInfo : m_weaponInfo.leftWeaponInfo;
+        weaponInfo.weaponAmmoText.fontSize = 9;
+        StartCoroutine(StartReloadingTextAnimation(weaponInfo));
+    }
+
+    //Going to cheese it by adding two coroutines
+    IEnumerator StartReloadingTextAnimation(GUIWeaponInfoConfig weaponInfo)
+    {
+        weaponInfo.weaponAmmoText.text = "";
+        foreach (char letter in "Reloading...")
+        {
+            weaponInfo.weaponAmmoText.text += letter;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+    #endregion
 }
 
 //[System.Serializable]

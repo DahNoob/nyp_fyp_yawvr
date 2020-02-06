@@ -50,6 +50,24 @@ public class UIObjectiveHandler
     private Vector3 prevPosition;
     private Quaternion prevRotation;
 
+    void OnEnable()
+    {
+        if (Game.instance)
+        {
+            Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
+            Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
+            Debug.Log("attached enabled");
+            //print("GUIManager events +attached+ successfully!");
+        }
+    }
+
+    void OnDisable()
+    {
+        Game.instance.onObjectiveStarted -= Game_onObjectiveStarted;
+        Game.instance.onObjectiveFinished -= Game_onObjectiveFinished;
+        //print("GUIManager events -detached- successfully!");
+    }
+
     // Start is called before the first frame update
     public void Awake()
     {
@@ -61,11 +79,19 @@ public class UIObjectiveHandler
 
         prevPosition = m_objectiveHex.anchoredPosition3D;
         prevRotation = m_objectiveHex.localRotation;
+
+        if (Game.instance)
+        {
+            Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
+            Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
+            //print("GUIManager events +attached+ successfully!");
+        }
     }
 
     public void Start()
     {
-        
+        Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
+        Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
     }
 
     // Update is called once per frame
@@ -261,6 +287,43 @@ public class UIObjectiveHandler
     bool AnimatorIsCurrentState(Animator refAnimator, string stateName)
     {
         return refAnimator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
+    //Events
+    private void Game_onObjectiveStarted(ObjectiveInfo _objectiveInfo)
+    {
+
+    }
+
+    private void Game_onObjectiveFinished(ObjectiveInfo _objectiveInfo, bool _succeeded)
+    {
+        if (_objectiveInfo.type == VariedObjectives.TYPE.BOUNTYHUNT)//srsly fuckin garbage
+        {
+            _objectiveInfo.panelInfo.panelText.text = "Bounty Hunt";
+        }
+        else if (_objectiveInfo.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
+        {
+            _objectiveInfo.panelInfo.panelText.text = "Defend structure";
+        }
+
+        if (_succeeded)
+        {
+            _objectiveInfo.panelInfo.panelText.color = Color.green;
+            _objectiveInfo.panelInfo.panelText.text += "\nSuccess!";
+
+            //Update UI
+            SucceededObjectiveGUI(ref _objectiveInfo);
+        }
+        else
+        {
+            _objectiveInfo.panelInfo.panelText.color = Color.red;
+            _objectiveInfo.panelInfo.panelText.text += "\nFailed!";
+
+            //Update UI
+            FailedObjectiveGUI(ref _objectiveInfo);
+
+        }
+        Game.instance.SetRandomObjective();
     }
 
 

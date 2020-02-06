@@ -57,7 +57,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
         ammoModule.onFinishReload += _AmmoModule_onFinishReload;
         shootTick = m_shootInterval;
 
-        GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo,ammoModule.ReturnNormalized());
+        PlayerUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo,ammoModule.ReturnNormalized());
 
         shootParticles = m_muzzleFlash.GetComponentsInChildren<ParticleSystem>();
         //Update ammo in GUI first
@@ -71,7 +71,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
             FadeIn();
 
         //Update the UI again with the new ammo
-        GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo,ammoModule.ReturnNormalized());
+        PlayerUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo,ammoModule.ReturnNormalized());
     }
 
     override public bool Selected()
@@ -111,10 +111,8 @@ abstract public class MechGunWeapon : MechBaseWeapon
                     m_shootAudioSource.pitch = Random.Range(0.9f, 1.1f);
                     m_shootAudioSource.Play();
                 }
-                //Triggered
-                GUIManager.instance.Triggered(_controller);
                 //Set weapon info ammo
-                GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo, ammoModule.ReturnNormalized());
+                PlayerUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo, ammoModule.ReturnNormalized());
                 return true;
             }
         }
@@ -124,8 +122,8 @@ abstract public class MechGunWeapon : MechBaseWeapon
     //Update UI
     public override bool UpdateUI()
     {
-        GUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo, ammoModule.ReturnNormalized());
-        GUIManager.instance.SetWeaponIconSprite(m_controller, m_moduleIcon, m_gunType );
+        PlayerUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo, ammoModule.ReturnNormalized());
+        PlayerUIManager.instance.SetWeaponIconSprite(m_controller, m_moduleIcon, m_gunType );
         return true;
     }
 
@@ -161,10 +159,8 @@ abstract public class MechGunWeapon : MechBaseWeapon
                         m_shootAudioSource.pitch = Random.Range(0.9f, 1.1f);
                         m_shootAudioSource.Play();
                     }
-                    //Triggered
-                    GUIManager.instance.Triggered(_controller);
                     //Set weapon info ammo
-                    GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo,ammoModule.ReturnNormalized());
+                    PlayerUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo,ammoModule.ReturnNormalized());
                     return true;
                 }
             }
@@ -209,7 +205,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
         forceFade = true;
         FadeOut();
         StartCoroutine(ammoModule.Reload());
-        GUIManager.instance.SetWeaponInfoReloading(m_controller);
+        PlayerUIManager.instance.SetWeaponInfoReloading(m_controller);
     }
 
     void OnDestroy()
