@@ -47,47 +47,41 @@ public class UIReticleHandler
 
     public void SetReticleInformation(OVRInput.Controller _controller, Vector3 hitPoint, GameObject hitObject, bool useTag = true)
     {
+        //Get controller first, then pass in gui config all at once
+        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
+
         //Set the reticle position based on raycasted position
-        SetReticlePosition(_controller, hitPoint);
+        SetReticlePosition(reticleConfig, hitPoint);
         //Set hit object name by accessing the object
         //SetHitObjectName(_controller, hitObject);
         //Set the hit color by accessing the layer of the object
-        SetReticleColor(_controller, hitObject, useTag);
+        SetReticleColor(reticleConfig, hitObject, useTag);
         //Scale the reticle to be correct scale
-        ScaleReticle(_controller);
+        ScaleReticle(reticleConfig);
 
         if (hitObject != null)
         {
-            GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
             //Temporary code
             reticleConfig.ObjectOfInterest(hitObject.tag == "Enemy");
         }
     }
 
-    public void SetReticlePosition(OVRInput.Controller _controller, Vector3 _worldPosition)
+    void SetReticlePosition(GUIReticleConfig reticleConfig, Vector3 _worldPosition)
     {
-        //Get config I suppose.
-        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
-
         reticleConfig.reticleReference.transform.position = _worldPosition;
         reticleConfig.reticleReference.transform.LookAt(Camera.main.transform);
         reticleConfig.reticleReference.transform.Rotate(0, 180, 0);
 
-        ScaleReticle(_controller);
+        ScaleReticle(reticleConfig);
     }
 
-    public void SetHitObjectName(OVRInput.Controller _controller, GameObject hitObject)
+    void SetHitObjectName(GUIReticleConfig reticleConfig, GameObject hitObject)
     {
-        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
-
         reticleConfig.reticleText.text = hitObject == null ? "N/A" : hitObject.name;
     }
 
-    public void SetReticleColor(OVRInput.Controller _controller, GameObject hitObject, bool useTag)
+    void SetReticleColor(GUIReticleConfig reticleConfig, GameObject hitObject, bool useTag)
     {
-        //Access the reticle
-        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
-
         if (hitObject == null)
         {
             reticleConfig.SetReticleDefaultColor();
@@ -113,11 +107,8 @@ public class UIReticleHandler
     }
 
     //Scaling the reticle to make its same size no matter what
-    public void ScaleReticle(OVRInput.Controller _controller)
+    void ScaleReticle(GUIReticleConfig reticleConfig)
     {
-        //Get config I suppose.
-        GUIReticleConfig reticleConfig = _controller == OVRInput.Controller.RTouch ? reticleModule.RightReticle : reticleModule.LeftReticle;
-
         //Distance between camera and the reticle
         float pos = Vector3.Distance(Camera.main.transform.position, reticleConfig.reticleReference.transform.position);
 

@@ -123,9 +123,4 @@ public class GUIManager : MonoBehaviour
         PlayerHandler.instance.ResetPose();
     }
 
-
-
-
-
-
 }

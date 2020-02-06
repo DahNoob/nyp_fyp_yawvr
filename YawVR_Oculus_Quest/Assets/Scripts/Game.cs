@@ -68,10 +68,20 @@ public class Game : MonoBehaviour
         if (instance == null)
             instance = this;
         print("Game awake!");
+
+        //Subscribe to the events
+        //Isntance is already set
+
+
     }
 
     void Start()
     {
+        //moved it here, dk if it's a good idea or not
+        onObjectiveStarted += UIObjectiveHandler.instance.Game_onObjectiveStarted;
+        onObjectiveFinished += UIObjectiveHandler.instance.Game_onObjectiveFinished;
+
+        Debug.Log("Game events -attached- successfully!");
         Random.InitState(System.DateTime.Now.Second);
         ApplyMechLoadouts();
         ApplyObjectives();

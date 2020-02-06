@@ -52,20 +52,19 @@ public class UIObjectiveHandler
 
     void OnEnable()
     {
-        if (Game.instance)
-        {
-            Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
-            Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
-            Debug.Log("attached enabled");
-            //print("GUIManager events +attached+ successfully!");
-        }
+        //if (Game.instance)
+        //{
+        //    Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
+        //    Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
+        //    //print("GUIManager events +attached+ successfully!");
+        //}
     }
 
     void OnDisable()
     {
         Game.instance.onObjectiveStarted -= Game_onObjectiveStarted;
         Game.instance.onObjectiveFinished -= Game_onObjectiveFinished;
-        //print("GUIManager events -detached- successfully!");
+        Debug.Log("Game events -detached- successfully!");
     }
 
     // Start is called before the first frame update
@@ -79,19 +78,12 @@ public class UIObjectiveHandler
 
         prevPosition = m_objectiveHex.anchoredPosition3D;
         prevRotation = m_objectiveHex.localRotation;
-
-        if (Game.instance)
-        {
-            Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
-            Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
-            //print("GUIManager events +attached+ successfully!");
-        }
     }
 
     public void Start()
     {
-        Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
-        Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
+        //Game.instance.onObjectiveStarted += Game_onObjectiveStarted;
+        //Game.instance.onObjectiveFinished += Game_onObjectiveFinished;
     }
 
     // Update is called once per frame
@@ -250,7 +242,10 @@ public class UIObjectiveHandler
         if (m_objectiveArrow.gameObject.activeInHierarchy)
         {
             if (m_activeObjective == null)
-                m_objectiveArrow.gameObject.SetActive(false);
+            {
+                if (m_objectiveArrow.gameObject.activeInHierarchy)
+                    m_objectiveArrow.gameObject.SetActive(false);
+            }
             else
             {
                 if (m_activeObjective.m_highlight != null)
@@ -290,12 +285,12 @@ public class UIObjectiveHandler
     }
 
     //Events
-    private void Game_onObjectiveStarted(ObjectiveInfo _objectiveInfo)
+    public void Game_onObjectiveStarted(ObjectiveInfo _objectiveInfo)
     {
 
     }
 
-    private void Game_onObjectiveFinished(ObjectiveInfo _objectiveInfo, bool _succeeded)
+    public void Game_onObjectiveFinished(ObjectiveInfo _objectiveInfo, bool _succeeded)
     {
         if (_objectiveInfo.type == VariedObjectives.TYPE.BOUNTYHUNT)//srsly fuckin garbage
         {
