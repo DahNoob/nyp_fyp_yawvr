@@ -16,10 +16,12 @@ public class GUIReticleConfig
 
     [SerializeField]
     [Tooltip("Reticle Text")]
+    [HideInInspector]
     private TextMesh m_reticleText;
 
     [SerializeField]
     [Tooltip("Reticle String")]
+    [HideInInspector]
     private string m_reticleString;
 
     [SerializeField]
@@ -30,6 +32,7 @@ public class GUIReticleConfig
     [SerializeField]
     [Tooltip("Reticle Text Color")]
     [ColorUsage(true, true)]
+    [HideInInspector]
     private Color m_reticleTextColor;
 
     [SerializeField]
@@ -243,8 +246,6 @@ public class GUIReticleConfig
                 toInitialSize = m_initialReticleSize - m_reticleSize;       
         }
     }
-
-
 
     public void UpdateEase()
     {

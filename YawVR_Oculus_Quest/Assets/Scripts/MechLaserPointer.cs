@@ -46,13 +46,13 @@ public class MechLaserPointer : MonoBehaviour
         {
             hitPoint = hit.point;
             //Apply it to the instance
-            GUIManager.instance.SetReticleInformation(m_controller, hitPoint, hit.collider.gameObject, true);
+            UIReticleHandler.instance.SetReticleInformation(m_controller, hitPoint, hit.collider.gameObject, true);
         }
         else
         {
             hitPoint = transform.position + transform.forward * m_maxDistance;
             //Apply it to the instance
-            GUIManager.instance.SetReticleInformation(m_controller, hitPoint, null, true);
+            UIReticleHandler.instance.SetReticleInformation(m_controller, hitPoint, null, true);
         }
 
         //for (int i = 0; i < m_points; ++i)

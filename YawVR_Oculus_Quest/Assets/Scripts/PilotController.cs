@@ -273,7 +273,7 @@ public class PilotController : MonoBehaviour
         }
         isHandTriggered = m_follower.m_enabled = _isTriggered;
         m_mechHand.SetEnabled(_isTriggered);
-        GUIManager.instance.EnableReticle(m_controller, _isTriggered);
+        UIReticleHandler.instance.EnableReticle(m_controller, _isTriggered);
         
     }
 
