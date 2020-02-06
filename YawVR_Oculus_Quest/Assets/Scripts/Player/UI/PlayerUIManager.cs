@@ -17,60 +17,26 @@ public class PlayerUIManager : MonoBehaviour
     private RectTransform m_minimapMask;
     //Minimap ranges
     [SerializeField]
-    [Tooltip("Player's Minimap Component")]
+    [Tooltip("Minimap Component")]
     private PlayerUIMinimap m_playerMinimap;
 
-    [Header("Player Minimap Ranges")]
+    [Header("Minimap Ranges")]
     public float m_customRange = 20;
     public float m_customRangeTwo = 0.1f;
     public float m_rejectionRange = 3;
 
-    [Header("Player Minimap Trail Configuration")]
+    [Header("Minimap Trail Configuration")]
     [SerializeField]
     private PlayerUIMinimapTrail m_playerMinimapTrail;
 
-    [Header("Player Objectives UI Configuration")]
+    [Header("Objectives UI Configuration")]
     [SerializeField]
-    private List<RectTransform> m_objectiveTransformList;
-    [SerializeField]
-    private RectTransform m_objectiveHex;
-    [SerializeField]
-    private Animator targetAcquiredAnimator;
-    [SerializeField]
-    private Animator objectiveHexAnimator;
-    [SerializeField]
-    [Range(0,1f)]
-    private float lerpTimeOffset;
+    private UIObjectiveHandler m_playerUIObjectives;
 
     //Local variables
     [HideInInspector]
     //Normalized scale for the update of size between other things
     public float normalizedScale;
-    private float lerpTime;
-    //Desired rect
-    private RectTransform desiredRectTransform;
-    //Prev locations
-    private Vector3 prevPosition;
-    private Quaternion prevRotation;
-
-
-    //[Header("Player HUD Configuration")]
-    ////Will move to class later if there is time
-    //[SerializeField]
-    //[Tooltip("HUD Text")]
-    //UnityEngine.UI.Text m_systemFluffs;
-
-    //[SerializeField]
-    //[Tooltip("Starting Fluffs")]
-    //private List<SystemFluffMessage> m_startingSystemFluffs;
-
-    ////Local variables
-    //Queue<SystemFluffMessage> m_systemQueue = new Queue<SystemFluffMessage>();
-    //Queue<SystemFluffMessage> m_processingQueue = new Queue<SystemFluffMessage>();
-    //static int MAX_SYSTEM_QUEUE_COUNT = 12;
-    //private int m_systemFluffCount = 0;
-    //private string m_previousSystemText;
-    //private bool isAlreadyTyping = false;
 
     public Camera minimapCamera
     {
@@ -96,8 +62,7 @@ public class PlayerUIManager : MonoBehaviour
         if (instance == null)
             instance = this;
 
-        prevPosition = m_objectiveHex.anchoredPosition3D;
-        prevRotation = m_objectiveHex.localRotation;
+        m_playerUIObjectives.Awake();
         //Load sounds so it can be used immediately
         //m_playerUISounds.Awake();
     }
@@ -125,54 +90,16 @@ public class PlayerUIManager : MonoBehaviour
     {
         m_playerMinimap.Update();
         m_playerMinimapTrail.Update();
+        m_playerUIObjectives.Update();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ObjectiveTriggered(1);
+        }
 
         m_playerMinimap.m_minimapBounds.position = transform.position;
         //lerp the objective hex thing
 
-        //We have a target
-        if (desiredRectTransform != null)
-        {
-            if (AnimatorIsCurrentState(objectiveHexAnimator, "ObjectiveHexFadeIn")
-                && !AnimatorIsPlaying(objectiveHexAnimator, "ObjectiveHexFadeIn"))
-            {
-                //lerp towards the thing
-                lerpTime += Time.deltaTime;
-
-                m_objectiveHex.anchoredPosition3D = Vector3.Lerp(m_objectiveHex.anchoredPosition3D, desiredRectTransform.anchoredPosition3D, lerpTime);
-
-                m_objectiveHex.rotation = Quaternion.Lerp(m_objectiveHex.rotation, desiredRectTransform.rotation, lerpTime);
-
-                //Finished animation
-                if(lerpTime >= lerpTimeOffset)
-                {
-                    objectiveHexAnimator.Play("ObjectiveHexExpand");
-                }
-
-            }
-        }
-#if UNITY_EDITOR
-        for (int i = 49; i < 58; ++i)
-        {
-            if (Input.GetKeyDown((KeyCode)i))
-            {
-                //PlayerUISoundManager.instance.PlaySound((PlayerUISoundManager.UI_SOUNDTYPE)i - 49);
-                ObjectiveTriggered(i - 49);
-            }
-        }
-
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    objectiveHexAnimator.Play("ObjectiveHexFadeIn");
-        //}
-        //if (Input.GetKeyDown(KeyCode.G))
-        //{
-        //    objectiveHexAnimator.Play("ObjectiveHexExpand");
-        //}
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    objectiveHexAnimator.Play("Default");
-        //}
-#endif
 
         //if (m_processingQueue.Count > 0 && !isAlreadyTyping)
         //{
@@ -185,115 +112,10 @@ public class PlayerUIManager : MonoBehaviour
         //}
     }
 
-    //public void AddStringToProcessingQueue(SystemFluffMessage fluffs)
-    //{
-    //    if (isAlreadyTyping)
-    //        m_processingQueue.Enqueue(fluffs);
-    //    else
-    //        AddStringToSystemQueue(fluffs);
-    //}
-
-    //bool AddStringToSystemQueue(SystemFluffMessage fluffs)
-    //{
-    //    fluffs.message = FormatFluff(fluffs.message);
-    //    if (m_systemFluffCount < MAX_SYSTEM_QUEUE_COUNT)
-    //    {
-    //        m_systemQueue.Enqueue(fluffs);
-    //        //Add one more to the thingy
-    //        StartCoroutine(TypeNewSystemLine(fluffs));
-    //        m_systemFluffCount++;
-    //    }
-    //    else
-    //    {
-    //        m_systemQueue.Dequeue();
-    //        AssignLastText();
-    //        StartCoroutine(TypeNewSystemLine(fluffs));
-    //        m_systemQueue.Enqueue(fluffs);
-    //    }
-
-    //    return true;
-    //}
-
-    //public string AssignLastText()
-    //{
-    //    if (m_systemQueue.Count == 0)
-    //        return "";
-
-    //    m_previousSystemText = "";
-    //    Queue<SystemFluffMessage> newQueue = new Queue<SystemFluffMessage>(m_systemQueue);
-    //    while (newQueue.Count > 0)
-    //    {
-    //        m_previousSystemText += newQueue.Dequeue().message;
-    //    }
-
-    //    m_systemFluffs.text = m_previousSystemText + "\n";
-
-    //    return m_previousSystemText;
-    //}
-
-    //IEnumerator TypeNewSystemLine(SystemFluffMessage fluff)
-    //{
-    //    isAlreadyTyping = true;
-
-    //    yield return new WaitForSeconds(fluff.delay);
-
-    //    foreach (char letter in fluff.message)
-    //    {
-    //        string previousText = "";
-    //        char[] systemFluffArray = m_systemFluffs.text.ToCharArray();
-
-    //        for (int i = 0; i < systemFluffArray.Length - 1; ++i)
-    //        {
-    //            previousText += systemFluffArray[i];
-    //        }
-    //        m_systemFluffs.text = previousText;
-
-    //        m_systemFluffs.text += letter + "|";
-    //        //m_systemFluffs.text += letter;
-    //        yield return new WaitForSeconds(fluff.messageSpeed);
-    //    }
-    //    isAlreadyTyping = false;
-    //}
-
-
-    //string FormatFluff(string message)
-    //{
-    //    return "-" + message + "\n";
-    //}
-
     public void ObjectiveTriggered(int objectiveIndex)
     {
-        m_objectiveHex.anchoredPosition3D = prevPosition;
-        m_objectiveHex.localRotation = prevRotation;
-        //Reset lerp time
-        lerpTime = 0;
-        //Play the animator
-        objectiveHexAnimator.Play("ObjectiveHexFadeIn");
-        targetAcquiredAnimator.Play("TargetAcquiredFadeIn");
-
-        desiredRectTransform = m_objectiveTransformList[objectiveIndex];
-
-        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_TRIGGER);
-
-    }
-
-    bool AnimatorIsPlaying(Animator refAnimator, string stateName)
-    {
-        return refAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1;
-    }
-
-    bool AnimatorIsCurrentState(Animator refAnimator, string stateName)
-    {
-        return refAnimator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
-    }
-
-
-    private void OnDrawGizmos()
-    {
-        //Gizmos.color = Color.cyan;
-
-        //Gizmos.DrawWireCube(m_playerMinimap.m_minimapBounds.position,
-        //    m_playerMinimap.m_minimapBounds.GetWidth() * 2);
+        if (m_playerUIObjectives != null)
+            m_playerUIObjectives.ObjectiveTriggered(objectiveIndex);
     }
 }
 
@@ -310,4 +132,99 @@ public class PlayerUIManager : MonoBehaviour
 //        delay = _delay;
 //        messageSpeed = _messageSpeed;
 //    }
+//}
+
+
+//[Header("Player HUD Configuration")]
+////Will move to class later if there is time
+//[SerializeField]
+//[Tooltip("HUD Text")]
+//UnityEngine.UI.Text m_systemFluffs;
+
+//[SerializeField]
+//[Tooltip("Starting Fluffs")]
+//private List<SystemFluffMessage> m_startingSystemFluffs;
+
+////Local variables
+//Queue<SystemFluffMessage> m_systemQueue = new Queue<SystemFluffMessage>();
+//Queue<SystemFluffMessage> m_processingQueue = new Queue<SystemFluffMessage>();
+//static int MAX_SYSTEM_QUEUE_COUNT = 12;
+//private int m_systemFluffCount = 0;
+//private string m_previousSystemText;
+//private bool isAlreadyTyping = false;
+
+//public void AddStringToProcessingQueue(SystemFluffMessage fluffs)
+//{
+//    if (isAlreadyTyping)
+//        m_processingQueue.Enqueue(fluffs);
+//    else
+//        AddStringToSystemQueue(fluffs);
+//}
+
+//bool AddStringToSystemQueue(SystemFluffMessage fluffs)
+//{
+//    fluffs.message = FormatFluff(fluffs.message);
+//    if (m_systemFluffCount < MAX_SYSTEM_QUEUE_COUNT)
+//    {
+//        m_systemQueue.Enqueue(fluffs);
+//        //Add one more to the thingy
+//        StartCoroutine(TypeNewSystemLine(fluffs));
+//        m_systemFluffCount++;
+//    }
+//    else
+//    {
+//        m_systemQueue.Dequeue();
+//        AssignLastText();
+//        StartCoroutine(TypeNewSystemLine(fluffs));
+//        m_systemQueue.Enqueue(fluffs);
+//    }
+
+//    return true;
+//}
+
+//public string AssignLastText()
+//{
+//    if (m_systemQueue.Count == 0)
+//        return "";
+
+//    m_previousSystemText = "";
+//    Queue<SystemFluffMessage> newQueue = new Queue<SystemFluffMessage>(m_systemQueue);
+//    while (newQueue.Count > 0)
+//    {
+//        m_previousSystemText += newQueue.Dequeue().message;
+//    }
+
+//    m_systemFluffs.text = m_previousSystemText + "\n";
+
+//    return m_previousSystemText;
+//}
+
+//IEnumerator TypeNewSystemLine(SystemFluffMessage fluff)
+//{
+//    isAlreadyTyping = true;
+
+//    yield return new WaitForSeconds(fluff.delay);
+
+//    foreach (char letter in fluff.message)
+//    {
+//        string previousText = "";
+//        char[] systemFluffArray = m_systemFluffs.text.ToCharArray();
+
+//        for (int i = 0; i < systemFluffArray.Length - 1; ++i)
+//        {
+//            previousText += systemFluffArray[i];
+//        }
+//        m_systemFluffs.text = previousText;
+
+//        m_systemFluffs.text += letter + "|";
+//        //m_systemFluffs.text += letter;
+//        yield return new WaitForSeconds(fluff.messageSpeed);
+//    }
+//    isAlreadyTyping = false;
+//}
+
+
+//string FormatFluff(string message)
+//{
+//    return "-" + message + "\n";
 //}

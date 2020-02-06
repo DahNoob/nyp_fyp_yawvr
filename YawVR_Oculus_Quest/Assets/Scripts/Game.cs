@@ -157,7 +157,7 @@ public class Game : MonoBehaviour
             }
             if (currObj.m_highlight == null)
             {
-                GUIManager.instance.FailedObjectiveGUI(ref currObj);
+                UIObjectiveHandler.instance.FailedObjectiveGUI(ref currObj);
                 print("Current Objective ended with status <Failed objective>!");
                 currObj.m_completed = true;
                 currObj.panelInfo.panelText.color = Color.red;
@@ -172,7 +172,7 @@ public class Game : MonoBehaviour
             }
             else if (currObj.m_timeLeft <= 0)
             {
-                GUIManager.instance.SucceededObjectiveGUI(ref currObj);
+                UIObjectiveHandler.instance.SucceededObjectiveGUI(ref currObj);
                 print("Current Objective ended with status <Succeeded objective>!");
                 currObj.m_completed = true;
                 currObj.panelInfo.panelText.color = Color.green;
@@ -185,7 +185,7 @@ public class Game : MonoBehaviour
                 onObjectiveFinished?.Invoke(currObj, true);
                 return;
             }
-            GUIManager.instance.UpdateObjectiveProgress(ref currObj);
+            UIObjectiveHandler.instance.UpdateObjectiveProgress(ref currObj);
         }
     }
 
@@ -233,7 +233,7 @@ public class Game : MonoBehaviour
                 m_objectives[currObjectivesCount].m_highlight = structure.transform;
                 print("Objective deployed : Defend Structure @ " + objIndex);
             }
-            GUIManager.instance.AddObjectiveToPanel(ref m_objectives[currObjectivesCount], currObjectivesCount);
+            UIObjectiveHandler.instance.AddObjectiveToPanel(ref m_objectives[currObjectivesCount], currObjectivesCount);
             //distances.Add(currObjectivesCount, (m_objectives[currObjectivesCount].m_highlight.position - PlayerHandler.instance.transform.position).sqrMagnitude);
             allocatedPoints.Add(objIndex);
             currObjectivesCount++;
@@ -250,7 +250,7 @@ public class Game : MonoBehaviour
         //            m_objectives[i].m_highlight.Find("Beacon").GetComponent<LineRenderer>().endColor = Color.red;
         //    }
         //}
-        GUIManager.instance.SetActiveObjective(m_objectives[0]);
+        UIObjectiveHandler.instance.SetActiveObjective(m_objectives[0]);
         for (int i = 0; i < MapPointsHandler.instance.m_mapPoints.Count; ++i)
         {
             bool loadloadaald = !allocatedPoints.Contains(i);
@@ -307,7 +307,7 @@ public class Game : MonoBehaviour
                         //AttachCrown(m_objectives[i].m_highlight.transform);
                         m_objectives[i].m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(true);
                     }
-                    GUIManager.instance.SetActiveObjective(m_objectives[i]);
+                    UIObjectiveHandler.instance.SetActiveObjective(m_objectives[i]);
                     PlayerUIManager.instance.ObjectiveTriggered(i);
                     m_objectives[i].m_inProgress = true;
                     m_objectives[i].panelInfo.panelText.color = Color.yellow;
@@ -334,11 +334,11 @@ public class Game : MonoBehaviour
         {
             if (!m_objectives[i].m_completed)
             {
-                GUIManager.instance.SetActiveObjective(m_objectives[i]);
+                UIObjectiveHandler.instance.SetActiveObjective(m_objectives[i]);
                 return true;
             }
         }
-        GUIManager.instance.SetActiveObjective();
+        UIObjectiveHandler.instance.SetActiveObjective();
         return false;
     }
 

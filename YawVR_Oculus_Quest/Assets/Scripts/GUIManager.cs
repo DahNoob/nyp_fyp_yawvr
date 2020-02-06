@@ -16,10 +16,6 @@ public class GUIManager : MonoBehaviour
     [Header("Configuration")]
     [SerializeField]
     private GUIReticleModule reticleModule;
-    [SerializeField]
-    private RawImage m_minimap;
-    [SerializeField]
-    private RectTransform m_objectiveArrow;
 
     [Header("Resources")]
     [SerializeField]
@@ -50,16 +46,6 @@ public class GUIManager : MonoBehaviour
     [Header("UI Panels")]
     [SerializeField]
     private RectTransform m_objectiveListPanel;
-    [SerializeField]
-    private ObjectivesGUIInfo[] m_objectivesGUI;
-    [SerializeField]
-    private Sprite lockedObjectiveImage;
-    [SerializeField]
-    private Sprite failedObjectiveImage;
-    [SerializeField]
-    private Sprite successObjectiveImage;
-    [SerializeField]
-    private Sprite baseObjectiveImage;
 
     [Header("Weapon Icon")]
     [SerializeField]
@@ -72,7 +58,6 @@ public class GUIManager : MonoBehaviour
     float dt = 0.0f;
     float fps = 0.0f;
     float updateRate = 4.0f;  // 4 updates per sec.
-    private ObjectiveInfo activeObjective;
 
     void Awake()
     {
@@ -141,35 +126,7 @@ public class GUIManager : MonoBehaviour
         //        objectiveArrow[i].Translate(0, Mathf.Min(0.14f, displacement.sqrMagnitude * 0.00005f), 0);
         //    }
         //}
-        if (m_objectiveArrow.gameObject.activeInHierarchy)
-        {
-            if (activeObjective == null)
-                m_objectiveArrow.gameObject.SetActive(false);
-            else
-            {
-                if (activeObjective.m_highlight != null)
-                {
-                    Vector3 displacement = Vector3.Scale(activeObjective.m_highlight.position - PlayerHandler.instance.transform.position, new Vector3(1, 0, 1));
-                    Vector3 bap = displacement.normalized;
-                    float dist = displacement.magnitude;
-                    float lol = Mathf.Atan2(bap.x, -bap.z) * Mathf.Rad2Deg;
-                    m_objectiveArrow.localPosition = Vector3.zero;
-                    m_objectiveArrow.localEulerAngles = new Vector3(0, 0, lol + PlayerHandler.instance.transform.eulerAngles.y + 180);
-                    //m_objectiveArrow.Rotate(90, 0, 0);
-                    m_objectiveArrow.Translate(0, Mathf.Min(0.14f, displacement.sqrMagnitude * 0.00005f), 0);
-
-                    string additionalInfo = activeObjective.m_inProgress ? "Time left : " + ((int)activeObjective.m_timeLeft) : "Proximity : " + ((int)dist);
-                    if (activeObjective.type == VariedObjectives.TYPE.BOUNTYHUNT)//hhhhhhhhhhhhh this is such garbage code fajfjofifaoopzpovzxda
-                    {
-                        activeObjective.panelInfo.panelText.text = string.Format("Bounty hunt\n{0}", additionalInfo);
-                    }
-                    else if (activeObjective.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
-                    {
-                        activeObjective.panelInfo.panelText.text = string.Format("Defend structure\n{0}", additionalInfo);
-                    }
-                }
-            }
-        }
+   
     }
 
     void LateUpdate()
@@ -218,111 +175,6 @@ public class GUIManager : MonoBehaviour
         OVRManager.display.RecenterPose();
         PlayerHandler.instance.ResetPose();
     }
-    public void SetActiveObjective(ObjectiveInfo _objectiveInfo = null)
-    {
-        if (_objectiveInfo != null)
-            m_objectiveArrow.gameObject.SetActive(true);
-
-        if (_objectiveInfo != null && !_objectiveInfo.m_completed)
-        {
-            if (_objectiveInfo.type == VariedObjectives.TYPE.BOUNTYHUNT)//srsly fuckin garbage
-            {
-                _objectiveInfo.panelInfo.panelText.text = "Bounty Hunt";
-            }
-            else if (_objectiveInfo.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
-            {
-                _objectiveInfo.panelInfo.panelText.text = "Defend structure";
-            }
-
-            //Set the appropriate sprites
-            //Remove lock icon from base
-            _objectiveInfo.panelInfo.firstFill.sprite = baseObjectiveImage;
-            _objectiveInfo.panelInfo.objectiveResult.gameObject.SetActive(false);
-            _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(true);
-            _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(true);
-        }
-
-        activeObjective = _objectiveInfo;
-    }
-    public void AddObjectiveToPanel(ref ObjectiveInfo _objectiveInfo, int index)
-    {
-        //Text panel = Instantiate(m_objectiveTextPanelPrefab, m_objectiveListPanel.transform).GetComponent<Text>();
-
-        _objectiveInfo.panelInfo = m_objectivesGUI[index];
-        if (_objectiveInfo.type == VariedObjectives.TYPE.BOUNTYHUNT)//hhhhhhhhhhhhh this is such garbage code fajfjofifaoopzpovzxda
-        {
-            m_objectivesGUI[index].panelText.text = "Bounty Hunt";
-        }
-        else if (_objectiveInfo.type == VariedObjectives.TYPE.DEFEND_STRUCTURE)
-        {
-            m_objectivesGUI[index].panelText.text = "Defend structure";
-        }
-
-    }
-
-    public void UpdateObjectiveProgress(ref ObjectiveInfo _objectiveInfo)
-    {
-        switch (_objectiveInfo.type)
-        {
-            case VariedObjectives.TYPE.BOUNTYHUNT:
-                {
-                    //m_objectiveTexts[index].backBlack.gameObject.SetActive(false);
-
-                    //m_objectiveTexts[index].panelSecondFill.fillAmount = 1;
-                    ////Set to 100%
-                    //m_objectiveTexts[index].panelText.text = "100%";
-                    break;
-                }
-            case VariedObjectives.TYPE.DEFEND_STRUCTURE:
-                {
-                    float fillAmount = 1 - (_objectiveInfo.m_timeLeft / _objectiveInfo.m_initialTime);
-                    int fillAmountInt = (int)(fillAmount * 100);
-                    _objectiveInfo.panelInfo.secondFill.fillAmount = fillAmount;
-                    //Set to 100%
-                    _objectiveInfo.panelInfo.panelProgress.text = fillAmountInt.ToString() + "%";
-                    break;
-                }
-            case VariedObjectives.TYPE.TOTAL:
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void FailedObjectiveGUI(ref ObjectiveInfo _objectiveInfo)
-    {
-        //Set the back black and the failed thing
-        _objectiveInfo.panelInfo.firstFill.sprite = baseObjectiveImage;
-        _objectiveInfo.panelInfo.objectiveResult.gameObject.SetActive(true);
-        _objectiveInfo.panelInfo.objectiveResult.sprite = failedObjectiveImage;
-
-        //Disable the panel stuff
-        _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(false);
-        _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(false);
-
-        //Play sound that failed
-        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_FAILED);
-        //m_objectivesGUI[index].panelFirstFill.color = Color.red;
-        //m_objectivesGUI[index].panelSecondFill.color = Color.red;
-        ////Set to 100%
-        //m_objectivesGUI[index].panelProgress.color = Color.red;
-
-    }
-
-    public void SucceededObjectiveGUI(ref ObjectiveInfo _objectiveInfo)
-    {
-        //Set the back black and the failed thing
-        _objectiveInfo.panelInfo.firstFill.sprite = baseObjectiveImage;
-        _objectiveInfo.panelInfo.objectiveResult.gameObject.SetActive(true);
-        _objectiveInfo.panelInfo.objectiveResult.sprite = successObjectiveImage;
-
-        _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(false);
-        _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(false);
-
-        //Play sound that suceed
-        PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_SUCCESS);
-    }
-
 
     #region Reticles
 
@@ -494,8 +346,9 @@ public class GUIManager : MonoBehaviour
         {
             _objectiveInfo.panelInfo.panelText.color = Color.green;
             _objectiveInfo.panelInfo.panelText.text += "\nSuccess!";
+
             //Update UI
-            SucceededObjectiveGUI(ref _objectiveInfo);
+            UIObjectiveHandler.instance.SucceededObjectiveGUI(ref _objectiveInfo);
         }
         else
         {
@@ -503,7 +356,7 @@ public class GUIManager : MonoBehaviour
             _objectiveInfo.panelInfo.panelText.text += "\nFailed!";
 
             //Update UI
-            FailedObjectiveGUI(ref _objectiveInfo);
+            UIObjectiveHandler.instance.FailedObjectiveGUI(ref _objectiveInfo);
 
         }
         Game.instance.SetRandomObjective();
