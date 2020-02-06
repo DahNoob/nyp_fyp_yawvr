@@ -141,7 +141,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     public void OnObjectDestroy()
     {
         //Set bool i suppose if it actually dead
-        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, transform.position + GetComponent<BoxCollider>().center * 2, Quaternion.identity);
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, transform.position, Quaternion.identity);
         m_Animator.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);

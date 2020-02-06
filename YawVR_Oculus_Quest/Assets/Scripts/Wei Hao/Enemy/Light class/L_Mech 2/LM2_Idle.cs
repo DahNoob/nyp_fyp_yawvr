@@ -26,7 +26,7 @@ public class LM2_Idle : SMB_EnemyWalk
     public override void ExitState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         base.ExitState(animator, animatorStateInfo, layerIndex);
-        enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 0.25f; //starts charging/revving up
-        enemy.GetComponent<UnityEngine.AI.NavMeshAgent>().SetDestination(PlayerHandler.instance.transform.position);
+        enemy.navMeshAgent.speed = 0.25f; //starts charging/revving up
+        enemy.navMeshAgent.SetDestination(enemy.m_target.position);
     }
 }

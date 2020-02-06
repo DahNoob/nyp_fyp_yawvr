@@ -133,6 +133,7 @@ public class AmmoModule
                     m_isReloading = false;
                     m_currentAmmo = m_ammoInfo.maxAmmo;
                     onFinishReload?.Invoke();
+                    Persistent.instance.SOUND_RELOAD_FADEIN.PlaySound();
                     break;
                 }
             }

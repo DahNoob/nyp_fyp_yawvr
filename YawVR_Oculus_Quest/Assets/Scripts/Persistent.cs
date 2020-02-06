@@ -34,7 +34,8 @@ public class Persistent : MonoBehaviour
     public Material MAT_WHITE;
     public Material MAT_ENEMYMECH;
     public SoundFXRef SOUND_EXPLODE;
-    public SoundFXRef SOUND_RELOAD;
+    public SoundFXRef SOUND_RELOAD_FADEOUT;
+    public SoundFXRef SOUND_RELOAD_FADEIN;
 
     private void Awake()
     {
