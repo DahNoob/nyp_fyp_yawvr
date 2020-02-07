@@ -24,7 +24,7 @@ public class Cargo_Spawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_Material = GetComponent<Renderer>().material;
+        //m_Material = GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame

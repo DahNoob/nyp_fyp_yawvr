@@ -87,7 +87,7 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         m_Animator.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);
-        //ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.HEAVY_MECH1);
+        ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.FLYING_MECH3);
     }
 
     // Start is called before the first frame update
@@ -194,7 +194,7 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     // Update is called once per frame
     override protected void Update()
     {
-        Vector3 relativePos = Player.transform.position - transform.position;
+        //Vector3 relativePos = Player.transform.position - transform.position;
 
         // Debugging distance
         float distance = Vector3.Distance(transform.position, Player.transform.position);

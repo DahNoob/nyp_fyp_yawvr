@@ -32,6 +32,7 @@ public class PoolObject
         LIGHT_MECH2,
         HEAVY_MECH2,
         LIGHT_MECH1,
+        FLYING_MECH3,
         MINIMAP_ICONS,
         BULLET_IMPACT_B_EFFECT,
         PLAYER_PROJECTILE_BIG,

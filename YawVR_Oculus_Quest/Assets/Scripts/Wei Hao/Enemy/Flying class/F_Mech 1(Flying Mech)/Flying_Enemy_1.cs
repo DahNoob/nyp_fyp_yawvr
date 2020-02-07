@@ -71,9 +71,11 @@ public class Flying_Enemy_1 : EnemyBase
     // Dodge Check
     private float dodgeCheck = 2.0f;
 
+    Transform Parent;
+
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
         // Current State
         //currentState = _EnemyState.AVOID;
@@ -88,6 +90,7 @@ public class Flying_Enemy_1 : EnemyBase
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
 
         transformX = transform.position;
+        Parent = transform.parent;
 
         //Debug.Log("Current Health = " + health);
         //Debug.Log("Current Max Health = " + maxHealth);
@@ -95,7 +98,7 @@ public class Flying_Enemy_1 : EnemyBase
     }
 
     // Update is called once per frame
-    void Update()
+    override protected void Update()
     {
  
 
@@ -105,34 +108,15 @@ public class Flying_Enemy_1 : EnemyBase
         //}
     }
 
-    //IEnumerator EnemyShoot()
-    //{
-    //    BaseProjectile _projectileL = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-    //    _projectileL.Init(m_projectileOriginL);
+    void StartHeal()
+    {    
+        Parent.GetChild(1).gameObject.SetActive(true);
+    }
 
-    //    yield return new WaitForSeconds(0.2f);
-
-    //    BaseProjectile _projectileR = Instantiate(projectile, transform.position + (target.position - transform.position).normalized, Quaternion.LookRotation(target.position - transform.position), Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
-    //    _projectileR.Init(m_projectileOriginR);
-    //}
-
-    //IEnumerator EnemyDodge()
-    //{
-    //    float random = Random.Range(1, 10);
-
-    //    if (random > 5)
-    //    {
-    //        transform.position += transform.right * (moveSpeed * 1.5f) * Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        transform.position += transform.right * (-moveSpeed * 1.5f) * Time.deltaTime;
-    //    }
-
-    //    yield return new WaitForSeconds(1.5f);
-
-    //    //currentState = _EnemyState.CHASE;
-    //}
+    void StopHeal()
+    {
+        Parent.GetChild(1).gameObject.SetActive(false);
+    }
 
     void PlayDeathParticle()
     {
