@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyingMech3 : EnemyBase
+public class FlyingMech3 : EnemyBase, IPooledObject
 {
     private enum _Buffs
     {
@@ -70,19 +70,24 @@ public class FlyingMech3 : EnemyBase
     [SerializeField]
     protected GameObject m_WeakPoint_2;
 
+    public void OnObjectDestroy()
+    {
+        ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, transform.position + GetComponent<SphereCollider>().center, Quaternion.identity);
+        m_Animator.SetBool("ResetAnim", true);
+        RemoveFromQuadTree(this.gameObject);
+        this.gameObject.SetActive(false);
+        //ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.HEAVY_MECH1);
+    }
+
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
 
-        // Current State
-        //currentState = _GameStates.CHASE;
         GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;
-        //Player = GameObject.Find("Player");
         Player = PlayerHandler.instance.gameObject;
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
-        //poof = gameObject.GetComponent<ParticleSystem>();
         weightedRandom = GameObject.Find("WeightedRNG");
 
         // Get rarity
