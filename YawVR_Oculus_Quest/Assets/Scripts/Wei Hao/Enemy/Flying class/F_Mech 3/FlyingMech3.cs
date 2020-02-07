@@ -70,6 +70,17 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     [SerializeField]
     protected GameObject m_WeakPoint_2;
 
+    public void OnObjectSpawn()
+    {
+        //Rigidbody rb = GetComponent<Rigidbody>();
+        //rb.velocity = new Vector3(0f, 0f, 0f);
+        //rb.angularVelocity = new Vector3(0f, 0f, 0f);
+
+        Start();
+        SetIconColor(Color.white);
+        SetIconSprite();
+    }
+
     public void OnObjectDestroy()
     {
         ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, transform.position + GetComponent<SphereCollider>().center, Quaternion.identity);
@@ -181,7 +192,7 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     }
 
     // Update is called once per frame
-    private void Update()
+    override protected void Update()
     {
         Vector3 relativePos = Player.transform.position - transform.position;
 

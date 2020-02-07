@@ -30,23 +30,23 @@ public class Cargo_Spawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (startTimer)
-        {
-            //spawnTimer -= 1.0f * Time.deltaTime;
-            if (spawnTimer <= 0.0f && !stopSpawn)
-            {
-                SpawnEnemy();
-                stopSpawn = true;
-            }
+        //if (startTimer)
+        //{
+        //    //spawnTimer -= 1.0f * Time.deltaTime;
+        //    if (spawnTimer <= 0.0f && !stopSpawn)
+        //    {
+        //        SpawnEnemy();
+        //        stopSpawn = true;
+        //    }
 
-            alphaVal -= 1.0f * Time.deltaTime;
-            m_Material.SetFloat("_Amount", alphaVal);
+        //    alphaVal -= 1.0f * Time.deltaTime;
+        //    m_Material.SetFloat("_Amount", alphaVal);
 
-            if(m_Material.GetFloat("_Amount") <= -2.0f)
-            {
-                Destroy(gameObject);
-            }
-        }
+        //    if(m_Material.GetFloat("_Amount") <= -2.0f)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 
     private void SpawnEnemy()
