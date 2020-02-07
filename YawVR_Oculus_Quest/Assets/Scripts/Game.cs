@@ -107,7 +107,7 @@ public class Game : MonoBehaviour
                 {
                     QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 9999);
                     Vector3 newEnemyPos = MapPointsHandler.instance.GetClosestPoint(newQuadRect);
-                    if (newEnemyPos == currObj.m_mapPointPosition)
+                    if (CustomUtility.IsHitRadius(newEnemyPos, currObj.m_mapPointPosition, 2.0f))
                         continue;
                     EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, newEnemyPos, Quaternion.identity).GetComponent<EnemyBase>();
                     derp.m_target = PlayerHandler.instance.transform;
@@ -158,7 +158,7 @@ public class Game : MonoBehaviour
                 {
                     QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 9999);
                     Vector3 newEnemyPos = MapPointsHandler.instance.GetClosestPoint(newQuadRect);
-                    if (newEnemyPos == currObj.m_mapPointPosition)
+                    if (CustomUtility.IsHitRadius(newEnemyPos, currObj.m_mapPointPosition, 2.0f))
                         continue;
                     EnemyBase derp = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, newEnemyPos, Quaternion.identity).GetComponent<EnemyBase>();
                     derp.m_target = Random.Range(0, 100) > 50 ? currObj.m_highlight : PlayerHandler.instance.transform;

@@ -32,7 +32,6 @@ public class SMB_EnemyWalk : SMB_BaseEnemyState
         {
             QuadRect newQuadRect = new QuadRect(enemy.transform.position + Vector3.RotateTowards(Vector3.forward * 30, new Vector3(Random.Range(-1.0f, 1.0f), 0, Random.Range(-1.0f, 1.0f)), 0.0f, 0.0f), 75, 150);
             enemy.navMeshAgent.SetDestination(MapPointsHandler.instance.GetClosestPoint(newQuadRect));
-            Debug.Log(MapPointsHandler.instance.GetClosestPoint(newQuadRect));
         }
         if(CustomUtility.IsHitRadius(enemy.m_target.transform.position, enemy.transform.position, m_detectRange))
         {

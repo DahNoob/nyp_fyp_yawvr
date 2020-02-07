@@ -78,6 +78,7 @@ public class UIObjectiveHandler
 
         prevPosition = m_objectiveHex.anchoredPosition3D;
         prevRotation = m_objectiveHex.localRotation;
+        m_objectiveArrow.gameObject.SetActive(false);
     }
 
     public void Start()
@@ -92,7 +93,7 @@ public class UIObjectiveHandler
         if (!m_componentEnabled)
             return;
 
-        UpdateObjectiveArrow();
+        //UpdateObjectiveArrow();
 
         //We have a target
         if (desiredRectTransform != null)
@@ -135,8 +136,8 @@ public class UIObjectiveHandler
 
     public void SetActiveObjective(ObjectiveInfo _objectiveInfo = null)
     {
-        if (_objectiveInfo != null)
-            m_objectiveArrow.gameObject.SetActive(true);
+        //if (_objectiveInfo != null)
+        //    m_objectiveArrow.gameObject.SetActive(true);
 
         if (_objectiveInfo != null && !_objectiveInfo.m_completed)
         {

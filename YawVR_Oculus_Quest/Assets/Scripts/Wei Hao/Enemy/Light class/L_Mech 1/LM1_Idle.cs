@@ -18,7 +18,14 @@ public class LM1_Idle : SMB_BaseEnemyState
         if(!animator.GetBool("Alert"))
         {
             bool isInViewRange = Vector2.Angle(CustomUtility.ToVector2(enemy.transform.forward), CustomUtility.ToVector2(enemy.m_target.position - enemy.transform.position)) < m_fieldOfViewAngle;
-            animator.SetBool("Alert", CustomUtility.IsHitRadius(enemy.m_target.position, enemy.transform.position, isInViewRange ? m_detectLongRange : m_detectRange));
+            if(CustomUtility.IsHitRadius(enemy.m_target.position, enemy.transform.position, isInViewRange ? m_detectLongRange : m_detectRange))
+            {
+                string[] layers = { "Terrain", "Player" };
+                RaycastHit hit;
+                Physics.Raycast(enemy.transform.position, (enemy.m_target.position - enemy.transform.position).normalized, out hit, 999999, LayerMask.GetMask(layers));
+                animator.SetBool("Alert", hit.collider.transform == enemy.m_target);
+            }
+            
         }
         
         //Debug.Log("Is the LM1's target nearby? " + animator.GetBool("Alert"));
