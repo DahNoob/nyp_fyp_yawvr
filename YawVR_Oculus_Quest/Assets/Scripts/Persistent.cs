@@ -29,10 +29,12 @@ public class Persistent : MonoBehaviour
     public GameObject PREFAB_CROWN;
     public GameObject PREFAB_SUPPLYCRATE;
     public GameObject PREFAB_SUPPLYCRATE_DROP;
+    public GameObject PREFAB_PICKABLES_BEACON;
     public Sprite MINIMAP_ICON_ENEMY;
     public Sprite MINIMAP_ICON_OBJECTIVE;
     public Material MAT_WHITE;
     public Material MAT_ENEMYMECH;
+    public Material MAT_PICKABLE_OUTLINE;
     public SoundFXRef SOUND_EXPLODE;
     public SoundFXRef SOUND_RELOAD_FADEOUT;
     public SoundFXRef SOUND_RELOAD_FADEIN;
