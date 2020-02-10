@@ -73,6 +73,8 @@ public class PlayerHandler : BaseEntity
     [SerializeField]
     private TextMeshProUGUI m_coinsText;
     [SerializeField]
+    private Camera m_minimapCamera;
+    [SerializeField]
     private float healthLerpSpeed = 5;
     [SerializeField]
     private float armorLerpSpeed = 5;
@@ -119,6 +121,10 @@ public class PlayerHandler : BaseEntity
 
     [Header("Debugs")]
     public bool overrideControllers = false;
+
+    //Public variables
+    public float goalPitch { private get; set; } = 0;
+    public float currentPitch { private set; get; } = 0;
 
     //Local variables
     private Vector3 origPos;
@@ -313,9 +319,11 @@ public class PlayerHandler : BaseEntity
             cameraShake = Vector3.zero;
         }
         m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset + new Vector3(0, prevHeight - transform.position.y, 0) * 0.15f, 0.12f) + cameraShake;
+        transform.localEulerAngles = new Vector3(currentPitch, transform.localEulerAngles.y, 0);
         if (m_vignette.color.a > 0)
             m_vignette.color = Color.LerpUnclamped(m_vignette.color, Persistent.instance.COLOR_TRANSPARENT, 0.05f);
         prevHeight = transform.position.y;
+        currentPitch = Mathf.LerpUnclamped(currentPitch, goalPitch, 0.1f);
         //rightHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
         //leftHand.GetComponent<OVRGrabber>().SetAnchorOffsetPosition(-m_camPivot.localPosition);
     }

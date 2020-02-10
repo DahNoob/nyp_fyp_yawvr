@@ -32,7 +32,7 @@ public class MainHubHandler : MonoBehaviour
     IEnumerator fadeToScene(string _sceneName)
     {
         m_playerScreenFade.fadeTime = 1.5f;
-        m_playerScreenFade.FadeIn();
+        m_playerScreenFade.FadeOut();
         yield return new WaitForSeconds(1.6f);
         SceneManager.LoadScene(_sceneName);
     }

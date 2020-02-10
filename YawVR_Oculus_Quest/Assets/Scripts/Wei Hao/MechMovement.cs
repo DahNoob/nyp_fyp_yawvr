@@ -16,7 +16,7 @@ using UnityEngine;
 *******************************/
 public class MechMovement : MonoBehaviour
 {
-    [Header("Mech Speed")]
+    [Header("Mech Speed Configuration")]
     [SerializeField]
     private float speed = 8.0f;         // Current Mech Speed (Do not edit this)
     [SerializeField]
@@ -29,6 +29,14 @@ public class MechMovement : MonoBehaviour
     private float deceleration = 1.5f;  // How fast will the mech reach 0 speed
     [SerializeField]
     private float rotationSpeed = 30.0f;  // Speed of rotation
+
+    [Header("Mech Movement Configuration")]
+    [SerializeField]
+    [Range(0.0f, 90.0f)]
+    private float m_pitchLowerLimit = 25.0f;
+    [SerializeField]
+    [Range(0.0f, 90.0f)]
+    private float m_pitchUpperLimit = 40.0f;
 
     private Vector3 MoveVector = Vector3.zero;
     private Vector3 Rotation;
@@ -74,6 +82,8 @@ public class MechMovement : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        m_pitchUpperLimit = -m_pitchUpperLimit;
+        m_pitchLowerLimit = -m_pitchLowerLimit;
     }
 
     void Update()
@@ -145,6 +155,10 @@ public class MechMovement : MonoBehaviour
             secondaryAxis.x += 1;
         if (Input.GetKey(KeyCode.Z))
             secondaryAxis.x -= 1;
+        if (Input.GetKey(KeyCode.F))
+            secondaryAxis.y += 1;
+        if (Input.GetKey(KeyCode.V))
+            secondaryAxis.y -= 1;
         rotationAxisSmoothedDelta_Goal = secondaryAxis.x;
         transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed * rotationAxisSmoothedDelta_Current);
         if (isRotating && rotationAxisSmoothedDelta_Goal == 0.0f)
@@ -161,6 +175,12 @@ public class MechMovement : MonoBehaviour
             m_rotationStartupAudio.Play();
             m_rotationLoopAudio.Play(); 
         }
+        if (secondaryAxis.y < 0)
+            PlayerHandler.instance.goalPitch = m_pitchLowerLimit * secondaryAxis.y;
+        else if (secondaryAxis.y > 0)
+            PlayerHandler.instance.goalPitch = m_pitchUpperLimit * secondaryAxis.y;
+        else
+            PlayerHandler.instance.goalPitch = 0;
 
         //if(Input.GetKey(KeyCode.X))
         //{
