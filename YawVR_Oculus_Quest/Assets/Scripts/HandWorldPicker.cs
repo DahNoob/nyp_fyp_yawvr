@@ -13,6 +13,7 @@ public class HandWorldPicker : MonoBehaviour
 
     private LineRenderer lineRenderer;
     private WorldPickable currentPickable;
+    private bool indexTriggered = false;
 
     void Start()
     {
@@ -20,6 +21,11 @@ public class HandWorldPicker : MonoBehaviour
     }
     void Update()
     {
+        bool frameTriggered = false;
+        if (!indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > 0.55f)
+            frameTriggered = indexTriggered = true;
+        else if (indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < 0.35f)
+            indexTriggered = false;
         RaycastHit hit;
         if (Physics.Raycast(m_raycastOrigin.position, m_raycastOrigin.forward, out hit, 999999))
         {
@@ -33,7 +39,7 @@ public class HandWorldPicker : MonoBehaviour
             if (currentPickable != prevPickable)
                 prevPickable?.SetHighlighted(false);
         }
-        if(currentPickable && OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, m_controller))
+        if(currentPickable && frameTriggered)
         {
             currentPickable.TriggerSelect();
         }

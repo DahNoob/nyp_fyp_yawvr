@@ -589,6 +589,18 @@ PrefabInstance:
       propertyPath: _trackingOriginType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: resetTrackerOnLoad
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: useRecommendedMSAALevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015248, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
+      propertyPath: near clip plane
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce816f2e6abb0504092c23ed9b970dfd, type: 3}
 --- !u!1 &435326049
@@ -738,6 +750,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CustomHandRight
       objectReference: {fileID: 0}
+    - target: {fileID: 195418, guid: ba1fa4a8c66106b4988c88fe4b8e8502, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 422740, guid: ba1fa4a8c66106b4988c88fe4b8e8502, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -785,7 +801,7 @@ PrefabInstance:
     - target: {fileID: 11477634, guid: ba1fa4a8c66106b4988c88fe4b8e8502, type: 3}
       propertyPath: m_parentTransform
       value: 
-      objectReference: {fileID: 160283267}
+      objectReference: {fileID: 2055533832}
     - target: {fileID: 137383442524578654, guid: ba1fa4a8c66106b4988c88fe4b8e8502,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -817,7 +833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f775184c3f010a6449f0ab24d8db01a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_controller: 0
+  m_controller: 2
   m_raycastOrigin: {fileID: 683313565}
   m_raycastPointIndicator: {fileID: 1232839717}
 --- !u!4 &683313565 stripped
@@ -839,6 +855,7 @@ GameObject:
   - component: {fileID: 707119984}
   - component: {fileID: 707119983}
   - component: {fileID: 707119986}
+  - component: {fileID: 707119987}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -934,6 +951,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &707119987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707119981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &726456363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5002397139618149939, guid: 380f9a101ee97b14588b537977f4c813,
@@ -1030,6 +1064,7 @@ GameObject:
   - component: {fileID: 782471951}
   - component: {fileID: 782471950}
   - component: {fileID: 782471953}
+  - component: {fileID: 782471954}
   m_Layer: 0
   m_Name: Cube (7)
   m_TagString: Untagged
@@ -1125,6 +1160,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &782471954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782471948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &837222805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,6 +1190,7 @@ GameObject:
   - component: {fileID: 837222808}
   - component: {fileID: 837222807}
   - component: {fileID: 837222810}
+  - component: {fileID: 837222811}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -1233,6 +1286,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &837222811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837222805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &859270821 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 865200615978097916, guid: 380f9a101ee97b14588b537977f4c813,
@@ -1724,6 +1794,7 @@ GameObject:
   - component: {fileID: 1338054960}
   - component: {fileID: 1338054959}
   - component: {fileID: 1338054962}
+  - component: {fileID: 1338054963}
   m_Layer: 0
   m_Name: Cube (8)
   m_TagString: Untagged
@@ -1819,6 +1890,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1338054963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338054957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &1362365303 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3126012701795791904, guid: 380f9a101ee97b14588b537977f4c813,
@@ -1898,6 +1986,7 @@ GameObject:
   - component: {fileID: 1456442658}
   - component: {fileID: 1456442657}
   - component: {fileID: 1456442660}
+  - component: {fileID: 1456442661}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -1993,6 +2082,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1456442661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456442655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &1488379131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,6 +2112,7 @@ GameObject:
   - component: {fileID: 1488379134}
   - component: {fileID: 1488379133}
   - component: {fileID: 1488379136}
+  - component: {fileID: 1488379137}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -2101,6 +2208,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1488379137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488379131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &1491070558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,6 +2238,7 @@ GameObject:
   - component: {fileID: 1491070561}
   - component: {fileID: 1491070560}
   - component: {fileID: 1491070563}
+  - component: {fileID: 1491070564}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
@@ -2209,6 +2334,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1491070564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491070558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &1618597499 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 679396191980816057, guid: 380f9a101ee97b14588b537977f4c813,
@@ -2354,6 +2496,7 @@ GameObject:
   - component: {fileID: 1793691361}
   - component: {fileID: 1793691360}
   - component: {fileID: 1793691363}
+  - component: {fileID: 1793691364}
   m_Layer: 0
   m_Name: Cube (5)
   m_TagString: Untagged
@@ -2449,6 +2592,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1793691364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793691358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &1804420710 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8237742520005560733, guid: 380f9a101ee97b14588b537977f4c813,
@@ -2530,6 +2690,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CustomHandLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 143668, guid: e6ba3498ffa1e534b91a07264266e6b8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 414912, guid: e6ba3498ffa1e534b91a07264266e6b8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2577,7 +2741,7 @@ PrefabInstance:
     - target: {fileID: 11438496, guid: e6ba3498ffa1e534b91a07264266e6b8, type: 3}
       propertyPath: m_parentTransform
       value: 
-      objectReference: {fileID: 160283267}
+      objectReference: {fileID: 2055533832}
     - target: {fileID: 137977633181334670, guid: e6ba3498ffa1e534b91a07264266e6b8,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2615,7 +2779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f775184c3f010a6449f0ab24d8db01a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_controller: 0
+  m_controller: 1
   m_raycastOrigin: {fileID: 1957384424}
   m_raycastPointIndicator: {fileID: 1136714159}
 --- !u!1 &1976552670
@@ -2631,6 +2795,7 @@ GameObject:
   - component: {fileID: 1976552673}
   - component: {fileID: 1976552672}
   - component: {fileID: 1976552675}
+  - component: {fileID: 1976552676}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2726,6 +2891,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1976552676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976552670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
 --- !u!1 &1999059836 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 123794, guid: ba1fa4a8c66106b4988c88fe4b8e8502,
@@ -2869,6 +3051,12 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
+--- !u!4 &2055533832 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 462066, guid: ce816f2e6abb0504092c23ed9b970dfd,
+    type: 3}
+  m_PrefabInstance: {fileID: 407426328}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2080637868
 GameObject:
   m_ObjectHideFlags: 0
