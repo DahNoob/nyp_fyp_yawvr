@@ -319,7 +319,7 @@ public class PlayerHandler : BaseEntity
             cameraShake = Vector3.zero;
         }
         m_camPivot.localPosition = finalCamOffset = Vector3.LerpUnclamped(m_camPivot.localPosition, m_cameraOffset + new Vector3(0, prevHeight - transform.position.y, 0) * 0.15f, 0.12f) + cameraShake;
-        transform.localEulerAngles = new Vector3(currentPitch, transform.localEulerAngles.y, 0);
+        //transform.localEulerAngles = new Vector3(currentPitch, transform.localEulerAngles.y, 0);
         if (m_vignette.color.a > 0)
             m_vignette.color = Color.LerpUnclamped(m_vignette.color, Persistent.instance.COLOR_TRANSPARENT, 0.05f);
         prevHeight = transform.position.y;
