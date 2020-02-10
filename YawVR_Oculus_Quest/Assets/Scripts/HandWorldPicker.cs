@@ -5,6 +5,8 @@ using UnityEngine;
 public class HandWorldPicker : MonoBehaviour
 {
     [SerializeField]
+    private OVRInput.Controller m_controller;
+    [SerializeField]
     private Transform m_raycastOrigin;
     [SerializeField]
     private Transform m_raycastPointIndicator;
@@ -30,6 +32,10 @@ public class HandWorldPicker : MonoBehaviour
             }
             if (currentPickable != prevPickable)
                 prevPickable?.SetHighlighted(false);
+        }
+        if(currentPickable && OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, m_controller))
+        {
+            currentPickable.TriggerSelect();
         }
     }
 }
