@@ -104,7 +104,6 @@ public class TutorialHandler : MonoBehaviour
                     m_tutorialInfo[i].rightController.SetActive(false);
                 }
             }
-
         }
     }
 
