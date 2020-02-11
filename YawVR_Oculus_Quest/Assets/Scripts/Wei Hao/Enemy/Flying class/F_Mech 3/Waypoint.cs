@@ -28,7 +28,7 @@ public class Waypoint : MonoBehaviour
     void Update()
     {
         NearestWaypointToPlayer = findNearest().transform.position;
-        Debug.Log("Nearest waypoint is: " + NearestWaypointToPlayer);
+        //Debug.Log("Nearest waypoint is: " + NearestWaypointToPlayer);
         gameObject.transform.position = Vector3.MoveTowards(transform.position, NearestWaypointToPlayer, movSpeed * Time.deltaTime);
         
         if (transform.position.x == NearestWaypointToPlayer.x && transform.position.z == NearestWaypointToPlayer.z)

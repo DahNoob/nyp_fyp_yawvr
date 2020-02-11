@@ -13,23 +13,13 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     List<string> buffs = new List<string> { "HP", "DMG", "MS" };
 
     private GameObject Player;
-    [Header("Flying Mech 3 Configuration")]
+    [Header("Flying Mech 3 Colliders")]
     [SerializeField]
-    // Chase range
-    protected int chaseRange = 10;
+    protected Collider Body;
     [SerializeField]
-    // Attack range
-    protected int attackRange = 4;
+    protected Collider WeakPoint_1;
     [SerializeField]
-    // LM2 rotation speed
-    protected int rotationSpeed = 5;
-    [SerializeField]
-    // Time taken before attack is activated
-    protected float attackWindUp = 2.0f;
-
-    //[Header("Current State")]
-    //[SerializeField]
-    //private _GameStates currentState = _GameStates.CHASE;
+    protected Collider WeakPoint_2;
 
     private Rigidbody rb;
 
@@ -188,7 +178,7 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         }
 
         //Add to Quadtree
-        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
+        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);        
     }
 
     // Update is called once per frame
@@ -197,7 +187,7 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         //Vector3 relativePos = Player.transform.position - transform.position;
 
         // Debugging distance
-        float distance = Vector3.Distance(transform.position, Player.transform.position);
+        //float distance = Vector3.Distance(transform.position, Player.transform.position);
         //if (Vector3.Distance(transform.position, Player.transform.position) >= attackRange)
         //{
         //currentState = _GameStates.CHASE;
@@ -263,51 +253,29 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         return selectedBuff;
     }
 
-    void OnTriggerEnter(Collider collision)
+    public void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
+        if (collision.gameObject.tag == "Bullet")
+        {
+            Debug.Log("Health = " + GetHealth());
+        }
+        //if(collision.collider == Body)
         //{
-        //    Debug.Log("Hit");
-        //    //transformX = transform.position;
-        //    //currentState = _GameStates.EXPLODE;
-        //    m_Animator.SetBool("Chase", false);
-        //    m_Animator.SetBool("Explode", true);
+        //    Debug.Log("Body Hit");
         //}
-
-        //if (collision.gameObject.tag == "Bullet")
+        //if (collision.collider == WeakPoint_1)
         //{
-        //    takeDamage(1);
-        //    Debug.Log("Parent Object collided");
-        //    //collision.gameObject.SetActive(false);
+        //    Debug.Log("WP_1 Hit");
+        //}
+        //if (collision.collider == WeakPoint_2)
+        //{
+        //    Debug.Log("WP_2 Hit");
         //}
     }
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
-    //    {
-    //        Debug.Log("Hit");
-    //        //transformX = transform.position;
-    //        //currentState = _GameStates.EXPLODE;
-    //        m_Animator.SetBool("Chase", false);
-    //        m_Animator.SetBool("Explode", true);
-    //    }
-
-    //    if (collision.gameObject.tag == "Bullet")
-    //    {
-    //        takeDamage(1);
-    //        collision.gameObject.SetActive(false);
-    //    }
-    //}
 
     public void CollisionDetected(WeakPoint child)
     {
         //takeDamage(5);
         Debug.Log("Child object collided");
     }
-
-
-    //private void OnCollisionEnterChild(Collision collision)
-    //{
-
-    //}
 }
