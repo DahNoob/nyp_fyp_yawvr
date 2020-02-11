@@ -310,9 +310,13 @@ public class PlayerUIMinimap
 
     void UpdateObjectives()
     {
+        if (Game.instance == null)
+            return;
+
         //Get the appropriate list
         int tag = (int)MINIMAP_ICONTYPE.OBJECTIVES;
         List<GameObject> objectiveIconList = minimapIcons[tag];
+
 
         int objectivesCount = Game.instance.m_objectives.Length;
 
