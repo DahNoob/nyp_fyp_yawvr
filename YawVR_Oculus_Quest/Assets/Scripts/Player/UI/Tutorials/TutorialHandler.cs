@@ -43,14 +43,12 @@ public class TutorialHandler : MonoBehaviour
     private PlayerTutorialElements m_elements;
 
     //Local variables
-    Queue<TutorialMessage> m_tutorialQueue = new Queue<TutorialMessage>();
-    Queue<TutorialMessage> m_processingQueue = new Queue<TutorialMessage>();
+    Queue<TutorialInfo> m_tutorialQueue = new Queue<TutorialInfo>();
 
     private Dictionary<int, TutorialInfo> m_tutorialDictionary = new Dictionary<int, TutorialInfo>();
 
-    static int MAX_TUTORIAL_QUEUE_COUNT = 12;
-    private int m_tutorialCount = 0;
-    private bool isAlreadyTyping = false;
+    private bool m_finishedCurrent = false;
+    private bool m_isWaiting = false;
     private string currentString;
 
     private TutorialInfo previousTutorialInfo;
@@ -60,7 +58,7 @@ public class TutorialHandler : MonoBehaviour
         if (instance == null)
             instance = this;
 
-        if(m_elements.playerTutorialUI != null)
+        if (m_elements.playerTutorialUI != null)
             m_elements.playerTutorialUI.SetActive(false);
 
         //Add everything to the dictionary
@@ -68,7 +66,7 @@ public class TutorialHandler : MonoBehaviour
         {
             m_tutorialDictionary.Add((int)m_tutorialInfo[i].tutorialType, m_tutorialInfo[i]);
 
-            if(!m_tutorialInfo[i].singleInput)
+            if (!m_tutorialInfo[i].singleInput)
             {
                 //Instantiate the objects based on...
                 if (m_tutorialInfo[i].leftControllerPrefab != null)
@@ -107,107 +105,12 @@ public class TutorialHandler : MonoBehaviour
         }
     }
 
-    public void AddTutorial(TUTORIAL_TYPE type)
-    {
-        int tag = (int)type;
-
-        TutorialInfo currentTutorialInfo = m_tutorialDictionary[tag];
-
-        if (currentTutorialInfo != null)
-        {
-            if (previousTutorialInfo != null)
-            {
-                if (previousTutorialInfo.leftController != null)
-                    previousTutorialInfo.leftController.SetActive(false);
-                if (previousTutorialInfo.rightController != null)
-                    previousTutorialInfo.rightController.SetActive(false);
-            }
-
-            //Enable things
-            m_elements.m_tutorialHeader.text = currentTutorialInfo.m_tutorialHeader;
-
-            if (currentTutorialInfo.leftController != null)
-                currentTutorialInfo.leftController.SetActive(true);
-            if (currentTutorialInfo.rightController != null)
-                currentTutorialInfo.rightController.SetActive(true);
-
-            //Set previous to current
-            previousTutorialInfo = currentTutorialInfo;
-
-            for (int i = 0; i < currentTutorialInfo.m_tutorialMessages.Count; ++i)
-            {
-                AddStringToProcessingQueue(currentTutorialInfo.m_tutorialMessages[i]);
-            }
-
-            m_elements.m_tutorialText.text = "";
-            //Enable the overall overlay
-            m_elements.playerTutorialUI.SetActive(true);
-        }
-    }
-
-    public void EndTutorial(TUTORIAL_TYPE tyoe)
-    {
-        m_elements.m_tutorialText.text = currentString;
-        m_elements.playerTutorialUI.SetActive(false);
-    }
-
-
-    public void AddStringToProcessingQueue(TutorialMessage tutorialMessage)
-    {
-        if (isAlreadyTyping)
-            m_processingQueue.Enqueue(tutorialMessage);
-        else
-            AddStringToTutorialQueue(tutorialMessage);
-    }
-
-    bool AddStringToTutorialQueue(TutorialMessage tutorialMessage)
-    {
-        if (m_tutorialCount < MAX_TUTORIAL_QUEUE_COUNT)
-        {
-            m_tutorialQueue.Enqueue(tutorialMessage);
-            //Add one more to the thingy
-            StartCoroutine(TypeNewTutorialLine(tutorialMessage));
-            m_tutorialCount++;
-        }
-        else
-        {
-            m_tutorialQueue.Dequeue();
-            //AssignLastText();
-            StartCoroutine(TypeNewTutorialLine(tutorialMessage));
-            m_tutorialQueue.Enqueue(tutorialMessage);
-        }
-
-        return true;
-    }
-
-    IEnumerator TypeNewTutorialLine(TutorialMessage tutorialMessage)
-    {
-        isAlreadyTyping = true;
-
-        yield return new WaitForSeconds(tutorialMessage.delay);
-
-        m_elements.m_tutorialText.text = "";
-        currentString = tutorialMessage.message;
-        //Set the text in player to be ""
-        foreach (char letter in tutorialMessage.message)
-        {
-            //Text += message
-            m_elements.m_tutorialText.text += letter;
-            yield return new WaitForSeconds(tutorialMessage.messageSpeed);
-
-            if(m_elements.m_tutorialText.text == tutorialMessage.message)
-            {
-                isAlreadyTyping = false;
-                m_tutorialCount--;
-                yield break;
-            }
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
-
+        AddTutorial(TUTORIAL_TYPE.RESET_POSE);
+        AddTutorial(TUTORIAL_TYPE.MOVE);
+        AddTutorial(TUTORIAL_TYPE.LOOKAROUND);
     }
 
     // Update is called once per frame
@@ -221,11 +124,135 @@ public class TutorialHandler : MonoBehaviour
             }
         }
 
-        //yeet
-        if (m_processingQueue.Count > 0 && !isAlreadyTyping)
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            AddStringToTutorialQueue(m_processingQueue.Dequeue());
+            Continue();
         }
+    }
+
+    public void AddTutorial(TUTORIAL_TYPE type)
+    {
+        int tag = (int)type;
+        TutorialInfo currentTutorialInfo = m_tutorialDictionary[tag];
+        if (previousTutorialInfo == null)
+        {
+            //If there is no current one
+            //Enable sprites
+            if (currentTutorialInfo != null)
+            {
+                if (currentTutorialInfo.leftController != null)
+                    currentTutorialInfo.leftController.SetActive(true);
+                if (currentTutorialInfo.rightController != null)
+                    currentTutorialInfo.rightController.SetActive(true);
+
+                //Set header
+                m_elements.m_tutorialHeader.text = currentTutorialInfo.m_tutorialHeader;
+                //Enable the thing
+                m_elements.playerTutorialUI.SetActive(true);
+
+                StartCoroutine(TypeNewTutorialLine(currentTutorialInfo));
+
+                previousTutorialInfo = currentTutorialInfo;
+            }
+        }
+        else
+        {
+            //Add to the queue for processing later
+            m_tutorialQueue.Enqueue(currentTutorialInfo);
+        }
+    }
+
+    //Internal function
+    private void FetchNewInfo()
+    {
+        if (m_tutorialQueue != null && m_tutorialQueue.Count > 0)
+        {
+            TutorialInfo currentTutorialInfo = m_tutorialQueue.Dequeue();
+            if (currentTutorialInfo != null)
+            {
+                if (previousTutorialInfo != null)
+                {
+                    if (previousTutorialInfo.leftController != null)
+                        previousTutorialInfo.leftController.SetActive(false);
+                    if (previousTutorialInfo.rightController != null)
+                        previousTutorialInfo.rightController.SetActive(false);
+
+                    //Enable things
+                    m_elements.m_tutorialHeader.text = currentTutorialInfo.m_tutorialHeader;
+
+                    if (currentTutorialInfo.leftController != null)
+                        currentTutorialInfo.leftController.SetActive(true);
+                    if (currentTutorialInfo.rightController != null)
+                        currentTutorialInfo.rightController.SetActive(true);
+
+                    //Set previous to current
+                    previousTutorialInfo = currentTutorialInfo;
+
+                    m_elements.m_tutorialText.text = "";
+                    //Enable the overall overlay
+                    m_elements.playerTutorialUI.SetActive(true);
+
+                    //Start the typing thingo
+                    StartCoroutine(TypeNewTutorialLine(currentTutorialInfo));
+
+                    //Set the previous to the current
+                    previousTutorialInfo = currentTutorialInfo;
+                }
+            }
+        }
+        else
+        {
+            //Set active the playerUI;
+            m_elements.m_tutorialText.text = "";
+            m_elements.playerTutorialUI.SetActive(false);
+            //Set previous to be null, kinda cheat way... but yea
+            previousTutorialInfo = null;
+        }
+    }
+
+    public void Continue()
+    {
+        m_isWaiting = false;
+    }
+
+    IEnumerator TypeNewTutorialLine(TutorialInfo tutorialInfo)
+    {
+        m_finishedCurrent = false;
+        for (int i = 0; i < tutorialInfo.m_tutorialMessages.Count; ++i)
+        {
+            while (m_isWaiting)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            //Then move on to next message if possible
+            yield return new WaitForSeconds(tutorialInfo.m_tutorialMessages[i].delay);
+
+            m_elements.m_tutorialText.text = "";
+            currentString = tutorialInfo.m_tutorialMessages[i].message;
+            //Set the text in player to be ""
+            foreach (char letter in tutorialInfo.m_tutorialMessages[i].message)
+            {
+                //Text += message
+                m_elements.m_tutorialText.text += letter;
+                yield return new WaitForSeconds(tutorialInfo.m_tutorialMessages[i].messageSpeed);
+
+                if (m_elements.m_tutorialText.text == tutorialInfo.m_tutorialMessages[i].message)
+                {
+                    m_isWaiting = true;
+                }
+            }
+        }
+
+        //Waita gain after end of loop for final instructions.
+        while (m_isWaiting)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        m_finishedCurrent = true;
+        FetchNewInfo();
+
+        yield break;
     }
 }
 

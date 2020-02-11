@@ -15,8 +15,7 @@ public class TutorialTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
-            TutorialHandler.instance.EndTutorial(m_tutorialType);
+
     }
 
 }
