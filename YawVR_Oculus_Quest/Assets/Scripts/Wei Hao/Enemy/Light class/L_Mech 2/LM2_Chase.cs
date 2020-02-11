@@ -22,7 +22,7 @@ public class LM2_Chase : SMB_BaseEnemyState
     {
         //animator.SetBool("Explode", CustomUtility.IsHitRadius(enemy.transform.position, enemy.m_target.transform.position, 5.0f));
         Collider[] hitColliders = Physics.OverlapSphere(animator.transform.position, m_detectRange);
-        for (int i = 0; i < hitColliders.Length; i++)
+        for (int i = 0; i < hitColliders.Length; ++i)
         {
             //if (hitColliders[i].gameObject.tag == "Player")
             //{

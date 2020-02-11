@@ -11,6 +11,11 @@ public class LM1_Idle : SMB_BaseEnemyState
     protected float m_detectLongRange = 80.0f;
     [SerializeField]
     protected float m_fieldOfViewAngle = 60.0f;
+    [SerializeField]
+    protected OVR.SoundFXRef m_idleSound;
+    [SerializeField]
+    [Range(0, 100)]
+    protected int m_soundProbability = 25;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void CheckState(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -27,7 +32,10 @@ public class LM1_Idle : SMB_BaseEnemyState
             }
             
         }
-        
+        if(!animator.GetBool("Alert") && Random.Range(0,100) < m_soundProbability)
+        {
+            m_idleSound.PlaySoundAt(enemy.transform.position);
+        }
         //Debug.Log("Is the LM1's target nearby? " + animator.GetBool("Alert"));
     }
 

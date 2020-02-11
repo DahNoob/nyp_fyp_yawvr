@@ -20,4 +20,7 @@ public class EnemyInfo : EntityInfo
     public GameObject dmgBuff, hpBuff, msBuff;
     public ENEMY_TYPE enemyType;
     public int currencyValue = 10;
+    //public OVR.SoundFXRef idleSound;
+    //public OVR.SoundFXRef alertSound;
+    //public OVR.SoundFXRef deathSound;
 }
