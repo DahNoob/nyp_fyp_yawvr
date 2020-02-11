@@ -110,11 +110,6 @@ public class PlayerUIManager : MonoBehaviour
         m_playerUIObjectives.Update();
         m_reticleHandler.Update();
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ObjectiveTriggered(1);
-        }
-
         m_playerMinimap.m_minimapBounds.position = transform.position;
         //lerp the objective hex thing
 

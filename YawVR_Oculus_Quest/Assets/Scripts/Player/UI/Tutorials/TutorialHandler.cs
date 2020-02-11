@@ -29,6 +29,9 @@ public class TutorialHandler : MonoBehaviour
         CHANGE_WEAPON,
         SHOOTING,
         LOOKAROUND,
+        LIGHTMECH2,
+        HEAVYMECH2,
+        OBJECTIVES,
         DEFAULT
     }
 
