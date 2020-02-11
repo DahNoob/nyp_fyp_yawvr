@@ -206,6 +206,10 @@ public class TutorialHandler : MonoBehaviour
             m_elements.m_tutorialText.text = "";
             m_elements.playerTutorialUI.SetActive(false);
             //Set previous to be null, kinda cheat way... but yea
+            if (previousTutorialInfo.leftController != null)
+                previousTutorialInfo.leftController.SetActive(false);
+            if (previousTutorialInfo.rightController != null)
+                previousTutorialInfo.rightController.SetActive(false);
             previousTutorialInfo = null;
         }
     }
@@ -251,7 +255,6 @@ public class TutorialHandler : MonoBehaviour
         }
         m_finishedCurrent = true;
         FetchNewInfo();
-
         yield break;
     }
 }
