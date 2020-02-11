@@ -37,4 +37,9 @@ public class WorldPickable : MonoBehaviour
         }
         isHighlighted = _var;
     }
+
+    public void TriggerSelect()
+    {
+        onSelected?.Invoke();
+    }
 }

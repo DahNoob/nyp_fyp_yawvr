@@ -24,9 +24,16 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     [SerializeField]
     private ParticleSystem m_alertParticleSystem;
     [SerializeField]
+    private ParticleSystem m_fireParticleSystem;
+    [SerializeField]
     private Transform m_rightProjectileOrigin;
     [SerializeField]
     private Transform m_leftProjectileOrigin;
+    [SerializeField]
+    private OVR.SoundFXRef m_shootSound;
+    [SerializeField]
+    private OVR.SoundFXRef m_deathSound;
+
     public enum _EnemyState
     {
         CHASE,
@@ -81,6 +88,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     private float projectileSpeed;
     private float amount = 1.0f; //how much it shakes
     private Vector3 transformX;
+    private bool inDyingAnim;
 
     //[Header("Projectile Origin")]
     //// Light Mech Shooting
@@ -164,6 +172,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         buffs = new List<string> { "HP", "DMG", "MS" };
 
         transformX = transform.position;
+        inDyingAnim = false;
 
         string currBuff = StartBuff();
         if (rarity == _Rarity.DELTA)
@@ -247,7 +256,6 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
             //    MS = true;
             //}
         }
-
         //Add this object to quad tree 
         AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
     }
@@ -344,6 +352,21 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         base.takeDamage(damage);
         m_Animator.SetBool("Alert", true);
     }
+    public override void Die()
+    {
+        if (!inDyingAnim)
+        {
+            inDyingAnim = true;
+            m_Animator.Play("Death");
+            m_fireParticleSystem.Play();
+            m_deathSound.PlaySoundAt(transform.position);
+        }
+    }
+    public void ActualDie()
+    {
+        inDyingAnim = false;
+        base.Die();
+    }
     public string StartBuff()
     {
         System.Random random = new System.Random();
@@ -358,23 +381,23 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         StartCoroutine(EnemyShoot());
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
-        {
-            //Debug.Log("Hit");
-            //transformX = transform.position;
-            //currentState = _EnemyState.DIE;
-            //m_Animator.SetBool("Explode", true);
-        }
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
+    //    {
+    //        //Debug.Log("Hit");
+    //        //transformX = transform.position;
+    //        //currentState = _EnemyState.DIE;
+    //        //m_Animator.SetBool("Explode", true);
+    //    }
 
-        //if (collision.gameObject.tag == "Bullet")
-        //{
-        //    takeDamage(40);
-        //    //collision.gameObject.SetActive(false);
-        //    collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
-        //}
-    }
+    //    //if (collision.gameObject.tag == "Bullet")
+    //    //{
+    //    //    takeDamage(40);
+    //    //    //collision.gameObject.SetActive(false);
+    //    //    collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
+    //    //}
+    //}
 
     //public float GetMoveSpeed()
     //{
@@ -394,6 +417,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         BaseProjectile _projectileL = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, m_leftProjectileOrigin.position, Quaternion.identity).GetComponent<BaseProjectile>();
         m_leftProjectileOrigin.LookAt(m_target);
         _projectileL.Init(m_leftProjectileOrigin);
+        m_shootSound.PlaySoundAt(m_leftProjectileOrigin.position);
 
         yield return new WaitForSeconds(0.2f);
 
@@ -402,5 +426,6 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         BaseProjectile _projectileR = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_PROJECTILE, m_rightProjectileOrigin.position, Quaternion.identity).GetComponent<BaseProjectile>();
         m_rightProjectileOrigin.LookAt(m_target);
         _projectileR.Init(m_rightProjectileOrigin);
+        m_shootSound.PlaySoundAt(m_rightProjectileOrigin.position);
     }
 }

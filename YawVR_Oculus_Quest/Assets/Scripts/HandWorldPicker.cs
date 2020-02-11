@@ -5,12 +5,15 @@ using UnityEngine;
 public class HandWorldPicker : MonoBehaviour
 {
     [SerializeField]
+    private OVRInput.Controller m_controller;
+    [SerializeField]
     private Transform m_raycastOrigin;
     [SerializeField]
     private Transform m_raycastPointIndicator;
 
     private LineRenderer lineRenderer;
     private WorldPickable currentPickable;
+    private bool indexTriggered = false;
 
     void Start()
     {
@@ -18,6 +21,11 @@ public class HandWorldPicker : MonoBehaviour
     }
     void Update()
     {
+        bool frameTriggered = false;
+        if (!indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > 0.55f)
+            frameTriggered = indexTriggered = true;
+        else if (indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < 0.35f)
+            indexTriggered = false;
         RaycastHit hit;
         if (Physics.Raycast(m_raycastOrigin.position, m_raycastOrigin.forward, out hit, 999999))
         {
@@ -30,6 +38,10 @@ public class HandWorldPicker : MonoBehaviour
             }
             if (currentPickable != prevPickable)
                 prevPickable?.SetHighlighted(false);
+        }
+        if(currentPickable && frameTriggered)
+        {
+            currentPickable.TriggerSelect();
         }
     }
 }

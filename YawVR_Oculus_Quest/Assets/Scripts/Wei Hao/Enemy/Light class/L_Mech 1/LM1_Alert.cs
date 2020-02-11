@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LM1_Alert : SMB_BaseEnemyState
 {
+    [SerializeField]
+    protected OVR.SoundFXRef m_alertSound;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     public override void CheckState(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -12,6 +14,7 @@ public class LM1_Alert : SMB_BaseEnemyState
     public override void EnterState(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemy.GetComponent<Light_Enemy_1>().alertParticleSystem.Emit(1);
+        m_alertSound.PlaySoundAt(enemy.transform.position);
         //enemy.navMeshAgent.updatePosition = false;
         //enemy.navMeshAgent.updateRotation = true;
         //enemy.navMeshAgent.SetDestination(enemy.m_target.position);
