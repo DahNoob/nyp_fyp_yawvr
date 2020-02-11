@@ -13,4 +13,10 @@ public class TutorialTrigger : MonoBehaviour
             TutorialHandler.instance.AddTutorial(m_tutorialType);
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+            TutorialHandler.instance.EndTutorial(m_tutorialType);
+    }
+
 }

@@ -39,10 +39,6 @@ public class TutorialHandler : MonoBehaviour
     [SerializeField]
     private PlayerTutorialElements m_elements;
 
-    [SerializeField]
-    private float delayBeforeClosing;
-    private float delayTimer;
-
     //Local variables
     Queue<TutorialMessage> m_tutorialQueue = new Queue<TutorialMessage>();
     Queue<TutorialMessage> m_processingQueue = new Queue<TutorialMessage>();
@@ -52,6 +48,7 @@ public class TutorialHandler : MonoBehaviour
     static int MAX_TUTORIAL_QUEUE_COUNT = 12;
     private int m_tutorialCount = 0;
     private bool isAlreadyTyping = false;
+    private string currentString;
 
     private TutorialInfo previousTutorialInfo;
 
@@ -59,6 +56,9 @@ public class TutorialHandler : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+
+        if(m_elements.playerTutorialUI != null)
+            m_elements.playerTutorialUI.SetActive(false);
 
         //Add everything to the dictionary
         for (int i = 0; i < m_tutorialInfo.Count; ++i)
@@ -137,12 +137,18 @@ public class TutorialHandler : MonoBehaviour
                 AddStringToProcessingQueue(currentTutorialInfo.m_tutorialMessages[i]);
             }
 
+            m_elements.m_tutorialText.text = "";
             //Enable the overall overlay
             m_elements.playerTutorialUI.SetActive(true);
-            //Delay thingy
-            delayTimer = 0;
         }
     }
+
+    public void EndTutorial(TUTORIAL_TYPE tyoe)
+    {
+        m_elements.m_tutorialText.text = currentString;
+        m_elements.playerTutorialUI.SetActive(false);
+    }
+
 
     public void AddStringToProcessingQueue(TutorialMessage tutorialMessage)
     {
@@ -179,7 +185,7 @@ public class TutorialHandler : MonoBehaviour
         yield return new WaitForSeconds(tutorialMessage.delay);
 
         m_elements.m_tutorialText.text = "";
-
+        currentString = tutorialMessage.message;
         //Set the text in player to be ""
         foreach (char letter in tutorialMessage.message)
         {
@@ -217,19 +223,6 @@ public class TutorialHandler : MonoBehaviour
         if (m_processingQueue.Count > 0 && !isAlreadyTyping)
         {
             AddStringToTutorialQueue(m_processingQueue.Dequeue());
-        }
-
-        if(m_tutorialCount <=0 )
-        {
-            if(delayTimer < delayBeforeClosing)
-            {
-                delayTimer += Time.deltaTime;
-            }
-            else
-            {
-                if (m_elements.playerTutorialUI.activeInHierarchy)
-                    m_elements.playerTutorialUI.SetActive(false);
-            }
         }
     }
 }
