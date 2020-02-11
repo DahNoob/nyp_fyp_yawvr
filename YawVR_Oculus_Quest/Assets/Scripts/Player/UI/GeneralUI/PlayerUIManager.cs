@@ -209,22 +209,6 @@ public class PlayerUIManager : MonoBehaviour
     #endregion
 }
 
-//[System.Serializable]
-//public class SystemFluffMessage
-//{
-//    public string message;
-//    public float delay;
-//    public float messageSpeed;
-
-//    public SystemFluffMessage(string _message, float _delay, float _messageSpeed)
-//    {
-//        message = _message;
-//        delay = _delay;
-//        messageSpeed = _messageSpeed;
-//    }
-//}
-
-
 //[Header("Player HUD Configuration")]
 ////Will move to class later if there is time
 //[SerializeField]
