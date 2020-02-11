@@ -329,16 +329,11 @@ public class QuadTreeManager : MonoBehaviour
 
     }
 
-    public List<GameObject> BROSENDHELP = new List<GameObject>();
-    public List<GameObject> BROSENDHELPAFTER = new List<GameObject>();
-
     //Updates tree
     IEnumerator UpdateDynamicQuadTree()
     {
         while (true)
         {
-            BROSENDHELP.Clear();
-            dynamicTrees[DYNAMIC_TYPES.ENEMIES].GetObjects(ref BROSENDHELP);
             ResetDynamicTrees();
 
             //Reset the moving tree
@@ -354,8 +349,6 @@ public class QuadTreeManager : MonoBehaviour
 
                 dynamicList.Remove(dynamicList[i]);
             }
-            BROSENDHELPAFTER.Clear();
-            dynamicTrees[DYNAMIC_TYPES.ENEMIES].GetObjects(ref BROSENDHELPAFTER);
             yield return new WaitForSeconds(updateTick);
         }
     }

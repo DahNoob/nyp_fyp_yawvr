@@ -26,8 +26,10 @@ public class HandWorldPicker : MonoBehaviour
             frameTriggered = indexTriggered = true;
         else if (indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < 0.35f)
             indexTriggered = false;
+        string[] layers = { "Props", "Pickable" };
+
         RaycastHit hit;
-        if (Physics.Raycast(m_raycastOrigin.position, m_raycastOrigin.forward, out hit, 999999))
+        if (Physics.Raycast(m_raycastOrigin.position, m_raycastOrigin.forward, out hit, 999999, LayerMask.GetMask(layers)))
         {
             m_raycastPointIndicator.position = hit.point;
             WorldPickable prevPickable = currentPickable;

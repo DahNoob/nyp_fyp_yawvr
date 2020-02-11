@@ -310,9 +310,13 @@ public class PlayerUIMinimap
 
     void UpdateObjectives()
     {
+        if (Game.instance == null)
+            return;
+
         //Get the appropriate list
         int tag = (int)MINIMAP_ICONTYPE.OBJECTIVES;
         List<GameObject> objectiveIconList = minimapIcons[tag];
+
 
         int objectivesCount = Game.instance.m_objectives.Length;
 
@@ -342,8 +346,6 @@ public class PlayerUIMinimap
                 HandleActive(objectiveIconList[i], false);
                 continue;
             }
-
-
             Vector3 displacement = Vector3.Scale((Game.instance.m_objectives[i].m_highlight.position - m_playerReference.transform.position), new Vector3(1, 0, 1));
 
             //Normalized value of that distance between the max size (query bounds) and not
