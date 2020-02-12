@@ -15,10 +15,11 @@ public class MainHubHandler : MonoBehaviour
     private GameObject[] m_planets_prefabs;
     [SerializeField]
     private TMPro.TextMeshProUGUI m_planetNameUi;
-
+    
     private bool isChangingScene = false;
     private BasePlanetHolograph[] planets;
     private int currentPlanetIndex = 0;
+    private PlanetHolographPickable planetHoloPickable;
 
     void Awake()
     {
@@ -31,6 +32,7 @@ public class MainHubHandler : MonoBehaviour
                 planets[i].gameObject.SetActive(false);
         }
         m_planetNameUi.text = planets[currentPlanetIndex].m_planetName;
+        planetHoloPickable = m_hologramsRoot.GetComponent<PlanetHolographPickable>();
     }
 
     void OnDisable()
@@ -72,6 +74,7 @@ public class MainHubHandler : MonoBehaviour
                 m_planetNameUi.text = planets[i].m_planetName;
             }
         }
+        planetHoloPickable.ResetFade();
     }
 
     IEnumerator fadeToScene(string _sceneName)
