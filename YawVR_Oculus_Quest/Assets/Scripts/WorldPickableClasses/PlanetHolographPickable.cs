@@ -24,7 +24,7 @@ public class PlanetHolographPickable : WorldPickable
         else
         {
             timer += Time.deltaTime;
-            if (timer > 6 && textFadeCoroutine == null)
+            if (timer > 3 && textFadeCoroutine == null)
                 textFadeCoroutine = StartCoroutine(fadeText());
         }
     }
@@ -37,6 +37,7 @@ public class PlanetHolographPickable : WorldPickable
     public void ResetFade()
     {
         timer = 0;
+        m_textUi.color = Color.white;
         if (textFadeCoroutine != null)
         {
             StopCoroutine(textFadeCoroutine);

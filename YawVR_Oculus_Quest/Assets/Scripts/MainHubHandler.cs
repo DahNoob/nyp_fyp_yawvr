@@ -35,6 +35,16 @@ public class MainHubHandler : MonoBehaviour
         planetHoloPickable = m_hologramsRoot.GetComponent<PlanetHolographPickable>();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            _chairPickable_onSelected();
+        if (Input.GetKeyDown(KeyCode.Z))
+            PreviousPlanet();
+        if (Input.GetKeyDown(KeyCode.C))
+            NextPlanet();
+    }
+
     void OnDisable()
     {
         m_chairPickable.onSelected -= _chairPickable_onSelected;

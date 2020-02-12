@@ -24,7 +24,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     [SerializeField]
     private ParticleSystem m_alertParticleSystem;
     [SerializeField]
-    private ParticleSystem m_fireParticleSystem;
+    private GameObject m_fireParticleSystem;
     [SerializeField]
     private Transform m_rightProjectileOrigin;
     [SerializeField]
@@ -89,6 +89,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     private float amount = 1.0f; //how much it shakes
     private Vector3 transformX;
     private bool inDyingAnim;
+    private ParticleSystem[] deathParticles;
 
     //[Header("Projectile Origin")]
     //// Light Mech Shooting
@@ -153,6 +154,11 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         m_Animator.SetBool("ResetAnim", true);
         RemoveFromQuadTree(this.gameObject);
         this.gameObject.SetActive(false);
+    }
+
+    void Awake()
+    {
+        deathParticles = m_fireParticleSystem.GetComponentsInChildren<ParticleSystem>();
     }
 
     // Start is called before the first frame update
@@ -358,7 +364,10 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         {
             inDyingAnim = true;
             m_Animator.Play("Death");
-            m_fireParticleSystem.Play();
+            for (int i = 0; i < deathParticles.Length; ++i)
+            {
+                deathParticles[i].Play();
+            }
             m_deathSound.PlaySoundAt(transform.position);
         }
     }
