@@ -465,4 +465,8 @@ public class PlayerHandler : BaseEntity
 
     }
 
+    public void ExitToHub(bool _allObjectivesCleared)
+    {
+        StartCoroutine(SetNextLevel("MainHub"));
+    }
 }

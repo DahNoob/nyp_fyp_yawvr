@@ -405,4 +405,15 @@ public class Game : MonoBehaviour
         }
         return nearest;
     }
+
+    public bool IsObjectivesCleared()
+    {
+        if (m_objectives.Length == 0) return true;
+        for (int i = 0; i < m_objectives.Length; ++i)
+        {
+            if (!m_objectives[i].m_completed)
+                return false;
+        }
+        return true;
+    }
 }

@@ -46,12 +46,24 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     private Image m_rightWeaponIcon;
 
+    [Header("Pause UI Configuration")]
+    [SerializeField]
+    private RectTransform m_pauseUiBackground;
+    [SerializeField]
+    private Canvas m_pauseUiButtons;
+    [SerializeField]
+    private Canvas m_confirmExitButtons;
+
+    
+
 
 
     //Local variables
     [HideInInspector]
     //Normalized scale for the update of size between other things
     public float normalizedScale;
+    private bool isPaused = false;
+    private bool isChangingScenes = false;
 
     public Camera minimapCamera
     {
@@ -123,6 +135,9 @@ public class PlayerUIManager : MonoBehaviour
         //{
         //    AddStringToProcessingQueue(FormatFluff("Interesting, to say the least."));
         //}
+        if (Input.GetKeyDown(KeyCode.Escape) || OVRInput.GetDown(OVRInput.RawButton.Start))
+            RequestPause();
+
     }
 
     public void ObjectiveTriggered(int objectiveIndex)
@@ -202,6 +217,43 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
     #endregion
+
+    public void RequestPause()
+    {
+        if (isChangingScenes) return;
+        isPaused = !isPaused;
+        m_pauseUiBackground.gameObject.SetActive(isPaused);
+        m_pauseUiButtons.gameObject.SetActive(isPaused);
+        m_confirmExitButtons.gameObject.SetActive(false);
+    }
+
+    public void ForceOpenPauseButtons()
+    {
+        m_pauseUiButtons.gameObject.SetActive(true);
+        m_confirmExitButtons.gameObject.SetActive(false);
+    }
+
+    public void RequestExit()
+    {
+        if (Game.instance && !Game.instance.IsObjectivesCleared())
+        {
+            m_pauseUiButtons.gameObject.SetActive(false);
+            m_confirmExitButtons.gameObject.SetActive(true);
+        }
+        else
+        {
+            PlayerHandler.instance.ExitToHub(true);
+        }
+    }
+
+    public void Exit(bool _objectivesCleared)
+    {
+        isChangingScenes = true;
+        m_pauseUiBackground.gameObject.SetActive(false);
+        m_pauseUiButtons.gameObject.SetActive(false);
+        m_confirmExitButtons.gameObject.SetActive(false);
+        PlayerHandler.instance.ExitToHub(_objectivesCleared);
+    }
 }
 
 //[Header("Player HUD Configuration")]
