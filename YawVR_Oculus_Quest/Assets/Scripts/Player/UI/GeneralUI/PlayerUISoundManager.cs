@@ -22,6 +22,19 @@ public class PlayerUISoundManager : MonoBehaviour
         TOTAL_SOUNDTYPE
     }
 
+    public enum TUTORIAL_SOUNDTYPE
+    {
+        WELCOME_TUTORIAL,
+        DISORIENTED,
+        LOOKAROUND,
+        MOVING,
+        READYING,
+        RELOADING,
+        RESET_POSE,
+        SWAP_WEAPONS,
+        TOTAL_SOUNDTYPE
+    }
+
     [System.Serializable]
     public class PlayerUISoundData
     {
@@ -31,10 +44,25 @@ public class PlayerUISoundManager : MonoBehaviour
         //public AudioSource m_audioSource;
         public SoundFXRef m_audioRef;
     }
+
+    [System.Serializable]
+    public class PlayerTutorialSoundData
+    {
+        public string m_audioName;
+        public TUTORIAL_SOUNDTYPE m_soundType;
+        //public AudioClip m_audioClip;
+        //public AudioSource m_audioSource;
+        public SoundFXRef m_audioRef;
+    }
     //I keep using this dictionary thing cause its useful but meh whatever
     private Dictionary<int, PlayerUISoundData> m_audioClipDictionary;
     [SerializeField]
     private List<PlayerUISoundData> m_soundData;
+
+    //I keep using this dictionary thing cause its useful but meh whatever
+    private Dictionary<int, PlayerTutorialSoundData> m_tutorialClipDictionary;
+    [SerializeField]
+    private List<PlayerTutorialSoundData> m_tutorialSoundData;
 
     //Dictionary for sounds
     // Start is called before the first frame update
@@ -47,6 +75,12 @@ public class PlayerUISoundManager : MonoBehaviour
         for(int i =0; i < m_soundData.Count; ++i)
         {
             m_audioClipDictionary.Add((int)m_soundData[i].m_soundType, m_soundData[i]);
+        }
+
+        m_tutorialClipDictionary = new Dictionary<int, PlayerTutorialSoundData>();
+        for (int i = 0; i < m_tutorialSoundData.Count; ++i)
+        {
+            m_tutorialClipDictionary.Add((int)m_tutorialSoundData[i].m_soundType, m_tutorialSoundData[i]);
         }
     }
 
@@ -63,6 +97,19 @@ public class PlayerUISoundManager : MonoBehaviour
 
     }
 
+    public void PlaySound(TUTORIAL_SOUNDTYPE m_soundType, float delaySecs = 0, float volume = 1)
+    {
+        if (m_soundType == TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
+            return;
+
+        int tag = (int)m_soundType;
+
+        SoundFXRef audioRef = m_tutorialClipDictionary[tag].m_audioRef;
+        audioRef.soundFX.volume = volume;
+        audioRef.PlaySound(delaySecs);
+
+    }
+
     public void PlaySoundAt(UI_SOUNDTYPE m_soundType, Vector3 position, float delaySecs = 0, float volume = 1, float pitchMultiplier = 1)
     {
         if (m_soundType == UI_SOUNDTYPE.TOTAL_SOUNDTYPE)
@@ -74,6 +121,17 @@ public class PlayerUISoundManager : MonoBehaviour
         audioRef.PlaySoundAt(position, delaySecs, volume, pitchMultiplier);
     }
 
+    public void PlaySoundAt(TUTORIAL_SOUNDTYPE m_soundType, Vector3 position, float delaySecs = 0, float volume = 1, float pitchMultiplier = 1)
+    {
+        if (m_soundType == TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
+            return;
+
+        int tag = (int)m_soundType;
+
+        SoundFXRef audioRef = m_tutorialClipDictionary[tag].m_audioRef;
+        audioRef.PlaySoundAt(position, delaySecs, volume, pitchMultiplier);
+    }
+
     public bool StopSound(UI_SOUNDTYPE m_soundType)
     {
         if (m_soundType == UI_SOUNDTYPE.TOTAL_SOUNDTYPE)
@@ -81,6 +139,16 @@ public class PlayerUISoundManager : MonoBehaviour
 
         int tag = (int)m_soundType;
         SoundFXRef audioRef = m_audioClipDictionary[tag].m_audioRef;
+        return audioRef.StopSound();
+    }
+
+    public bool StopSound(TUTORIAL_SOUNDTYPE m_soundType)
+    {
+        if (m_soundType == TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
+            return false;
+
+        int tag = (int)m_soundType;
+        SoundFXRef audioRef = m_tutorialClipDictionary[tag].m_audioRef;
         return audioRef.StopSound();
     }
 
@@ -97,4 +165,32 @@ public class PlayerUISoundManager : MonoBehaviour
             audioRef.StopSound();
         }
     }
+
+    public void StopAllTutorialSounds()
+    {
+        foreach (KeyValuePair<int, PlayerTutorialSoundData> data in m_tutorialClipDictionary)
+        {
+            PlayerTutorialSoundData soundsData = data.Value;
+
+            if (soundsData.m_soundType == TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
+                continue;
+
+            SoundFXRef audioRef = soundsData.m_audioRef;
+            audioRef.StopSound();
+        }
+    }
+
+    public void StopAllSounds()
+    {
+        StopAllUISounds();
+        StopAllTutorialSounds();
+    }
+}
+
+[System.Serializable]
+public class SoundData
+{
+    public float delaySecs = 0;
+    public float volume = 1;
+    public float pitchMultiplier = 1;
 }

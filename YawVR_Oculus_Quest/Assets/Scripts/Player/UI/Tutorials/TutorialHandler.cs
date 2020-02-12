@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using OVR;
 
 public class TutorialHandler : MonoBehaviour
 {
@@ -16,22 +17,21 @@ public class TutorialHandler : MonoBehaviour
         public Transform leftTransform;
         public Transform rightTransform;
         public Transform middleTransform;
+        public GameObject continueButton;
     }
 
     //Linked stuff first
 
     public enum TUTORIAL_TYPE
     {
-        RELOAD,
-        MOVE,
-        RESET_POSE,
-        WEAPONS,
-        CHANGE_WEAPON,
-        SHOOTING,
-        LOOKAROUND,
-        LIGHTMECH2,
-        HEAVYMECH2,
-        OBJECTIVES,
+        WELCOME_TUTORIAL,
+        LOOKAROUND1,
+        LOOKAROUND2,
+        MOVING,
+        READYINGWEAPONS,
+        RELOADING,
+        RESETPOSE,
+        SWAP_WEAPONS,
         DEFAULT
     }
 
@@ -48,7 +48,7 @@ public class TutorialHandler : MonoBehaviour
     private Dictionary<int, TutorialInfo> m_tutorialDictionary = new Dictionary<int, TutorialInfo>();
 
     private bool m_finishedCurrent = false;
-    private bool m_isWaiting = false;
+    public bool m_isWaiting = false;
     private string currentString;
 
     private TutorialInfo previousTutorialInfo;
@@ -108,9 +108,10 @@ public class TutorialHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AddTutorial(TUTORIAL_TYPE.RESET_POSE);
-        AddTutorial(TUTORIAL_TYPE.MOVE);
-        AddTutorial(TUTORIAL_TYPE.LOOKAROUND);
+        for (int i = 0; i < 8; ++i)
+        {
+                AddTutorial((TUTORIAL_TYPE)i);
+        }
     }
 
     // Update is called once per frame
@@ -147,11 +148,21 @@ public class TutorialHandler : MonoBehaviour
 
                 //Set header
                 m_elements.m_tutorialHeader.text = currentTutorialInfo.m_tutorialHeader;
-                //Enable the thing
-                m_elements.playerTutorialUI.SetActive(true);
 
                 StartCoroutine(TypeNewTutorialLine(currentTutorialInfo));
 
+                //Enable the thing
+                m_elements.playerTutorialUI.SetActive(true);
+                m_elements.continueButton.SetActive(true);
+
+                //Set width
+                m_elements.m_tutorialText.GetComponent<RectTransform>().sizeDelta = currentTutorialInfo.textBoxWidth;
+                //Play Sound
+                if (currentTutorialInfo.soundType != PlayerUISoundManager.TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
+                {
+                    SoundData soundData = currentTutorialInfo.m_soundData;
+                    PlayerUISoundManager.instance.PlaySound(currentTutorialInfo.soundType, soundData.delaySecs, soundData.volume);
+                }
                 previousTutorialInfo = currentTutorialInfo;
             }
         }
@@ -185,15 +196,29 @@ public class TutorialHandler : MonoBehaviour
                     if (currentTutorialInfo.rightController != null)
                         currentTutorialInfo.rightController.SetActive(true);
 
-                    //Set previous to current
-                    previousTutorialInfo = currentTutorialInfo;
-
                     m_elements.m_tutorialText.text = "";
                     //Enable the overall overlay
                     m_elements.playerTutorialUI.SetActive(true);
+                    m_elements.continueButton.SetActive(true);
 
                     //Start the typing thingo
                     StartCoroutine(TypeNewTutorialLine(currentTutorialInfo));
+
+                    //Set width
+                    m_elements.m_tutorialText.GetComponent<RectTransform>().sizeDelta = currentTutorialInfo.textBoxWidth;
+
+                    //Stop previous sound and play new sound.
+                    if (previousTutorialInfo != null && previousTutorialInfo.soundType != PlayerUISoundManager.TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
+                    {
+                        PlayerUISoundManager.instance.StopSound(previousTutorialInfo.soundType);
+                    }
+
+                    //Play Sound
+                    if (currentTutorialInfo.soundType != PlayerUISoundManager.TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
+                    {
+                        SoundData soundData = currentTutorialInfo.m_soundData;
+                        PlayerUISoundManager.instance.PlaySound(currentTutorialInfo.soundType, soundData.delaySecs, soundData.volume);
+                    }
 
                     //Set the previous to the current
                     previousTutorialInfo = currentTutorialInfo;
@@ -205,6 +230,7 @@ public class TutorialHandler : MonoBehaviour
             //Set active the playerUI;
             m_elements.m_tutorialText.text = "";
             m_elements.playerTutorialUI.SetActive(false);
+            m_elements.continueButton.SetActive(false);
             //Set previous to be null, kinda cheat way... but yea
             if (previousTutorialInfo.leftController != null)
                 previousTutorialInfo.leftController.SetActive(false);
@@ -216,7 +242,17 @@ public class TutorialHandler : MonoBehaviour
 
     public void Continue()
     {
-        m_isWaiting = false;
+        if (m_isWaiting)
+            m_isWaiting = false;
+        else
+        {
+            if (previousTutorialInfo != null && previousTutorialInfo.soundType != PlayerUISoundManager.TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
+            {
+                PlayerUISoundManager.instance.StopSound(previousTutorialInfo.soundType);
+            }
+            m_elements.m_tutorialText.text = currentString;
+            m_isWaiting = true;
+        }
     }
 
     IEnumerator TypeNewTutorialLine(TutorialInfo tutorialInfo)
@@ -237,14 +273,21 @@ public class TutorialHandler : MonoBehaviour
             //Set the text in player to be ""
             foreach (char letter in tutorialInfo.m_tutorialMessages[i].message)
             {
-                //Text += message
-                m_elements.m_tutorialText.text += letter;
-                yield return new WaitForSeconds(tutorialInfo.m_tutorialMessages[i].messageSpeed);
-
+                //To handle the skip
                 if (m_elements.m_tutorialText.text == tutorialInfo.m_tutorialMessages[i].message)
                 {
                     m_isWaiting = true;
+                    break;
                 }
+                else
+                    m_elements.m_tutorialText.text += letter;
+
+                yield return new WaitForSeconds(tutorialInfo.m_tutorialMessages[i].messageSpeed);
+            }
+
+            if (m_elements.m_tutorialText.text == tutorialInfo.m_tutorialMessages[i].message)
+            {
+                m_isWaiting = true;
             }
         }
 
@@ -253,6 +296,7 @@ public class TutorialHandler : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
         }
+
         m_finishedCurrent = true;
         FetchNewInfo();
         yield break;
@@ -270,19 +314,26 @@ public class TutorialInfo
     public string m_tutorialHeader;
     //List of things, and type
     public List<TutorialMessage> m_tutorialMessages;
+    //To show one sprite or not...
+    public bool singleInput = true;
     //Prefab
     public GameObject leftControllerPrefab;
     //Right prefab
     public GameObject rightControllerPrefab;
 
-    public bool singleInput = true;
+    public Vector2 textBoxWidth = new Vector2(90f, 100f);
+
+    //Audio Clip
+    public PlayerUISoundManager.TUTORIAL_SOUNDTYPE soundType = PlayerUISoundManager.TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE;
+    //SoundData
+    public SoundData m_soundData;
+
 
     //Finalized GameObjects
     [HideInInspector]
     public GameObject leftController;
     [HideInInspector]
     public GameObject rightController;
-
 }
 
 [System.Serializable]
