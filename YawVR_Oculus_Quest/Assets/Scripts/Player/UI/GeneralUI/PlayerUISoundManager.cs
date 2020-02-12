@@ -25,10 +25,11 @@ public class PlayerUISoundManager : MonoBehaviour
     public enum TUTORIAL_SOUNDTYPE
     {
         WELCOME_TUTORIAL,
-        DISORIENTED,
-        LOOKAROUND,
+        LOOKAROUNDPART1,
+        LOOKAROUNDPART2,
         MOVING,
         READYING,
+        SHOOTING,
         RELOADING,
         RESET_POSE,
         SWAP_WEAPONS,

@@ -32,6 +32,7 @@ public class TutorialHandler : MonoBehaviour
         RELOADING,
         RESETPOSE,
         SWAP_WEAPONS,
+        SHOOTING_WEAPONS,
         DEFAULT
     }
 

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2218244564894432549
 Transform:
   m_ObjectHideFlags: 0
@@ -765,7 +765,7 @@ MonoBehaviour:
         invSquareFalloff: {x: 1, y: 25}
       soundClips:
       - {fileID: 8300000, guid: 1d0477df936004844a7e20cfcaac55d2, type: 3}
-      visibilityToggle: 0
+      visibilityToggle: 1
     - name: HitMarker
       playback: 0
       volume: 1
@@ -1606,6 +1606,634 @@ MonoBehaviour:
         invSquareFalloff: {x: 1, y: 25}
       soundClips:
       - {fileID: 8300000, guid: 5a3160dbf0a8ebe40b94dd66abc2df06, type: 3}
+      visibilityToggle: 1
+    mixerGroup: {fileID: 0}
+    maxPlayingSounds: 0
+    preloadAudio: 0
+    volumeOverride: 1
+    playingSoundCount: 0
+  - name: Tutorial
+    soundList:
+    - name: WelcomeTutorial
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 1e4c0d59121f9d3449b8117c048d1ed6, type: 3}
+      visibilityToggle: 1
+    - name: LookAroundPart1
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 73cc17afa125ca1428c928a491d79239, type: 3}
+      visibilityToggle: 1
+    - name: LookAroundPart2
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 2e06a00830d67674a8a6721f89b174ad, type: 3}
+      visibilityToggle: 1
+    - name: Moving
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 064147bcb31d4104ab0c290594b03439, type: 3}
+      visibilityToggle: 1
+    - name: Readying...
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: b759bab55f219464c9a2caaa6d74398a, type: 3}
+      visibilityToggle: 1
+    - name: Shooting
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 5ff63b1af5c0a3b48a66ec33fdaf9fc9, type: 3}
+      visibilityToggle: 1
+    - name: Reloading
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 2275be09260dc6343ace00b87ee0ecf5, type: 3}
+      visibilityToggle: 1
+    - name: ResetPose
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: b71950711f1a41c44a0b4f275a634383, type: 3}
+      visibilityToggle: 1
+    - name: Swapping Weapons
+      playback: 0
+      volume: 1
+      pitchVariance: {x: 1, y: 1}
+      falloffDistance: {x: 1, y: 25}
+      falloffCurve: 1
+      volumeFalloffCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      reverbZoneMix:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      spread: 0
+      pctChanceToPlay: 1
+      priority: 0
+      delay: {x: 0, y: 0}
+      looping: 0
+      ospProps:
+        enableSpatialization: 0
+        useFastOverride: 0
+        gain: 0
+        enableInvSquare: 0
+        volumetric: 0
+        invSquareFalloff: {x: 1, y: 25}
+      soundClips:
+      - {fileID: 8300000, guid: 1c4b3e0468fc0c744a4f1e86210b5813, type: 3}
       visibilityToggle: 1
     mixerGroup: {fileID: 0}
     maxPlayingSounds: 0
