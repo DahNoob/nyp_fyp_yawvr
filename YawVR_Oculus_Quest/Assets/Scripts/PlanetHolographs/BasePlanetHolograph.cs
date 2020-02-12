@@ -6,7 +6,11 @@ abstract public class BasePlanetHolograph : MonoBehaviour
 {
     [Header("Base Configuration")]
     [SerializeField]
+    [Tooltip("The name of the scene file.")]
     public string m_sceneName;
+    [SerializeField]
+    [Tooltip("The planet's name to be shown in-game.")]
+    public string m_planetName;
     [SerializeField]
     protected Transform m_holographRoot;
     [SerializeField]

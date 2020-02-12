@@ -13,6 +13,8 @@ public class MainHubHandler : MonoBehaviour
     private Transform m_hologramsRoot;
     [SerializeField]
     private GameObject[] m_planets_prefabs;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI m_planetNameUi;
 
     private bool isChangingScene = false;
     private BasePlanetHolograph[] planets;
@@ -28,6 +30,7 @@ public class MainHubHandler : MonoBehaviour
             if (i != currentPlanetIndex)
                 planets[i].gameObject.SetActive(false);
         }
+        m_planetNameUi.text = planets[currentPlanetIndex].m_planetName;
     }
 
     void OnDisable()
@@ -64,7 +67,10 @@ public class MainHubHandler : MonoBehaviour
         {
             planets[i].gameObject.SetActive(false);
             if (i == currentPlanetIndex)
+            {
                 planets[i].gameObject.SetActive(true);
+                m_planetNameUi.text = planets[i].m_planetName;
+            }
         }
     }
 
