@@ -98,7 +98,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5708,12 +5708,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8834079351152413895, guid: 143acbe0941cf0347897b1a551349d3b,
+    - target: {fileID: 332367213553987817, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8834079351152413895, guid: 143acbe0941cf0347897b1a551349d3b,
+    - target: {fileID: 332367213553987817, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5728,12 +5728,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 332367213553987817, guid: 143acbe0941cf0347897b1a551349d3b,
+    - target: {fileID: 8834079351152413895, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 332367213553987817, guid: 143acbe0941cf0347897b1a551349d3b,
+    - target: {fileID: 8834079351152413895, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -30344,6 +30344,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23786289319021016, guid: a9d2de84afb308a4796cc671d3432b4d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 199ed3ac1a16fa84ebe8f09a05bc0cd1, type: 2}
     - target: {fileID: 120006741097097638, guid: a9d2de84afb308a4796cc671d3432b4d,
         type: 3}
       propertyPath: m_Enabled
@@ -30364,11 +30369,6 @@ PrefabInstance:
       propertyPath: rayTransform
       value: 
       objectReference: {fileID: 759797092}
-    - target: {fileID: 23786289319021016, guid: a9d2de84afb308a4796cc671d3432b4d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 199ed3ac1a16fa84ebe8f09a05bc0cd1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9d2de84afb308a4796cc671d3432b4d, type: 3}
 --- !u!1 &1374964578
