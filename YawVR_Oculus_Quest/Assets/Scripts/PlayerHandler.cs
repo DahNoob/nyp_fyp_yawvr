@@ -196,8 +196,8 @@ public class PlayerHandler : BaseEntity
         origRot = transform.rotation;
         m_healthBar.maxValue = m_maxHealth;
         m_armorBar.maxValue = m_maxArmor;
-        rightHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
-        leftHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
+        //rightHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
+        //leftHand.GetComponent<OVRGrabber>().QueryOffset += OnGrabberQueryOffset;
         m_uiHealth = health; //initial values
         m_uiArmor = armor; //initial values
         m_coinsText.text = "0";
@@ -421,8 +421,8 @@ public class PlayerHandler : BaseEntity
     }
     void OnDestroy()
     {
-        rightHand.GetComponent<OVRGrabber>().QueryOffset -= OnGrabberQueryOffset;
-        leftHand.GetComponent<OVRGrabber>().QueryOffset -= OnGrabberQueryOffset;
+        //rightHand.GetComponent<OVRGrabber>().QueryOffset -= OnGrabberQueryOffset;
+        //leftHand.GetComponent<OVRGrabber>().QueryOffset -= OnGrabberQueryOffset;
 
     }
 
