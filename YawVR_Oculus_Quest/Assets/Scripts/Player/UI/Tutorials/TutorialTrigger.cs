@@ -5,12 +5,19 @@ using UnityEngine;
 public class TutorialTrigger : MonoBehaviour
 {
     [SerializeField]
-    private TutorialHandler.TUTORIAL_TYPE m_tutorialType;
+    private TutorialHandler.TUTORIAL_TYPE[] m_tutorialTypes;
 
     private void OnTriggerEnter(Collider other)
     {
+        print(other.gameObject.name);
         if (other.tag == "Player")
-            TutorialHandler.instance.AddTutorial(m_tutorialType);
+        {
+            for (int i = 0; i < m_tutorialTypes.Length; ++i)
+            {
+                TutorialHandler.instance.AddTutorial(m_tutorialTypes[i]);
+            }
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerExit(Collider other)

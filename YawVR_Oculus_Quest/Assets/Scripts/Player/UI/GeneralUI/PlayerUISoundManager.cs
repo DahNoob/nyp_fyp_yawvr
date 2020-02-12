@@ -33,6 +33,8 @@ public class PlayerUISoundManager : MonoBehaviour
         RELOADING,
         RESET_POSE,
         SWAP_WEAPONS,
+        COMPLIMENT,
+        MOVETOPOINT,
         TOTAL_SOUNDTYPE
     }
 
@@ -147,9 +149,10 @@ public class PlayerUISoundManager : MonoBehaviour
     {
         if (m_soundType == TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
             return false;
-
+        
         int tag = (int)m_soundType;
         SoundFXRef audioRef = m_tutorialClipDictionary[tag].m_audioRef;
+        audioRef.soundFX.volume = 0;
         return audioRef.StopSound();
     }
 
@@ -163,6 +166,7 @@ public class PlayerUISoundManager : MonoBehaviour
                 continue;
 
             SoundFXRef audioRef = soundsData.m_audioRef;
+            audioRef.soundFX.volume = 0;
             audioRef.StopSound();
         }
     }
@@ -177,6 +181,7 @@ public class PlayerUISoundManager : MonoBehaviour
                 continue;
 
             SoundFXRef audioRef = soundsData.m_audioRef;
+            audioRef.soundFX.volume = 0;
             audioRef.StopSound();
         }
     }

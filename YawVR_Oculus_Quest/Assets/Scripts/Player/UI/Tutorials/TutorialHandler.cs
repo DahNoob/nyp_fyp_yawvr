@@ -33,6 +33,8 @@ public class TutorialHandler : MonoBehaviour
         RESETPOSE,
         SWAP_WEAPONS,
         SHOOTING_WEAPONS,
+        COMPLIMENT,
+        MOVETOPOINT,
         DEFAULT
     }
 
@@ -109,10 +111,10 @@ public class TutorialHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 8; ++i)
-        {
-                AddTutorial((TUTORIAL_TYPE)i);
-        }
+        //for (int i = 0; i < 8; ++i)
+        //{
+        //        AddTutorial((TUTORIAL_TYPE)i);
+        //}
     }
 
     // Update is called once per frame
@@ -244,13 +246,15 @@ public class TutorialHandler : MonoBehaviour
     public void Continue()
     {
         if (m_isWaiting)
-            m_isWaiting = false;
-        else
         {
             if (previousTutorialInfo != null && previousTutorialInfo.soundType != PlayerUISoundManager.TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
             {
                 PlayerUISoundManager.instance.StopSound(previousTutorialInfo.soundType);
             }
+            m_isWaiting = false;
+        }
+        else
+        {
             m_elements.m_tutorialText.text = currentString;
             m_isWaiting = true;
         }
