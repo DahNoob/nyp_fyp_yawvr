@@ -9,7 +9,6 @@ public class TutorialTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
         if (other.tag == "Player")
         {
             for (int i = 0; i < m_tutorialTypes.Length; ++i)

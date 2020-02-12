@@ -1256,11 +1256,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 23786289319021016, guid: a9d2de84afb308a4796cc671d3432b4d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e92c598ccd7563b408cb22916184a2e9, type: 2}
     - target: {fileID: 120006741097097638, guid: a9d2de84afb308a4796cc671d3432b4d,
         type: 3}
       propertyPath: m_Enabled
@@ -1291,6 +1286,11 @@ PrefabInstance:
       propertyPath: _laserBeamBehavior
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 23786289319021016, guid: a9d2de84afb308a4796cc671d3432b4d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e92c598ccd7563b408cb22916184a2e9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9d2de84afb308a4796cc671d3432b4d, type: 3}
 --- !u!4 &2482690947081206279 stripped
@@ -1429,6 +1429,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8602080149038066884}
     m_Modifications:
+    - target: {fileID: 756605538046042366, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 756605538046042364, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1484,11 +1489,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 756605538046042366, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 5682009806463883072, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_pivotOffset
@@ -1509,32 +1509,22 @@ PrefabInstance:
       propertyPath: m_ringOffset
       value: 
       objectReference: {fileID: 7980476832676308274}
-    - target: {fileID: 7104349720974818097, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7104349720974818097, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 332367213553987817, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 332367213553987817, guid: 143acbe0941cf0347897b1a551349d3b,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7117505394612399539, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7117505394612399539, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7104349720974818097, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7104349720974818097, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1549,11 +1539,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2200181157468920084, guid: 143acbe0941cf0347897b1a551349d3b,
+    - target: {fileID: 332367213553987817, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
-      propertyPath: pointer
-      value: 
-      objectReference: {fileID: 2478840350744900883}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332367213553987817, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6088252323711678180, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973349511687273666, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2973349511687273666, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: pointer
@@ -1564,17 +1569,32 @@ PrefabInstance:
       propertyPath: pointer
       value: 
       objectReference: {fileID: 2478840350744900883}
+    - target: {fileID: 4401352077186171233, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4401352077186171233, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: pointer
+      value: 
+      objectReference: {fileID: 2478840350744900883}
     - target: {fileID: 3310083984926012504, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: pointer
       value: 
       objectReference: {fileID: 2478840350744900883}
-    - target: {fileID: 5495598557866091939, guid: 143acbe0941cf0347897b1a551349d3b,
+    - target: {fileID: 2200181157468920084, guid: 143acbe0941cf0347897b1a551349d3b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200181157468920084, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: pointer
       value: 
       objectReference: {fileID: 2478840350744900883}
-    - target: {fileID: 4401352077186171233, guid: 143acbe0941cf0347897b1a551349d3b,
+    - target: {fileID: 5495598557866091939, guid: 143acbe0941cf0347897b1a551349d3b,
         type: 3}
       propertyPath: pointer
       value: 
