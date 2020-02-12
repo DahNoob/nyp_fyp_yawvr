@@ -12899,7 +12899,43 @@ MonoBehaviour:
     m_soundType: 8
     m_audioRef:
       soundFXName: Low Health
-  m_tutorialSoundData: []
+  m_tutorialSoundData:
+  - m_audioName: WelcomeTutorial
+    m_soundType: 0
+    m_audioRef:
+      soundFXName: WelcomeTutorial
+  - m_audioName: LookAroundPart1
+    m_soundType: 1
+    m_audioRef:
+      soundFXName: LookAroundPart1
+  - m_audioName: LookAroundPart2
+    m_soundType: 2
+    m_audioRef:
+      soundFXName: LookAroundPart2
+  - m_audioName: Moving
+    m_soundType: 3
+    m_audioRef:
+      soundFXName: Moving
+  - m_audioName: Readying
+    m_soundType: 4
+    m_audioRef:
+      soundFXName: Readying...
+  - m_audioName: Shooting
+    m_soundType: 5
+    m_audioRef:
+      soundFXName: Shooting
+  - m_audioName: Reloading
+    m_soundType: 6
+    m_audioRef:
+      soundFXName: Reloading
+  - m_audioName: ResetPose
+    m_soundType: 7
+    m_audioRef:
+      soundFXName: ResetPose
+  - m_audioName: SwapWeapons
+    m_soundType: 8
+    m_audioRef:
+      soundFXName: Swapping Weapons
 --- !u!114 &756605538046042339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23408,7 +23444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3401952915491931841
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23417,7 +23453,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425521913645499503}
   m_LocalRotation: {x: -0.078459024, y: -0, z: -0, w: 0.99691737}
-  m_LocalPosition: {x: 0, y: 0, z: 0.895}
+  m_LocalPosition: {x: 0, y: 0, z: 0.894}
   m_LocalScale: {x: 0.047, y: 0.047, z: 0.047}
   m_Children:
   - {fileID: 7798674349453741202}
@@ -23426,7 +23462,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -9, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 3.08}
+  m_AnchoredPosition: {x: 0, y: 3.089}
   m_SizeDelta: {x: 7.95, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3340875743007348241
@@ -82208,19 +82244,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_tutorialInfo:
-  - name: Reload
+  - name: WelcomeTutorial
     tutorialType: 0
-    m_tutorialHeader: Reloading Your Weapon
+    m_tutorialHeader: Welcome to Alphacore!
     m_tutorialMessages:
-    - message: Press the A button on your joystick to reload your weapon manually.
+    - message: Hey, friend! Welcome to the tutorial! My name is CHR15, or you can
+        just call me Chris. I'm your Alphacore and I'm going to guide you through
+        this!
       delay: 0
-      messageSpeed: 0
-    singleInput: 0
-    leftControllerPrefab: {fileID: 4378442634807181698, guid: 546b707e6c5a944438c137b5b8d43b30,
-      type: 3}
-    rightControllerPrefab: {fileID: 6265427588494766691, guid: 87c903c95c432a5419744431e68db370,
-      type: 3}
-    textBoxWidth: {x: 90, y: 100}
+      messageSpeed: 0.035
+    singleInput: 1
+    leftControllerPrefab: {fileID: 0}
+    rightControllerPrefab: {fileID: 0}
+    textBoxWidth: {x: 140, y: 100}
     soundType: 0
     m_soundData:
       delaySecs: 0
@@ -82228,19 +82264,101 @@ MonoBehaviour:
       pitchMultiplier: 1
     leftController: {fileID: 0}
     rightController: {fileID: 0}
-  - name: Move
+  - name: LookAroundOne
     tutorialType: 1
-    m_tutorialHeader: Moving Around
+    m_tutorialHeader: Looking Around
     m_tutorialMessages:
-    - message: Move the left joystick on the left controller to move your mech.
+    - message: First, lets begin by looking around the cockpit. Look up and down,
+        left and right. Behind you even, perhaps.
       delay: 0
-      messageSpeed: 0
+      messageSpeed: 0.035
+    singleInput: 1
+    leftControllerPrefab: {fileID: 0}
+    rightControllerPrefab: {fileID: 0}
+    textBoxWidth: {x: 140, y: 100}
+    soundType: 1
+    m_soundData:
+      delaySecs: 0
+      volume: 1
+      pitchMultiplier: 1
+    leftController: {fileID: 0}
+    rightController: {fileID: 0}
+  - name: LookAroundTwo
+    tutorialType: 2
+    m_tutorialHeader: Looking Around Part 2
+    m_tutorialMessages:
+    - message: All right, nice job. So now, to look around in your mech, move your
+        joystick on your right controller to rotate!
+      delay: 0
+      messageSpeed: 0.035
+    singleInput: 1
+    leftControllerPrefab: {fileID: 0}
+    rightControllerPrefab: {fileID: 5650064157499202938, guid: 69067d119bd3ebf498979c0812789273,
+      type: 3}
+    textBoxWidth: {x: 90, y: 100}
+    soundType: 2
+    m_soundData:
+      delaySecs: 0
+      volume: 1
+      pitchMultiplier: 1
+    leftController: {fileID: 0}
+    rightController: {fileID: 0}
+  - name: Moving
+    tutorialType: 3
+    m_tutorialHeader: Moving Your Mech
+    m_tutorialMessages:
+    - message: Hey hey, good job! Now, it's time to move around the level. Move the
+        left controller's joystick to move!
+      delay: 0
+      messageSpeed: 0.035
     singleInput: 1
     leftControllerPrefab: {fileID: 4917499735066306757, guid: b6cd4aa221c750d489c8d9a322857e11,
       type: 3}
     rightControllerPrefab: {fileID: 0}
     textBoxWidth: {x: 90, y: 100}
-    soundType: 0
+    soundType: 3
+    m_soundData:
+      delaySecs: 0
+      volume: 1
+      pitchMultiplier: 1
+    leftController: {fileID: 0}
+    rightController: {fileID: 0}
+  - name: Readying
+    tutorialType: 4
+    m_tutorialHeader: Readying Weapons
+    m_tutorialMessages:
+    - message: To raise your weapon, hold the grip button on the controllers. Go ahead,
+        try them out!
+      delay: 0
+      messageSpeed: 0.035
+    singleInput: 0
+    leftControllerPrefab: {fileID: 700457809667380731, guid: b500a2027ec675347a1744970698827d,
+      type: 3}
+    rightControllerPrefab: {fileID: 9015345698382129870, guid: b8c5ee1f0f1ce4547b353b0c28e32a86,
+      type: 3}
+    textBoxWidth: {x: 90, y: 100}
+    soundType: 4
+    m_soundData:
+      delaySecs: 0
+      volume: 1
+      pitchMultiplier: 1
+    leftController: {fileID: 0}
+    rightController: {fileID: 0}
+  - name: Reloading
+    tutorialType: 5
+    m_tutorialHeader: Reloading Weapons
+    m_tutorialMessages:
+    - message: Hey buddy, if you gotta reload, press the X/A button to reload your
+        left or right weapon.
+      delay: 0
+      messageSpeed: 0.035
+    singleInput: 0
+    leftControllerPrefab: {fileID: 4378442634807181698, guid: 546b707e6c5a944438c137b5b8d43b30,
+      type: 3}
+    rightControllerPrefab: {fileID: 6265427588494766691, guid: 87c903c95c432a5419744431e68db370,
+      type: 3}
+    textBoxWidth: {x: 90, y: 100}
+    soundType: 5
     m_soundData:
       delaySecs: 0
       volume: 1
@@ -82248,59 +82366,40 @@ MonoBehaviour:
     leftController: {fileID: 0}
     rightController: {fileID: 0}
   - name: ResetPose
-    tutorialType: 2
+    tutorialType: 6
     m_tutorialHeader: Resetting Pose
     m_tutorialMessages:
-    - message: Is your view off-centered? Hold down the Oculus Home button on the
-        right controller to reset your view.
+    - message: Remember, if at any time, you're not in the correct position, hold
+        the Oculus Home button to reset your view.
       delay: 0
-      messageSpeed: 0
+      messageSpeed: 0.035
     singleInput: 1
     leftControllerPrefab: {fileID: 0}
     rightControllerPrefab: {fileID: 3632102124900194231, guid: 7c29730c7e836f04297cd532c8516994,
       type: 3}
     textBoxWidth: {x: 90, y: 100}
-    soundType: 0
+    soundType: 6
     m_soundData:
       delaySecs: 0
       volume: 1
       pitchMultiplier: 1
     leftController: {fileID: 0}
     rightController: {fileID: 0}
-  - name: Weapons
-    tutorialType: 3
-    m_tutorialHeader: Readying Weapons
+  - name: SwapWeapons
+    tutorialType: 7
+    m_tutorialHeader: Swapping Weapons
     m_tutorialMessages:
-    - message: Hold down the grip buttons to bring out your weapons.
+    - message: Did you know, you could change your weapons? Press the Y/B button to
+        change!
       delay: 0
-      messageSpeed: 0
-    singleInput: 0
-    leftControllerPrefab: {fileID: 700457809667380731, guid: b500a2027ec675347a1744970698827d,
-      type: 3}
-    rightControllerPrefab: {fileID: 9015345698382129870, guid: b8c5ee1f0f1ce4547b353b0c28e32a86,
-      type: 3}
-    textBoxWidth: {x: 90, y: 100}
-    soundType: 0
-    m_soundData:
-      delaySecs: 0
-      volume: 1
-      pitchMultiplier: 1
-    leftController: {fileID: 0}
-    rightController: {fileID: 0}
-  - name: ChangeWeapon
-    tutorialType: 4
-    m_tutorialHeader: Changing Weapons
-    m_tutorialMessages:
-    - message: Press the B button on your joystick to swap weapons.
-      delay: 0
-      messageSpeed: 0
+      messageSpeed: 0.035
     singleInput: 0
     leftControllerPrefab: {fileID: 8465795014136489353, guid: 1e5d46a76e47e944cbc4b397c4425d4c,
       type: 3}
     rightControllerPrefab: {fileID: 3910004099927206309, guid: ba4f7072cba673640bb39b71291d69a5,
       type: 3}
     textBoxWidth: {x: 90, y: 100}
-    soundType: 0
+    soundType: 7
     m_soundData:
       delaySecs: 0
       volume: 1
@@ -82308,38 +82407,20 @@ MonoBehaviour:
     leftController: {fileID: 0}
     rightController: {fileID: 0}
   - name: Shooting
-    tutorialType: 5
-    m_tutorialHeader: Shooting
+    tutorialType: 8
+    m_tutorialHeader: Shooting Weapons
     m_tutorialMessages:
-    - message: Hold down the trigger button on your joystick to fire away!
+    - message: Time for the fun part! Press/Hold the trigger buttons on either controllers
+        and just fire away!
       delay: 0
-      messageSpeed: 0
+      messageSpeed: 0.035
     singleInput: 0
-    leftControllerPrefab: {fileID: 612276365501532956, guid: 46b01104a255c1c41a6fa9a0e0004964,
+    leftControllerPrefab: {fileID: 8465795014136489353, guid: 1e5d46a76e47e944cbc4b397c4425d4c,
       type: 3}
-    rightControllerPrefab: {fileID: 8464495584639716360, guid: 7546e93534510664da1c132921389671,
-      type: 3}
-    textBoxWidth: {x: 90, y: 100}
-    soundType: 0
-    m_soundData:
-      delaySecs: 0
-      volume: 1
-      pitchMultiplier: 1
-    leftController: {fileID: 0}
-    rightController: {fileID: 0}
-  - name: LookAround
-    tutorialType: 6
-    m_tutorialHeader: Looking Around
-    m_tutorialMessages:
-    - message: Move the joystick on your right controller to rotate your mech!
-      delay: 0
-      messageSpeed: 0
-    singleInput: 1
-    leftControllerPrefab: {fileID: 0}
-    rightControllerPrefab: {fileID: 5650064157499202938, guid: 69067d119bd3ebf498979c0812789273,
+    rightControllerPrefab: {fileID: 3910004099927206309, guid: ba4f7072cba673640bb39b71291d69a5,
       type: 3}
     textBoxWidth: {x: 90, y: 100}
-    soundType: 0
+    soundType: 7
     m_soundData:
       delaySecs: 0
       volume: 1
@@ -82353,7 +82434,7 @@ MonoBehaviour:
     leftTransform: {fileID: 145936702633221309}
     rightTransform: {fileID: 7730861517725872311}
     middleTransform: {fileID: 6367477128345656578}
-    continueButton: {fileID: 0}
+    continueButton: {fileID: 1425521913645499503}
   m_isWaiting: 0
 --- !u!1 &6096836666365457467
 GameObject:
@@ -116530,7 +116611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6104740978722269986
 RectTransform:
   m_ObjectHideFlags: 0
@@ -119772,7 +119853,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6367477128345656578
 Transform:
   m_ObjectHideFlags: 0
