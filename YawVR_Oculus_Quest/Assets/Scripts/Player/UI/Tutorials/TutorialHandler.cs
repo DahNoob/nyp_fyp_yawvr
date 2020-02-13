@@ -35,6 +35,7 @@ public class TutorialHandler : MonoBehaviour
         SHOOTING_WEAPONS,
         COMPLIMENT,
         MOVETOPOINT,
+        OPEN_PAUSEMENU,
         DEFAULT
     }
 
@@ -50,11 +51,18 @@ public class TutorialHandler : MonoBehaviour
 
     private Dictionary<int, TutorialInfo> m_tutorialDictionary = new Dictionary<int, TutorialInfo>();
 
-    private bool m_finishedCurrent = false;
+    private bool m_inTutorial = false;
     public bool m_isWaiting = false;
     private string currentString;
 
     private TutorialInfo previousTutorialInfo;
+
+    //Some queue system
+    [SerializeField]
+    private List<GameObject> tutorialLocations = new List<GameObject>();
+    //Current tutorial Index
+    private int currentTutorialIndex = 0;
+
 
     private void Awake()
     {
@@ -115,6 +123,8 @@ public class TutorialHandler : MonoBehaviour
         //{
         //        AddTutorial((TUTORIAL_TYPE)i);
         //}
+
+        StartTutorial();
     }
 
     // Update is called once per frame
@@ -243,6 +253,9 @@ public class TutorialHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Skips the current text displaying, or move on to the next tutorial.
+    /// </summary>
     public void Continue()
     {
         if (m_isWaiting)
@@ -260,9 +273,14 @@ public class TutorialHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Function that is called when a new line needs to be typed to screen
+    /// </summary>
+    /// <param name="tutorialInfo">The reference tutorialInfo object to get info from.</param>
+    /// <returns></returns>
     IEnumerator TypeNewTutorialLine(TutorialInfo tutorialInfo)
     {
-        m_finishedCurrent = false;
+        m_inTutorial = false;
         for (int i = 0; i < tutorialInfo.m_tutorialMessages.Count; ++i)
         {
             while (m_isWaiting)
@@ -302,9 +320,40 @@ public class TutorialHandler : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        m_finishedCurrent = true;
+        m_inTutorial = true;
         FetchNewInfo();
         yield break;
+    }
+
+    /// <summary>
+    /// Goes to the index of the tutorial
+    /// </summary>
+    public void SetNextTutorial()
+    {
+        currentTutorialIndex++;
+        for(int i =0; i < tutorialLocations.Count; ++i)
+        {
+            bool active = i == currentTutorialIndex ? true : false;
+            tutorialLocations[i].SetActive(active);
+        }
+    }
+
+    public void StartTutorial()
+    {
+        for (int i = 0; i < tutorialLocations.Count; ++i)
+        {
+            bool active = i == currentTutorialIndex ? true : false;
+            tutorialLocations[i].SetActive(active);
+        }
+    }
+
+    /// <summary>
+    /// Adds a object to the tutorialList as a public function
+    /// </summary>
+    /// <param name="referenceObject">The reference object to add into the list</param>
+    public void AddToTutorialList(GameObject referenceObject)
+    {
+        tutorialLocations.Add(referenceObject);
     }
 }
 
