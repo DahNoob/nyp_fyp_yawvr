@@ -15,13 +15,7 @@ public class TutorialTrigger : MonoBehaviour
             {
                 TutorialHandler.instance.AddTutorial(m_tutorialTypes[i]);
             }
-            Destroy(this.gameObject);
+            TutorialHandler.instance.SetNextTutorial();
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-
-    }
-
 }

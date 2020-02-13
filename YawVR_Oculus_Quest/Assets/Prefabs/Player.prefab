@@ -13304,6 +13304,14 @@ MonoBehaviour:
     m_soundType: 8
     m_audioRef:
       soundFXName: Swapping Weapons
+  - m_audioName: Compliment
+    m_soundType: 9
+    m_audioRef:
+      soundFXName: Compliment
+  - m_audioName: MoveToLocation
+    m_soundType: 10
+    m_audioRef:
+      soundFXName: MoveToLocation
 --- !u!114 &756605538046042339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83702,7 +83710,7 @@ MonoBehaviour:
     leftControllerPrefab: {fileID: 0}
     rightControllerPrefab: {fileID: 0}
     textBoxWidth: {x: 140, y: 100}
-    soundType: 11
+    soundType: 9
     m_soundData:
       delaySecs: 0
       volume: 1
@@ -83713,14 +83721,14 @@ MonoBehaviour:
     tutorialType: 10
     m_tutorialHeader: Try it out!
     m_tutorialMessages:
-    - message: It's time to test your knowledge. Move to the point seen on your screen.
+    - message: Okay, move to the location seen on your screen.
       delay: 0
       messageSpeed: 0.02
     singleInput: 1
     leftControllerPrefab: {fileID: 0}
     rightControllerPrefab: {fileID: 0}
     textBoxWidth: {x: 140, y: 100}
-    soundType: 11
+    soundType: 10
     m_soundData:
       delaySecs: 0
       volume: 1
@@ -83736,6 +83744,11 @@ MonoBehaviour:
     middleTransform: {fileID: 6367477128345656578}
     continueButton: {fileID: 1425521913645499503}
   m_isWaiting: 0
+  tutorialLocations:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6096836666365457467
 GameObject:
   m_ObjectHideFlags: 0
@@ -124121,11 +124134,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MechLegs
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 91471b64876858b4386b4fb6b873a173, type: 2}
     - target: {fileID: -4216859302048453862, guid: 39ba5ee659284c942b72f011f8c4c388,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -124181,6 +124189,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 39ba5ee659284c942b72f011f8c4c388,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 91471b64876858b4386b4fb6b873a173, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39ba5ee659284c942b72f011f8c4c388, type: 3}
 --- !u!4 &8755393700263190707 stripped
@@ -125158,6 +125171,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      propertyPath: useRecommendedMSAALevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      propertyPath: resetTrackerOnLoad
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2037080, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_BackGroundColor.a
       value: 0
@@ -125172,14 +125193,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2037080, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_HDR
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
-      propertyPath: useRecommendedMSAALevel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
-      propertyPath: resetTrackerOnLoad
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -125231,11 +125244,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Reticles
-      objectReference: {fileID: 0}
-    - target: {fileID: 5571571889790552413, guid: d223a7ba248897d46a0198428384121a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
         type: 3}
@@ -125290,6 +125298,11 @@ PrefabInstance:
     - target: {fileID: 1452691406602340962, guid: d223a7ba248897d46a0198428384121a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571571889790552413, guid: d223a7ba248897d46a0198428384121a,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 80669793385175505, guid: d223a7ba248897d46a0198428384121a,
