@@ -35,6 +35,7 @@ public class TutorialHandler : MonoBehaviour
         SHOOTING_WEAPONS,
         COMPLIMENT,
         MOVETOPOINT,
+        OPEN_PAUSEMENU,
         DEFAULT
     }
 
