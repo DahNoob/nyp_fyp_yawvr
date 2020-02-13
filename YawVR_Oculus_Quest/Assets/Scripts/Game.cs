@@ -68,6 +68,7 @@ public class Game : MonoBehaviour
     //Local variables
     public int currentObjectiveIndex { private set; get; } = -1;
     private List<int> allocatedPoints;
+    private int fm3Limit = 0;
 
     void Awake()
     {
@@ -287,7 +288,10 @@ public class Game : MonoBehaviour
             bool loadloadaald = !allocatedPoints.Contains(i);
             if (!allocatedPoints.Contains(i) && Random.Range(0.0f, 100.0f) < m_enemySpawnProbability && !CustomUtility.IsHitRadius(MapPointsHandler.instance.m_mapPoints[i], PlayerHandler.instance.transform.position, m_enemySpawnDeadzone))
             {
-                EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[Random.Range(0, m_enemies.Length)].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
+                int randomEnemyIndex = Random.Range(0, m_enemies.Length);
+                if (randomEnemyIndex == m_enemies.Length - 1 && ++fm3Limit > 6)// HARDCODED BCFHESSSSAFFAF
+                    randomEnemyIndex = Random.Range(0, m_enemies.Length - 1);
+                EnemyBase enemy = ObjectPooler.instance.SpawnFromPool(m_enemies[randomEnemyIndex].poolType, MapPointsHandler.instance.m_mapPoints[i], Quaternion.identity).GetComponent<EnemyBase>();
                 //print("Enemy deployed at point " + i);
             }
         }
