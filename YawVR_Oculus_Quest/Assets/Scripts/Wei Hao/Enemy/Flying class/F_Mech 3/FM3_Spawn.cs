@@ -36,10 +36,12 @@ public class FM3_Spawn : SMB_BaseEnemyState
         //m_currentIteration = 0;
         animator.SetBool("Chase_InRange", false);
 
-        Transform pTransform = GameObject.Find(animator.name).GetComponent<Transform>();
-        Cargo = pTransform.Find("Flying_Mech_Master/Container").gameObject;
-        Cargo.gameObject.AddComponent<Rigidbody>();
-        rb = Cargo.gameObject.GetComponent<Rigidbody>();
+        //Transform pTransform = GameObject.Find(animator.name).GetComponent<Transform>();
+        //Cargo = pTransform.Find("Flying_Mech_Master/Container").gameObject;
+        Cargo = enemy.GetComponent<FlyingMech3>().m_cargoObject;
+        //Cargo.AddComponent<Rigidbody>();
+        //rb = Cargo.gameObject.GetComponent<Rigidbody>();
+        rb = Cargo.AddComponent<Rigidbody>();
         //rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         //foreach (Transform trs in pTransform)
         //{
@@ -54,11 +56,6 @@ public class FM3_Spawn : SMB_BaseEnemyState
 
         //DropCargo(animator);
         //enemy.GetComponent<HeavyMech2>().EnterSpawn();
-    }
-
-    private void StartCoroutine(IEnumerator enumerator)
-    {
-        throw new NotImplementedException();
     }
 
     public override void UpdateState(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)

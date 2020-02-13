@@ -116,7 +116,7 @@ public class Game : MonoBehaviour
             {
                 currObj.m_timer -= currObj.m_spawnTime;
                 print("Spawn Enemies!");
-                int i = 0, max = Random.Range(1, m_enemies.Length);
+                int i = 0, max = Random.Range(1, m_enemies.Length - 1);//minus one cuz not spawqning flying cargo enemy
                 while (i < max)
                 {
                     QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 9999);
@@ -170,7 +170,7 @@ public class Game : MonoBehaviour
             {
                 currObj.m_timer -= currObj.m_spawnTime;
                 print("Spawn Enemies!");
-                int i = 0, max = Random.Range(1, m_enemies.Length);
+                int i = 0, max = Random.Range(1, m_enemies.Length - 1);//minus one cuz not spawqning flying cargo enemy
                 while (i < max)
                 {
                     QuadRect newQuadRect = new QuadRect(currObj.m_highlight.position + new Vector3(Random.Range(-20, 20), 0, Random.Range(-20, 20)) * (i + 1), 75, 9999);

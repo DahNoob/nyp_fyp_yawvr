@@ -66,6 +66,12 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     [SerializeField]
     protected GameObject LM_Spawn2;
 
+    public GameObject m_cargoObject;
+    [SerializeField]
+    private GameObject m_cargoObjectPrefab;
+    [SerializeField]
+    private Transform m_flying_mech_master;
+
     public void OnObjectSpawn()
     {
         //Rigidbody rb = GetComponent<Rigidbody>();
@@ -75,6 +81,12 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         Start();
         SetIconColor(Color.white);
         SetIconSprite();
+        GetComponent<Waypoint>().Start();
+        if (m_cargoObject == null)
+        {
+            m_cargoObject = Instantiate(m_cargoObjectPrefab, m_flying_mech_master);
+            m_cargoObject.transform.localPosition = new Vector3(0, -5.5f, 0);
+        }
     }
 
     public void OnObjectDestroy()
@@ -101,88 +113,88 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         // Get rarity
         rarity = (_Rarity)weightedRandom.GetComponent<WeightedRandom>().random();
 
-        string currBuff = StartBuff();
-        if (rarity == _Rarity.DELTA)
-        {
-            if (currBuff == "HP")
-            {
-                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
-                HP = true;
-            }
-            else if (currBuff == "DMG")
-            {
-                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
-                DMG = true;
-            }
-            else if (currBuff == "MS")
-            {
-                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
-                MS = true;
-            }
-        }
-        else if (rarity == _Rarity.BETA)
-        {
-            string secondBuff = StartBuff();
+        //string currBuff = StartBuff();
+        //if (rarity == _Rarity.DELTA)
+        //{
+        //    if (currBuff == "HP")
+        //    {
+        //        GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
+        //        HP = true;
+        //    }
+        //    else if (currBuff == "DMG")
+        //    {
+        //        GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
+        //        DMG = true;
+        //    }
+        //    else if (currBuff == "MS")
+        //    {
+        //        GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
+        //        MS = true;
+        //    }
+        //}
+        //else if (rarity == _Rarity.BETA)
+        //{
+        //    string secondBuff = StartBuff();
 
-            if (currBuff == "HP" || secondBuff == "HP")
-            {
-                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
-                HP = true;
-            }
-            else if (currBuff == "DMG" || secondBuff == "DMG")
-            {
-                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
-                DMG = true;
-            }
-            else if (currBuff == "MS" || secondBuff == "MS")
-            {
-                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
-                MS = true;
-            }
-        }
-        else if (rarity == _Rarity.ALPHA)
-        {
-            string secondBuff = StartBuff();
-            string thirdBuff = StartBuff();
+        //    if (currBuff == "HP" || secondBuff == "HP")
+        //    {
+        //        GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
+        //        HP = true;
+        //    }
+        //    else if (currBuff == "DMG" || secondBuff == "DMG")
+        //    {
+        //        GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
+        //        DMG = true;
+        //    }
+        //    else if (currBuff == "MS" || secondBuff == "MS")
+        //    {
+        //        GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
+        //        MS = true;
+        //    }
+        //}
+        //else if (rarity == _Rarity.ALPHA)
+        //{
+        //    string secondBuff = StartBuff();
+        //    string thirdBuff = StartBuff();
 
-            if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
-            {
-                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
-                HP = true;
-            }
-            else if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
-            {
-                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
-                DMG = true;
-            }
-            else if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
-            {
-                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
-                MS = true;
-            }
-        }
-        else if (rarity == _Rarity.OMEGA)
-        {
-            //string secondBuff = StartBuff();
-            //string thirdBuff = StartBuff();
-            //string fourthBuff = StartBuff();
+        //    if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
+        //    {
+        //        GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
+        //        HP = true;
+        //    }
+        //    else if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+        //    {
+        //        GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
+        //        DMG = true;
+        //    }
+        //    else if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+        //    {
+        //        GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
+        //        MS = true;
+        //    }
+        //}
+        //else if (rarity == _Rarity.OMEGA)
+        //{
+        //    //string secondBuff = StartBuff();
+        //    //string thirdBuff = StartBuff();
+        //    //string fourthBuff = StartBuff();
 
-            //if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
-            //{
-            //    GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
-            //    HP = true;
-            //}
-            //if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
-            //{
-            //    GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
-            //    DMG = true;
-            //}
-            //if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
-            //{
-            //    GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
-            //    MS = true;
-            //}
-        }
+        //    //if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
+        //    //{
+        //    //    GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        //    //    HP = true;
+        //    //}
+        //    //if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
+        //    //{
+        //    //    GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        //    //    DMG = true;
+        //    //}
+        //    //if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
+        //    //{
+        //    //    GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+        //    //    MS = true;
+        //    //}
+        //}
 
         //Add to Quadtree
         AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);        
@@ -253,8 +265,7 @@ public class FlyingMech3 : EnemyBase, IPooledObject
 
     public string StartBuff()
     {
-        System.Random random = new System.Random();
-        int index = random.Next(buffs.Count);
+        int index = Random.Range(0, buffs.Count);
         var selectedBuff = buffs[index];
         buffs.RemoveAt(index);
         return selectedBuff;
