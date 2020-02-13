@@ -15,11 +15,21 @@ public class MainHubHandler : MonoBehaviour
     private GameObject[] m_planets_prefabs;
     [SerializeField]
     private TMPro.TextMeshProUGUI m_planetNameUi;
+    [SerializeField]
+    private OVR.SoundFXRef m_spaceBgm;
+    [SerializeField]
+    private OVR.SoundFXRef m_welcomeAboardSound;
+    [SerializeField]
+    private OVR.SoundFXRef m_welcomeBackSound;
+    [SerializeField]
+    private OVR.SoundFXRef m_nowTravellingSound;
     
     private bool isChangingScene = false;
     private BasePlanetHolograph[] planets;
     private int currentPlanetIndex = 0;
     private PlanetHolographPickable planetHoloPickable;
+    private float welcomeTimer = 0;
+    private bool hasBeenWelcomed = false;
 
     void Awake()
     {
@@ -35,6 +45,12 @@ public class MainHubHandler : MonoBehaviour
         planetHoloPickable = m_hologramsRoot.GetComponent<PlanetHolographPickable>();
     }
 
+    void Start()
+    {
+        m_spaceBgm.PlaySound(Random.Range(1.0f, 2.0f));
+        m_spaceBgm.AttachToParent(Camera.main.transform);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
@@ -43,11 +59,22 @@ public class MainHubHandler : MonoBehaviour
             PreviousPlanet();
         if (Input.GetKeyDown(KeyCode.C))
             NextPlanet();
+        if (!hasBeenWelcomed)
+        {
+            welcomeTimer += Time.deltaTime;
+            if(welcomeTimer > 2)
+            {
+                hasBeenWelcomed = true;
+                m_welcomeAboardSound.PlaySound();
+            }
+        }
+       
     }
 
     void OnDisable()
     {
         m_chairPickable.onSelected -= _chairPickable_onSelected;
+        
     }
 
     void _chairPickable_onSelected()
@@ -89,8 +116,11 @@ public class MainHubHandler : MonoBehaviour
 
     IEnumerator fadeToScene(string _sceneName)
     {
+        m_nowTravellingSound.PlaySound();
         m_playerScreenFade.fadeTime = 1.5f;
         m_playerScreenFade.FadeOut();
+        m_spaceBgm.DetachFromParent();
+        m_spaceBgm.StopSound();
         yield return new WaitForSeconds(1.6f);
         SceneManager.LoadScene(_sceneName);
     }

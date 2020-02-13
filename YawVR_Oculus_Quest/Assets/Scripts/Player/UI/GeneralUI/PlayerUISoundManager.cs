@@ -67,6 +67,11 @@ public class PlayerUISoundManager : MonoBehaviour
     [SerializeField]
     private List<PlayerTutorialSoundData> m_tutorialSoundData;
 
+    [SerializeField]
+    private SoundFXRef m_hoverUiSound;
+    [SerializeField]
+    private SoundFXRef m_clickUiSound;
+
     //Dictionary for sounds
     // Start is called before the first frame update
     public void Awake()
@@ -190,6 +195,15 @@ public class PlayerUISoundManager : MonoBehaviour
     {
         StopAllUISounds();
         StopAllTutorialSounds();
+    }
+
+    public void PlayUiClickSound()
+    {
+        m_clickUiSound.PlaySoundAt(transform.position);
+    }
+    public void PlayUiHoverSound()
+    {
+        m_hoverUiSound.PlaySoundAt(transform.position);
     }
 }
 
