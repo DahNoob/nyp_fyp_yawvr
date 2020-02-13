@@ -318,6 +318,10 @@ public class PlayerHandler : BaseEntity
             //else play sound = false
             isPlayHealthSound = false;
         }
+        if(Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            ExitToHub(false);
+        }
     }
 
     private void FixedUpdate()

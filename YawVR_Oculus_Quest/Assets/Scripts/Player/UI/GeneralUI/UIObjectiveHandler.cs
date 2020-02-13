@@ -63,10 +63,11 @@ public class UIObjectiveHandler
         //}
     }
 
-    void OnDisable()
+    public void OnDisable()
     {
         Game.instance.onObjectiveStarted -= Game_onObjectiveStarted;
         Game.instance.onObjectiveFinished -= Game_onObjectiveFinished;
+        instance = null;
         Debug.Log("Game events -detached- successfully!");
     }
 

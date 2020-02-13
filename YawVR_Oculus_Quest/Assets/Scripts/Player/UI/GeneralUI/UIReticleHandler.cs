@@ -21,6 +21,11 @@ public class UIReticleHandler
             instance = this;
     }
 
+    public void OnDisable()
+    {
+        instance = null;
+    }
+
     // Start is called before the first frame update
     public void Start()
     {

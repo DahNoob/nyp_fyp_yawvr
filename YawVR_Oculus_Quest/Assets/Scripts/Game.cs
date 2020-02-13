@@ -107,6 +107,12 @@ public class Game : MonoBehaviour
 
     }
 
+    private void OnDisable()
+    {
+        UIObjectiveHandler.instance.OnDisable();
+        UIReticleHandler.instance.OnDisable();
+    }
+
     void Start()
     {
         //moved it here, dk if it's a good idea or not

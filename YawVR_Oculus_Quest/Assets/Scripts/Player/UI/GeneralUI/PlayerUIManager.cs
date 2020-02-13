@@ -108,7 +108,6 @@ public class PlayerUIManager : MonoBehaviour
         //m_playerUISounds.Awake();
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -150,7 +149,8 @@ public class PlayerUIManager : MonoBehaviour
         //}
         if (Input.GetKeyDown(KeyCode.Escape) || OVRInput.GetDown(OVRInput.RawButton.Start))
             RequestPause();
-
+        if (Input.GetKeyDown(KeyCode.Backslash))
+            RequestExit();
     }
 
     /// <summary>
