@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class handles the spawning for FlyingMech3
+/// </summary>
 public class Cargo_Spawn : MonoBehaviour
 {
     [SerializeField]
@@ -49,6 +52,9 @@ public class Cargo_Spawn : MonoBehaviour
         //}
     }
 
+    /// <summary>
+    /// Function that is called when spawning starts for FlyingMech3
+    /// </summary>
     private void SpawnEnemy()
     {
         GameObject newEnemy = Instantiate(m_lesserEnemy, spawnPoint_1.transform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
