@@ -377,6 +377,7 @@ public class PlayerHandler : BaseEntity
 
     public IEnumerator SetNextLevel(string _sceneName)
     {
+        Game.instance.StopAllBGM();
         isResettingPose = true;
         m_camScreenFade.FadeOut();
         yield return new WaitForSeconds(m_camScreenFade.fadeTime + 0.1f);

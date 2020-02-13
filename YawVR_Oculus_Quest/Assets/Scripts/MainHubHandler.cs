@@ -49,6 +49,7 @@ public class MainHubHandler : MonoBehaviour
     {
         m_spaceBgm.PlaySound(Random.Range(1.0f, 2.0f));
         m_spaceBgm.AttachToParent(Camera.main.transform);
+        m_welcomeAboardSound.PlaySound(2);
     }
 
     void Update()
@@ -59,16 +60,6 @@ public class MainHubHandler : MonoBehaviour
             PreviousPlanet();
         if (Input.GetKeyDown(KeyCode.C))
             NextPlanet();
-        if (!hasBeenWelcomed)
-        {
-            welcomeTimer += Time.deltaTime;
-            if(welcomeTimer > 2)
-            {
-                hasBeenWelcomed = true;
-                m_welcomeAboardSound.PlaySound();
-            }
-        }
-       
     }
 
     void OnDisable()

@@ -58,6 +58,12 @@ public class Game : MonoBehaviour
     private GameObject m_bountyHuntObjectivePrefab;
     [SerializeField]
     private GameObject m_environmentParticles;
+    [SerializeField]
+    private OVR.SoundFXRef m_backgroundMusic;
+    [SerializeField]
+    private OVR.SoundFXRef m_backgroundAmbience;
+    [SerializeField]
+    private OVR.SoundFXRef m_battleMusic;
 
     //Local variables
     public int currentObjectiveIndex { private set; get; } = -1;
@@ -89,6 +95,11 @@ public class Game : MonoBehaviour
 
         if (m_environmentParticles != null)
             StartCoroutine(setEnvironmentParticlePosition());
+
+        m_backgroundMusic.PlaySound();
+        m_backgroundMusic.AttachToParent(Camera.main.transform);
+        m_backgroundAmbience.PlaySound(Random.Range(10, 20));
+        m_backgroundAmbience.AttachToParent(Camera.main.transform);
 
         print("Game started!");
     }
@@ -130,6 +141,8 @@ public class Game : MonoBehaviour
                 if (currObj.m_highlight.Find("Beacon"))
                     Destroy(currObj.m_highlight.Find("Beacon").gameObject);
                 Instantiate(Persistent.instance.PREFAB_SUPPLYCRATE_DROP, currObj.m_highlight.position, Quaternion.Euler(0, Random.Range(0, 360), 0), Persistent.instance.GO_STATIC.transform);
+                m_battleMusic.DetachFromParent();
+                m_battleMusic.StopSound();
                 onObjectiveFinished?.Invoke(currObj, true);
                 return;
             }
@@ -145,8 +158,9 @@ public class Game : MonoBehaviour
                     Destroy(currObj.m_highlight.Find("Crown").gameObject);
                 if (currObj.m_highlight.Find("Beacon"))
                     Destroy(currObj.m_highlight.Find("Beacon").gameObject);
+                m_battleMusic.DetachFromParent();
+                m_battleMusic.StopSound();
                 onObjectiveFinished?.Invoke(currObj, false);
-
                 return;
             }
         }
@@ -176,6 +190,8 @@ public class Game : MonoBehaviour
                 currObj.panelInfo.panelText.color = Color.red;
                 currentObjectiveIndex = -1;
                 currObj.m_inProgress = false;
+                m_battleMusic.DetachFromParent();
+                m_battleMusic.StopSound();
                 onObjectiveFinished?.Invoke(currObj, false);
                 //Update UI on fail
 
@@ -195,6 +211,8 @@ public class Game : MonoBehaviour
                     Destroy(currObj.m_highlight.Find("Beacon").gameObject);
                 currObj.m_highlight.GetComponent<ObjectiveStructure>().SetCurrentObjective(false);
                 Instantiate(Persistent.instance.PREFAB_SUPPLYCRATE_DROP, currObj.m_highlight.position, Quaternion.Euler(0, Random.Range(0, 360), 0), Persistent.instance.GO_STATIC.transform);
+                m_battleMusic.DetachFromParent();
+                m_battleMusic.StopSound();
                 onObjectiveFinished?.Invoke(currObj, true);
                 return;
             }
@@ -324,6 +342,8 @@ public class Game : MonoBehaviour
                     PlayerUIManager.instance.ObjectiveTriggered(i);
                     m_objectives[i].m_inProgress = true;
                     m_objectives[i].panelInfo.panelText.color = Color.yellow;
+                    m_battleMusic.PlaySound();
+                    m_battleMusic.AttachToParent(Camera.main.transform);
                     onObjectiveStarted?.Invoke(m_objectives[i]);
                     print("Current Objective started! : " + i);
                     break;
@@ -418,5 +438,11 @@ public class Game : MonoBehaviour
                 return false;
         }
         return true;
+    }
+
+    public void StopAllBGM()
+    {
+        m_battleMusic.StopSound();
+        m_backgroundMusic.StopSound();
     }
 }
