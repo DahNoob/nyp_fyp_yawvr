@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class provides all functionalities and variables that is used by FlyingMech3
+/// </summary>
 public class FlyingMech3 : EnemyBase, IPooledObject
 {
     private enum _Buffs
@@ -72,6 +75,9 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     [SerializeField]
     private Transform m_flying_mech_master;
 
+    /// <summary>
+    /// Called when this enemy  is spawned from the object pool.
+    /// </summary>
     public void OnObjectSpawn()
     {
         //Rigidbody rb = GetComponent<Rigidbody>();
@@ -89,6 +95,9 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         }
     }
 
+    /// <summary>
+    /// Called when this enemy should be "destroyed"
+    /// </summary>
     public void OnObjectDestroy()
     {
         ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, transform.position + GetComponent<SphereCollider>().center, Quaternion.identity);

@@ -18,6 +18,10 @@ using UnityEngine.AI;
 ** 2    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
 ** 3    2/1/2020, 4:31 PM       Wei Hao   Added passive buffs depending on rarity
 *******************************/
+
+/// <summary>
+/// This class provides all functionalities and variables that is used by LightMech1
+/// </summary>
 public class Light_Enemy_1 : EnemyBase, IPooledObject
 {
     [Header("Light Mech 1 Resources")]
@@ -34,13 +38,13 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     [SerializeField]
     private OVR.SoundFXRef m_deathSound;
 
-    public enum _EnemyState
-    {
-        CHASE,
-        SHOOT,
-        AVOID,
-        DIE,
-    }
+    //public enum _EnemyState
+    //{
+    //    CHASE,
+    //    SHOOT,
+    //    AVOID,
+    //    DIE,
+    //}
 
     private enum _Buffs
     {
@@ -51,7 +55,7 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
 
     List<string> buffs;
 
-    public Transform projectile;
+    //public Transform projectile;
     private Transform target;
     private GameObject Player;
 
@@ -73,12 +77,10 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
 
     private Rigidbody rb;
 
-    // Particle effect when baneling explodes
-    public ParticleSystem poof;
     float explodeDuration = 1.0f;
 
-    [SerializeField]
-    private _EnemyState currentState;
+    //[SerializeField]
+    // _EnemyState currentState;
 
     [Header("Rarity")]
     [SerializeField]
@@ -86,23 +88,8 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     private WeightedRandom weightedRandom;
 
     private float projectileSpeed;
-    private float amount = 1.0f; //how much it shakes
-    private Vector3 transformX;
     private bool inDyingAnim;
     private ParticleSystem[] deathParticles;
-
-    //[Header("Projectile Origin")]
-    //// Light Mech Shooting
-    //public Transform m_projectileOriginL;
-    //public Transform m_projectileOriginR;
-
-    // Dodge Check
-    private float dodgeCheck = 2.0f;
-
-    [Header("Death Particle Effect")]
-    [SerializeField]
-    public GameObject explosionPrefab;
-    private GameObject explosion;
 
     [Header("Buff Prefabs")]
     [SerializeField]
@@ -136,6 +123,9 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         private set { m_leftProjectileOrigin = value; }
     }
 
+    /// <summary>
+    /// Called when this enemy  is spawned from the object pool.
+    /// </summary>
     public void OnObjectSpawn()
     {
         //Just gonna cheese it by calling start first
@@ -147,6 +137,10 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         rb.angularVelocity = new Vector3(0f, 0f, 0f);
     }
 
+
+    /// <summary>
+    /// Called when this enemy should be "destroyed"
+    /// </summary>
     public void OnObjectDestroy()
     {
         //Set bool i suppose if it actually dead
@@ -165,19 +159,15 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     new void Start()
     {
         base.Start();
-        // Current State
-        //currentState = _EnemyState.AVOID;
         Player = PlayerHandler.instance.gameObject;
         target = Player.transform;
         rb = GetComponent<Rigidbody>();
         m_Animator = GetComponentInChildren<Animator>();
-        poof = GetComponent<ParticleSystem>();
 
         // Get rarity
         rarity = (_Rarity)WeightedRandom.instance.random();
         buffs = new List<string> { "HP", "DMG", "MS" };
 
-        transformX = transform.position;
         inDyingAnim = false;
 
         string currBuff = StartBuff();
@@ -269,95 +259,18 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
     // Update is called once per frame
     override protected void Update()
     {
-        base.Update();
-        //Vector3 relativePos = target.position - transform.position;
-
-        //// Debugging distance
-        //float distance = Vector3.Distance(transform.position, target.position);
-        //if (Vector3.Distance(transform.position, target.position) >= minimumRange)
-        //{
-        //    currentState = _EnemyState.CHASE;
-        //    //m_Animator.SetBool("Chase", true);
-
-        //    Debug.Log("Current State: " + currentState);
-        //    //Debug.Log("Distance: " + distance);
-        //    if (Vector3.Distance(transform.position, target.position) <= maximumRange)
-        //    {
-        //        Debug.Log("Within Range");
-        //        currentState = _EnemyState.SHOOT;
-        //        //transformX = transform.position;
-        //        //m_Animator.SetBool("Explode", true);
-        //    }
-        //}
-
-        //dodgeCheck -= 1.0f * Time.deltaTime;
-        //if (dodgeCheck <= 0.0f)
-        //{
-        //    Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 5.0f);
-        //    for (int i = 0; i < hitColliders.Length; i++)
-        //    {
-        //        if (hitColliders[i].gameObject.tag == "Bullet")
-        //        {
-        //            Debug.Log("Projectile detected");
-        //            currentState = _EnemyState.AVOID;
-        //        }
-        //    }
-        //}
-
-        //switch (currentState)
-        //{
-        //case _EnemyState.CHASE:
-        //    Quaternion toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-        //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-
-        //    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-
-        //    attackWindUp -= 1.0f * Time.deltaTime;
-        //    if (attackWindUp <= 0.0f)
-        //    {
-        //        //StartCoroutine(EnemyShoot());
-        //        attackWindUp = 2.0f;
-        //    }
-
-        //    break;
-        //case _EnemyState.SHOOT:
-        //    toRotation = Quaternion.LookRotation(new Vector3(relativePos.x, 0, relativePos.z));
-        //    transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-
-        //    attackWindUp -= 1.0f * Time.deltaTime;
-        //    if (attackWindUp <= 0.0f)
-        //    {
-        //        StartCoroutine(EnemyShoot());
-        //        attackWindUp = 2.0f;
-        //    }
-
-        //    //transformX.x = Mathf.Sin(Time.time * speed) * amount;
-
-        //    break;
-        //case _EnemyState.AVOID:
-
-        //    StartCoroutine(EnemyDodge());               
-        //    //currentState = _EnemyState.CHASE;
-        //    //transform.position += transform.right * -moveSpeed * Time.deltaTime;
-
-        //    break;
-        //case _EnemyState.DIE:
-        //    break;
-        //}
-
-        
+        base.Update();      
     }
 
-    //void PlayDeathParticle()
-    //{
-    //    explosion = Instantiate(explosionPrefab, transform.position, transform.rotation);
-    //}
-
+    /// <summary>
+    /// Called when this enemy takes damage
+    /// </summary>
     public override void takeDamage(int damage)
     {
         base.takeDamage(damage);
         m_Animator.SetBool("Alert", true);
     }
+
     public override void Die()
     {
         if (!inDyingAnim)
@@ -371,11 +284,19 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
             m_deathSound.PlaySoundAt(transform.position);
         }
     }
+
+    /// <summary>
+    /// Called when this enemy hp is 0
+    /// </summary>
     public void ActualDie()
     {
         inDyingAnim = false;
         base.Die();
     }
+
+    /// <summary>
+    /// Called at Start to give this mech a random buff
+    /// </summary>
     public string StartBuff()
     {
         System.Random random = new System.Random();
@@ -385,33 +306,13 @@ public class Light_Enemy_1 : EnemyBase, IPooledObject
         return selectedBuff;
     }
 
+    /// <summary>
+    /// Called when this enemy is required to shoot at target
+    /// </summary>
     public void Shoot_Async()
     {
         StartCoroutine(EnemyShoot());
     }
-
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")
-    //    {
-    //        //Debug.Log("Hit");
-    //        //transformX = transform.position;
-    //        //currentState = _EnemyState.DIE;
-    //        //m_Animator.SetBool("Explode", true);
-    //    }
-
-    //    //if (collision.gameObject.tag == "Bullet")
-    //    //{
-    //    //    takeDamage(40);
-    //    //    //collision.gameObject.SetActive(false);
-    //    //    collision.gameObject.GetComponent<IPooledObject>().OnObjectDestroy();
-    //    //}
-    //}
-
-    //public float GetMoveSpeed()
-    //{
-    //    return moveSpeed;
-    //}
 
     public float GetRotationSpeed()
     {
