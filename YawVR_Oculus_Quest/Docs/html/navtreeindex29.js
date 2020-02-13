@@ -1,5 +1,8 @@
 var NAVTREEINDEX29 =
 {
+"class_quad_tree.html#ad2ebd34f0d5f04e2ac06ca57d70bb90a":[1,0,300,1],
+"class_quad_tree.html#afa68b4c30d8936d6ea056f466627d23a":[1,0,300,4],
+"class_quad_tree_manager.html":[1,0,301],
 "class_quad_tree_manager.html#a349ade6a390f5956be4f3824708b5024":[1,0,301,1],
 "class_quad_tree_manager.html#a349ade6a390f5956be4f3824708b5024a844fe8784acc5e2af3ac31ac06c94e0e":[1,0,301,1,1],
 "class_quad_tree_manager.html#a349ade6a390f5956be4f3824708b5024af0d62ea6bc0a041d009322e77e1253c0":[1,0,301,1,0],
@@ -246,8 +249,5 @@ var NAVTREEINDEX29 =
 "class_teleport_input_handler.html#a5f9e4f8ff935bf6a1a98530a6e995778":[1,0,331,3],
 "class_teleport_input_handler.html#a95c57250b5b0330d79d3c80f486178d0":[1,0,331,0],
 "class_teleport_input_handler_avatar_touch.html":[1,0,332],
-"class_teleport_input_handler_avatar_touch.html#a11ad2038b24ce79bfdcb41feff62f5ab":[1,0,332,3],
-"class_teleport_input_handler_avatar_touch.html#a3ab8bfaee57fbaa2a8bb124d07b725be":[1,0,332,0],
-"class_teleport_input_handler_avatar_touch.html#a3ab8bfaee57fbaa2a8bb124d07b725bea02129bb861061d1a052c592e2dc6b383":[1,0,332,0,6],
-"class_teleport_input_handler_avatar_touch.html#a3ab8bfaee57fbaa2a8bb124d07b725bea2a89ae5f2b8c90f60c9727da00dfbaf7":[1,0,332,0,5]
+"class_teleport_input_handler_avatar_touch.html#a11ad2038b24ce79bfdcb41feff62f5ab":[1,0,332,3]
 };

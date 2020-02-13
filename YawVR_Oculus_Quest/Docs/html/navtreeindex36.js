@@ -1,5 +1,9 @@
 var NAVTREEINDEX36 =
 {
+"openvr__api_8cs.html#add4b958163ef265a550794a6abe100c1aa1b827828f04351d72f9c9ecd8381022":[2,0,0,2,7,2,0,138,130],
+"openvr__api_8cs.html#add4b958163ef265a550794a6abe100c1aa20ac1a0349b72eb10c9a416f2c668ac":[2,0,0,2,7,2,0,138,92],
+"openvr__api_8cs.html#add4b958163ef265a550794a6abe100c1aa2f1b7aeb5691cd7f639368ddccd2d72":[2,0,0,2,7,2,0,138,98],
+"openvr__api_8cs.html#add4b958163ef265a550794a6abe100c1aa40032ea0cc8c773a34bdeacfb36b066":[2,0,0,2,7,2,0,138,3],
 "openvr__api_8cs.html#add4b958163ef265a550794a6abe100c1aa48641d0b2ab27a259a8e1c161f5427e":[2,0,0,2,7,2,0,138,93],
 "openvr__api_8cs.html#add4b958163ef265a550794a6abe100c1aa4e90eb535864ba1f2031838dc126c66":[2,0,0,2,7,2,0,138,113],
 "openvr__api_8cs.html#add4b958163ef265a550794a6abe100c1aa576c695f160055a5f69cef6fa8731a9":[2,0,0,2,7,2,0,138,51],
@@ -245,9 +249,5 @@ var NAVTREEINDEX36 =
 "struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#ab038ff409fe51beeba53ce56900068ad":[1,0,4,0,31,8],
 "struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#abbe48077186887e98cfbb59469c92dbd":[1,0,4,0,31,10],
 "struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#acbbad3e36a1a542e67cf4cbe2d99ca7a":[1,0,4,0,31,2],
-"struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#ad45893097424343025575c1a4ae836bd":[1,0,4,0,31,13],
-"struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#addc0751c6dc2847933f7ad0e5610a9df":[1,0,4,0,31,14],
-"struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#ade815f04e3d229cc2ef9718d6a4cf1e4":[1,0,4,0,31,4],
-"struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#ae330b134f23f3dd908c600e14cdbbd6d":[1,0,4,0,31,11],
-"struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#ae4e0cdd82d8f71e86ea522b85f930e9b":[1,0,4,0,31,5]
+"struct_o_v_r_1_1_open_v_r_1_1_hmd_matrix44__t.html#ad45893097424343025575c1a4ae836bd":[1,0,4,0,31,13]
 };

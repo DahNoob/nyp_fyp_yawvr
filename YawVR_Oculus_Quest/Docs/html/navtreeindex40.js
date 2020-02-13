@@ -1,5 +1,9 @@
 var NAVTREEINDEX40 =
 {
+"struct_o_v_r_pose.html#a66c51f24eb8d887c9a51b49431442c55":[1,0,262,1],
+"struct_o_v_r_pose.html#a7247cc1fddf356198560956e01025241":[1,0,262,7],
+"struct_o_v_r_pose.html#aac81c38f4076ade5669058d402e6f1c9":[1,0,262,8],
+"struct_o_v_r_pose.html#ab1fe1f6d36ab555296ca5de73e485d6e":[1,0,262,10],
 "struct_o_v_r_pose.html#ab939bd69505f46d8c4b921380094f399":[1,0,262,9],
 "struct_o_v_r_pose.html#abcb5b6c3de05a3c1225a7c4803fbd4a3":[1,0,262,2],
 "struct_o_v_r_pose.html#ac7d9e530eab25b2a9e6b47598d8f6a73":[1,0,262,5],
@@ -245,9 +249,5 @@ var NAVTREEINDEX40 =
 "structovr_avatar_message___asset_loaded.html#a0bb105017727f0245b88a7d4c13f636a":[1,0,188,1],
 "structovr_avatar_message___asset_loaded.html#a53fe982b9f9ed1912a68bad8f28bd943":[1,0,188,0],
 "structovr_avatar_message___avatar_specification.html":[1,0,189],
-"structovr_avatar_message___avatar_specification.html#a860f470c602ec9123b554d306470f68a":[1,0,189,1],
-"structovr_avatar_message___avatar_specification.html#ac3783e87e84a50a36a491c26d50eed97":[1,0,189,0],
-"structovr_avatar_p_b_s_material_state.html":[1,0,191],
-"structovr_avatar_p_b_s_material_state.html#a107784788a307d42a2f14dfa285dca26":[1,0,191,1],
-"structovr_avatar_p_b_s_material_state.html#a3e5eaa74e87ca0af1ed9b80b6638bef4":[1,0,191,5]
+"structovr_avatar_message___avatar_specification.html#a860f470c602ec9123b554d306470f68a":[1,0,189,1]
 };

@@ -1,5 +1,8 @@
 var NAVTREEINDEX8 =
 {
+"class_movie_player_sample.html#a1c058ad953f9af78140180e0b9e50075":[1,0,140,1],
+"class_movie_player_sample.html#a3e4d4b47861080acb251c815f5e8d702":[1,0,140,3],
+"class_movie_player_sample.html#a470f9a4c38948b263b2a3cd202185fae":[1,0,140,5],
 "class_movie_player_sample.html#a547afbc9d7d4f4653e1fdc913beb506d":[1,0,140,0],
 "class_movie_player_sample.html#ad0831597b2c542abd82cb63e9c7ef23b":[1,0,140,4],
 "class_movie_player_sample.html#aea1de4c9ebc160c1a8327b1ef7da8159":[1,0,140,6],
@@ -246,8 +249,5 @@ var NAVTREEINDEX8 =
 "class_o_v_r_1_1_audio_manager.html#a3a62e7ad372cbb5cf39516f7be8e9951":[1,0,4,3,44],
 "class_o_v_r_1_1_audio_manager.html#a3de9f46a2f0adfcd86ff72fdb9886457":[1,0,4,3,31],
 "class_o_v_r_1_1_audio_manager.html#a3f6f544bc3ff9ec23b2982a5aa195300":[1,0,4,3,7],
-"class_o_v_r_1_1_audio_manager.html#a40a81eccd4dc534cb81dd7cb7811ee33":[1,0,4,3,12],
-"class_o_v_r_1_1_audio_manager.html#a438cdc2018f22ffd7adde05e241165ac":[1,0,4,3,43],
-"class_o_v_r_1_1_audio_manager.html#a447f1b1ea29e2dbf677f8c3109ce4e18":[1,0,4,3,1],
-"class_o_v_r_1_1_audio_manager.html#a4a0598df68c58322f2681594a559ba2b":[1,0,4,3,47]
+"class_o_v_r_1_1_audio_manager.html#a40a81eccd4dc534cb81dd7cb7811ee33":[1,0,4,3,12]
 };

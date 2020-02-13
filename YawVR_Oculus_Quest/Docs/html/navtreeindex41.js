@@ -1,5 +1,9 @@
 var NAVTREEINDEX41 =
 {
+"structovr_avatar_message___avatar_specification.html#ac3783e87e84a50a36a491c26d50eed97":[1,0,189,0],
+"structovr_avatar_p_b_s_material_state.html":[1,0,191],
+"structovr_avatar_p_b_s_material_state.html#a107784788a307d42a2f14dfa285dca26":[1,0,191,1],
+"structovr_avatar_p_b_s_material_state.html#a3e5eaa74e87ca0af1ed9b80b6638bef4":[1,0,191,5],
 "structovr_avatar_p_b_s_material_state.html#a450ff9445830fee70cf3f997cd352f61":[1,0,191,10],
 "structovr_avatar_p_b_s_material_state.html#a5cc6902989357fda73e674a31a29576e":[1,0,191,4],
 "structovr_avatar_p_b_s_material_state.html#a6d144cd4a7be2f4b9df8f42461da1e6c":[1,0,191,9],

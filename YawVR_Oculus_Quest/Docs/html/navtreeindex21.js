@@ -1,5 +1,8 @@
 var NAVTREEINDEX21 =
 {
+"class_oculus_1_1_platform_1_1_c_a_p_i.html#ac5b10877ce0be72948af97a75ff4b6ee":[1,0,1,1,13,51],
+"class_oculus_1_1_platform_1_1_c_a_p_i.html#ac6105b4ca9f4b66683ac679813193eae":[1,0,1,1,13,281],
+"class_oculus_1_1_platform_1_1_c_a_p_i.html#ac67e177628f0728d960fad461f82bde4":[1,0,1,1,13,640],
 "class_oculus_1_1_platform_1_1_c_a_p_i.html#ac7fd560f9c7d3239559e382123baf220":[1,0,1,1,13,225],
 "class_oculus_1_1_platform_1_1_c_a_p_i.html#ac860e49f4809a44db067322858044b9c":[1,0,1,1,13,28],
 "class_oculus_1_1_platform_1_1_c_a_p_i.html#ac8c01128075ec0e804ec45c56a04ee28":[1,0,1,1,13,13],
@@ -246,8 +249,5 @@ var NAVTREEINDEX21 =
 "class_oculus_1_1_platform_1_1_message.html#a129a29f03b1491cf2ce1fdcc93e5f601":[1,0,1,1,30,44],
 "class_oculus_1_1_platform_1_1_message.html#a13c3c6e38c61ff490ec80c61e728af2d":[1,0,1,1,30,32],
 "class_oculus_1_1_platform_1_1_message.html#a140e14ddc37584b310bf1aeafe7c5597":[1,0,1,1,30,27],
-"class_oculus_1_1_platform_1_1_message.html#a14af8e6427216795f36da06ecd50aaa9":[1,0,1,1,30,43],
-"class_oculus_1_1_platform_1_1_message.html#a16583efea2f5d702365e810cc26e6993":[1,0,1,1,30,66],
-"class_oculus_1_1_platform_1_1_message.html#a170d2e30d7c2962dd9bf9acdfdd22005":[1,0,1,1,30,25],
-"class_oculus_1_1_platform_1_1_message.html#a17686035bf8cce8bc3a26a9a02ac7cfa":[1,0,1,1,30,51]
+"class_oculus_1_1_platform_1_1_message.html#a14af8e6427216795f36da06ecd50aaa9":[1,0,1,1,30,43]
 };

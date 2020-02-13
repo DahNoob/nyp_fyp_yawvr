@@ -1,5 +1,8 @@
 var NAVTREEINDEX24 =
 {
+"class_oculus_1_1_platform_1_1_models_1_1_asset_file_delete_result.html#aa1c6bbaaec4cbcc698d6d6ddf605605d":[1,0,1,1,0,9,1],
+"class_oculus_1_1_platform_1_1_models_1_1_asset_file_delete_result.html#ad319c1c616ebc5d6fe4e0a9d97b3f322":[1,0,1,1,0,9,3],
+"class_oculus_1_1_platform_1_1_models_1_1_asset_file_delete_result.html#ade982995e9fa53a8a3c454dbec83fa93":[1,0,1,1,0,9,0],
 "class_oculus_1_1_platform_1_1_models_1_1_asset_file_delete_result.html#af253784e0ec076e70a64d546f49152c4":[1,0,1,1,0,9,4],
 "class_oculus_1_1_platform_1_1_models_1_1_asset_file_download_cancel_result.html":[1,0,1,1,0,10],
 "class_oculus_1_1_platform_1_1_models_1_1_asset_file_download_cancel_result.html#a1fa36dcdd32d6925b53b104022600e4c":[1,0,1,1,0,10,4],
@@ -246,8 +249,5 @@ var NAVTREEINDEX24 =
 "class_oculus_1_1_platform_1_1_models_1_1_product.html#a2e2b26d8e4fb0dd42f71866190f5fdb9":[1,0,1,1,0,58,4],
 "class_oculus_1_1_platform_1_1_models_1_1_product.html#a6c18061370f1c611613c8312f3221113":[1,0,1,1,0,58,1],
 "class_oculus_1_1_platform_1_1_models_1_1_product.html#aa99e55b2499d958a3d32afa91fd3d308":[1,0,1,1,0,58,2],
-"class_oculus_1_1_platform_1_1_models_1_1_product.html#aebe66481cda089999ee80a2ae15d0348":[1,0,1,1,0,58,3],
-"class_oculus_1_1_platform_1_1_models_1_1_product.html#afaea9934c1b8b99c3bc26034361dff90":[1,0,1,1,0,58,0],
-"class_oculus_1_1_platform_1_1_models_1_1_product_list.html":[1,0,1,1,0,59],
-"class_oculus_1_1_platform_1_1_models_1_1_product_list.html#aa01f1a61ee7ffe7d7e8858ce623d8455":[1,0,1,1,0,59,0]
+"class_oculus_1_1_platform_1_1_models_1_1_product.html#aebe66481cda089999ee80a2ae15d0348":[1,0,1,1,0,58,3]
 };

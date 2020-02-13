@@ -1,5 +1,8 @@
 var NAVTREEINDEX17 =
 {
+"class_o_v_r_screen_fade.html#a38ab84724650b451812045044faf7a52":[1,0,269,8],
+"class_o_v_r_screen_fade.html#a6193ae3e10a6ea45d9312ac74c561f69":[1,0,269,2],
+"class_o_v_r_screen_fade.html#a723f0f2bf6cecada79d5bdff8f3d5e5d":[1,0,269,0],
 "class_o_v_r_screen_fade.html#a841d9c42bfad4d2ee5eccc2818af8687":[1,0,269,6],
 "class_o_v_r_screen_fade.html#a94a876f24dcf2c0b6dd2fb7ba459e168":[1,0,269,1],
 "class_o_v_r_screen_fade.html#ab4521fb3e7af6a6ab12715015d9db36f":[1,0,269,4],
@@ -246,8 +249,5 @@ var NAVTREEINDEX17 =
 "class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a08a38277b0309070706f6652eeae9a53":[1,0,273,0,5],
 "class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a258f49887ef8d14ac268c92b02503aaa":[1,0,273,0,4],
 "class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a2dbbbb4602d657551cc056396f3ee5f6":[1,0,273,0,0],
-"class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a8f3f96ab0875983edbc267d3cec4aed9":[1,0,273,0,1],
-"class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a92b09c7c48c520c3c55e497875da437c":[1,0,273,0,3],
-"class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a945d5e233cf7d6240f6b783b36a374ff":[1,0,273,0,2],
-"class_o_v_r_touchpad.html#ade619b264647c019fd8bf0592d3e0882":[1,0,273,1]
+"class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a8f3f96ab0875983edbc267d3cec4aed9":[1,0,273,0,1]
 };

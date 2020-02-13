@@ -1,5 +1,8 @@
 var NAVTREEINDEX18 =
 {
+"class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a92b09c7c48c520c3c55e497875da437c":[1,0,273,0,3],
+"class_o_v_r_touchpad.html#a787fd5de32818ff630a69a460195c623a945d5e233cf7d6240f6b783b36a374ff":[1,0,273,0,2],
+"class_o_v_r_touchpad.html#ade619b264647c019fd8bf0592d3e0882":[1,0,273,1],
 "class_o_v_r_touchpad.html#af2e5513ff7248475d097a0a120067c43":[1,0,273,3],
 "class_o_v_r_touchpad.html#af8d7f460e2d8501738dc5fdb3c279edd":[1,0,273,5],
 "class_o_v_r_touchpad_helper.html":[1,0,274],
@@ -246,8 +249,5 @@ var NAVTREEINDEX18 =
 "class_oculus_1_1_platform_1_1_asset_file.html#a3de562f5dc994637d331d03f5daaa8a7":[1,0,1,1,8,1],
 "class_oculus_1_1_platform_1_1_asset_file.html#a4e264e6e167e7e23479a4f9079df35d3":[1,0,1,1,8,3],
 "class_oculus_1_1_platform_1_1_asset_file.html#a731ccb84a83e8f69e31f56312480bda2":[1,0,1,1,8,4],
-"class_oculus_1_1_platform_1_1_asset_file.html#a884ac233c9e29ea6ab3fb77b2e4f1ff2":[1,0,1,1,8,0],
-"class_oculus_1_1_platform_1_1_asset_file.html#a8e9fe1fc5c58cc8314e01fb28687227e":[1,0,1,1,8,12],
-"class_oculus_1_1_platform_1_1_asset_file.html#a9370d1843314fbd99c3318d030719a66":[1,0,1,1,8,2],
-"class_oculus_1_1_platform_1_1_asset_file.html#aab2224fc8ba1b742a62d78ccf4c330ef":[1,0,1,1,8,13]
+"class_oculus_1_1_platform_1_1_asset_file.html#a884ac233c9e29ea6ab3fb77b2e4f1ff2":[1,0,1,1,8,0]
 };

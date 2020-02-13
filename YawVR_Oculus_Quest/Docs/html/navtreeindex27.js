@@ -1,5 +1,8 @@
 var NAVTREEINDEX27 =
 {
+"class_oculus_sample_framework_1_1_color_grabbable.html#adc9e038b896073fe5dcb63a2ade49d0a":[1,0,2,0,1],
+"class_oculus_sample_framework_1_1_color_grabbable.html#af633f31aae584c685a287a0cf200577d":[1,0,2,0,0],
+"class_oculus_sample_framework_1_1_distance_grabbable.html":[1,0,2,1],
 "class_oculus_sample_framework_1_1_distance_grabbable.html#a03207e82cc2ea25415693790e8a68c5f":[1,0,2,1,0],
 "class_oculus_sample_framework_1_1_distance_grabbable.html#a1cece2767f0d3cda3863d3d5c44bf3be":[1,0,2,1,5],
 "class_oculus_sample_framework_1_1_distance_grabbable.html#a211ec36736f75cceed20102ee8345927":[1,0,2,1,4],
@@ -246,8 +249,5 @@ var NAVTREEINDEX27 =
 "class_ovr_avatar_render_component.html#ab0af1ca236fdc490e4f83a38e4ee472c":[1,0,194,5],
 "class_ovr_avatar_render_component.html#ae529bc706623725b6bcc6e96cb9e8ac8":[1,0,194,1],
 "class_ovr_avatar_render_component.html#afafedb6a3147bdd3f5563959464121ca":[1,0,194,0],
-"class_ovr_avatar_s_d_k_manager.html":[1,0,199],
-"class_ovr_avatar_s_d_k_manager.html#a0833207a87c9c7c49052643ffe5e99aa":[1,0,199,4],
-"class_ovr_avatar_s_d_k_manager.html#a25e8dda0cebd1b2ab2e87fcd4b585e86":[1,0,199,1],
-"class_ovr_avatar_s_d_k_manager.html#a27e7ac1270ffc4b1236823ae1c26b904":[1,0,199,0]
+"class_ovr_avatar_s_d_k_manager.html":[1,0,199]
 };

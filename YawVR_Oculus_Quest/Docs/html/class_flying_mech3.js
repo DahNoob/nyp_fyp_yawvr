@@ -12,5 +12,6 @@ var class_flying_mech3 =
     [ "ignoredColliders", "class_flying_mech3.html#aa29dd9bd69ab80f760e0a43aa1dca5f9", null ],
     [ "LM_Spawn1", "class_flying_mech3.html#a6f2e7efc03ca608042147b842cfa0115", null ],
     [ "LM_Spawn2", "class_flying_mech3.html#af3be94a92fe5c3e831b13e2aac92f483", null ],
+    [ "m_cargoObject", "class_flying_mech3.html#a6436db316a03abf892ebe40bb732c20b", null ],
     [ "MS_Buff_Prefab", "class_flying_mech3.html#a80493a97f0d7b20beaf310b0e0809bb6", null ]
 ];

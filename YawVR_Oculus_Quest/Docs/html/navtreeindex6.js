@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"class_g_u_i_reticle_config.html#a6c167a8717fcddeeffca205fa2bb0d3f":[1,0,83,4],
 "class_g_u_i_reticle_config.html#a847d8150c157f0cd7274f65ff56c03ed":[1,0,83,15],
 "class_g_u_i_reticle_config.html#a8a5cd200b80ca3f687315f80639dc943":[1,0,83,13],
 "class_g_u_i_reticle_config.html#a8e64b70ef8825ebdddfa5d5ce76766c0":[1,0,83,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "class_light___enemy__1.html#ac0f47731d72c61c42c0e1b54b1b5ce9e":[1,0,104,14],
 "class_light___enemy__1.html#ac2ba9a638be947b4a8dcc0bf406c7c30":[1,0,104,15],
 "class_light___enemy__1.html#ad2218e7d7cd0342801c61df58aab13d3":[1,0,104,7],
-"class_light___enemy__1.html#ad48dd78f7783c5a576534862cd8c39ac":[1,0,104,9],
-"class_light___enemy__1.html#ae09a922a9ceee9b3cbfc0b7de4bb28ed":[1,0,104,6]
+"class_light___enemy__1.html#ad48dd78f7783c5a576534862cd8c39ac":[1,0,104,9]
 };
