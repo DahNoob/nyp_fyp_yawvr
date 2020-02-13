@@ -126,7 +126,7 @@ public class PlayerUISoundManager : MonoBehaviour
         SoundFXRef audioRef = m_audioClipDictionary[tag].m_audioRef;
         audioRef.soundFX.volume = volume;
         audioRef.PlaySound(delaySecs);
-
+        audioRef.AttachToParent(Camera.main.transform);
     }
 
     /// <summary>
@@ -145,6 +145,7 @@ public class PlayerUISoundManager : MonoBehaviour
         SoundFXRef audioRef = m_tutorialClipDictionary[tag].m_audioRef;
         audioRef.soundFX.volume = volume;
         audioRef.PlaySound(delaySecs);
+        audioRef.AttachToParent(Camera.main.transform);
 
     }
     /// <summary>
@@ -164,6 +165,7 @@ public class PlayerUISoundManager : MonoBehaviour
 
         SoundFXRef audioRef = m_audioClipDictionary[tag].m_audioRef;
         audioRef.PlaySoundAt(position, delaySecs, volume, pitchMultiplier);
+        audioRef.AttachToParent(Camera.main.transform);
     }
     /// <summary>
     /// Plays a sound
@@ -182,6 +184,7 @@ public class PlayerUISoundManager : MonoBehaviour
 
         SoundFXRef audioRef = m_tutorialClipDictionary[tag].m_audioRef;
         audioRef.PlaySoundAt(position, delaySecs, volume, pitchMultiplier);
+        audioRef.AttachToParent(Camera.main.transform);
     }
 
     /// <summary>
