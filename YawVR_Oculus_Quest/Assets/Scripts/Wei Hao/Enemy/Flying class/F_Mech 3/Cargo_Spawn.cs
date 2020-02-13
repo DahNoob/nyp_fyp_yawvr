@@ -9,9 +9,9 @@ public class Cargo_Spawn : MonoBehaviour
     [SerializeField]
     protected GameObject m_lesserEnemy;
     [SerializeField]
-    protected GameObject spawnPoint_1;
+    protected Transform spawnPoint_1;
     [SerializeField]
-    protected GameObject spawnPoint_2;
+    protected Transform spawnPoint_2;
 
     protected bool startTimer = false;
     protected bool stopSpawn = false;
@@ -53,6 +53,17 @@ public class Cargo_Spawn : MonoBehaviour
     {
         GameObject newEnemy = Instantiate(m_lesserEnemy, spawnPoint_1.transform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
         GameObject newEnemy2 = Instantiate(m_lesserEnemy, spawnPoint_2.transform.position, transform.rotation, Persistent.instance.GO_DYNAMIC.transform);
+        //EnemyBase newEnemy = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, spawnPoint_1.transform.position, Quaternion.identity).GetComponent<EnemyBase>();
+        //EnemyBase newEnemy2 = ObjectPooler.instance.SpawnFromPool(m_enemies[i].poolType, spawnPoint_2.transform.position, Quaternion.identity).GetComponent<EnemyBase>();
+        //newEnemy.m_target = PlayerHandler.instance.transform;
+        //newEnemy2.m_target = PlayerHandler.instance.transform;
+        //gameObject.GetComponentInParent<FlyingMech3>().SpawnEnemy();
+
+        //EnemyBase newEnemy = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.LIGHT_MECH1, spawnPoint_1.transform.position, transform.rotation).GetComponent<EnemyBase>();
+        //newEnemy.GetComponent<EnemyBase>().m_target = PlayerHandler.instance.transform;//m_target;
+
+        //EnemyBase newEnemy2 = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.LIGHT_MECH1, spawnPoint_2.transform.position, transform.rotation).GetComponent<EnemyBase>();
+        //newEnemy2.GetComponent<EnemyBase>().m_target = PlayerHandler.instance.transform;//m_target;
         //Destroy(gameObject);
     }
 
@@ -64,6 +75,11 @@ public class Cargo_Spawn : MonoBehaviour
         //gameObject.GetComponent<Rigidbody>().detectCollisions = false;
         if (!stopSpawn)
         {
+            //SpawnEnemy();
+            Transform Parent = gameObject.transform.root;
+            //Debug.Log("Parent is: " + Parent.gameObject.name);
+            //Parent.gameObject.GetComponent<FlyingMech3>().SpawnEnemy();
+            //gameObject.GetComponentInParent<FlyingMech3>().SpawnEnemy();
             SpawnEnemy();
             stopSpawn = true;
             StartCoroutine(DestroyCargo());
