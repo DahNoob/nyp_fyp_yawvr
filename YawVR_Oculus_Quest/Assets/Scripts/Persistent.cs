@@ -39,6 +39,8 @@ public class Persistent : MonoBehaviour
     public SoundFXRef SOUND_RELOAD_FADEOUT;
     public SoundFXRef SOUND_RELOAD_FADEIN;
 
+    public bool isFirstTime = true;
+
     private void Awake()
     {
         if (instance != null && instance != this)

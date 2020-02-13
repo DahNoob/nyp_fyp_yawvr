@@ -323,6 +323,8 @@ public class UIObjectiveHandler
             FailedObjectiveGUI(ref _objectiveInfo);
 
         }
+        if (Game.instance.IsObjectivesCleared())
+            PlayerHandler.instance.TriggerAllObjectivesCleared();
         Game.instance.SetRandomObjective();
     }
 

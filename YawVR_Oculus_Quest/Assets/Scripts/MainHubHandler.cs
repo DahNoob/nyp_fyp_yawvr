@@ -16,6 +16,8 @@ public class MainHubHandler : MonoBehaviour
     [SerializeField]
     private TMPro.TextMeshProUGUI m_planetNameUi;
     [SerializeField]
+    private TMPro.TextMeshProUGUI m_coinsDisplayText;
+    [SerializeField]
     private OVR.SoundFXRef m_spaceBgm;
     [SerializeField]
     private OVR.SoundFXRef m_welcomeAboardSound;
@@ -49,7 +51,11 @@ public class MainHubHandler : MonoBehaviour
     {
         m_spaceBgm.PlaySound(Random.Range(1.0f, 2.0f));
         m_spaceBgm.AttachToParent(Camera.main.transform);
-        m_welcomeAboardSound.PlaySound(2);
+        if (Persistent.instance.isFirstTime)
+            m_welcomeAboardSound.PlaySound(2);
+        else
+            m_welcomeBackSound.PlaySound(2);
+        m_coinsDisplayText.text = PlayerPrefs.GetInt("Currency", 0).ToString();
     }
 
     void Update()
@@ -72,6 +78,7 @@ public class MainHubHandler : MonoBehaviour
     {
         if (isChangingScene) return;
         isChangingScene = true;
+        Persistent.instance.isFirstTime = false;
         StartCoroutine(fadeToScene(planets[currentPlanetIndex].m_sceneName));
     }
 

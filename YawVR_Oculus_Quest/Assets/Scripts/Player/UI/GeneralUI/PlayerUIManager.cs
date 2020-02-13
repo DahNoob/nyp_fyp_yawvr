@@ -33,6 +33,8 @@ public class PlayerUIManager : MonoBehaviour
     [Header("Objectives UI Configuration")]
     [SerializeField]
     private UIObjectiveHandler m_playerUIObjectives;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI m_allObjectivesClearedText;
 
     [Header("Reticle UI Configuration")]
     [SerializeField]
@@ -253,6 +255,11 @@ public class PlayerUIManager : MonoBehaviour
         m_pauseUiButtons.gameObject.SetActive(false);
         m_confirmExitButtons.gameObject.SetActive(false);
         PlayerHandler.instance.ExitToHub(_objectivesCleared);
+    }
+
+    public void TriggerAllObjectivesCleared()
+    {
+        m_allObjectivesClearedText.gameObject.SetActive(true);
     }
 }
 

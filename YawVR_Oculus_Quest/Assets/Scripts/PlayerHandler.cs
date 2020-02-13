@@ -468,6 +468,17 @@ public class PlayerHandler : BaseEntity
 
     public void ExitToHub(bool _allObjectivesCleared)
     {
+        if(_allObjectivesCleared)
+        {
+            PlayerPrefs.SetInt("Currency", PlayerPrefs.GetInt("Currency", 0) + currency);
+            PlayerPrefs.Save();
+        }
         StartCoroutine(SetNextLevel("MainHub"));
+    }
+
+    public void TriggerAllObjectivesCleared()
+    {
+        GetComponent<PlayerUIManager>().TriggerAllObjectivesCleared();
+        GetComponent<PlayerUISoundManager>().PlayAllObjectivesClearedSound();
     }
 }
