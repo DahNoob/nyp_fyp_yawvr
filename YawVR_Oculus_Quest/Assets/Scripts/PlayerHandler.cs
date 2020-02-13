@@ -377,6 +377,7 @@ public class PlayerHandler : BaseEntity
 
     public IEnumerator SetNextLevel(string _sceneName)
     {
+        Game.instance.StopAllBGM();
         isResettingPose = true;
         m_camScreenFade.FadeOut();
         yield return new WaitForSeconds(m_camScreenFade.fadeTime + 0.1f);
@@ -467,6 +468,17 @@ public class PlayerHandler : BaseEntity
 
     public void ExitToHub(bool _allObjectivesCleared)
     {
+        if(_allObjectivesCleared)
+        {
+            PlayerPrefs.SetInt("Currency", PlayerPrefs.GetInt("Currency", 0) + currency);
+            PlayerPrefs.Save();
+        }
         StartCoroutine(SetNextLevel("MainHub"));
+    }
+
+    public void TriggerAllObjectivesCleared()
+    {
+        GetComponent<PlayerUIManager>().TriggerAllObjectivesCleared();
+        GetComponent<PlayerUISoundManager>().PlayAllObjectivesClearedSound();
     }
 }

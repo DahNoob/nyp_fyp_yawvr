@@ -10,6 +10,7 @@ public class EnemyInfo : EntityInfo
         LIGHT_MECH1,
         LIGHT_MECH2,
         HEAVY_MECH2,
+        FLYING_MECH3,
         TOTAL_TYPE
     }
 
