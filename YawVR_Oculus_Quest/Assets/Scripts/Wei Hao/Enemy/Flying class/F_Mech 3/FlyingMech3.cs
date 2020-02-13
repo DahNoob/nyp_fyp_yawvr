@@ -91,7 +91,8 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     {
         base.Start();
 
-        GetComponent<UnityEngine.AI.NavMeshAgent>().updatePosition = false;
+        if(navMeshAgent)
+            navMeshAgent.updatePosition = false;
         Player = PlayerHandler.instance.gameObject;
         rb = gameObject.GetComponent<Rigidbody>();
         m_Animator = gameObject.GetComponentInChildren<Animator>();
@@ -105,17 +106,17 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         {
             if (currBuff == "HP")
             {
-                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
             else if (currBuff == "DMG")
             {
-                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
             else if (currBuff == "MS")
             {
-                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
                 MS = true;
             }
         }
@@ -125,17 +126,17 @@ public class FlyingMech3 : EnemyBase, IPooledObject
 
             if (currBuff == "HP" || secondBuff == "HP")
             {
-                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
             else if (currBuff == "DMG" || secondBuff == "DMG")
             {
-                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
             else if (currBuff == "MS" || secondBuff == "MS")
             {
-                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
                 MS = true;
             }
         }
@@ -146,17 +147,17 @@ public class FlyingMech3 : EnemyBase, IPooledObject
 
             if (currBuff == "HP" || secondBuff == "HP" || thirdBuff == "HP")
             {
-                GameObject hpBuff = Instantiate(HP_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject hpBuff = Instantiate(m_enemyInfo.hpBuff, transform.position, Quaternion.identity, transform);
                 HP = true;
             }
             else if (currBuff == "DMG" || secondBuff == "DMG" || thirdBuff == "DMG")
             {
-                GameObject dmgBuff = Instantiate(DMG_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject dmgBuff = Instantiate(m_enemyInfo.dmgBuff, transform.position, Quaternion.identity, transform);
                 DMG = true;
             }
             else if (currBuff == "MS" || secondBuff == "MS" || thirdBuff == "MS")
             {
-                GameObject msBuff = Instantiate(MS_Buff_Prefab, transform.position, Quaternion.identity, transform);
+                GameObject msBuff = Instantiate(m_enemyInfo.msBuff, transform.position, Quaternion.identity, transform);
                 MS = true;
             }
         }
