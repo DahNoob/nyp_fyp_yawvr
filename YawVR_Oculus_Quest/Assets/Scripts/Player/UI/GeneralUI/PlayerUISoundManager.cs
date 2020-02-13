@@ -71,6 +71,8 @@ public class PlayerUISoundManager : MonoBehaviour
     private SoundFXRef m_hoverUiSound;
     [SerializeField]
     private SoundFXRef m_clickUiSound;
+    [SerializeField]
+    private SoundFXRef m_allObjectivesClearedSound;
 
     //Dictionary for sounds
     // Start is called before the first frame update
@@ -204,6 +206,11 @@ public class PlayerUISoundManager : MonoBehaviour
     public void PlayUiHoverSound()
     {
         m_hoverUiSound.PlaySoundAt(transform.position);
+    }
+    public void PlayAllObjectivesClearedSound()
+    {
+        m_allObjectivesClearedSound.PlaySound();
+        m_allObjectivesClearedSound.AttachToParent(Camera.main.transform);
     }
 }
 
