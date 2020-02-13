@@ -13,13 +13,13 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     List<string> buffs = new List<string> { "HP", "DMG", "MS" };
 
     private GameObject Player;
-    [Header("Flying Mech 3 Colliders")]
-    [SerializeField]
-    protected Collider Body;
-    [SerializeField]
-    protected Collider WeakPoint_1;
-    [SerializeField]
-    protected Collider WeakPoint_2;
+    //[Header("Flying Mech 3 Colliders")]
+    //[SerializeField]
+    //protected Collider Body;
+    //[SerializeField]
+    //protected Collider WeakPoint_1;
+    //[SerializeField]
+    //protected Collider WeakPoint_2;
 
     private Rigidbody rb;
 
@@ -45,20 +45,26 @@ public class FlyingMech3 : EnemyBase, IPooledObject
     [SerializeField]
     private bool MS;
 
-    [Header("Flying Mech 3 Configuration")]
-    [SerializeField]
-    protected Rigidbody m_rigidBody;
-    [SerializeField]
-    protected Transform m_coreTransform;
-    [SerializeField]
-    protected GameObject m_lesserEnemy;
+    //[Header("Flying Mech 3 Configuration")]
+    //[SerializeField]
+    //protected Rigidbody m_rigidBody;
+    //[SerializeField]
+    //protected Transform m_coreTransform;
+    //[SerializeField]
+    //protected GameObject m_lesserEnemy;
 
     protected List<Collider> ignoredColliders = new List<Collider>();
 
+    //[SerializeField]
+    //protected GameObject m_WeakPoint_1;
+    //[SerializeField]
+    //protected GameObject m_WeakPoint_2;
+
+    //[Header("Flying Mech 3 Configuration")]
     [SerializeField]
-    protected GameObject m_WeakPoint_1;
+    protected GameObject LM_Spawn1;
     [SerializeField]
-    protected GameObject m_WeakPoint_2;
+    protected GameObject LM_Spawn2;
 
     public void OnObjectSpawn()
     {
@@ -251,6 +257,15 @@ public class FlyingMech3 : EnemyBase, IPooledObject
         var selectedBuff = buffs[index];
         buffs.RemoveAt(index);
         return selectedBuff;
+    }
+
+    public void SpawnEnemy(/*Transform LM_Spawn1, Transform LM_Spawn2*/)
+    {
+        EnemyBase newEnemy = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.LIGHT_MECH1, LM_Spawn1.transform.position, transform.rotation).GetComponent<EnemyBase>();
+        //newEnemy.GetComponent<EnemyBase>().m_target = m_target;
+
+        EnemyBase newEnemy2 = ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.LIGHT_MECH1, LM_Spawn2.transform.position, transform.rotation).GetComponent<EnemyBase>();
+        //newEnemy2.GetComponent<EnemyBase>().m_target = m_target;
     }
 
     public void OnCollisionEnter(Collision collision)
