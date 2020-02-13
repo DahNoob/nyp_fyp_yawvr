@@ -152,12 +152,16 @@ public class UIObjectiveHandler
         }
 
         m_activeObjective = _objectiveInfo;
-        //Set the appropriate sprites
-        //Remove lock icon from base
-        _objectiveInfo.panelInfo.firstFill.sprite = baseObjectiveImage;
-        _objectiveInfo.panelInfo.objectiveResult.gameObject.SetActive(false);
-        _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(true);
-        _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(true);
+
+        if (_objectiveInfo != null)
+        {
+            //Set the appropriate sprites
+            //Remove lock icon from base
+            _objectiveInfo.panelInfo.firstFill.sprite = baseObjectiveImage;
+            _objectiveInfo.panelInfo.objectiveResult.gameObject.SetActive(false);
+            _objectiveInfo.panelInfo.secondFill.gameObject.SetActive(true);
+            _objectiveInfo.panelInfo.panelProgress.gameObject.SetActive(true);
+        }
     }
 
     public void AddObjectiveToPanel(ref ObjectiveInfo _objectiveInfo, int index)

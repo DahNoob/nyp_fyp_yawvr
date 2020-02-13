@@ -86,7 +86,10 @@ public class Game : MonoBehaviour
         ApplyMechLoadouts();
         ApplyObjectives();
         StartCoroutine(checkObjectives());
-        StartCoroutine(setEnvironmentParticlePosition());
+
+        if (m_environmentParticles != null)
+            StartCoroutine(setEnvironmentParticlePosition());
+
         print("Game started!");
     }
 
