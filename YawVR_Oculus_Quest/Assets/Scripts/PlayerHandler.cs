@@ -19,6 +19,9 @@ using OVR;
 ** 1    forgot                  DahNoob   Created
 ** 2    09/12/2019, 4:43PM      DahNoob   Added energy
 *******************************/
+/// <summary>
+/// This class serves as a form of easy access for all objects to access player's values at any given time.
+/// </summary>
 [System.Serializable]
 public class PlayerHandler : BaseEntity
 {
@@ -83,7 +86,7 @@ public class PlayerHandler : BaseEntity
 
     [Header("Configuration")]
     [SerializeField]
-    [ColorUsage(true,true)]
+    [ColorUsage(true, true)]
     private Color m_armInnerColor;
     [SerializeField]
     [ColorUsage(true, true)]
@@ -105,7 +108,7 @@ public class PlayerHandler : BaseEntity
     [SerializeField]
     private PlayerHandler.STATE state = STATE.IDLE;
     [SerializeField]
-    [Range(0.0f,0.2f)]
+    [Range(0.0f, 0.2f)]
     private float m_camSwayIntensity = 0.1f;
     [SerializeField]
     [Range(0.0f, 0.2f)]
@@ -151,8 +154,11 @@ public class PlayerHandler : BaseEntity
     //For sounds? Idk maybe better way later on
     bool isPlayHealthSound = false;
 
-    //Getters/Setters
-    public new float health {
+    /// <summary>
+    /// Returns player's health
+    /// </summary>
+    public new float health
+    {
         get { return _health; }
         private set
         {
@@ -160,7 +166,11 @@ public class PlayerHandler : BaseEntity
             m_healthBar.value = _health;
         }
     }
-    public float armor {
+    /// <summary>
+    /// Returns player's armor
+    /// </summary>
+    public float armor
+    {
         get { return _armor; }
         private set
         {
@@ -168,6 +178,9 @@ public class PlayerHandler : BaseEntity
             m_armorBar.value = _armor;
         }
     }
+    /// <summary>
+    /// Returns player's currency value
+    /// </summary>
     public int currency
     {
         get { return _currency; }
@@ -204,7 +217,7 @@ public class PlayerHandler : BaseEntity
         prevHeight = transform.position.y;
         print("PlayerHandler started!");
     }
-    
+
     void Update()
     {
         if (transform.position.y < m_fallThreshold)
@@ -214,7 +227,7 @@ public class PlayerHandler : BaseEntity
         if (armorRegenElapsed > m_armorRegenDelay)
         {
             armor = Mathf.Min(m_maxArmor, armor + m_armorRegenRate * Time.deltaTime);
-            if(startedRecharge)
+            if (startedRecharge)
             {
                 //PlayerUIManager.instance.AddStringToProcessingQueue(new SystemFluffMessage("Recharging shields...", 0.1f, 0.05f));
                 startedRecharge = false;
@@ -232,12 +245,12 @@ public class PlayerHandler : BaseEntity
             m_mechLegs.SetFloat("Blend", 0);
             walkHapticReady = true;
         }
-        else if(state == STATE.WALK)
+        else if (state == STATE.WALK)
         {
             float walkMultiplier = mechMovement.movementAlpha;
             float time_mult = mechMovement.startWalkTime + Time.time * 5.6f;
             float sin = Mathf.Sin(time_mult * 2);
-            if(walkHapticReady && sin < -0.45f)
+            if (walkHapticReady && sin < -0.45f)
             {
                 walkHapticReady = false;
                 float strength = 0.65f * walkMultiplier;
@@ -245,7 +258,7 @@ public class PlayerHandler : BaseEntity
                 VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, strength, false, 0.02f);
                 mechMovement.PlayStepSound();
             }
-            else if(!walkHapticReady && sin > 0.5f)
+            else if (!walkHapticReady && sin > 0.5f)
             {
                 walkHapticReady = true;
             }
@@ -256,7 +269,7 @@ public class PlayerHandler : BaseEntity
         if (Input.GetKeyDown(KeyCode.G))
             Shake(0.2f);
 #endif
-        if(Input.GetKey(KeyCode.R) || (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.RTouch) && OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.LTouch)))
+        if (Input.GetKey(KeyCode.R) || (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.RTouch) && OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.LTouch)))
         {
             DEV_resetLevelTimer += Time.deltaTime;
             if (DEV_resetLevelTimer > 2)
@@ -269,7 +282,7 @@ public class PlayerHandler : BaseEntity
         {
             DEV_resetLevelTimer = 0;
         }
-        if(Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             Instantiate(Persistent.instance.PREFAB_SUPPLYCRATE_DROP, transform.position + Vector3.up * -4.5f + transform.forward * 4, Quaternion.Euler(0, Random.Range(0, 360), 0), Persistent.instance.GO_STATIC.transform);
         }
@@ -277,7 +290,7 @@ public class PlayerHandler : BaseEntity
         //m_healthBar.value = Mathf.Lerp(m_uiHealth, _health, Time.deltaTime * healthLerpSpeed);
         //m_armorBar.value = Mathf.Lerp(m_uiArmor, _armor, Time.deltaTime * armorLerpSpeed);
 
-        if(health < m_maxHealth * 0.5f && armor <= 0f)
+        if (health < m_maxHealth * 0.5f && armor <= 0f)
         {
             m_warningTimer += Time.deltaTime * warningUIFadeSpeed;
             for (int i = 0; i < m_warningUI.Length; ++i)
@@ -287,14 +300,14 @@ public class PlayerHandler : BaseEntity
                 m_warningUI[i].color = color;
             }
 
-            if(!isPlayHealthSound)
+            if (!isPlayHealthSound)
             {
                 isPlayHealthSound = true;
                 PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.LOW_HEALTH);
             }
         }
         else
-        {   
+        {
             for (int i = 0; i < m_warningUI.Length; ++i)
             {
                 Color color = m_warningUI[i].color;
@@ -338,9 +351,12 @@ public class PlayerHandler : BaseEntity
     //{
     //}
 
+    /// <summary>
+    /// Resets the view and rotation of the player for centering.
+    /// </summary>
     public void ResetPose()
     {
-        if(!isResettingPose)
+        if (!isResettingPose)
         {
             StartCoroutine(ResetPoseThread());
         }
@@ -350,11 +366,19 @@ public class PlayerHandler : BaseEntity
         //GetComponent<CharacterController>().enabled = true;
     }
 
+    /// <summary>
+    /// Adds currency to the player's currency values.
+    /// </summary>
+    /// <param name="_amount">Amount to add to player's currency values.</param>
     public void AddCurrency(int _amount)
     {
         currency += _amount;
     }
-    
+
+    /// <summary>
+    /// Adds currency to the player's health value.
+    /// </summary>
+    /// <param name="_amount">Amount to add to health currency values.</param>
     public void AddHealth(int _amount)
     {
         health += _armor;
@@ -375,6 +399,11 @@ public class PlayerHandler : BaseEntity
         isResettingPose = false;
     }
 
+    /// <summary>
+    /// Function to handle scene fading and setting of next scene
+    /// </summary>
+    /// <param name="_sceneName">Name of scene to change to.</param>
+    /// <returns></returns>
     public IEnumerator SetNextLevel(string _sceneName)
     {
         Game.instance.StopAllBGM();
@@ -384,29 +413,72 @@ public class PlayerHandler : BaseEntity
         SceneManager.LoadScene(_sceneName);
     }
 
+    /// <summary>
+    /// Returns the player's right pilot controller
+    /// </summary>
+    /// <returns>PilotController</returns>
     public PilotController GetRightPilotController() { return m_rightController; }
+    /// <summary>
+    /// Returns the player's left pilot controller
+    /// </summary>
+    /// <returns>PilotController</returns>
     public PilotController GetLeftPilotController() { return m_leftController; }
+    /// <summary>
+    /// Returns the player's right follower
+    /// </summary>
+    /// <returns>ControllerFollower</returns>
     public ControllerFollower GetRightFollower() { return m_rightFollower; }
+    /// <summary>
+    /// Returns the player's left follower
+    /// </summary>
+    /// <returns>ControllerFollower</returns>
     public ControllerFollower GetLeftFollower() { return m_leftFollower; }
+    /// <summary>
+    /// Returns the player's right mech hand
+    /// </summary>
+    /// <returns>MechHandHandler</returns>
     public MechHandHandler GetRightMechHand() { return m_rightMechHand; }
+    /// <summary>
+    /// Returns the player's left mech hand
+    /// </summary>
+    /// <returns>MechHandHandler</returns>
     public MechHandHandler GetLeftMechHand() { return m_leftMechHand; }
 
+    /// <summary>
+    /// Returns the arm inner color
+    /// </summary>
+    /// <returns>Color</returns>
     public Color GetArmInnerColor()
     {
         return m_armInnerColor;
     }
+    /// <summary>
+    /// Returns the arm rim color
+    /// </summary>
+    /// <returns>Color</returns>
     public Color GetArmRimColor()
     {
         return m_armRimColor;
     }
+
+    /// <summary>
+    /// Returns the offset of player's camera.
+    /// </summary>
+    /// <returns>Camera's localPosition</returns>
     public Vector3 GetCameraOffset()
     {
         return m_camPivot.localPosition;
     }
+    
+    /// <summary>
+    /// Sets state of the player
+    /// </summary>
+    /// <param name="_newState">State to set as new state.</param>
     public void SetState(PlayerHandler.STATE _newState)
     {
         state = _newState;
     }
+
     public void SetLegsAngle(float _x, float _y)
     {
         m_mechLegs.transform.localEulerAngles = new Vector3(0, Mathf.Atan2(-_y, _x) * Mathf.Rad2Deg + 90, 0);
@@ -427,6 +499,10 @@ public class PlayerHandler : BaseEntity
 
     }
 
+    /// <summary>
+    /// Override function for the player to take damage
+    /// </summary>
+    /// <param name="damage">Amount of damage to take</param>
     public override void takeDamage(int damage)
     {
         if (armor > 0)
@@ -458,6 +534,9 @@ public class PlayerHandler : BaseEntity
             Die();
     }
 
+    /// <summary>
+    /// Override function for when the player dies
+    /// </summary>
     public override void Die()
     {
         health = m_maxHealth;
@@ -466,9 +545,13 @@ public class PlayerHandler : BaseEntity
 
     }
 
+    /// <summary>
+    /// Function to exit back to MainHubScene
+    /// </summary>
+    /// <param name="_allObjectivesCleared">Is all objectives cleared?</param>
     public void ExitToHub(bool _allObjectivesCleared)
     {
-        if(_allObjectivesCleared)
+        if (_allObjectivesCleared)
         {
             PlayerPrefs.SetInt("Currency", PlayerPrefs.GetInt("Currency", 0) + currency);
             PlayerPrefs.Save();
@@ -476,6 +559,9 @@ public class PlayerHandler : BaseEntity
         StartCoroutine(SetNextLevel("MainHub"));
     }
 
+    /// <summary>
+    /// Triggers all objectives to be cleared.
+    /// </summary>
     public void TriggerAllObjectivesCleared()
     {
         GetComponent<PlayerUIManager>().TriggerAllObjectivesCleared();

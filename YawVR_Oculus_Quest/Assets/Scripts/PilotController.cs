@@ -20,6 +20,10 @@ using UnityEngine;
 ** 6    09/12/2019, 5:30 PM     DahNoob   Refactored to accomodate for the overhauled MechArmModule system
 ** 7    10/12/2019, 12:08 PM    DahNoob   Refactored to accomodate for HandPivot thing
 *******************************/
+
+    /// <summary>
+    /// This class detects player hands in control holes.
+    /// </summary>
 public class PilotController : MonoBehaviour
 {
     [SerializeField]
@@ -163,6 +167,10 @@ public class PilotController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Attach weapons to the correct transforms in the hands.
+    /// </summary>
+    /// <param name="_armModulePackages"></param>
     public void AttachArmModules(GameObject[] _armModulePackages)
     {
         foreach (GameObject armModulePackage in _armModulePackages)
@@ -204,6 +212,12 @@ public class PilotController : MonoBehaviour
         SetCurrentModule(0);
     }
 
+    /// <summary>
+    /// Sets holo arm material color.
+    /// </summary>
+    /// <param name="_index"></param>
+    /// <param name="_newInnerColor"></param>
+    /// <param name="_newRimColor"></param>
     void SetHoloArmMaterialColor(int _index, Color _newInnerColor, Color _newRimColor)
     {
         MeshRenderer[] holoMeshes = modules[_index].m_holoMeshes;
@@ -217,6 +231,10 @@ public class PilotController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the current module based on index
+    /// </summary>
+    /// <param name="_index">indexToChange</param>
     void SetCurrentModule(int _index)
     {
         int prevModuleIndex = currModuleIndex;
@@ -244,6 +262,9 @@ public class PilotController : MonoBehaviour
         ResetArmModules();
     }
 
+    /// <summary>
+    /// Resets arm modules.
+    /// </summary>
     void ResetArmModules()
     {
         for (int i = 0; i < modules.Count; ++i)
@@ -259,6 +280,10 @@ public class PilotController : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Changes the state of the hands
+    /// </summary>
+    /// <param name="_isTriggered"></param>
     void HandStateChange(bool _isTriggered)
     {
         if (!_isTriggered)
@@ -277,6 +302,10 @@ public class PilotController : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Changes the state of index.
+    /// </summary>
+    /// <param name="_isTriggered"></param>
     void IndexStateChange(bool _isTriggered)
     {
         isIndexTriggered = _isTriggered;

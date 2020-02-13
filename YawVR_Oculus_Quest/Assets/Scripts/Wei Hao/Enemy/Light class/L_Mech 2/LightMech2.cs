@@ -16,6 +16,10 @@ using UnityEngine;
 ** 2    13/12/2019, 1:33 PM     Wei Hao   Updated basic animation
 ** 3    18/12/2019, 1:50 PM     Wei Hao   Added rarity for enemy
 *******************************/
+
+/// <summary>
+/// This class provides all functionalities and variables that is used by LightMech2
+/// </summary>
 public class LightMech2 : EnemyBase , IPooledObject
 {
     // Banelings states
@@ -110,6 +114,9 @@ public class LightMech2 : EnemyBase , IPooledObject
     [SerializeField]
     private bool MS;
 
+    /// <summary>
+    /// Called when this enemy  is spawned from the object pool.
+    /// </summary>
     public void OnObjectSpawn()
     {
         //Just gonna cheese it by calling start first
@@ -118,6 +125,9 @@ public class LightMech2 : EnemyBase , IPooledObject
         SetIconSprite();
     }
 
+    /// <summary>
+    /// Called when this enemy should be "destroyed"
+    /// </summary>
     public void OnObjectDestroy()
     {     
         //Reset velocity
@@ -311,6 +321,10 @@ public class LightMech2 : EnemyBase , IPooledObject
         return selectedBuff;
     }
 
+    /// <summary>
+    /// Plays the particle effects.
+    /// </summary>
+    /// <param name="_isActive">Do you want to play the rolling effects?</param>
     public void SetRollingEffect(bool _isActive)
     {
         if(_isActive)
@@ -334,6 +348,10 @@ public class LightMech2 : EnemyBase , IPooledObject
         }
     }
 
+    /// <summary>
+    /// Callback that is called when another object enters this enemy's trigger area.
+    /// </summary>
+    /// <param name="collision">Object that has entered the enemy's trigger area.</param>
     void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")

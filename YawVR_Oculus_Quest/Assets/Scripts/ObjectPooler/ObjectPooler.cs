@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class provides information about a pool object and it's properties.
+/// </summary>
 [System.Serializable]
 public class PoolObject
 {
@@ -50,6 +53,9 @@ public class PoolObject
     }
 }
 
+/// <summary>
+/// This class contains all information about objects pooled and gives an interface for other classes to spawn objects from this pool.
+/// </summary>
 public class ObjectPooler : MonoBehaviour
 {
     //Instance object
@@ -99,6 +105,13 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Can be called by any class to spawn an object from any class
+    /// </summary>
+    /// <param name="objectType">Object type to spawn</param>
+    /// <param name="position">Position to spawn</param>
+    /// <param name="rotation">Rotation to spawn</param>
+    /// <returns>Spawned gameObject if parameters are valid.</returns>
     public GameObject SpawnFromPool(PoolObject.OBJECTTYPES objectType, Vector3 position, Quaternion rotation)
     {
         int tag = (int)(objectType);
@@ -223,13 +236,26 @@ public class ObjectPooler : MonoBehaviour
 
         return true;
     }
-
+    /// <summary>
+    /// Not used.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="objectToPool"></param>
+    /// <param name="amountToPool"></param>
+    /// <param name="amountToExpand"></param>
+    /// <param name="overWrite"></param>
+    /// <returns></returns>
     public bool AddAnotherPool(PoolObject.OBJECTTYPES type, GameObject objectToPool, int amountToPool, int amountToExpand, bool overWrite = false)
     {
         PoolObject resultObject = new PoolObject(type, objectToPool, amountToPool, amountToPool);
         return AddAnotherPool(resultObject, overWrite);
     }
 
+    /// <summary>
+    /// Returns how many objects are active in the current pool
+    /// </summary>
+    /// <param name="type">Type to check</param>
+    /// <returns>How many objects are active in the given pool.</returns>
     public string AmountActive(PoolObject.OBJECTTYPES type)
     {
         int tag = (int)(type);
@@ -268,6 +294,10 @@ public class ObjectPooler : MonoBehaviour
         return poolDictionary[tag].Count;
     }
 
+    /// <summary>
+    /// Disables an object in pools as an updated count
+    /// </summary>
+    /// <param name="type">Type to reduce</param>
     public void DisableInPool(PoolObject.OBJECTTYPES type)
     {
         //Guaranteed type, dont need to check, i hope.

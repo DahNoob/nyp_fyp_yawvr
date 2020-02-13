@@ -17,6 +17,10 @@ using UnityEngine;
 ** 3    03/12/2019, 3:41PM      DahNoob   Implemented Version 2 (One-time attach, HandTrigger to control)
 ** 4    23/12/2019, 11:07AM     DahNoob   Renamed it from ControllerFollower to MechHandHandler
 *******************************/
+
+/// <summary>
+/// This class handles the mech hand movements and animations.
+/// </summary>
 public class MechHandHandler : MonoBehaviour
 {
     [Header("Configuration")]
@@ -49,13 +53,13 @@ public class MechHandHandler : MonoBehaviour
 
     void Update()
     {
-        if(m_enabled)
+        if (m_enabled)
             m_handPivot.rotation = follower.transform.rotation;
     }
 
     void FixedUpdate()
     {
-        if(m_enabled)
+        if (m_enabled)
             m_handModel.SetFloat("Blend", Mathf.LerpUnclamped(m_handModel.GetFloat("Blend"), OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller), 0.13f));
     }
 
@@ -67,7 +71,7 @@ public class MechHandHandler : MonoBehaviour
     public void SetEnabled(bool _enabled)
     {
         m_enabled = _enabled;
-        if(!_enabled)
+        if (!_enabled)
         {
             m_handPivot.localRotation = Quaternion.identity;
             m_handModel.SetFloat("Blend", 0);

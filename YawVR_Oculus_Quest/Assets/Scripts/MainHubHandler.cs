@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles and controls all logic inside the MainHub scene.
+/// </summary>
 public class MainHubHandler : MonoBehaviour
 {
     [SerializeField]
@@ -82,6 +85,9 @@ public class MainHubHandler : MonoBehaviour
         StartCoroutine(fadeToScene(planets[currentPlanetIndex].m_sceneName));
     }
 
+    /// <summary>
+    /// Changes the hologram display to the next planet.
+    /// </summary>
     public void NextPlanet()
     {
         currentPlanetIndex++;
@@ -90,6 +96,9 @@ public class MainHubHandler : MonoBehaviour
         UpdatePlanet();
     }
 
+    /// <summary>
+    /// Changes the hologram display to the previous planet.
+    /// </summary>
     public void PreviousPlanet()
     {
         currentPlanetIndex--;
@@ -98,6 +107,9 @@ public class MainHubHandler : MonoBehaviour
         UpdatePlanet();
     }
 
+    /// <summary>
+    /// Updates the current planet.
+    /// </summary>
     void UpdatePlanet()
     {
         for (int i = 0; i < planets.Length; ++i)
@@ -112,6 +124,11 @@ public class MainHubHandler : MonoBehaviour
         planetHoloPickable.ResetFade();
     }
 
+    /// <summary>
+    /// Fades to a scene based on the planet chosen.
+    /// </summary>
+    /// <param name="_sceneName"></param>
+    /// <returns></returns>
     IEnumerator fadeToScene(string _sceneName)
     {
         m_nowTravellingSound.PlaySound();

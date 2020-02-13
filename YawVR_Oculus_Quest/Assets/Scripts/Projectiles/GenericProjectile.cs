@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class defines the properties an GenericProjectile should have.
+/// Inherits from BaseProjectile, IPooledObject.
+/// </summary>
 public class GenericProjectile : BaseProjectile, IPooledObject
 {
     [Header("Generic Configuration")]
@@ -18,6 +22,9 @@ public class GenericProjectile : BaseProjectile, IPooledObject
     [SerializeField]
     private TrailRenderer m_trailRenderer;
 
+    /// <summary>
+    /// Called when this projectile is spawned from the object pool.
+    /// </summary>
     public void OnObjectSpawn()
     {
         //Reset normal and angular velocities
@@ -26,12 +33,20 @@ public class GenericProjectile : BaseProjectile, IPooledObject
         //Clears the renderer positions so the trail stops acting out
         m_trailRenderer.Clear();
     }
+
+    /// <summary>
+    /// Called when this projectile should be "destroyed"
+    /// </summary>
     public void OnObjectDestroy()
     {
         ObjectPooler.instance.DisableInPool(m_projectileInfo.projectileType);
         this.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Init function for projectile.
+    /// </summary>
+    /// <param name="_transform"></param>
     public override void Init(Transform _transform = null)
     {
         if (_transform != null)
@@ -40,6 +55,10 @@ public class GenericProjectile : BaseProjectile, IPooledObject
         StartCoroutine(delayDestroy());
     }
 
+    /// <summary>
+    /// Defines what happens when this projectile collides with collision.
+    /// </summary>
+    /// <param name="collision">The object that is colliding with this projectile.</param>
     protected override void OnCollisionEnter(Collision collision)
     {
         //GameObject efx = Instantiate(m_projectileInfo.impactEffect, Persistent.instance.GO_DYNAMIC.transform);
@@ -62,6 +81,10 @@ public class GenericProjectile : BaseProjectile, IPooledObject
         //Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Coroutine that destroys the projectile after it has not hit something, to save resources.
+    /// </summary>
+    /// <returns></returns>
     protected IEnumerator delayDestroy()
     {
         yield return new WaitForSeconds(m_projectileInfo.lifeTime);

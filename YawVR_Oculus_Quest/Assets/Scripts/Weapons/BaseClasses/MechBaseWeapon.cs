@@ -15,6 +15,11 @@ using UnityEngine;
 ** 1    06/12/2019, 2:35PM      DahNoob   Created
 ** 2    09/12/2019, 5:14PM      DahNoob   Overhauled the variables and logic such that it should be implemented to one script per arm now
 *******************************/
+
+/// <summary>
+/// This class provides functions and variables for the mech's base weapon
+/// Inherits from BaseMechModule
+/// </summary>
 [System.Serializable]
 abstract public class MechBaseWeapon : BaseMechModule
 {
@@ -87,12 +92,21 @@ abstract public class MechBaseWeapon : BaseMechModule
     }
 
     //Update UI
+    /// <summary>
+    /// Update UI
+    /// </summary>
+    /// <returns>boolean</returns>
     abstract public bool UpdateUI();
 
+    /// <summary>
+    /// Gets the current controller controlling this weapon.
+    /// </summary>
+    /// <returns>OVRInput.Controller controller.</returns>
     public OVRInput.Controller GetController()
     {
         return m_controller;
     }
+
     protected void SetModelFade(float _val)
     {
         MeshRenderer[] ms = m_gunObject.GetComponentsInChildren<MeshRenderer>();
@@ -118,7 +132,7 @@ abstract public class MechBaseWeapon : BaseMechModule
             yield return new WaitForFixedUpdate();
             fadeValue += 0.05f;
             SetModelFade(fadeValue + m_gunObject.transform.position.y);
-            if(fadeValue > m_fadeInThreshold)
+            if (fadeValue > m_fadeInThreshold)
             {
                 isFullyVisible = true;
                 SetModelFade(99999);
@@ -126,7 +140,7 @@ abstract public class MechBaseWeapon : BaseMechModule
                 break;
             }
         }
-        
+
     }
     IEnumerator fadeOut()
     {
@@ -136,7 +150,7 @@ abstract public class MechBaseWeapon : BaseMechModule
             yield return new WaitForFixedUpdate();
             fadeValue -= 0.05f;
             SetModelFade(fadeValue + m_gunObject.transform.position.y);
-            if(fadeValue < m_fadeOutThreshold)// && !isSelected)
+            if (fadeValue < m_fadeOutThreshold)// && !isSelected)
             {
                 SetModelFade(-99999);
                 m_gunObject.SetActive(false);

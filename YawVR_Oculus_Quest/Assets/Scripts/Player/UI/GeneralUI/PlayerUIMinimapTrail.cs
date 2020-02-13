@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// This class controls the pathfinding done by the minimap to lead players to objectives or interest points.
+/// </summary>
 [System.Serializable]
 public class PlayerUIMinimapTrail
 {
@@ -89,6 +92,10 @@ public class PlayerUIMinimapTrail
 
         }
     }
+
+    /// <summary>
+    /// Finds a path to nearest objective or interest point.
+    /// </summary>
     public void Pathfind()
     {
         minimapFinderNav.Warp(PlayerHandler.instance.transform.position);
@@ -132,6 +139,10 @@ public class PlayerUIMinimapTrail
         }
     }
 
+    /// <summary>
+    /// Enables the first trail (on minimap)
+    /// </summary>
+    /// <param name="minimapPathLength"></param>
     public void FirstTrail(int minimapPathLength)
     {
         if (!enableMinimapTrail)
@@ -196,7 +207,10 @@ public class PlayerUIMinimapTrail
         }
 
     }
-
+    /// <summary>
+    /// Enables the second trail (world space)
+    /// </summary>
+    /// <param name="minimapPathLength"></param>
     public void SecondTrail(int minimapPathLength)
     {
         if (!enableSecondaryTrail)
@@ -219,6 +233,11 @@ public class PlayerUIMinimapTrail
 
     }
 
+    /// <summary>
+    /// Helper function to prevent redundant SetActive calls .
+    /// </summary>
+    /// <param name="go">GameObject reference</param>
+    /// <param name="active">Active value</param>
     public void HandleActive(GameObject go, bool active)
     {
         if (go.activeInHierarchy != active)
@@ -226,12 +245,20 @@ public class PlayerUIMinimapTrail
 
     }
 
+    /// <summary>
+    /// Checks if the referenceObjective is null or completed to update the minimap
+    /// </summary>
+    /// <param name="referenceInfo">Reference objective</param>
+    /// <returns>True if valid, false if not.</returns>
     public bool IsObjectiveValid(ObjectiveInfo referenceInfo)
     {
         return !(referenceInfo == null || referenceInfo.m_highlight == null || referenceInfo.m_completed);
     }
 
-    //Helper function
+    /// <summary>
+    /// Helper function that returns a bool if the player is moving.
+    /// </summary>
+    /// <returns>True if player is moving, false if not.</returns>
     public bool IsCharacterMoving()
     {
         if (m_mechMovement == null)

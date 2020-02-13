@@ -17,6 +17,11 @@ using UnityEngine;
 ** 2    ????                    DahNoob   forgot lol
 ** 3    16/01/2020, 10:23AM     DahNoob   Renamed it from LaserBlaster to ShotGun
 *******************************/
+
+/// <summary>
+/// This class contains properties and values for the Shotgun
+/// Inherits from MechGunWeapon
+/// </summary>
 public class ShotGun : MechGunWeapon
 {
     [Header("Shot Gun Configuration")]
@@ -39,6 +44,10 @@ public class ShotGun : MechGunWeapon
         VibrationManager.SetControllerVibration(m_controller, 0.1f, 0.7f);
     }
 
+    /// <summary>
+    /// Override function that spawns projectiles and plays the shotgun animator.
+    /// Emits particles.
+    /// </summary>
     override protected void SpawnProjectile()
     {
         for (int i = 0; i < m_projectileAmount; ++i)

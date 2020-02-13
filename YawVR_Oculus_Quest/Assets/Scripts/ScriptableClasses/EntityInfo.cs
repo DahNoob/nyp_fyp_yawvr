@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is used as a base for creating a ScriptableObject asset for an entity's base info.
+/// </summary>
 [CreateAssetMenu(fileName = "Entity Info", menuName = "Entity Info/Entity Info")]
 public class EntityInfo : ScriptableObject
 {

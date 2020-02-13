@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['g_12204',['g',['../structovr_avatar_mesh_vertex_v2.html#ae952d988c469d73446622ba704d89f80',1,'ovrAvatarMeshVertexV2.g()'],['../struct_o_v_r_plugin_1_1_colorf.html#a735470563795895be0c196c0380b7909',1,'OVRPlugin.Colorf.g()'],['../struct_o_v_r_1_1_open_v_r_1_1_hmd_color__t.html#acdbe1cef51ae1f4e7d730a9b968b4089',1,'OVR.OpenVR.HmdColor_t.g()']]],
+  ['gain_12205',['gain',['../class_o_v_r_1_1_o_s_p_props.html#afeb35e479a050057087eaafcc8cc3621',1,'OVR.OSPProps.gain()'],['../class_o_v_r_lip_sync_context.html#a3b7a55b33e1a6d2e4eb92026573ba2c4',1,'OVRLipSyncContext.gain()'],['../class_o_v_r_voice_mod_context.html#a11550f89ec9399ff60b1a07816633b62',1,'OVRVoiceModContext.gain()']]],
+  ['gamepad_5fpitchdegreespersec_12206',['GamePad_PitchDegreesPerSec',['../class_o_v_r_debug_head_controller.html#a1c367117fcfe3a73f3244b4d86d61979',1,'OVRDebugHeadController']]],
+  ['gamepad_5fyawdegreespersec_12207',['GamePad_YawDegreesPerSec',['../class_o_v_r_debug_head_controller.html#aa4bdfbf6c681291ea1815ca29cdf44f6',1,'OVRDebugHeadController']]],
+  ['gazeclickkey_12208',['gazeClickKey',['../class_unity_engine_1_1_event_systems_1_1_o_v_r_input_module.html#aef76d4cb08a389aeac5a80f3c965ed58',1,'UnityEngine::EventSystems::OVRInputModule']]],
+  ['gearmaterial_12209',['gearMaterial',['../class_social_platform_manager.html#aa764a5b79f3213b2edc8fdbc3987510e',1,'SocialPlatformManager']]],
+  ['glossinessscale_12210',['glossinessScale',['../structovr_avatar_p_b_s_material_state.html#aab94d57c323309a23738f06201cdadc4',1,'ovrAvatarPBSMaterialState']]],
+  ['gorandom_12211',['goRandom',['../class_test_target_follower.html#a54a078de0058d9bdcd0c71f53082cad4',1,'TestTargetFollower']]],
+  ['grabbegin_12212',['grabBegin',['../class_o_v_r_grabber.html#a73f250601d4ace3d0f82e22f62db979c',1,'OVRGrabber']]],
+  ['grabend_12213',['grabEnd',['../class_o_v_r_grabber.html#a338681eef30e75e7d619da33384cfca4',1,'OVRGrabber']]],
+  ['granttime_12214',['GrantTime',['../class_oculus_1_1_platform_1_1_models_1_1_purchase.html#a259618f3ed06c55d3318b7dff13bb39e',1,'Oculus::Platform::Models::Purchase']]],
+  ['gravity_12215',['Gravity',['../class_teleport_aim_handler_parabolic.html#a22376f305199ec635c58d3a1d3ed733a',1,'TeleportAimHandlerParabolic']]],
+  ['gravitymodifier_12216',['GravityModifier',['../class_o_v_r_player_controller.html#a5f28824c01b830bbdd3cf2f8db08c750',1,'OVRPlayerController']]],
+  ['griddivs_12217',['gridDivs',['../struct_o_v_r_1_1_open_v_r_1_1_compositor___overlay_settings.html#a1c9b64ade7bfe12e6022dcb69e79ad51',1,'OVR::OpenVR::Compositor_OverlaySettings']]],
+  ['gridkey_12218',['GridKey',['../class_o_v_r_grid_cube.html#ad86e6a265640c7dd361b90b8ab06a4d2',1,'OVRGridCube']]],
+  ['gridscale_12219',['gridScale',['../struct_o_v_r_1_1_open_v_r_1_1_compositor___overlay_settings.html#a33a211e57c80ec5f031cbdfce4247e6e',1,'OVR::OpenVR::Compositor_OverlaySettings']]],
+  ['gridwidth_12220',['gridWidth',['../struct_o_v_r_1_1_open_v_r_1_1_compositor___overlay_settings.html#af8a0daa50f73ff20e49f3fd5e08a45ab',1,'OVR::OpenVR::Compositor_OverlaySettings']]],
+  ['guiselectdevice_12221',['GuiSelectDevice',['../class_o_v_r_mic_input.html#a5ec11a3783161907f1c8f5540e7e6bbd',1,'OVRMicInput']]]
+];

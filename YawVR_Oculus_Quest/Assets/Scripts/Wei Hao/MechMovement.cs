@@ -14,6 +14,10 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    27/11/2019, 5:05 PM     Wei Hao   Created and implemented
 *******************************/
+
+/// <summary>
+/// This class handles all logic for the player's mech movement
+/// </summary>
 public class MechMovement : MonoBehaviour
 {
     [Header("Mech Speed Configuration")]
@@ -133,10 +137,10 @@ public class MechMovement : MonoBehaviour
         cc.SimpleMove(movementDelta);
 
         //Check fall
-        if(isFalling && cc.isGrounded)
+        if (isFalling && cc.isGrounded)
         {
             isFalling = false;
-            if(Time.time > startFallTime)
+            if (Time.time > startFallTime)
             {
                 m_mechLandAudio.Play();
                 PlayerHandler.instance.Shake(0.2f);
@@ -144,7 +148,7 @@ public class MechMovement : MonoBehaviour
                 VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, 0.5f, false, 0.02f);
             }
         }
-        else if(!isFalling && !cc.isGrounded)
+        else if (!isFalling && !cc.isGrounded)
         {
             isFalling = true;
             startFallTime = Time.time + 0.5f;
@@ -173,7 +177,7 @@ public class MechMovement : MonoBehaviour
             isRotating = true;
             m_rotationEndAudio.Stop();
             m_rotationStartupAudio.Play();
-            m_rotationLoopAudio.Play(); 
+            m_rotationLoopAudio.Play();
         }
         if (secondaryAxis.y < 0)
             PlayerHandler.instance.goalPitch = m_pitchLowerLimit * secondaryAxis.y;
@@ -215,11 +219,18 @@ public class MechMovement : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Normalized value of speed and max speed clamped between 0 and 1
+    /// </summary>
+    /// <returns>Normalized Value between 0 and 1</returns>
     public float GetMovementAlpha()
     {
         return speed / maxSpeed;
     }
 
+    /// <summary>
+    /// Plays sound when the mech is walking
+    /// </summary>
     public void PlayStepSound()
     {
         stepAlternation = !stepAlternation;

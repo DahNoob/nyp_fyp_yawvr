@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['savemode_14032',['SaveMode',['../class_o_v_r_screenshot_wizard.html#a42b3363c32616f53582a4813b8fe7ec2',1,'OVRScreenshotWizard']]],
+  ['sdkaccounttype_14033',['SdkAccountType',['../namespace_oculus_1_1_platform.html#a2a36f960caf8a6ddc567fff59d96a2ba',1,'Oculus::Platform']]],
+  ['sendpolicy_14034',['SendPolicy',['../namespace_oculus_1_1_platform.html#aa6012af8216f7127957c8ec7c0ae07cb',1,'Oculus::Platform']]],
+  ['sentry_5fmodes_14035',['SENTRY_MODES',['../class_sentry_controller.html#a20056e7bd24ee03aa56718e646560e5d',1,'SentryController']]],
+  ['serviceprovider_14036',['ServiceProvider',['../namespace_oculus_1_1_platform.html#a870e4ed8471e948b35ef014e8e13e253',1,'Oculus::Platform']]],
+  ['sharemediastatus_14037',['ShareMediaStatus',['../namespace_oculus_1_1_platform.html#a3b0eaf3ec79356244a0bb11d3a00ffa9',1,'Oculus::Platform']]],
+  ['signals_14038',['Signals',['../class_o_v_r_lip_sync.html#a1169379a3b396794183156ccc491ab72',1,'OVRLipSync']]],
+  ['soundfxnext_14039',['SoundFXNext',['../namespace_o_v_r.html#ae8f4a8817c5ba11f760983bdcc9edc59',1,'OVR']]],
+  ['soundpriority_14040',['SoundPriority',['../namespace_o_v_r.html#a1cae31b048f39cc393097f968e78623b',1,'OVR']]],
+  ['state_14041',['STATE',['../class_player_handler.html#a65caa541e946ee1d46e56b22b0ec3694',1,'PlayerHandler.STATE()'],['../class_social_platform_manager.html#aea42e6b25945f62e57bc5c6b442d3a3e',1,'SocialPlatformManager.State()'],['../class_oculus_1_1_platform_1_1_samples_1_1_vr_hoops_1_1_platform_manager.html#a8992ccc9cb1fb4a640a8b2929fec3a84',1,'Oculus.Platform.Samples.VrHoops.PlatformManager.State()'],['../class_oculus_1_1_platform_1_1_samples_1_1_vr_voice_chat_1_1_platform_manager.html#a327cd597ab068af53eb18b0dbe26a3cc',1,'Oculus.Platform.Samples.VrVoiceChat.PlatformManager.State()'],['../class_o_v_r_profile.html#a4a188cd25d610d6a371316c76bf664ff',1,'OVRProfile.State()']]],
+  ['states_14042',['States',['../class_locomotion_teleport.html#a2af1d2c8801d78dac5a1acc795cdf00b',1,'LocomotionTeleport.States()'],['../class_enemy_base.html#a0d22b00d87b97d75eeea0425a5353aab',1,'EnemyBase.States()'],['../namespace_oculus_1_1_platform_1_1_samples_1_1_net_chat.html#a6cce97a533910077bc2fb41e96a064ee',1,'Oculus.Platform.Samples.NetChat.states()']]],
+  ['static_5ftypes_14043',['STATIC_TYPES',['../class_quad_tree_manager.html#ac8f05826a5eb08a946accffbaa6eaa78',1,'QuadTreeManager']]],
+  ['step_14044',['Step',['../class_o_v_r_plugin.html#a721791104128b5dc59e685a81b1ccc6d',1,'OVRPlugin']]],
+  ['stereotype_14045',['StereoType',['../class_o_v_r_overlay_editor.html#abc4715e06ef64d7b51521bcca35383f0',1,'OVROverlayEditor']]],
+  ['systemheadset_14046',['SystemHeadset',['../class_o_v_r_plugin.html#a1991047022cc290e38d9d51b22acae5b',1,'OVRPlugin']]],
+  ['systemregion_14047',['SystemRegion',['../class_o_v_r_plugin.html#a30deae7fe01b945cd93959e476b08122',1,'OVRPlugin']]],
+  ['systemvoipstatus_14048',['SystemVoipStatus',['../namespace_oculus_1_1_platform.html#a624269c3078a0080f5dc9233951bb91a',1,'Oculus::Platform']]]
+];

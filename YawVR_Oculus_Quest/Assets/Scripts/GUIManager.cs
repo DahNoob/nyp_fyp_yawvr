@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// This class serves as a manager to handle GUI elements [no longer used for game purposes other than debug]
+/// </summary>
 public class GUIManager : MonoBehaviour
 {
     //[Header("Configurations")]

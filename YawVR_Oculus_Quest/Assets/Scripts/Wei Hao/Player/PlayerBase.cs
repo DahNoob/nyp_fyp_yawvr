@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class defines all the variables and functions that the player should have.
+/// </summary>
 public class PlayerBase : MonoBehaviour
 {
     // Enemy Current Health
@@ -25,6 +28,10 @@ public class PlayerBase : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Take damage for the player
+    /// </summary>
+    /// <param name="damage">The amount of damage to take.</param>
     public void takeDamage(int damage)
     {
         health = Mathf.Max(0, health - damage);
@@ -32,6 +39,9 @@ public class PlayerBase : MonoBehaviour
             Die();
     }
 
+    /// <summary>
+    /// Function that should be called when player is dying
+    /// </summary>
     public void Die()
     {
         gameObject.SetActive(false);

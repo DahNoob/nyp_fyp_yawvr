@@ -14,6 +14,10 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    6/12/2019, 12:50:00 PM  Wei Hao   Created and implemented
 *******************************/
+
+/// <summary>
+/// This class inherits from EnemyBase and provides functionalities and variables for chasing enemies.
+/// </summary>
 public class Enemy_Chase : EnemyBase
 {
     private GameObject Player;
@@ -59,7 +63,7 @@ public class Enemy_Chase : EnemyBase
     // Update is called once per frame
     void Update()
     {
-        Vector3 relativePos = Player.transform.position - transform.position;       
+        Vector3 relativePos = Player.transform.position - transform.position;
 
         // Debugging distance
         float distance = Vector3.Distance(transform.position, Player.transform.position);
@@ -68,7 +72,7 @@ public class Enemy_Chase : EnemyBase
         {
             currentState = States.CHASE;
             //Debug.Log(distance);
-            
+
             if (Vector3.Distance(transform.position, Player.transform.position) <= attackRange + 1)
             {
                 currentState = States.ATTACK;
@@ -103,14 +107,14 @@ public class Enemy_Chase : EnemyBase
             case States.WAIT:
                 //transform.LookAt(new Vector3(Player.transform.position.x, 0, Player.transform.position.z));
                 m_Animator.SetBool("Attack", false);
-                attackCooldown -= 1.0f * Time.deltaTime;               
-                if(attackCooldown <= 0.0f)
+                attackCooldown -= 1.0f * Time.deltaTime;
+                if (attackCooldown <= 0.0f)
                 {
                     attackCooldown = 2.0f;
                     attackWindUp = 2.0f;
                     readyToAttack = true;
                     currentState = States.CHASE;
-                }               
+                }
 
                 break;
             default:
@@ -124,10 +128,10 @@ public class Enemy_Chase : EnemyBase
     {
         if (collision.gameObject.tag == "Mech")
         {
-            currentState = States.WAIT;          
+            currentState = States.WAIT;
         }
 
-        if(collision.gameObject.tag == "Bullet")
+        if (collision.gameObject.tag == "Bullet")
         {
             takeDamage(1);
             collision.gameObject.SetActive(false);

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// This class provides the main functionalities of a reticle itself
+/// Contains GUIReticleConfig for left and right, and GUIReticleColorConfig for changing it's colors.
+/// </summary>
 [System.Serializable]
 public class GUIReticleModule
 {
@@ -24,6 +29,9 @@ public class GUIReticleModule
     //Local variables
     private SpriteRenderer leftRenderer, rightRenderer;
 
+    /// <summary>
+    /// Get the left reticle config.
+    /// </summary>
     public GUIReticleConfig LeftReticle
     {
         get
@@ -36,6 +44,9 @@ public class GUIReticleModule
         }
     }
 
+    /// <summary>
+    /// Get the right reticle config.
+    /// </summary>
     public GUIReticleConfig RightReticle
     {
         get
@@ -48,6 +59,9 @@ public class GUIReticleModule
         }
     }
 
+    /// <summary>
+    /// Get the color config.
+    /// </summary>
     public GUIReticleColorConfig ReticleColors
     {
         get
@@ -60,6 +74,9 @@ public class GUIReticleModule
         }
     }
 
+    /// <summary>
+    /// Assigns the values of reticles based on inspector inputs.
+    /// </summary>
     public void SetupReticleModule()
     {
         //Setup reticles
@@ -91,11 +108,17 @@ public class GUIReticleModule
         m_rightReticle.sizeDelta = m_rightReticle.reticleInterestSize - m_rightReticle.initialReticleSize;
     }
 
+    /// <summary>
+    /// Sets up the layer colors and reticle colors.
+    /// </summary>
     public void SetupReticleColors()
     {
         m_reticleColors.SetupLayerColors();
     }
 
+    /// <summary>
+    /// Calls the left and right UpdateEase function.
+    /// </summary>
     public void UpdateEase()
     {
         m_leftReticle.UpdateEase();

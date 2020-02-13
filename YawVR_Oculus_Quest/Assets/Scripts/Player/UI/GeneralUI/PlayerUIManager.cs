@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// This class handles all playerUI, while allowing other classes
+/// to access the UI at any given point
+/// </summary>
 public class PlayerUIManager : MonoBehaviour
 {
     //Honestly liek idk what is this tbh liek if i have time i will get back to this but...
@@ -69,6 +72,9 @@ public class PlayerUIManager : MonoBehaviour
     private bool isPaused = false;
     private bool isChangingScenes = false;
 
+    /// <summary>
+    /// Returns the camera rendering the minimap
+    /// </summary>
     public Camera minimapCamera
     {
         get
@@ -81,6 +87,9 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns the player's minimap components
+    /// </summary>
     //Get stuff
     public PlayerUIMinimap playerMinimap
     {
@@ -144,6 +153,10 @@ public class PlayerUIManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Objective Triggered for the UI to update
+    /// </summary>
+    /// <param name="objectiveIndex">Index in the Game objectivelist to trigger an objective.</param>
     public void ObjectiveTriggered(int objectiveIndex)
     {
         if (m_playerUIObjectives != null)
@@ -151,6 +164,12 @@ public class PlayerUIManager : MonoBehaviour
     }
 
     //Weapons stuff
+    /// <summary>
+    /// No longer used.
+    /// </summary>
+    /// <param name="m_controller"></param>
+    /// <param name="m_moduleIcon"></param>
+    /// <param name="m_gunType"></param>
     public void SetWeaponIconSprite(OVRInput.Controller m_controller, Sprite m_moduleIcon, MechGunWeapon.GUN_TYPE m_gunType)
     {
         Image resultantSprite = m_controller == OVRInput.Controller.RTouch ? m_rightWeaponIcon : m_leftWeaponIcon;
@@ -174,6 +193,16 @@ public class PlayerUIManager : MonoBehaviour
     }
 
     #region WeaponPanelUpdates
+
+    /// <summary>
+    /// Sets the weapon info all in one function
+    /// </summary>
+    /// <param name="_controller">The controller (left or right)</param>
+    /// <param name="m_weaponSprite">New weaponSprite</param>
+    /// <param name="m_weaponName">New weapon name</param>
+    /// <param name="m_currWeaponAmmo">New ammo</param>
+    /// <param name="m_maxWeaponAmmo">New weapon max ammo</param>
+    /// <param name="normalized">Normalized value for slider.</param>
     public void SetWeaponInfo(OVRInput.Controller _controller,
         Sprite m_weaponSprite,
         string m_weaponName,
@@ -222,6 +251,9 @@ public class PlayerUIManager : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// Shows the pause/in-game menu
+    /// </summary>
     public void RequestPause()
     {
         if (isChangingScenes) return;
@@ -239,6 +271,9 @@ public class PlayerUIManager : MonoBehaviour
         m_confirmExitButtons.SetActive(false);
     }
 
+    /// <summary>
+    /// Exits to the hub
+    /// </summary>
     public void RequestExit()
     {
         if (Game.instance && !Game.instance.IsObjectivesCleared())
@@ -252,6 +287,10 @@ public class PlayerUIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Exits to the hub
+    /// </summary>
+    /// <param name="_objectivesCleared"></param>
     public void Exit(bool _objectivesCleared)
     {
         isChangingScenes = true;
@@ -262,6 +301,9 @@ public class PlayerUIManager : MonoBehaviour
         PlayerHandler.instance.ExitToHub(_objectivesCleared);
     }
 
+    /// <summary>
+    /// Set all objectives to be cleared.
+    /// </summary>
     public void TriggerAllObjectivesCleared()
     {
         m_allObjectivesClearedText.gameObject.SetActive(true);

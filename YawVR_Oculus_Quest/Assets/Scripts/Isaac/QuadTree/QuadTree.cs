@@ -14,6 +14,10 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    19/12/2019, 11:31 AM     Isaac   Created
 *******************************/
+
+/// <summary>
+/// This class contains all properties and functions needed for a QuadTree to function
+/// </summary>
 public class QuadTree
 {
     //Should be 4.
@@ -29,6 +33,11 @@ public class QuadTree
     //What's inside each object
     private List<GameObject> m_objectList;
 
+    /// <summary>
+    /// Constructor for this QuadTree
+    /// </summary>
+    /// <param name="m_bounds"></param>
+    /// <param name="maxCapacity">Max amount of capacity this quadtree can hold before it splits into lower divisions</param>
     public QuadTree(QuadRect m_bounds, int maxCapacity)
     {
         this.m_bounds = m_bounds;
@@ -38,6 +47,11 @@ public class QuadTree
         regions = new QuadTree[QUADTREE_COUNT];
     }
 
+    /// <summary>
+    /// Initializes this quadtree
+    /// </summary>
+    /// <param name="m_bounds"></param>
+    /// <param name="maxCapacity">Max amount of capacity this quadtree can hold before it splits into lower divisions</param>
     public void Init(QuadRect m_bounds, int maxCapacity)
     {
         this.m_bounds = m_bounds;
@@ -47,7 +61,11 @@ public class QuadTree
         regions = new QuadTree[QUADTREE_COUNT];
     }
 
-    // public bool Insert(TquadTreeObject)
+    /// <summary>
+    /// Inserts an object into the QuadTree.
+    /// </summary>
+    /// <param name="quadTreeObject">Object to insert to this quadTree</param>
+    /// <returns></returns>
     public bool Insert(GameObject quadTreeObject)
     {
         //Do not insert if the object is null
@@ -80,6 +98,11 @@ public class QuadTree
         return false;
     }
 
+    /// <summary>
+    /// Removes an object from the quadTreeObject
+    /// </summary>
+    /// <param name="quadTreeObject">Object to remove</param>
+    /// <returns></returns>
     public bool Remove(GameObject quadTreeObject)
     {
         if (quadTreeObject == null)
@@ -115,6 +138,9 @@ public class QuadTree
         }
     }
 
+    /// <summary>
+    /// Clears all objects in this quadtree and subsequent quadtrees
+    /// </summary>
     public void Clear()
     {
         //Else if its not null, we just clear
@@ -134,6 +160,7 @@ public class QuadTree
             isDivided = false;
         }
     }
+
 
     void SubDivide()
     {
@@ -174,6 +201,11 @@ public class QuadTree
 
     }
 
+    /// <summary>
+    /// Queries this quadtree and child quadtrees for objects.
+    /// </summary>
+    /// <param name="range">Range to check</param>
+    /// <returns></returns>
     public List<GameObject> Query(QuadRect range)
     {
         List<GameObject> objectsInRange = new List<GameObject>();
@@ -212,6 +244,10 @@ public class QuadTree
         }
     }
 
+    /// <summary>
+    /// Draws this quadtree using Gizmos.
+    /// </summary>
+    /// <param name="offset"></param>
     //Render function
     public void Render(Vector3 offset = new Vector3())
     {
@@ -233,7 +269,10 @@ public class QuadTree
         }
     }
 
-    //Gets the number of sub divisions in this tree
+    /// <summary>
+    /// Gets the amount of sub divisions in this tree.
+    /// </summary>
+    /// <param name="here"></param>
     public void GetSubDivisions(ref int here)
     {
         if (isDivided)
@@ -250,16 +289,19 @@ public class QuadTree
         }
     }
 
-    //Gets all objects in this quadtree and returns a reference to it
+    /// <summary>
+    /// //Gets all objects in this quadtree and returns a reference to it
+    /// </summary>
+    /// <param name="referenceList">List to populate.</param>
     public void GetObjects(ref List<GameObject> referenceList)
     {
         for (int i = 0; i < m_objectList.Count; ++i)
         {
             referenceList.Add(m_objectList[i]);
         }
-        if(isDivided)
+        if (isDivided)
         {
-            for(int i =0; i < QUADTREE_COUNT; ++i)
+            for (int i = 0; i < QUADTREE_COUNT; ++i)
             {
                 regions[i].GetObjects(ref referenceList);
             }

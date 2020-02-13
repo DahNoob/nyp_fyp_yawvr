@@ -2,14 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class handles all game logic, win conditions and the player's mech loadouts.
+/// </summary>
 [System.Serializable]
 public class Game : MonoBehaviour
 {
+    /// <summary>
+    /// Delegate event definition for when an objective has started.
+    /// </summary>
+    /// <param name="_objectiveInfo"></param>
     public delegate void ObjectiveStarted(ObjectiveInfo _objectiveInfo);
+
+    /// <summary>
+    /// Delegate event definition for when an object has ended, with a outcome.
+    /// </summary>
+    /// <param name="_objectiveInfo">The reference objectiveInfo</param>
+    /// <param name="_succeeded">Was the objective completed?</param>
+    /// 
     public delegate void ObjectiveFinished(ObjectiveInfo _objectiveInfo, bool _succeeded);
+
+    /// <summary>
+    /// Event that is called when an objective has started.
+    /// </summary>
     public event ObjectiveStarted onObjectiveStarted;
+
+    /// <summary>
+    /// Event that is called when an object has ended.
+    /// </summary>
     public event ObjectiveFinished onObjectiveFinished;
 
+    /// <summary>
+    /// Game instance
+    /// </summary>
     public static Game instance { get; private set; }
 
     [System.Serializable]
@@ -220,12 +245,18 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Assigns the player it's weapons on it's left and right arms
+    /// </summary>
     private void ApplyMechLoadouts()
     {
         PlayerHandler.instance.GetLeftPilotController().AttachArmModules(m_leftArmModules);
         PlayerHandler.instance.GetRightPilotController().AttachArmModules(m_rightArmModules);
     }
 
+    /// <summary>
+    /// Handles the logic for objectives, and starts the game with objectives.
+    /// </summary>
     private void ApplyObjectives()
     {
         MapPointsHandler mph = MapPointsHandler.instance;
@@ -303,6 +334,10 @@ public class Game : MonoBehaviour
         _entity.onEntityDie -= Structure_onEntityDie;
     }
 
+    /// <summary>
+    /// Coroutine that checks the completion status of all objectives.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator checkObjectives()
     {
         while (isActiveAndEnabled)
@@ -352,6 +387,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets a particle system to be the player's position
+    /// </summary>
+    /// <returns></returns>
     IEnumerator setEnvironmentParticlePosition()
     {
         while (isActiveAndEnabled)
@@ -361,6 +400,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Assigns the player a random objective.
+    /// </summary>
+    /// <returns>True if theres an uncompleted objective, false if not.</returns>
     public bool SetRandomObjective()
     {
         for (int i = 0; i < m_objectives.Length; ++i)
@@ -399,6 +442,10 @@ public class Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets the current objective, and it's info.
+    /// </summary>
+    /// <returns>Current Objective Data</returns>
     public ObjectiveInfo GetCurrentObjectiveInfo()
     {
         if (currentObjectiveIndex == -1) return null;
@@ -406,6 +453,10 @@ public class Game : MonoBehaviour
         return currObj;
     }
 
+    /// <summary>
+    /// Gets the nearest objective to the player.
+    /// </summary>
+    /// <returns>Nearest Objective Data</returns>
     public ObjectiveInfo ReturnNearestObjectiveToPlayer()
     {
         float maxDistance = float.MaxValue;
@@ -429,6 +480,10 @@ public class Game : MonoBehaviour
         return nearest;
     }
 
+    /// <summary>
+    /// Checks if all objectives are cleared
+    /// </summary>
+    /// <returns>True if all are completed, false if not.</returns>
     public bool IsObjectivesCleared()
     {
         if (m_objectives.Length == 0) return true;
@@ -440,6 +495,9 @@ public class Game : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Stops in game sound.
+    /// </summary>
     public void StopAllBGM()
     {
         m_battleMusic.StopSound();

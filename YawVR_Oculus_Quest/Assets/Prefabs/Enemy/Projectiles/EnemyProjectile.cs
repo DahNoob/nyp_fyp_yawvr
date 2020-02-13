@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class defines the properties an EnemyProjectile should have.
+/// Inherits from BaseProjectile, IPooledObject.
+/// </summary>
 public class EnemyProjectile : BaseProjectile, IPooledObject
 {
     protected float m_projectileSpeed = 10.0f;
@@ -14,6 +18,9 @@ public class EnemyProjectile : BaseProjectile, IPooledObject
     private TrailRenderer m_trailRenderer;
     private float bulletDamage = 2.0f;
 
+    /// <summary>
+    /// Called when this projectile is spawned from the object pool.
+    /// </summary>
     public void OnObjectSpawn()
     {
         //Reset normal and angular velocities
@@ -22,11 +29,18 @@ public class EnemyProjectile : BaseProjectile, IPooledObject
         //Clears the renderer positions so the trail stops acting out
         m_trailRenderer.Clear();
     }
+    /// <summary>
+    /// Called when this projectile should be "destroyed"
+    /// </summary>
     public void OnObjectDestroy()
     {
         this.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Init function for projectile.
+    /// </summary>
+    /// <param name="_transform"></param>
     public override void Init(Transform _transform = null)
     {
         if (_transform != null)
@@ -34,6 +48,10 @@ public class EnemyProjectile : BaseProjectile, IPooledObject
         m_rigidbody.AddRelativeForce(Vector3.forward * m_projectileSpeed);
     }
 
+    /// <summary>
+    /// Defines what happens when this projectile collides with collision.
+    /// </summary>
+    /// <param name="collision">The object that is colliding with this projectile.</param>
     protected override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Mech")

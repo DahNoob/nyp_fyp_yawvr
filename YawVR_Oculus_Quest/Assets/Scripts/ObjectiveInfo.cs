@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-
+/// <summary>
+/// This class provides variables for an objective.
+/// </summary>
 [System.Serializable]
 public class ObjectiveInfo
 {
@@ -20,6 +22,9 @@ public class ObjectiveInfo
     public ObjectivesGUIInfo panelInfo;
 }
 
+/// <summary>
+/// This class provides GUI information for objectives so it can be updated.
+/// </summary>
 [System.Serializable]
 public class ObjectivesGUIInfo
 {

@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['rangedrecord_8545',['RangedRecord',['../class_assets_1_1_o_v_r_1_1_scripts_1_1_ranged_record.html',1,'Assets::OVR::Scripts']]],
+  ['record_8546',['Record',['../class_assets_1_1_o_v_r_1_1_scripts_1_1_record.html',1,'Assets::OVR::Scripts']]],
+  ['rectf_8547',['Rectf',['../struct_o_v_r_plugin_1_1_rectf.html',1,'OVRPlugin']]],
+  ['recti_8548',['Recti',['../struct_o_v_r_plugin_1_1_recti.html',1,'OVRPlugin']]],
+  ['redistpackage_8549',['RedistPackage',['../class_assets_1_1_oculus_1_1_v_r_1_1_editor_1_1_redist_package.html',1,'Assets::Oculus::VR::Editor']]],
+  ['reflectionsnapshot_8550',['ReflectionSnapshot',['../struct_reflection_snapshot.html',1,'']]],
+  ['remoteloopbackmanager_8551',['RemoteLoopbackManager',['../class_remote_loopback_manager.html',1,'']]],
+  ['remoteplayer_8552',['RemotePlayer',['../class_remote_player.html',1,'RemotePlayer'],['../class_oculus_1_1_platform_1_1_samples_1_1_vr_hoops_1_1_remote_player.html',1,'Oculus.Platform.Samples.VrHoops.RemotePlayer']]],
+  ['rendermodel_5fcomponentstate_5ft_8553',['RenderModel_ComponentState_t',['../struct_o_v_r_1_1_open_v_r_1_1_render_model___component_state__t.html',1,'OVR::OpenVR']]],
+  ['rendermodel_5fcontrollermode_5fstate_5ft_8554',['RenderModel_ControllerMode_State_t',['../struct_o_v_r_1_1_open_v_r_1_1_render_model___controller_mode___state__t.html',1,'OVR::OpenVR']]],
+  ['rendermodel_5ft_8555',['RenderModel_t',['../struct_o_v_r_1_1_open_v_r_1_1_render_model__t.html',1,'OVR::OpenVR']]],
+  ['rendermodel_5ft_5fpacked_8556',['RenderModel_t_Packed',['../struct_o_v_r_1_1_open_v_r_1_1_render_model__t___packed.html',1,'OVR::OpenVR']]],
+  ['rendermodel_5ftexturemap_5ft_8557',['RenderModel_TextureMap_t',['../struct_o_v_r_1_1_open_v_r_1_1_render_model___texture_map__t.html',1,'OVR::OpenVR']]],
+  ['rendermodel_5ftexturemap_5ft_5fpacked_8558',['RenderModel_TextureMap_t_Packed',['../struct_o_v_r_1_1_open_v_r_1_1_render_model___texture_map__t___packed.html',1,'OVR::OpenVR']]],
+  ['rendermodel_5fvertex_5ft_8559',['RenderModel_Vertex_t',['../struct_o_v_r_1_1_open_v_r_1_1_render_model___vertex__t.html',1,'OVR::OpenVR']]],
+  ['request_8560',['Request',['../class_oculus_1_1_platform_1_1_request.html',1,'Oculus::Platform']]],
+  ['room_8561',['Room',['../class_oculus_1_1_platform_1_1_models_1_1_room.html',1,'Oculus::Platform::Models']]],
+  ['roominvitenotification_8562',['RoomInviteNotification',['../class_oculus_1_1_platform_1_1_models_1_1_room_invite_notification.html',1,'Oculus::Platform::Models']]],
+  ['roominvitenotificationlist_8563',['RoomInviteNotificationList',['../class_oculus_1_1_platform_1_1_models_1_1_room_invite_notification_list.html',1,'Oculus::Platform::Models']]],
+  ['roomlist_8564',['RoomList',['../class_oculus_1_1_platform_1_1_models_1_1_room_list.html',1,'Oculus::Platform::Models']]],
+  ['roommanager_8565',['RoomManager',['../class_oculus_1_1_platform_1_1_samples_1_1_vr_voice_chat_1_1_room_manager.html',1,'Oculus.Platform.Samples.VrVoiceChat.RoomManager'],['../class_room_manager.html',1,'RoomManager']]],
+  ['roomoptions_8566',['RoomOptions',['../class_oculus_1_1_platform_1_1_room_options.html',1,'Oculus::Platform']]],
+  ['rooms_8567',['Rooms',['../class_oculus_1_1_platform_1_1_rooms.html',1,'Oculus::Platform']]]
+];

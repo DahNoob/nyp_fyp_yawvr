@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles all objectives for the player's UI
+/// </summary>
 [System.Serializable]
 public class UIObjectiveHandler
 {
@@ -118,6 +121,10 @@ public class UIObjectiveHandler
         }
     }
 
+    /// <summary>
+    /// Triggers and play the animation for a specific objectiveIndex
+    /// </summary>
+    /// <param name="objectiveIndex"></param>
     public void ObjectiveTriggered(int objectiveIndex)
     {
         m_objectiveHex.anchoredPosition3D = prevPosition;
@@ -134,6 +141,10 @@ public class UIObjectiveHandler
 
     }
 
+    /// <summary>
+    /// Sets current objective and UI
+    /// </summary>
+    /// <param name="_objectiveInfo"></param>
     public void SetActiveObjective(ObjectiveInfo _objectiveInfo = null)
     {
         //if (_objectiveInfo != null)
@@ -179,6 +190,10 @@ public class UIObjectiveHandler
         }
     }
 
+    /// <summary>
+    /// Called when objective has failed to update UI
+    /// </summary>
+    /// <param name="_objectiveInfo"></param>
     public void FailedObjectiveGUI(ref ObjectiveInfo _objectiveInfo)
     {
         //Set the back black and the failed thing
@@ -199,6 +214,10 @@ public class UIObjectiveHandler
 
     }
 
+    /// <summary>
+    /// Called when objective has succeeded to update UI
+    /// </summary>
+    /// <param name="_objectiveInfo"></param>
     public void SucceededObjectiveGUI(ref ObjectiveInfo _objectiveInfo)
     {
         //Set the back black and the failed thing
@@ -213,6 +232,10 @@ public class UIObjectiveHandler
         PlayerUISoundManager.instance.PlaySound(PlayerUISoundManager.UI_SOUNDTYPE.OBJECTIVE_SUCCESS);
     }
 
+    /// <summary>
+    /// Updates Objective Progress
+    /// </summary>
+    /// <param name="_objectiveInfo"></param>
     public void UpdateObjectiveProgress(ref ObjectiveInfo _objectiveInfo)
     {
         switch (_objectiveInfo.type)
@@ -241,7 +264,9 @@ public class UIObjectiveHandler
                 break;
         }
     }
-
+    /// <summary>
+    /// No longer used, but updates objective arrow to lead player's in correct direction.
+    /// </summary>
     public void UpdateObjectiveArrow()
     {
         if (m_objectiveArrow.gameObject.activeInHierarchy)
@@ -290,11 +315,20 @@ public class UIObjectiveHandler
     }
 
     //Events
+    /// <summary>
+    /// Called when objective has started
+    /// </summary>
+    /// <param name="_objectiveInfo"></param>
     public void Game_onObjectiveStarted(ObjectiveInfo _objectiveInfo)
     {
 
     }
 
+    /// <summary>
+    /// Called when objective is finished.
+    /// </summary>
+    /// <param name="_objectiveInfo"></param>
+    /// <param name="_succeeded"></param>
     public void Game_onObjectiveFinished(ObjectiveInfo _objectiveInfo, bool _succeeded)
     {
         if (_objectiveInfo.type == VariedObjectives.TYPE.BOUNTYHUNT)//srsly fuckin garbage

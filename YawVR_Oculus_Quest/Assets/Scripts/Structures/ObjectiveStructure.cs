@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class provides functions and variables for an objective, and updates the player if it is completed.
+/// </summary>
 public class ObjectiveStructure : BaseStructure
 {
     [Header("Objective Structure Configuration")]
@@ -32,11 +35,19 @@ public class ObjectiveStructure : BaseStructure
         }
     }
 
+    /// <summary>
+    /// Sets the objective ring radius.
+    /// </summary>
+    /// <param name="_rad">Target radius.</param>
     public void SetRingRadius(float _rad)
     {
         m_objectiveRing.transform.localScale = new Vector3(_rad, _rad * 0.15f, _rad);
     }
 
+    /// <summary>
+    /// Sets current objective for the player
+    /// </summary>
+    /// <param name="_isCurrent"></param>
     public void SetCurrentObjective(bool _isCurrent)
     {
         if(_isCurrent)

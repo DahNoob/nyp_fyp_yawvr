@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class provides information of how a minimap icon should behave or look.
+/// </summary>
 [System.Serializable]
 public class PlayerUIMinimapIcons 
 {
@@ -25,6 +28,9 @@ public class PlayerUIMinimapIcons
 
 }
 
+/// <summary>
+/// This class provides information of how a minimap icon for objectives should behave or look.
+/// </summary>
 [System.Serializable]
 public class PlayerUIMinimapObjectiveIcons
 {

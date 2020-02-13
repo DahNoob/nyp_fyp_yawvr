@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is used as a base for creating a ScriptableObject asset for assigning enemy's values.
+/// </summary>
 [CreateAssetMenu(fileName = "Enemy Info", menuName = "Entity Info/Enemy Info")]
 public class EnemyInfo : EntityInfo
 {

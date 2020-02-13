@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class contains properties and values for the Shotgun
+/// Inherits from MechGunWeapon
+/// </summary>
 public class TriGatlingGun : MechGunWeapon
 {
     [Header("Tri-Gatling Gun Configuration")]
