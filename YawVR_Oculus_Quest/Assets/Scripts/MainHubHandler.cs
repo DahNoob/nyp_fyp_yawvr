@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles and controls all logic inside the MainHub scene.
+/// </summary>
 public class MainHubHandler : MonoBehaviour
 {
     [SerializeField]
@@ -92,6 +95,9 @@ public class MainHubHandler : MonoBehaviour
         StartCoroutine(fadeToScene(planets[currentPlanetIndex].m_sceneName));
     }
 
+    /// <summary>
+    /// Go to next planet.
+    /// </summary>
     public void NextPlanet()
     {
         currentPlanetIndex++;
@@ -100,6 +106,9 @@ public class MainHubHandler : MonoBehaviour
         UpdatePlanet();
     }
 
+    /// <summary>
+    /// Return to previous planet
+    /// </summary>
     public void PreviousPlanet()
     {
         currentPlanetIndex--;
@@ -122,10 +131,16 @@ public class MainHubHandler : MonoBehaviour
         planetHoloPickable.ResetFade();
     }
 
+    /// <summary>
+    /// Play HoverUISound
+    /// </summary>
     public void PlayHoverUiSound()
     {
         m_hoverUiSound.PlaySoundAt(Camera.main.transform.position);
     }
+    /// <summary>
+    /// Play Click UI Sound
+    /// </summary>
     public void PlayClickUiSound()
     {
         m_clickUiSound.PlaySoundAt(Camera.main.transform.position);
