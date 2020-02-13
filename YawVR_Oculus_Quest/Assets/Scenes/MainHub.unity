@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1838,6 +1838,10 @@ MonoBehaviour:
     soundFXName: WelcomeBack
   m_nowTravellingSound:
     soundFXName: NowTravelling
+  m_clickUiSound:
+    soundFXName: Default Sound
+  m_hoverUiSound:
+    soundFXName: Default Sound
 --- !u!4 &731576093
 Transform:
   m_ObjectHideFlags: 0
@@ -2273,6 +2277,7 @@ GameObject:
   - component: {fileID: 856189047}
   - component: {fileID: 856189046}
   - component: {fileID: 856189045}
+  - component: {fileID: 856189048}
   m_Layer: 5
   m_Name: PreviousButton
   m_TagString: Untagged
@@ -2392,6 +2397,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 856189043}
   m_CullTransparentMesh: 0
+--- !u!114 &856189048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856189043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 731576092}
+          m_MethodName: PlayHoverUiSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 731576092}
+          m_MethodName: PlayClickUiSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1 &859270821 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 865200615978097916, guid: 380f9a101ee97b14588b537977f4c813,
@@ -5376,6 +5428,7 @@ GameObject:
   - component: {fileID: 2085730425}
   - component: {fileID: 2085730424}
   - component: {fileID: 2085730423}
+  - component: {fileID: 2085730426}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -5495,6 +5548,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085730421}
   m_CullTransparentMesh: 0
+--- !u!114 &2085730426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085730421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 731576092}
+          m_MethodName: PlayHoverUiSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 731576092}
+          m_MethodName: PlayClickUiSound
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!1001 &6884980209988075043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5832,6 +5932,106 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 18
       objectReference: {fileID: 0}
+    - target: {fileID: 6696891797760128072, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6696891797760128072, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 1160313763957955271, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160313763957955271, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 3616635441783940645, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616635441783940645, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 106710061155042382, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 106710061155042382, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 6834461315162844699, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6834461315162844699, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 819085071197576240, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 819085071197576240, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 8197016335390171914, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8197016335390171914, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 1894124542167588604, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1894124542167588604, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 112642069242397513, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 112642069242397513, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
+    - target: {fileID: 5540595216172726355, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540595216172726355, guid: 380f9a101ee97b14588b537977f4c813,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 42aa6962d70d6d1479ac086dba2b2b90, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 380f9a101ee97b14588b537977f4c813, type: 3}
 --- !u!4 &6884980209988075044 stripped

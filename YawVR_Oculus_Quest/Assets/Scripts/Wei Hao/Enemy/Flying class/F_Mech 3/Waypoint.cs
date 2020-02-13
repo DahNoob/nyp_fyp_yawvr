@@ -13,32 +13,40 @@ public class Waypoint : MonoBehaviour
     float movSpeed;
     [SerializeField]
     float rotSpeed;
+    [SerializeField]
+    float detectRange = 100;
 
     //Fetch the Animator
     Animator m_Animator;
 
-    void Start()
+    bool hasDetectedPlayer = false;
+
+    public void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = PlayerHandler.instance.gameObject;
         waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
         m_Animator = GetComponentInChildren<Animator>();
         NearestWaypointToPlayer = findNearest().transform.position;
+        hasDetectedPlayer = false;
     }
 
     void Update()
     {
-        NearestWaypointToPlayer = findNearest().transform.position;
-        //Debug.Log("Nearest waypoint is: " + NearestWaypointToPlayer);
-        gameObject.transform.position = Vector3.MoveTowards(transform.position, NearestWaypointToPlayer, movSpeed * Time.deltaTime);
-        
-        if (transform.position.x == NearestWaypointToPlayer.x && transform.position.z == NearestWaypointToPlayer.z)
+        if(hasDetectedPlayer)
         {
-            m_Animator.SetBool("Spawn_GetReady", true);
-        }
-        else
-        {
-            Quaternion toRotation = Quaternion.LookRotation(new Vector3(NearestWaypointToPlayer.x, 0, NearestWaypointToPlayer.z));
-            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, rotSpeed * Time.deltaTime);
+            NearestWaypointToPlayer = findNearest().transform.position;
+            //Debug.Log("Nearest waypoint is: " + NearestWaypointToPlayer);
+            gameObject.transform.position = Vector3.MoveTowards(transform.position, NearestWaypointToPlayer, movSpeed * Time.deltaTime);
+
+            if (transform.position.x == NearestWaypointToPlayer.x && transform.position.z == NearestWaypointToPlayer.z)
+            {
+                m_Animator.SetBool("Spawn_GetReady", true);
+            }
+            else
+            {
+                Quaternion toRotation = Quaternion.LookRotation(new Vector3(NearestWaypointToPlayer.x, 0, NearestWaypointToPlayer.z));
+                GetComponent<Rigidbody>().rotation = Quaternion.Lerp(transform.rotation, toRotation, rotSpeed * Time.deltaTime);
+            }
         }
     }
     public GameObject findNearest()
@@ -57,5 +65,20 @@ public class Waypoint : MonoBehaviour
             }
          }
         return waypoints[j];
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, detectRange);
+    }
+
+    IEnumerator scan()
+    {
+        while (!hasDetectedPlayer)
+        {
+            yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+            if (CustomUtility.IsHitRadius(transform.position, PlayerHandler.instance.transform.position, detectRange))
+                hasDetectedPlayer = true;
+        }
     }
 }

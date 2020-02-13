@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Handles and controls all logic inside the MainHub scene.
-/// </summary>
 public class MainHubHandler : MonoBehaviour
 {
     [SerializeField]
@@ -28,6 +25,10 @@ public class MainHubHandler : MonoBehaviour
     private OVR.SoundFXRef m_welcomeBackSound;
     [SerializeField]
     private OVR.SoundFXRef m_nowTravellingSound;
+    [SerializeField]
+    private OVR.SoundFXRef m_clickUiSound;
+    [SerializeField]
+    private OVR.SoundFXRef m_hoverUiSound;
     
     private bool isChangingScene = false;
     private BasePlanetHolograph[] planets;
@@ -55,9 +56,15 @@ public class MainHubHandler : MonoBehaviour
         m_spaceBgm.PlaySound(Random.Range(1.0f, 2.0f));
         m_spaceBgm.AttachToParent(Camera.main.transform);
         if (Persistent.instance.isFirstTime)
+        {
             m_welcomeAboardSound.PlaySound(2);
+            m_welcomeAboardSound.AttachToParent(Camera.main.transform);
+        }
         else
+        {
             m_welcomeBackSound.PlaySound(2);
+            m_welcomeBackSound.AttachToParent(Camera.main.transform);
+        }
         m_coinsDisplayText.text = PlayerPrefs.GetInt("Currency", 0).ToString();
     }
 
@@ -85,9 +92,6 @@ public class MainHubHandler : MonoBehaviour
         StartCoroutine(fadeToScene(planets[currentPlanetIndex].m_sceneName));
     }
 
-    /// <summary>
-    /// Changes the hologram display to the next planet.
-    /// </summary>
     public void NextPlanet()
     {
         currentPlanetIndex++;
@@ -96,9 +100,6 @@ public class MainHubHandler : MonoBehaviour
         UpdatePlanet();
     }
 
-    /// <summary>
-    /// Changes the hologram display to the previous planet.
-    /// </summary>
     public void PreviousPlanet()
     {
         currentPlanetIndex--;
@@ -107,9 +108,6 @@ public class MainHubHandler : MonoBehaviour
         UpdatePlanet();
     }
 
-    /// <summary>
-    /// Updates the current planet.
-    /// </summary>
     void UpdatePlanet()
     {
         for (int i = 0; i < planets.Length; ++i)
@@ -124,14 +122,19 @@ public class MainHubHandler : MonoBehaviour
         planetHoloPickable.ResetFade();
     }
 
-    /// <summary>
-    /// Fades to a scene based on the planet chosen.
-    /// </summary>
-    /// <param name="_sceneName"></param>
-    /// <returns></returns>
+    public void PlayHoverUiSound()
+    {
+        m_hoverUiSound.PlaySoundAt(Camera.main.transform.position);
+    }
+    public void PlayClickUiSound()
+    {
+        m_clickUiSound.PlaySoundAt(Camera.main.transform.position);
+    }
+
     IEnumerator fadeToScene(string _sceneName)
     {
         m_nowTravellingSound.PlaySound();
+        m_nowTravellingSound.AttachToParent(Camera.main.transform);
         m_playerScreenFade.fadeTime = 1.5f;
         m_playerScreenFade.FadeOut();
         m_spaceBgm.DetachFromParent();

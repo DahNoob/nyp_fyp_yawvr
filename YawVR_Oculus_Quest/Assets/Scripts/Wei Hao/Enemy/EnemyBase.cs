@@ -125,7 +125,8 @@ abstract public class EnemyBase : BaseEntity
         if (m_target == null)
             m_target = PlayerHandler.instance.transform;
         health = GetMaxHealth();
-        GetComponent<UnityEngine.AI.NavMeshAgent>().speed = GetSpeed();
+        if(navMeshAgent)
+            navMeshAgent.speed = GetSpeed();
         meshRenderers = GetComponentsInChildren<MeshRenderer>();
         SetFlash(false);
     }
@@ -284,7 +285,8 @@ abstract public class EnemyBase : BaseEntity
     public void SetMoveSpeedMultiplier(float _newMult)
     {
         moveSpeedMultiplier = _newMult;
-        GetComponent<UnityEngine.AI.NavMeshAgent>().speed = m_enemyInfo.moveSpeed * moveSpeedMultiplier;
+        if(navMeshAgent)
+         navMeshAgent.speed = m_enemyInfo.moveSpeed * moveSpeedMultiplier;
     }
 
     /// <summary>

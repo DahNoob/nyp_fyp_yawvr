@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1386788579945945854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1386788579945945848}
+  - component: {fileID: 1386788579945945855}
+  m_Layer: 0
+  m_Name: ObjectPooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1386788579945945848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386788579945945854}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1386788579945945855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386788579945945854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799ab3132c7c5d642a4c72a34ae9087e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolList:
+  - poolName: PlayerProjectile
+    poolType: 0
+    objToPool: {fileID: 9208457272521591478, guid: ea8cc7d1e69bf764c8297c3231cebfe8,
+      type: 3}
+    amountToPool: 50
+    amountToExpand: 10
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: EnemyProjectile
+    poolType: 1
+    objToPool: {fileID: 9208457272521591478, guid: 84b6b4ca99af4ff40906caea5d12bde5,
+      type: 3}
+    amountToPool: 50
+    amountToExpand: 2
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: PlayerProjectileImpact
+    poolType: 2
+    objToPool: {fileID: 7298378838209257786, guid: 28bcee94cdcd8ca47bd78c6064ba3f70,
+      type: 3}
+    amountToPool: 30
+    amountToExpand: 2
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: EnemyDeathEffect
+    poolType: 3
+    objToPool: {fileID: 8290165608302987775, guid: d903496c821bada4eadb62fdb6334398,
+      type: 3}
+    amountToPool: 15
+    amountToExpand: 2
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: LightMech2
+    poolType: 4
+    objToPool: {fileID: 6089654258507672792, guid: c5149578cf4385e428f65c56265f518d,
+      type: 3}
+    amountToPool: 20
+    amountToExpand: 2
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: HeavyMech2
+    poolType: 5
+    objToPool: {fileID: 980808854142652617, guid: becfd3f6e3347e74bb033d91b3079787,
+      type: 3}
+    amountToPool: 20
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: LightMech1
+    poolType: 6
+    objToPool: {fileID: 425559466754471307, guid: 87c4db333979fec4293598ca163adb71,
+      type: 3}
+    amountToPool: 20
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: MinimapIcons
+    poolType: 8
+    objToPool: {fileID: 6962463165745650831, guid: 0b95d59f88118ae41acee4caa07a5b04,
+      type: 3}
+    amountToPool: 20
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: BulletImpactB
+    poolType: 9
+    objToPool: {fileID: 2649874472483423902, guid: b092dc4ec5ac41348b601cd42acbbb0c,
+      type: 3}
+    amountToPool: 50
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: PlayerProjectileBig
+    poolType: 10
+    objToPool: {fileID: 2768400570068932745, guid: 9dfb8839d26449e4d83518576e90b52b,
+      type: 3}
+    amountToPool: 50
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: PlayerProjectileBigger
+    poolType: 11
+    objToPool: {fileID: 3165853338160174225, guid: ae069469889e2da4581a8c818501da09,
+      type: 3}
+    amountToPool: 20
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0
+  - poolName: FlyingMech3
+    poolType: 7
+    objToPool: {fileID: 6087396883789445802, guid: b9917b3a72eb6c24c96de016f68d9c16,
+      type: 3}
+    amountToPool: 20
+    amountToExpand: 5
+    parentInHierachy: {fileID: 0}
+    amountActiveInPool: 0

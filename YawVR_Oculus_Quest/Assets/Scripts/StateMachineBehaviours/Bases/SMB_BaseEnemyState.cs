@@ -28,7 +28,7 @@ abstract public class SMB_BaseEnemyState : StateMachineBehaviour
     public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         if (enemy == null)
-            enemy = animator.GetComponent<EnemyBase>();
+            enemy = animator.GetComponent<EnemyBase>() ?? animator.GetComponentInParent<EnemyBase>();
         checkTimer = 0;
         EnterState(animator, animatorStateInfo, layerIndex);
     }
