@@ -52,9 +52,11 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField]
     private RectTransform m_pauseUiBackground;
     [SerializeField]
-    private Canvas m_pauseUiButtons;
+    private Canvas m_pauseUiCanvas;
     [SerializeField]
-    private Canvas m_confirmExitButtons;
+    private GameObject m_pauseUiButtons;
+    [SerializeField]
+    private GameObject m_confirmExitButtons;
 
     
 
@@ -225,22 +227,24 @@ public class PlayerUIManager : MonoBehaviour
         if (isChangingScenes) return;
         isPaused = !isPaused;
         m_pauseUiBackground.gameObject.SetActive(isPaused);
-        m_pauseUiButtons.gameObject.SetActive(isPaused);
-        m_confirmExitButtons.gameObject.SetActive(false);
+        m_pauseUiCanvas.gameObject.SetActive(isPaused);
+        m_pauseUiButtons.SetActive(true);
+        m_confirmExitButtons.SetActive(false);
     }
 
     public void ForceOpenPauseButtons()
     {
-        m_pauseUiButtons.gameObject.SetActive(true);
-        m_confirmExitButtons.gameObject.SetActive(false);
+        m_pauseUiCanvas.gameObject.SetActive(true);
+        m_pauseUiButtons.SetActive(true);
+        m_confirmExitButtons.SetActive(false);
     }
 
     public void RequestExit()
     {
         if (Game.instance && !Game.instance.IsObjectivesCleared())
         {
-            m_pauseUiButtons.gameObject.SetActive(false);
-            m_confirmExitButtons.gameObject.SetActive(true);
+            m_pauseUiButtons.SetActive(false);
+            m_confirmExitButtons.SetActive(true);
         }
         else
         {
@@ -252,8 +256,9 @@ public class PlayerUIManager : MonoBehaviour
     {
         isChangingScenes = true;
         m_pauseUiBackground.gameObject.SetActive(false);
-        m_pauseUiButtons.gameObject.SetActive(false);
-        m_confirmExitButtons.gameObject.SetActive(false);
+        m_pauseUiCanvas.gameObject.SetActive(false);
+        m_pauseUiButtons.SetActive(false);
+        m_confirmExitButtons.SetActive(false);
         PlayerHandler.instance.ExitToHub(_objectivesCleared);
     }
 
