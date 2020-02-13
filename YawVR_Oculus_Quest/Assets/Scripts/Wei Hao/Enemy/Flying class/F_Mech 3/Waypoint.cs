@@ -28,6 +28,7 @@ public class Waypoint : MonoBehaviour
         m_Animator = GetComponentInChildren<Animator>();
         NearestWaypointToPlayer = findNearest().transform.position;
         hasDetectedPlayer = false;
+        StartCoroutine(scan());
     }
 
     void Update()
