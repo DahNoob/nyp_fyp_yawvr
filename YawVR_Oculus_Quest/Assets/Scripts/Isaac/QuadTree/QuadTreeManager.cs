@@ -17,6 +17,9 @@ using UnityEngine.UI;
 ** 2    20/12/2019,    2.58 PM     Isaac  Added remove and clear functionalities, and updating of tree
 ** 3    06/01/2020,  12.00 AM    Isaac   Forgot the other dates, but yes finished revamping QuadTree
 *******************************/
+/// <summary>
+/// This class manages a list of QuadTrees based on types and provides an interface and buffer for accessing QuadTree functions.
+/// </summary>
 public class QuadTreeManager : MonoBehaviour
 {
     //Instance to access the quadtree manager
@@ -206,7 +209,12 @@ public class QuadTreeManager : MonoBehaviour
 
     }
 
-    //Adds an object to the static list, shouldn't be called at all, other than by quadtreeobjects.
+    /// <summary>
+    /// //Adds an object to the static list, shouldn't be called at all, other than by quadtreeobjects.
+    /// </summary>
+    /// <param name="referenceObject">Object to add</param>
+    /// <param name="types">Type of object</param>
+    /// <returns></returns>
     public bool AddToStaticQuadTree(GameObject referenceObject, STATIC_TYPES types)
     {
         if (referenceObject == null)
@@ -222,8 +230,12 @@ public class QuadTreeManager : MonoBehaviour
         }
         return false;
     }
-
-    //Adds an object to the dynamic list, shouldn't be called at all, other than by quadtreeobjects.
+    /// <summary>
+    ///  Adds an object to the dynamic list, shouldn't be called at all, other than by quadtreeobjects.
+    /// </summary>
+    /// <param name="referenceObject">Object to add</param>
+    /// <param name="types">Type of object</param>
+    /// <returns></returns>
     public bool AddToDynamicQuadTree(GameObject referenceObject, DYNAMIC_TYPES types)
     {
         if (referenceObject == null)
@@ -380,6 +392,12 @@ public class QuadTreeManager : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// Queries static objects in a QuadTree
+    /// </summary>
+    /// <param name="queryBounds">Bounds to query</param>
+    /// <param name="types">Type to query</param>
+    /// <returns>A List if theres objects, null if not</returns>
     public List<GameObject> QueryStaticObjects(QuadRect queryBounds, STATIC_TYPES types)
     {
         if (!staticTrees.ContainsKey(types))
@@ -393,6 +411,12 @@ public class QuadTreeManager : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// Queries dynamic objects in a QuadTree
+    /// </summary>
+    /// <param name="queryBounds">Bounds to query</param>
+    /// <param name="types">Type to query</param>
+    /// <returns>A List if theres objects, null if not</returns>
     public List<GameObject> QueryDynamicObjects(QuadRect queryBounds, DYNAMIC_TYPES types)
     {
         if (!dynamicTrees.ContainsKey(types))
@@ -407,6 +431,13 @@ public class QuadTreeManager : MonoBehaviour
         return result;
     }
 
+
+    /// <summary>
+    /// Removes static objects in a QuadTree
+    /// </summary>
+    /// <param name="queryBounds">Bounds to query</param>
+    /// <param name="types">Type to query</param>
+    /// <returns>True if removed, false if not</returns>
     public bool RemoveStaticObject(GameObject referenceObject, STATIC_TYPES types)
     {
         if (!staticTrees.ContainsKey(types))
@@ -419,6 +450,13 @@ public class QuadTreeManager : MonoBehaviour
         staticList.Remove(referenceObject);
         return result;
     }
+
+    /// <summary>
+    /// Queries dynamic objects in a QuadTree
+    /// </summary>
+    /// <param name="queryBounds">Bounds to query</param>
+    /// <param name="types">Type to query</param>
+    /// <returns>True if removed, false if not</returns>
     public bool RemoveDynamicObject(GameObject referenceObject, DYNAMIC_TYPES types)
     {
         if (!dynamicTrees.ContainsKey(types))
@@ -432,7 +470,10 @@ public class QuadTreeManager : MonoBehaviour
         return result;
     }
 
-
+    /// <summary>
+    /// Resets all quadtrees.
+    /// </summary>
+    /// <returns>True always.</returns>
     public bool ResetQuadTrees()
     {
         ResetStaticTrees();
@@ -442,6 +483,10 @@ public class QuadTreeManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Resets dynamic quadtree.
+    /// </summary>
+    /// <returns>True always.</returns>
     public bool ResetDynamicTrees()
     {
         foreach (KeyValuePair<DYNAMIC_TYPES, QuadTree> dynamicTree in dynamicTrees)
@@ -452,6 +497,10 @@ public class QuadTreeManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Resets static quadtree
+    /// </summary>
+    /// <returns></returns>
     public bool ResetStaticTrees()
     {
         foreach (KeyValuePair<STATIC_TYPES, QuadTree> staticTree in staticTrees)

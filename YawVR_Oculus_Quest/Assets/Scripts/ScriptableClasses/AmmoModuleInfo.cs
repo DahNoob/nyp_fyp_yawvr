@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Scriptable object class that stores the info each ammoModule has.
+/// </summary>
 [CreateAssetMenu(fileName = "Ammo Info", menuName = "Ammo Info/Ammo Info")]
 public class AmmoModuleInfo : ScriptableObject
 {

@@ -16,6 +16,10 @@ using UnityEngine;
 ** 2    09/12/2019, 11:12PM     DahNoob   Implemented abstract functions Activate, Hold and Stop
 ** 3    09/12/2019, 4:48PM      DahNoob   Implemented energy reduction
 *******************************/
+
+/// <summary>
+/// Abstract class that subsequent modules classes would inherit from.
+/// </summary>
 [System.Serializable]
 abstract public class BaseMechModule : MonoBehaviour
 {
@@ -27,10 +31,34 @@ abstract public class BaseMechModule : MonoBehaviour
     //[SerializeField]
     //protected float m_energyReduction = 10.0f;
 
-    abstract public bool Activate(OVRInput.Controller _controller);    // To be called when the module is first used/pressed/activated/derp
-    abstract public bool Hold(OVRInput.Controller _controller);        // To be called while the module is activated/in usage
-    abstract public bool Stop(OVRInput.Controller _controller);        // To be called once the module is deactivated
+    /// <summary>
+    /// Abstract function for calls of Activate by sub classes
+    ///  To be called when the module is first used/pressed/activated/derp
+    /// </summary>
+    /// <param name="_controller">Which controller is controlling this action</param>
+    /// <returns></returns>
+    abstract public bool Activate(OVRInput.Controller _controller);
 
+    /// <summary>
+    /// Abstract function for calls of Hold by sub classes
+    /// To be called while the module is activated/in usage
+    /// </summary>
+    /// <param name="_controller">Which controller is controlling this action</param>
+    /// <returns></returns>
+    abstract public bool Hold(OVRInput.Controller _controller);
+
+    /// <summary>
+    /// Abstract function for calls of Stop by sub classes
+    /// To be called once the module is deactivated
+    /// </summary>
+    /// <param name="_controller">Which controller is controlling this action</param>
+    /// <returns></returns>
+    abstract public bool Stop(OVRInput.Controller _controller);
+
+    /// <summary>
+    /// Get this module's icon for UI purposes.
+    /// </summary>
+    /// <returns>Module Icon Sprite</returns>
     public Sprite GetIcon()
     {
         return m_moduleIcon;

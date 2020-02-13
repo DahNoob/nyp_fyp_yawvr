@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Not used as of now.
+/// </summary>
 public class LooseDestructible : BaseEntity
 {
     [Header("Destructible Stats")]

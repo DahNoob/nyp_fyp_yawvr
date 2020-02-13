@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class provides the variables for colors using tags needed for initialization in the UnityEditor.
+/// </summary>
 [System.Serializable]
 public class GUIReticleLayerColor
 {
@@ -11,6 +14,9 @@ public class GUIReticleLayerColor
     [ColorUsage(true, true)]
     private Color m_layerColor;
 
+    /// <summary>
+    /// Returns the layerMask.
+    /// </summary>
     // Get functions, just in case I need them later
     public LayerMask layerMask
     {
@@ -23,6 +29,10 @@ public class GUIReticleLayerColor
             m_layerMask = value; 
         }
     }
+
+    /// <summary>
+    /// Returns the layerColor
+    /// </summary>
     public Color layerColor
     {
         get

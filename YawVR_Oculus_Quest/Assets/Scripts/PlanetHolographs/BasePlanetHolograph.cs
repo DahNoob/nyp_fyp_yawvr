@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract class for planet holographs in the MainHub scene.
+/// </summary>
 abstract public class BasePlanetHolograph : MonoBehaviour
 {
     [Header("Base Configuration")]

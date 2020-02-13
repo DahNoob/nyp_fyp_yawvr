@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A class that can be added to any gun to have ammo capabilities.
+/// </summary>
 [System.Serializable]
 public class AmmoModule
 {
     public delegate void StartReload();
     public delegate void FinishReload();
+
+    /// <summary>
+    /// Called when a reload is called.
+    /// </summary>
     public event StartReload onStartReload;
+    /// <summary>
+    /// called when a reload has finished.
+    /// </summary>
     public event FinishReload onFinishReload;
 
     [Header("Ammo Setup")]
@@ -41,38 +51,54 @@ public class AmmoModule
    // [SerializeField]
     private bool usesAmmo = true;
 
-    //Getter for reloadTime
+    /// <summary>
+    /// Gets the reloadTime for this module.
+    /// </summary>
     public float reloadTime
     {
         get { return m_reloadTime; }
         private set { m_reloadTime = value; }
     }
 
+    /// <summary>
+    /// Gets current ammo for this module.
+    /// </summary>
     public int currentAmmo
     {
         get { return m_currentAmmo; }
         private set { m_currentAmmo = Mathf.Clamp(value, 0, m_ammoInfo.maxAmmo); }
     }
 
+    /// <summary>
+    /// Gets the max ammo of this module.
+    /// </summary>
     public int maxAmmo
     {
         get { return m_ammoInfo.maxAmmo; }
         //private set { m_maxAmmo = value; }
     }
 
+    /// <summary>
+    /// Gets max clips of this module.
+    /// </summary>
     public int maxClips
     {
         get { return m_ammoInfo.maxClip; }
         //private set { m_maxClips = value; }
     }
 
+    /// <summary>
+    /// Gets the current clips
+    /// </summary>
     public int currentClips
     {
         get { return m_currentClips; }
         private set { m_currentClips = Mathf.Clamp(value, 0, m_ammoInfo.maxClip); }
     }
 
-    //Inits values, for now can just not call if you want?
+    /// <summary>
+    /// Inits values, for now can just not call if you want?
+    /// </summary>
     public void Init()
     {
         //Sets current ammo to max ammo?
@@ -84,7 +110,11 @@ public class AmmoModule
         usesClips = m_ammoInfo.usesClips;
     }
 
-    //A function to decrease ammo or shoot
+    /// <summary>
+    ///  A function to decrease ammo or for shooting
+    /// </summary>
+    /// <param name="ammoDeduction">Amount of ammo deducted for this function.</param>
+    /// <returns>True if ammo was successfully deducted, false if not.</returns>
     public bool DecreaseAmmo(int ammoDeduction)
     {
         //Just ignore and always return true to the ammo decrease.
@@ -100,7 +130,11 @@ public class AmmoModule
         return false;
     }
 
-    //Function to decrease clips
+ /// <summary>
+ /// Function to decrease amount of clips
+ /// </summary>
+ /// <param name="clipDeduction">Amount of clips to deduct by</param>
+ /// <returns>True if clips were deducted, false if not.</returns>
     public bool DecreaseClips(int clipDeduction)
     {
         //Just ignore and always return true to the clips decrease.
@@ -118,7 +152,10 @@ public class AmmoModule
     }
 
 
-    //Reload function
+    /// <summary>
+    /// Coroutine for reloading this ammoModule
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator Reload()
     {
         if (DecreaseClips(1))
@@ -140,17 +177,30 @@ public class AmmoModule
         }
     }
 
+    /// <summary>
+    /// Changes behaviour on whether this ammo module uses clips or ammo.
+    /// </summary>
+    /// <param name="usesClips">Does this module want to use clips?</param>
+    /// <param name="usesAmmo">Does this module want to use ammo?</param>
     public void ChangeBehaviour(bool usesClips, bool usesAmmo)
     {
         this.usesClips = usesClips;
         this.usesAmmo = usesAmmo;
     }
 
+    /// <summary>
+    /// Returns a normalized value between 0 and 1
+    /// </summary>
+    /// <returns>A normalized value between 0 and 1 (currentAmmo/maxAmmo)</returns>
     public float ReturnNormalized()
     {
         return (float)m_currentAmmo / (float)m_ammoInfo.maxAmmo;
     }
 
+    /// <summary>
+    /// Does this ammoModule need to reload?
+    /// </summary>
+    /// <returns>Returns true if this ammoModule needs to reload</returns>
     public bool NeedReload()
     {
         //if already reloading then just dont do the reload again

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class provides a clear easy way to initialize values and customise reticles in the Unity Inspector with proper headings and tooltips.
+/// </summary>
 [Serializable]
 public class GUIReticleConfig
 {
@@ -66,6 +69,9 @@ public class GUIReticleConfig
 
 
     //Get functions
+    /// <summary>
+    /// Returns the reticleReference
+    /// </summary>
     public GameObject reticleReference
     {
         get
@@ -78,6 +84,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns reticleText[no longer used]
+    /// </summary>
     public TextMesh reticleText
     {
         get
@@ -90,6 +99,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns the reticleString
+    /// </summary>
     public string reticleString
     {
         get
@@ -102,6 +114,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns the current reticleColor
+    /// </summary>
     public Color reticleColor
     {
         get
@@ -114,6 +129,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns the reticle's text color
+    /// </summary>
     public Color reticleTextColor
     {
         get
@@ -126,6 +144,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns the reticleSize
+    /// </summary>
     public float reticleSize
     {
         get
@@ -138,6 +159,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns the current reticle sprite
+    /// </summary>
     public Sprite reticleSprite
     {
         get
@@ -150,6 +174,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns the reticleInterestSize
+    /// </summary>
     public float reticleInterestSize
     {
         get
@@ -162,6 +189,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns whether the cursor is highlighting an object of interest (an enemy for example)
+    /// </summary>
     public bool objectInterest
     {
         get
@@ -174,6 +204,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Size difference between normal reticle size and interest size
+    /// </summary>
     public float sizeDelta
     {
         get
@@ -186,6 +219,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns initial reticle size
+    /// </summary>
     public float initialReticleSize
     {
         get
@@ -198,6 +234,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Returns reticle's recovery time scale.
+    /// </summary>
     public float reticleRecoveryTimeScale
     {
         get
@@ -210,7 +249,10 @@ public class GUIReticleConfig
         }
     }
 
-
+    /// <summary>
+    /// Sets the reticleColor to be resultColor.
+    /// </summary>
+    /// <param name="resultColor">Color to be used as reticle's new color.</param>
     public void SetReticleColor(Color resultColor)
     {
         if (m_reticleReference != null)
@@ -218,6 +260,9 @@ public class GUIReticleConfig
     }
 
     //Sets back reticle to default color
+    /// <summary>
+    /// Set reticle back to default color.
+    /// </summary>
     public void SetReticleDefaultColor()
     {
         if (m_reticleReference != null)
@@ -247,6 +292,9 @@ public class GUIReticleConfig
         }
     }
 
+    /// <summary>
+    /// Updates the easing function sfor the reticle
+    /// </summary>
     public void UpdateEase()
     {
         if (m_reticleSizeBeforeEase == 0)

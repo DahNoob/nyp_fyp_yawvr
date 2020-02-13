@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract base class for structures/objectives.
+/// </summary>
 abstract public class BaseStructure : BaseEntity
 {
     [Header("Structure Configuration")]
@@ -20,6 +23,10 @@ abstract public class BaseStructure : BaseEntity
         origPos = transform.position;
         isShaking = false;
     }
+
+    /// <summary>
+    /// Override function of BaseEntity's Die function.
+    /// </summary>
     public override void Die()
     {
         Instantiate(m_structureInfo.dieEffect, transform.position, Quaternion.identity, Persistent.instance.GO_DYNAMIC.transform);
@@ -27,6 +34,10 @@ abstract public class BaseStructure : BaseEntity
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Override function for taking damage to this structure.
+    /// </summary>
+    /// <param name="damage">Amount of damage to take</param>
     public override void takeDamage(int damage)
     {
         if(health > 0)
@@ -40,6 +51,10 @@ abstract public class BaseStructure : BaseEntity
         
     }
 
+    /// <summary>
+    /// Function that sets the mesh renderer of this structure to be a certain color based on bool.
+    /// </summary>
+    /// <param name="_isFlashing"></param>
     void SetFlash(bool _isFlashing)
     {
         if (_isFlashing)

@@ -14,6 +14,10 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    26/12/2019, 3:13PM      DahNoob   Created
 *******************************/
+
+/// <summary>
+/// This class shoots rays to determine if the reticle has hit something and updates it respectively.
+/// </summary>
 public class MechLaserPointer : MonoBehaviour
 {
     [Header("Configuration")]

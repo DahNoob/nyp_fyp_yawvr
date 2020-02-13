@@ -14,6 +14,10 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    23/12/2019, 11:48PM     DahNoob   Created (ish), actually duplicated from MechHandHandler
 *******************************/
+
+/// <summary>
+/// Class that defines the variables and functions for hand movement.
+/// </summary>
 public class ControllerFollower : MonoBehaviour
 {
     [Header("Settings")]

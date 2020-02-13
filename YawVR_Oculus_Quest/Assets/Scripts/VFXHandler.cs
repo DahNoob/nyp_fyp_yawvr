@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that spawns VFX
+/// </summary>
 public class VFXHandler : MonoBehaviour , IPooledObject
 {
     public float m_time = 1;

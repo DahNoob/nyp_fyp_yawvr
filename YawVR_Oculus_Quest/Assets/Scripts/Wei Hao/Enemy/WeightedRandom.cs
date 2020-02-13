@@ -14,6 +14,10 @@ using UnityEngine;
 ** --   --------                -------   ------------------------------------
 ** 1    18/12/2019, 10:30 PM     Wei Hao   Created and implemented
 *******************************/
+
+/// <summary>
+/// Provides random functions
+/// </summary>
 public class WeightedRandom : MonoBehaviour
 {
     public static WeightedRandom instance { get; private set; }
@@ -31,7 +35,7 @@ public class WeightedRandom : MonoBehaviour
         public const int omega = 3;
         // Legendary (4 passives)
         public const int alpha = 4;
-        
+
     }
 
     void Awake()

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class inherits from EnemyBase and provides functionalities and variables for roaming enemies.
+/// </summary>
 public class Enemy_Roam : EnemyBase
 {
     private GameObject Player;

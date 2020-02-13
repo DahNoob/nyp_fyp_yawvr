@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['hasball_15757',['HasBall',['../class_oculus_1_1_platform_1_1_samples_1_1_vr_hoops_1_1_player.html#aacd2a19f9a73ec7f10d843d2290ef5d5',1,'Oculus::Platform::Samples::VrHoops::Player']]],
+  ['hasinputfocus_15758',['hasInputFocus',['../class_o_v_r_manager.html#a768112df2e2acceeccdcf84ff14dd512',1,'OVRManager.hasInputFocus()'],['../class_o_v_r_plugin.html#a9c44b0cef1711edb8fe75fc7766c2ff7',1,'OVRPlugin.hasInputFocus()']]],
+  ['hasnextpage_15759',['HasNextPage',['../class_oculus_1_1_platform_1_1_models_1_1_deserializable_list.html#aaa360c6119337c238b5c7e815e2caee4',1,'Oculus::Platform::Models::DeserializableList']]],
+  ['haspreviouspage_15760',['HasPreviousPage',['../class_oculus_1_1_platform_1_1_models_1_1_deserializable_list.html#a13874969da49f99210c3da368847fe9b',1,'Oculus::Platform::Models::DeserializableList']]],
+  ['hasvrfocus_15761',['hasVrFocus',['../class_o_v_r_manager.html#aac78feb72db01b8dd22436a4b20ace62',1,'OVRManager.hasVrFocus()'],['../class_o_v_r_plugin.html#aede761946dd30e65d2dd5cd1d5377918',1,'OVRPlugin.hasVrFocus()']]],
+  ['headphonespresent_15762',['headphonesPresent',['../class_o_v_r_plugin.html#a135d5e1a3774e4b5fbee8e097bd3f385',1,'OVRPlugin']]],
+  ['headposerelativeoffsetrotation_15763',['headPoseRelativeOffsetRotation',['../class_o_v_r_manager.html#a4d4b0a97341c226ef620c47d01297681',1,'OVRManager']]],
+  ['headposerelativeoffsettranslation_15764',['headPoseRelativeOffsetTranslation',['../class_o_v_r_manager.html#a486b8476acb25991d4d485b349d09de7',1,'OVRManager']]],
+  ['health_15765',['health',['../class_player_handler.html#aba7aac79bde6243a1eda3713e0112425',1,'PlayerHandler']]],
+  ['height_15766',['height',['../class_quad_rect.html#acf0a8f29e364554ef8b29d223013ab63',1,'QuadRect']]],
+  ['hidden_15767',['hidden',['../class_o_v_r_gaze_pointer.html#a1ed290b8f38451086231d74b129c2596',1,'OVRGazePointer']]],
+  ['highlight_15768',['Highlight',['../class_oculus_sample_framework_1_1_color_grabbable.html#a35eefcc8bba6a3f70bf74e12cbc57f66',1,'OculusSampleFramework::ColorGrabbable']]],
+  ['highscoreleaderboardupdatedcallback_15769',['HighScoreLeaderboardUpdatedCallback',['../class_oculus_1_1_platform_1_1_samples_1_1_vr_hoops_1_1_leaderboard_manager.html#a2c49975ce625d8298f86ca838f817f84',1,'Oculus::Platform::Samples::VrHoops::LeaderboardManager']]],
+  ['hitpoint_15770',['hitPoint',['../class_mech_laser_pointer.html#a2c5cf545f76757171c3cbb975e751a7d',1,'MechLaserPointer']]],
+  ['hmdpresent_15771',['hmdPresent',['../class_o_v_r_plugin.html#a0faa25c3b250f503d7679a755417e2f2',1,'OVRPlugin']]],
+  ['holoobject_15772',['holoObject',['../class_mech_base_weapon.html#a82300d342676082793eaf0044de0f14d',1,'MechBaseWeapon']]],
+  ['horizontalaxis_15773',['horizontalAxis',['../class_unity_engine_1_1_event_systems_1_1_o_v_r_input_module.html#a1b6bf75f3f113549a53039e635f9ea65',1,'UnityEngine::EventSystems::OVRInputModule']]]
+];

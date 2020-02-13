@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class allows various map points around the map to be placed and used by entities.
+/// </summary>
 [System.Serializable]
 public class MapPointsHandler : MonoBehaviour
 {
@@ -65,6 +68,9 @@ public class MapPointsHandler : MonoBehaviour
     [InspectorButton("OnResetLabeling", 150.0f)]
     public bool resetLabeling;
 
+    /// <summary>
+    /// Re-adds every child transform in this gameobject's transform
+    /// </summary>
     private void OnResetSavedMapPoints()
     {
         m_mapPoints.Clear();
@@ -73,6 +79,10 @@ public class MapPointsHandler : MonoBehaviour
             m_mapPoints.Add(t.position);
         }
     }
+    
+    /// <summary>
+    /// Sets every point's height to be level onto the ground.
+    /// </summary>
     private void OnSetPointsHeight()
     {
         //foreach (Transform t in transform)
@@ -157,6 +167,11 @@ public class MapPointsHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Gets closest point given a position.
+    /// </summary>
+    /// <param name="_pos">Position to compare to</param>
+    /// <returns>Closest point closest to given position.</returns>
     public Vector3 GetClosestPoint(Vector3 _pos)
     {
         float dist = float.MaxValue;
@@ -173,7 +188,11 @@ public class MapPointsHandler : MonoBehaviour
         return point;
     }
 
-
+    /// <summary>
+    /// Queries for the closest point using a quadtree.
+    /// </summary>
+    /// <param name="queryBounds">The search radius and position.</param>
+    /// <returns>Closest point inside the search radius and position.</returns>
     public Vector3 GetClosestPoint(QuadRect queryBounds)
     {
         List<GameObject> nearbyMapPoints = QuadTreeManager.instance.QueryStaticObjects(queryBounds, QuadTreeManager.STATIC_TYPES.MAP_POINTS);

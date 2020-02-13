@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// This class defines properties that are used by the player's minimap
+/// </summary>
 [System.Serializable]
 public class PlayerUIMinimap
 {
@@ -204,6 +206,10 @@ public class PlayerUIMinimap
         return true;
     }
 
+    /// <summary>
+    /// Function that updates enemies on the minimap
+    /// </summary>
+    /// <returns></returns>
     public bool UpdateEnemies()
     {
         //Update queries

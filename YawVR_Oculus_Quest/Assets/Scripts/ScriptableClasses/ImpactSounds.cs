@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class contains variables that would be made into a ScriptableObject later.
+/// </summary>
 [CreateAssetMenu(fileName = "Impact Sound Info", menuName = "Sound Info/Impact Sound Info")]
 public class ImpactSoundInfo : ScriptableObject
 {

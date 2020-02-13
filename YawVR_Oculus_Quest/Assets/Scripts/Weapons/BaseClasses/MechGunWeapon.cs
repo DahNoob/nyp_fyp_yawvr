@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Abstract public class for a MechGunWeapon
+/// Inherits from MechBaseWeapon
+/// </summary>
 abstract public class MechGunWeapon : MechBaseWeapon
 {
     //For UI
@@ -64,6 +68,9 @@ abstract public class MechGunWeapon : MechBaseWeapon
         //GUIManager.instance.SetWeaponInfoAmmo(m_controller, ammoModule.currentAmmo, ammoModule.maxAmmo);
     }
 
+    /// <summary>
+    /// Called when the ammo module finishes reloading.
+    /// </summary>
     private void _AmmoModule_onFinishReload()
     {
         forceFade = false;
@@ -119,7 +126,10 @@ abstract public class MechGunWeapon : MechBaseWeapon
         return true;
     }
 
-    //Update UI
+    /// <summary>
+    /// Updates UI
+    /// </summary>
+    /// <returns></returns>
     public override bool UpdateUI()
     {
         PlayerUIManager.instance.SetWeaponInfo(m_controller, m_moduleIcon, m_moduleName, ammoModule.currentAmmo, ammoModule.maxAmmo, ammoModule.ReturnNormalized());
@@ -184,6 +194,9 @@ abstract public class MechGunWeapon : MechBaseWeapon
         return true;
     }
 
+    /// <summary>
+    /// Spawns a projectile
+    /// </summary>
     virtual protected void SpawnProjectile()
     {
         //BaseProjectile derp = Instantiate(m_projectilePrefab, m_projectileOrigin.position, m_projectileOrigin.rotation, Persistent.instance.GO_DYNAMIC.transform).GetComponent<BaseProjectile>();
@@ -197,6 +210,9 @@ abstract public class MechGunWeapon : MechBaseWeapon
         VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
     }
 
+    /// <summary>
+    /// Virtual function that reloads the gun and plays reload sound.
+    /// </summary>
     virtual public void Reload()
     {
         if (ammoModule.m_isReloading || !isFullyVisible)

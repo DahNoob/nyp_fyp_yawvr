@@ -7,7 +7,14 @@ using OVR;
 public class PlayerUISoundManager : MonoBehaviour
 {   
     //Honestly liek idk what is this tbh liek if i have time i will get back to this but...
+    /// <summary>
+    /// Instance for the soundManager
+    /// </summary>
     public static PlayerUISoundManager instance;
+
+    /// <summary>
+    /// Enum for UI sound types.
+    /// </summary>
     public enum UI_SOUNDTYPE
     {
         OBJECTIVE_SUCCESS,
@@ -22,6 +29,9 @@ public class PlayerUISoundManager : MonoBehaviour
         TOTAL_SOUNDTYPE
     }
 
+    /// <summary>
+    /// Enum for tutorial sound types.
+    /// </summary>
     public enum TUTORIAL_SOUNDTYPE
     {
         WELCOME_TUTORIAL,
@@ -38,6 +48,9 @@ public class PlayerUISoundManager : MonoBehaviour
         TOTAL_SOUNDTYPE
     }
 
+    /// <summary>
+    /// This class assigns a certain sound to a type that would be defined in the inspector.
+    /// </summary>
     [System.Serializable]
     public class PlayerUISoundData
     {
@@ -48,6 +61,9 @@ public class PlayerUISoundManager : MonoBehaviour
         public SoundFXRef m_audioRef;
     }
 
+    /// <summary>
+    /// This class assigns a certain sound to a type that would be defined in the inspector.
+    /// </summary>
     [System.Serializable]
     public class PlayerTutorialSoundData
     {
@@ -94,6 +110,12 @@ public class PlayerUISoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plays a sound.
+    /// </summary>
+    /// <param name="m_soundType">Type of sound to play</param>
+    /// <param name="delaySecs">Amount of delay before sound plays</param>
+    /// <param name="volume">Volume to play the sound</param>
     public void PlaySound(UI_SOUNDTYPE m_soundType, float delaySecs = 0, float volume = 1)
     {
         if (m_soundType == UI_SOUNDTYPE.TOTAL_SOUNDTYPE)
@@ -107,6 +129,12 @@ public class PlayerUISoundManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Plays a sound.
+    /// </summary>
+    /// <param name="m_soundType">Type of sound to play</param>
+    /// <param name="delaySecs">Amount of delay before sound plays</param>
+    /// <param name="volume">Volume to play the sound</param>
     public void PlaySound(TUTORIAL_SOUNDTYPE m_soundType, float delaySecs = 0, float volume = 1)
     {
         if (m_soundType == TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
@@ -119,7 +147,14 @@ public class PlayerUISoundManager : MonoBehaviour
         audioRef.PlaySound(delaySecs);
 
     }
-
+    /// <summary>
+    /// Plays a sound
+    /// </summary>
+    /// <param name="m_soundType">Type of sound to play</param>
+    /// <param name="position">Position to play sound</param>
+    /// <param name="delaySecs">Amount of delay before sound plays</param>
+    /// <param name="volume">Volume to play the sound</param>
+    /// <param name="pitchMultiplier">Pitch multiplier</param>
     public void PlaySoundAt(UI_SOUNDTYPE m_soundType, Vector3 position, float delaySecs = 0, float volume = 1, float pitchMultiplier = 1)
     {
         if (m_soundType == UI_SOUNDTYPE.TOTAL_SOUNDTYPE)
@@ -130,7 +165,14 @@ public class PlayerUISoundManager : MonoBehaviour
         SoundFXRef audioRef = m_audioClipDictionary[tag].m_audioRef;
         audioRef.PlaySoundAt(position, delaySecs, volume, pitchMultiplier);
     }
-
+    /// <summary>
+    /// Plays a sound
+    /// </summary>
+    /// <param name="m_soundType">Type of sound to play</param>
+    /// <param name="position">Position to play sound</param>
+    /// <param name="delaySecs">Amount of delay before sound plays</param>
+    /// <param name="volume">Volume to play the sound</param>
+    /// <param name="pitchMultiplier">Pitch multiplier</param>
     public void PlaySoundAt(TUTORIAL_SOUNDTYPE m_soundType, Vector3 position, float delaySecs = 0, float volume = 1, float pitchMultiplier = 1)
     {
         if (m_soundType == TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
@@ -142,6 +184,11 @@ public class PlayerUISoundManager : MonoBehaviour
         audioRef.PlaySoundAt(position, delaySecs, volume, pitchMultiplier);
     }
 
+    /// <summary>
+    /// Stop sound.
+    /// </summary>
+    /// <param name="m_soundType">Type to stop</param>
+    /// <returns>True if sound is stopped, false if soundType is invalid.</returns>
     public bool StopSound(UI_SOUNDTYPE m_soundType)
     {
         if (m_soundType == UI_SOUNDTYPE.TOTAL_SOUNDTYPE)
@@ -151,7 +198,11 @@ public class PlayerUISoundManager : MonoBehaviour
         SoundFXRef audioRef = m_audioClipDictionary[tag].m_audioRef;
         return audioRef.StopSound();
     }
-
+    /// <summary>
+    /// Stop sound.
+    /// </summary>
+    /// <param name="m_soundType">Type to stop</param>
+    /// <returns>True if sound is stopped, false if soundType is invalid.</returns>
     public bool StopSound(TUTORIAL_SOUNDTYPE m_soundType)
     {
         if (m_soundType == TUTORIAL_SOUNDTYPE.TOTAL_SOUNDTYPE)
@@ -162,7 +213,9 @@ public class PlayerUISoundManager : MonoBehaviour
         audioRef.soundFX.volume = 0;
         return audioRef.StopSound();
     }
-
+    /// <summary>
+    /// Stops all UI sounds
+    /// </summary>
     public void StopAllUISounds()
     {
         foreach(KeyValuePair<int, PlayerUISoundData> data in m_audioClipDictionary)
@@ -178,6 +231,9 @@ public class PlayerUISoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stops all tutorial sounds.
+    /// </summary>
     public void StopAllTutorialSounds()
     {
         foreach (KeyValuePair<int, PlayerTutorialSoundData> data in m_tutorialClipDictionary)
@@ -193,20 +249,34 @@ public class PlayerUISoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stops all sounds playing by this manager.
+    /// </summary>
     public void StopAllSounds()
     {
         StopAllUISounds();
         StopAllTutorialSounds();
     }
 
+    /// <summary>
+    /// Play UIClickSound
+    /// </summary>
     public void PlayUiClickSound()
     {
         m_clickUiSound.PlaySoundAt(transform.position);
     }
+
+    /// <summary>
+    /// Player UIHoverSound
+    /// </summary>
     public void PlayUiHoverSound()
     {
         m_hoverUiSound.PlaySoundAt(transform.position);
     }
+
+    /// <summary>
+    /// Play all ObjectivesClearedSound.
+    /// </summary>
     public void PlayAllObjectivesClearedSound()
     {
         m_allObjectivesClearedSound.PlaySound();
@@ -214,6 +284,9 @@ public class PlayerUISoundManager : MonoBehaviour
     }
 }
 
+/// <summary>
+/// This class contains properties that will be passed into the SoundManager for sounds.
+/// </summary>
 [System.Serializable]
 public class SoundData
 {

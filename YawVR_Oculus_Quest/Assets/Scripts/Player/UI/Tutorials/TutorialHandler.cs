@@ -4,10 +4,16 @@ using UnityEngine;
 using TMPro;
 using OVR;
 
+/// <summary>
+/// Handles all the tutorial logic, while allowing any other objects to access any tutorial-related function and properties.
+/// </summary>
 public class TutorialHandler : MonoBehaviour
 {
     public static TutorialHandler instance;
 
+    /// <summary>
+    /// Player's UI elements into a struct.
+    /// </summary>
     [System.Serializable]
     public struct PlayerTutorialElements
     {
@@ -22,6 +28,9 @@ public class TutorialHandler : MonoBehaviour
 
     //Linked stuff first
 
+    /// <summary>
+    /// Enum for tutorial types.
+    /// </summary>
     public enum TUTORIAL_TYPE
     {
         WELCOME_TUTORIAL,
@@ -144,6 +153,10 @@ public class TutorialHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds a tutorial based on type to the player UI
+    /// </summary>
+    /// <param name="type">Target type</param>
     public void AddTutorial(TUTORIAL_TYPE type)
     {
         int tag = (int)type;
@@ -326,18 +339,21 @@ public class TutorialHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Goes to the index of the tutorial
+    /// Increases currentTutorialIndex and sets active false the rest of the objectives.
     /// </summary>
     public void SetNextTutorial()
     {
         currentTutorialIndex++;
-        for(int i =0; i < tutorialLocations.Count; ++i)
+        for (int i = 0; i < tutorialLocations.Count; ++i)
         {
             bool active = i == currentTutorialIndex ? true : false;
             tutorialLocations[i].SetActive(active);
         }
     }
 
+    /// <summary>
+    /// Called when the tutorial has just started.
+    /// </summary>
     public void StartTutorial()
     {
         for (int i = 0; i < tutorialLocations.Count; ++i)
@@ -357,6 +373,9 @@ public class TutorialHandler : MonoBehaviour
     }
 }
 
+/// <summary>
+/// This class provides all information and properties for a single tutorial.
+/// </summary>
 [System.Serializable]
 public class TutorialInfo
 {
@@ -390,6 +409,9 @@ public class TutorialInfo
     public GameObject rightController;
 }
 
+/// <summary>
+/// Class which contains properties for a tutorial message.
+/// </summary>
 [System.Serializable]
 public class TutorialMessage
 {

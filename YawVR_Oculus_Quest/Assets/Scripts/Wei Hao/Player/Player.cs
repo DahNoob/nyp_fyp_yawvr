@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class initializes player values
+/// Inherits from PlayerBase
+/// </summary>
 public class Player : PlayerBase
 {
     // Start is called before the first frame update

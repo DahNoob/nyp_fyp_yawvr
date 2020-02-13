@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class provides the variables for colors using layers needed for initialization in the UnityEditor.
+/// </summary>
 [System.Serializable]
 public class GUIReticleTagColor
 {

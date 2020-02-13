@@ -15,6 +15,10 @@ using OVR;
 ** --   --------                -------   ------------------------------------
 ** 1    27/11/2019, 5:05 PM     DahNoob   Created and implemented
 *******************************/
+
+/// <summary>
+/// This class provides a DontDestroyOnLoad behaviour and contains variables accessible by all scenes in this program's lifetime.
+/// </summary>
 [System.Serializable]
 public class Persistent : MonoBehaviour
 {
@@ -58,7 +62,7 @@ public class Persistent : MonoBehaviour
     }
     void Start()
     {
-        
+
         print("Persistent started!");
     }
 }

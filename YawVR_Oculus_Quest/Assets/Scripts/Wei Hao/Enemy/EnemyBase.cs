@@ -17,6 +17,9 @@ using UnityEngine;
 ** 2    18/12/2019, 10:31 PM    Wei Hao   Added rarity enum
 *******************************/
 
+/// <summary>
+/// This class provides the core variables and functions for an enemy.
+/// </summary>
 abstract public class EnemyBase : BaseEntity
 {
     [Header("Enemy Stats")]
@@ -50,8 +53,13 @@ abstract public class EnemyBase : BaseEntity
     protected MeshRenderer[] meshRenderers;
 
     //Getters/setters
-    public Transform m_target {
-        get {
+    /// <summary>
+    /// Get the enemy's target 
+    /// </summary>
+    public Transform m_target
+    {
+        get
+        {
             if (_m_target == null)
                 _m_target = PlayerHandler.instance.transform;
 
@@ -59,12 +67,19 @@ abstract public class EnemyBase : BaseEntity
         }
         set { _m_target = value; }
     }
+
+    /// <summary>
+    /// Get the enemie's navMeshAgent
+    /// </summary>
     public UnityEngine.AI.NavMeshAgent navMeshAgent
     {
         get { return m_navMeshAgent; }
         private set { m_navMeshAgent = value; }
     }
 
+    /// <summary>
+    /// Get the enemy's data.
+    /// </summary>
     public EnemyInfo enemyInfo
     {
         get { return m_enemyInfo; }
@@ -133,14 +148,14 @@ abstract public class EnemyBase : BaseEntity
     public void SetFlash(bool _flashing)
     {
         //MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
-        if(_flashing)
+        if (_flashing)
         {
             for (int i = 0; i < meshRenderers.Length; ++i)
             {
                 //meshes[i].material.EnableKeyword("_EMISSION");
                 //meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
                 //meshes[i].material.SetColor("_EmissionColor", Color.white);
-                if(meshRenderers[i])
+                if (meshRenderers[i])
                     meshRenderers[i].material = Persistent.instance.MAT_WHITE;
             }
         }
@@ -151,15 +166,19 @@ abstract public class EnemyBase : BaseEntity
                 //meshes[i].material.DisableKeyword("_EMISSION");
                 //meshes[i].material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
                 //meshes[i].material.SetColor("_EmissionColor", Color.black);
-                if(meshRenderers[i])
+                if (meshRenderers[i])
                     meshRenderers[i].material = Persistent.instance.MAT_ENEMYMECH;
             }
         }
     }
 
+    /// <summary>
+    /// Enemy's override function for taking damage.
+    /// </summary>
+    /// <param name="damage"></param>
     public override void takeDamage(int damage)
     {
-        if(health > 0)
+        if (health > 0)
         {
             if (flashTick <= 0)
                 SetFlash(true);
@@ -170,6 +189,9 @@ abstract public class EnemyBase : BaseEntity
         }
     }
 
+    /// <summary>
+    /// Override function for enemy's die
+    /// </summary>
     public override void Die()
     {
         //gameObject.SetActive(false);
@@ -193,40 +215,73 @@ abstract public class EnemyBase : BaseEntity
     //{
     //}
 
+        /// <summary>
+        /// Get the enemy's speed value.
+        /// </summary>
+        /// <returns>Enemy's speed value in float.</returns>
     public float GetSpeed()
     {
         return m_enemyInfo.moveSpeed * moveSpeedMultiplier;
     }
 
+    /// <summary>
+    /// Gets the enemy's damage
+    /// </summary>
+    /// <returns>Enemy's damage value in int.</returns>
     public int GetDamage()
     {
         return (int)(m_enemyInfo.damage * damageMultiplier);
     }
 
+    /// <summary>
+    /// Get's the enemy's max health
+    /// </summary>
+    /// <returns>Enemy's max health in int.</returns>
     public int GetMaxHealth()
     {
         return (int)(m_enemyInfo.maxHealth * maxHealthMultiplier);
     }
 
+    /// <summary>
+    /// Sets the enemy's minimap icon sprite [no longer used]
+    /// </summary>
+    /// <param name="_newSprite">The sprite to be used as reference.</param>
     public void SetIconSprite(Sprite _newSprite = null)
     {
         m_minimapIcon.sprite = _newSprite ?? m_enemyInfo.defaultIcon;
     }
+
+    /// <summary>
+    /// Sets the enemy's icon color [no longer used]
+    /// </summary>
+    /// <param name="_color">Color for sprite</param>
     public void SetIconColor(Color _color)
     {
         m_minimapIcon.color = _color;
     }
 
+    /// <summary>
+    /// Sets the enemy's health
+    /// </summary>
+    /// <param name="new_HP">New HP value</param>
     public void SetHealth(int new_HP)
     {
         health = new_HP;
     }
 
+    /// <summary>
+    /// Sets the enemy's damage multiplier
+    /// </summary>
+    /// <param name="_newMult">New Multiplier Value</param>
     public void SetDamageMultiplier(float _newMult)
     {
         damageMultiplier = _newMult;
     }
 
+    /// <summary>
+    /// Sets the enemy's move speed multiplier
+    /// </summary>
+    /// <param name="_newMult">New Multiplier Value</param>
     public void SetMoveSpeedMultiplier(float _newMult)
     {
         moveSpeedMultiplier = _newMult;
@@ -234,6 +289,10 @@ abstract public class EnemyBase : BaseEntity
          navMeshAgent.speed = m_enemyInfo.moveSpeed * moveSpeedMultiplier;
     }
 
+    /// <summary>
+    /// Sets the enemy's max health multiplier.
+    /// </summary>
+    /// <param name="_newMult">New Multiplier Value</param>
     public void SetMaxHealthMultiplier(float _newMult)
     {
         maxHealthMultiplier = _newMult;

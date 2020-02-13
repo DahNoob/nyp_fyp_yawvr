@@ -16,8 +16,12 @@ using UnityEngine.AI;
 ** 1    18/12/2019, 11:10 AM    DahNoob   Created
 ** 2    27/12/2019, 11:47 AM    DahNoob   Implemented spawning recharge time
 *******************************/
+
+/// <summary>
+/// This class provides all functionalities and variables that is used by HeavyMech2
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class HeavyMech2 : EnemyBase ,IPooledObject
+public class HeavyMech2 : EnemyBase, IPooledObject
 {
     // Banelings states
     protected enum _GameStates
@@ -63,6 +67,9 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
     private Animator anim;
     private NavMeshAgent navMeshAgent;
 
+    /// <summary>
+    /// Called when this enemy  is spawned from the object pool.
+    /// </summary>
     public void OnObjectSpawn()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -74,6 +81,9 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         SetIconSprite();
     }
 
+    /// <summary>
+    /// Called when this enemy should be "destroyed"
+    /// </summary>
     public void OnObjectDestroy()
     {
         ObjectPooler.instance.SpawnFromPool(PoolObject.OBJECTTYPES.ENEMY_DEATH_EFFECT, transform.position + GetComponent<SphereCollider>().center, Quaternion.identity);
@@ -91,9 +101,9 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         spawnRechargeTimer = Time.time;
 
         anim = GetComponent<Animator>();
-        navMeshAgent = GetComponent<NavMeshAgent>(); 
+        navMeshAgent = GetComponent<NavMeshAgent>();
 
-        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES); 
+        AddToQuadTree(this.gameObject, QuadTreeManager.DYNAMIC_TYPES.ENEMIES);
     }
 
     override protected void Update()
@@ -107,7 +117,7 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
             anim.SetFloat("AnimSpeed", 0);
             return;
         }
-        anim.SetFloat("AnimSpeed", GetComponent<NavMeshAgent>().velocity.magnitude / GetComponent<NavMeshAgent>().speed);       
+        anim.SetFloat("AnimSpeed", GetComponent<NavMeshAgent>().velocity.magnitude / GetComponent<NavMeshAgent>().speed);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -129,6 +139,9 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
     }
 
     //shite implementation but wutever
+    /// <summary>
+    /// When the enemy is entering spawn
+    /// </summary>
     public void EnterSpawn()
     {
         m_currentState = _GameStates.SPAWN;
@@ -137,6 +150,10 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         m_spawnSpinSound.Play();
         FlipActiveSide();
     }
+
+    /// <summary>
+    /// When the enemy is exiting spawn.
+    /// </summary>
     public void ExitSpawn()
     {
         m_currentState = _GameStates.CHASE;
@@ -154,6 +171,9 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         m_spawnSpinSound.Stop();
     }
 
+    /// <summary>
+    /// Function that is called by the enemy AI for spawning an enemy.
+    /// </summary>
     public void SpawnEnemy()
     {
         Transform spawnTransform = activeSideIsRight ? m_spawnPivotRight : m_spawnPivotLeft;
@@ -169,6 +189,10 @@ public class HeavyMech2 : EnemyBase ,IPooledObject
         else
             m_effectLeft_Spawn.Emit(1);
     }
+
+    /// <summary>
+    /// Flips the side and spawns enemies based on that side.
+    /// </summary>
     public void FlipActiveSide()
     {
         RaycastHit hitLeft, hitRight;

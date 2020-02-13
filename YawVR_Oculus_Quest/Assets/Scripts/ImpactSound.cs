@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using OVR;
 
+/// <summary>
+/// This class contains audio files to be used when projectiles hit a certain type(sand, rock, metal)
+/// </summary>
 public class ImpactSound : MonoBehaviour , IPooledObject
 {
     public enum IMPACT_TYPE
@@ -18,10 +21,16 @@ public class ImpactSound : MonoBehaviour , IPooledObject
 
     private bool startedPlaying = false;
 
+    /// <summary>
+    /// Called when this sound should be "spawned"
+    /// </summary>
     public void OnObjectSpawn()
     {
     }
 
+    /// <summary>
+    /// Called when this sound should be "destroyed"
+    /// </summary>
     public void OnObjectDestroy()
     {
         ObjectPooler.instance.DisableInPool(PoolObject.OBJECTTYPES.PLAYER_PROJECTILE_IMPACT);
@@ -29,6 +38,9 @@ public class ImpactSound : MonoBehaviour , IPooledObject
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Start playing sounds
+    /// </summary>
     public void StartImpact()
     {
         AudioClip[] clips;

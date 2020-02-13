@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// This class is used as a base for creating a ScriptableObject asset for an projectile's base info
+/// </summary>
 [CreateAssetMenu(fileName = "Generic Projectile Info", menuName = "Projectile Info/Generic Projectile Info")]
 public class GenericProjectileInfo : ScriptableObject
 {
