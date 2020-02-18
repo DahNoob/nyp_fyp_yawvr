@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using OVR;
+using YawVR;
 
 /******************************  
 ** Name: Persistent Behaviour
@@ -27,6 +28,7 @@ public class Persistent : MonoBehaviour
     public readonly Color COLOR_TRANSPARENT = new Color(0, 0, 0, 0);
     public GameObject GO_STATIC { get; private set; }
     public GameObject GO_DYNAMIC { get; private set; }
+    public GameObject YAW_TRACKER;
 
     public GameObject PREFAB_MODULE_ICON;
     public GameObject PREFAB_BEACON;
@@ -58,11 +60,19 @@ public class Persistent : MonoBehaviour
         DontDestroyOnLoad(this);
         GO_STATIC = GameObject.Find("Static");
         GO_DYNAMIC = GameObject.Find("Dynamic");
+        YAW_TRACKER = GameObject.Find("YAWTracker");
         print("Persistent awake!");
     }
     void Start()
     {
-
         print("Persistent started!");
+    }
+    public void AttachYawTrackerTo(Transform _transform)
+    {
+        YAW_TRACKER.transform.SetParent(_transform);
+    }
+    public void DetachYawTracker()
+    {
+        YAW_TRACKER.transform.SetParent(YawController.Instance().transform);
     }
 }

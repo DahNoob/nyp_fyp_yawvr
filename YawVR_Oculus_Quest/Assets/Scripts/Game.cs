@@ -111,6 +111,8 @@ public class Game : MonoBehaviour
     {
         UIObjectiveHandler.instance.OnDisable();
         UIReticleHandler.instance.OnDisable();
+
+        Persistent.instance.DetachYawTracker();
     }
 
     void Start()
@@ -132,6 +134,8 @@ public class Game : MonoBehaviour
         m_backgroundMusic.AttachToParent(Camera.main.transform);
         m_backgroundAmbience.PlaySound(Random.Range(10, 20));
         m_backgroundAmbience.AttachToParent(Camera.main.transform);
+
+        Persistent.instance.AttachYawTrackerTo(PlayerHandler.instance.transform);
 
         print("Game started!");
     }
