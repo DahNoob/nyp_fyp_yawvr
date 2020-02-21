@@ -35,5 +35,13 @@ namespace YawVR {
                 }
             }
         }
+        public void SetCameraOffset(Transform _transform)
+        {
+            cameraOffsetTransform = _transform;
+        }
+        public float GetYawOffset()
+        {
+            return IMU.y + offset.y;
+        }
     }
 }

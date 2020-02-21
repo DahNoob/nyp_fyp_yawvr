@@ -28,6 +28,7 @@ public class Persistent : MonoBehaviour
     public readonly Color COLOR_TRANSPARENT = new Color(0, 0, 0, 0);
     public GameObject GO_STATIC { get; private set; }
     public GameObject GO_DYNAMIC { get; private set; }
+    [HideInInspector]
     public GameObject YAW_TRACKER;
 
     public GameObject PREFAB_MODULE_ICON;
@@ -51,9 +52,10 @@ public class Persistent : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            Destroy(gameObject);
             instance.GO_STATIC = GameObject.Find("Static");
             instance.GO_DYNAMIC = GameObject.Find("Dynamic");
+            instance.YAW_TRACKER = GameObject.Find("YAWTracker");
+            DestroyImmediate(gameObject);
             return;
         }
         instance = this;
@@ -70,6 +72,10 @@ public class Persistent : MonoBehaviour
     public void AttachYawTrackerTo(Transform _transform)
     {
         YAW_TRACKER.transform.SetParent(_transform);
+    }
+    public void SetYawCameraOffset(Transform _transform)
+    {
+        YawController.Instance().GetCameraIMUCancellation().SetCameraOffset(_transform);
     }
     public void DetachYawTracker()
     {

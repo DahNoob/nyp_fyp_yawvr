@@ -42,6 +42,7 @@ public class ShotGun : MechGunWeapon
     override protected void Vibe()
     {
         VibrationManager.SetControllerVibration(m_controller, 0.1f, 0.7f);
+        PlayerHandler.instance.BuzzYaw(0.2f, 50, (int)m_yawBuzzAmplitudes.z, (int)m_yawBuzzAmplitudes.y, (int)m_yawBuzzAmplitudes.x);
     }
 
     /// <summary>

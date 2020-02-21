@@ -162,6 +162,7 @@ namespace YawVR {
       
     
         private OVector referenceRotation; // the rotation of the YAWTracker
+        public OVector additionalRotation; // additional rotation of the Yaw
 
         [SerializeField]
         private Vector3 rotationMultiplier = new Vector3(1, 1, 1); // multiplier for YAWTracker
@@ -180,6 +181,8 @@ namespace YawVR {
             }
             return instance;
         }
+
+        public CameraIMUCancellation GetCameraIMUCancellation() { return cancellation; }
 
         //MARK: - Lifecycle methods
 
@@ -626,9 +629,9 @@ namespace YawVR {
 
             float yaw = 0, pitch = 0, roll = 0;
   
-            yaw = SignedForm(referenceRotation.yaw);
-            pitch = SignedForm(referenceRotation.pitch);
-            roll = SignedForm(referenceRotation.roll);
+            yaw = SignedForm(referenceRotation.yaw + additionalRotation.yaw);
+            pitch = SignedForm(referenceRotation.pitch + additionalRotation.pitch);
+            roll = SignedForm(referenceRotation.roll + additionalRotation.roll);
 
             
             SendRotation(new OVector(yaw,pitch,roll));

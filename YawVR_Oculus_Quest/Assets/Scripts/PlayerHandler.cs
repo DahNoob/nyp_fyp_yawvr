@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using OVR;
+using YawVR;
 
 /******************************  
 ** Name: Player Handler behaviour
@@ -100,6 +101,7 @@ public class PlayerHandler : BaseEntity
     private int m_fallThreshold = -20;
     [SerializeField]
     private Transform m_camPivot;
+    public Transform m_yawCamPivot;
     [SerializeField]
     private OVRScreenFade m_camScreenFade;
     [SerializeField]
@@ -144,6 +146,7 @@ public class PlayerHandler : BaseEntity
     private float DEV_resetLevelTimer = 0;
     private float prevHeight;
     private MechMovement mechMovement;
+    private Coroutine yawBuzzCoroutine;
 
     //Hidden variables
     private float _health, _armor;
@@ -215,6 +218,7 @@ public class PlayerHandler : BaseEntity
         m_uiArmor = armor; //initial values
         m_coinsText.text = "0";
         prevHeight = transform.position.y;
+        YawController.Instance().Buzzer.SetOn(false);
         print("PlayerHandler started!");
     }
 
@@ -222,6 +226,10 @@ public class PlayerHandler : BaseEntity
     {
         if (transform.position.y < m_fallThreshold)
             ResetPose();
+        if (YawController.Instance().Device.Status == DeviceStatus.Available)
+            m_yawCamPivot.localEulerAngles = new Vector3(0, -transform.localEulerAngles.y, 0);
+        else
+            m_yawCamPivot.localEulerAngles = Vector3.zero;
         shakeElapsed -= Time.deltaTime;
         armorRegenElapsed += Time.deltaTime;
         if (armorRegenElapsed > m_armorRegenDelay)
@@ -257,6 +265,7 @@ public class PlayerHandler : BaseEntity
                 VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.03f, strength, false, 0.02f);
                 VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, strength, false, 0.02f);
                 mechMovement.PlayStepSound();
+                BuzzYaw(0.175f, 30);
             }
             else if (!walkHapticReady && sin > 0.5f)
             {
@@ -269,15 +278,6 @@ public class PlayerHandler : BaseEntity
         if (Input.GetKeyDown(KeyCode.G))
             Shake(0.2f);
 #endif
-        if (Input.GetKey(KeyCode.R) || (OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.RTouch) && OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OVRInput.Controller.LTouch)))
-        {
-            DEV_resetLevelTimer += Time.deltaTime;
-            if (DEV_resetLevelTimer > 2)
-            {
-                DEV_resetLevelTimer = -9999999;
-                StartCoroutine(SetNextLevel("NewDesertMap"));
-            }
-        }
         else
         {
             DEV_resetLevelTimer = 0;
@@ -388,7 +388,7 @@ public class PlayerHandler : BaseEntity
         health += _armor;
     }
 
-    public IEnumerator ResetPoseThread()
+    private IEnumerator ResetPoseThread()
     {
         isResettingPose = true;
         m_camScreenFade.FadeOut();
@@ -408,13 +408,38 @@ public class PlayerHandler : BaseEntity
     /// </summary>
     /// <param name="_sceneName">Name of scene to change to.</param>
     /// <returns></returns>
-    public IEnumerator SetNextLevel(string _sceneName)
+    private IEnumerator SetNextLevel(string _sceneName)
     {
         Game.instance.StopAllBGM();
         isResettingPose = true;
         m_camScreenFade.FadeOut();
+        Persistent.instance.DetachYawTracker();
+        Persistent.instance.SetYawCameraOffset(null);
         yield return new WaitForSeconds(m_camScreenFade.fadeTime + 0.1f);
         SceneManager.LoadScene(_sceneName);
+    }
+
+    private IEnumerator buzzYawVR(float _duration, int _hz, int _right, int _center, int _left)
+    {
+        Buzzer b = YawController.Instance().Buzzer;
+        print(b.isOn);
+        if (b.isOn)
+            StopCoroutine(yawBuzzCoroutine);
+        b.SetOn(true);
+        b.SetHz(_hz);
+        float elapsedTime = 0;
+        while (b.isOn)
+        {
+            if (elapsedTime > _duration)
+            {
+                b.SetOn(false);
+                break;
+            }
+            Vector3 amps = new Vector3(_right, _center, _left) * (1.0f - (elapsedTime / _duration));
+            b.SetBuzzerAmps((int)amps.x, (int)amps.y, (int)amps.z);
+            yield return new WaitForFixedUpdate();
+            elapsedTime += Time.fixedDeltaTime;
+        }
     }
 
     /// <summary>
@@ -473,6 +498,11 @@ public class PlayerHandler : BaseEntity
     {
         return m_camPivot.localPosition;
     }
+
+    public float GetYawOffset()
+    {
+        return m_yawCamPivot.localEulerAngles.y;
+    }
     
     /// <summary>
     /// Sets state of the player
@@ -491,6 +521,10 @@ public class PlayerHandler : BaseEntity
     {
         isShaking = true;
         shakeElapsed = _duration;
+    }
+    public void BuzzYaw(float _duration, int _hz, int _right = 30, int _center = 30, int _left = 30)
+    {
+        yawBuzzCoroutine = StartCoroutine(buzzYawVR(_duration, _hz, _right, _center, _left));
     }
     public void OnGrabberQueryOffset(OVRGrabber _obj)
     {

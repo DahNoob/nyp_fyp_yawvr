@@ -45,6 +45,8 @@ abstract public class MechGunWeapon : MechBaseWeapon
     protected Vector3 m_recoilPosition = new Vector3(0, 0.02f, 0.05f);
     [SerializeField]
     protected Vector3 m_recoilRotation = new Vector3(-2, 0, 0);
+    [SerializeField]
+    protected Vector3 m_yawBuzzAmplitudes = new Vector3(100, 20, 100);
 
     [Header("Ammo Configuration")]
     [SerializeField]
@@ -208,6 +210,7 @@ abstract public class MechGunWeapon : MechBaseWeapon
     virtual protected void Vibe()
     {
         VibrationManager.SetControllerVibration(m_controller, 0.01f, 0.4f);
+        PlayerHandler.instance.BuzzYaw(0.15f, 80, (int)m_yawBuzzAmplitudes.z, (int)m_yawBuzzAmplitudes.y, (int)m_yawBuzzAmplitudes.x);
     }
 
     /// <summary>

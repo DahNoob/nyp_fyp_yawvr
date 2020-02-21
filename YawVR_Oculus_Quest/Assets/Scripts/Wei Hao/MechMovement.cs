@@ -144,6 +144,7 @@ public class MechMovement : MonoBehaviour
             {
                 m_mechLandAudio.Play();
                 PlayerHandler.instance.Shake(0.2f);
+                PlayerHandler.instance.BuzzYaw(0.4f, 40, 80, 80, 80);
                 VibrationManager.SetControllerVibration(OVRInput.Controller.RTouch, 0.03f, 0.5f, false, 0.02f);
                 VibrationManager.SetControllerVibration(OVRInput.Controller.LTouch, 0.03f, 0.5f, false, 0.02f);
             }
@@ -213,7 +214,7 @@ public class MechMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rotationAxisSmoothedDelta_Current = Mathf.LerpUnclamped(rotationAxisSmoothedDelta_Current, rotationAxisSmoothedDelta_Goal, 0.2f);
+        rotationAxisSmoothedDelta_Current = Mathf.LerpUnclamped(rotationAxisSmoothedDelta_Current, rotationAxisSmoothedDelta_Goal, 0.15f);
         if (rotationAxisSmoothedDelta_Current < 0.005f && rotationAxisSmoothedDelta_Current > -0.005f)
             rotationAxisSmoothedDelta_Current = 0;
 

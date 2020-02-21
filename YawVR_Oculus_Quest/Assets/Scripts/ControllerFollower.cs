@@ -50,14 +50,14 @@ public class ControllerFollower : MonoBehaviour
         if (m_enabled)
         {
             Transform t = GetComponent<Transform>();           
-            goalPosition = /*Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * */(Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
-            goalRotation = OVRInput.GetLocalControllerRotation(m_controller);
+            goalPosition = Quaternion.Euler(0, PlayerHandler.instance.GetYawOffset(), 0) * (Vector3.Scale(controllerPos,m_offsetScale) + m_offsetPosition);
+            goalRotation = Quaternion.Euler(0, PlayerHandler.instance.GetYawOffset(), 0) * OVRInput.GetLocalControllerRotation(m_controller);
         }
         else
         {
             float camRot = Camera.main.transform.localEulerAngles.y;
             Transform t = GetComponent<Transform>();
-            goalPosition = /*Quaternion.AngleAxis(m_playerTransform.localEulerAngles.y, Vector3.up) * */m_origin.localPosition;
+            goalPosition = m_origin.localPosition;
             goalRotation = m_origin.localRotation;
         }
     }
