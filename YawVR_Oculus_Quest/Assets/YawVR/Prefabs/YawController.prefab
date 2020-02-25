@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533629748126424}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -58,6 +58,10 @@ MonoBehaviour:
   connectType: 0
   debug_ipAddress: 192.168.1.44
   udpClientPort: 50060
+  additionalRotation:
+    yaw: 0
+    pitch: 0
+    roll: 0
   rotationMultiplier: {x: 1, y: 1, z: 1}
   limits:
     yaw: -1
@@ -143,7 +147,7 @@ GameObject:
   - component: {fileID: 4637228224705595410}
   - component: {fileID: 4637228224702203954}
   - component: {fileID: 4637228224703302386}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: BOWL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +224,7 @@ GameObject:
   - component: {fileID: 4637228224705595412}
   - component: {fileID: 4637228224702203956}
   - component: {fileID: 4637228224703302388}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: bowlinside
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +301,7 @@ GameObject:
   - component: {fileID: 4637228224705595414}
   - component: {fileID: 4637228224702203958}
   - component: {fileID: 4637228224703302390}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: legholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4637228224705595416}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Particle View 001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +408,7 @@ GameObject:
   - component: {fileID: 4637228224705595418}
   - component: {fileID: 4637228224702203960}
   - component: {fileID: 4637228224703302392}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: sittingon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -481,7 +485,7 @@ GameObject:
   - component: {fileID: 4637228224705595420}
   - component: {fileID: 4637228224702203962}
   - component: {fileID: 4637228224703302394}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: topedge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,13 +560,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4637228224705595422}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: DemoMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4637228224705595422
 Transform:
   m_ObjectHideFlags: 0
@@ -597,7 +601,7 @@ GameObject:
   - component: {fileID: 8804032174265894556}
   - component: {fileID: 2003287051}
   - component: {fileID: 5904379143554600941}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: YAWTracker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +615,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5904379142663287788}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.08715578, y: 0, z: 0, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
@@ -711,7 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 516553965906077984}
   - component: {fileID: 5306587429407206605}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: YAWTrackerCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -739,14 +743,15 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8411604111482309835}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2

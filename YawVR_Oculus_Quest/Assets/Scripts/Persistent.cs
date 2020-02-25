@@ -47,6 +47,7 @@ public class Persistent : MonoBehaviour
     public SoundFXRef SOUND_RELOAD_FADEIN;
 
     public bool isFirstTime = true;
+    public bool yawEnabled = false;
 
     private void Awake()
     {
@@ -59,7 +60,7 @@ public class Persistent : MonoBehaviour
             return;
         }
         instance = this;
-        //DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this);
         GO_STATIC = GameObject.Find("Static");
         GO_DYNAMIC = GameObject.Find("Dynamic");
         YAW_TRACKER = GameObject.Find("YAWTracker");

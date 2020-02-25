@@ -241,6 +241,7 @@ namespace YawVR {
 
         void OnDestroy() // NNN
         {
+            if (instance != this) return;
             Debug.Log("Destroying YawController");
             if (state != ControllerState.Initial && state != ControllerState.Disconnecting && device != null) {
                 DisconnectFromDevice(null, null);

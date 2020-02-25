@@ -21,6 +21,8 @@ public class MainHubHandler : MonoBehaviour
     [SerializeField]
     private TMPro.TextMeshProUGUI m_coinsDisplayText;
     [SerializeField]
+    private UnityEngine.UI.Toggle m_yawToggle;
+    [SerializeField]
     private OVR.SoundFXRef m_spaceBgm;
     [SerializeField]
     private OVR.SoundFXRef m_welcomeAboardSound;
@@ -69,6 +71,7 @@ public class MainHubHandler : MonoBehaviour
             m_welcomeBackSound.AttachToParent(Camera.main.transform);
         }
         m_coinsDisplayText.text = PlayerPrefs.GetInt("Currency", 0).ToString();
+        m_yawToggle.SetIsOnWithoutNotify(Persistent.instance.yawEnabled);
     }
 
     void Update()
@@ -144,6 +147,11 @@ public class MainHubHandler : MonoBehaviour
     public void PlayClickUiSound()
     {
         m_clickUiSound.PlaySoundAt(Camera.main.transform.position);
+    }
+
+    public void SetYawIsEnabled()
+    {
+        Persistent.instance.yawEnabled = m_yawToggle.isOn;
     }
 
     IEnumerator fadeToScene(string _sceneName)

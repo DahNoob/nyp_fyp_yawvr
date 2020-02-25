@@ -135,8 +135,12 @@ public class Game : MonoBehaviour
         m_backgroundAmbience.PlaySound(Random.Range(10, 20));
         m_backgroundAmbience.AttachToParent(Camera.main.transform);
 
-        Persistent.instance.AttachYawTrackerTo(PlayerHandler.instance.transform);
-        //Persistent.instance.SetYawCameraOffset(PlayerHandler.instance.m_yawCamPivot);
+        if(Persistent.instance.yawEnabled)
+        {
+            Persistent.instance.AttachYawTrackerTo(PlayerHandler.instance.transform);
+            //Persistent.instance.SetYawCameraOffset(PlayerHandler.instance.m_yawCamPivot);
+        }
+
 
         print("Game started!");
     }

@@ -226,7 +226,7 @@ public class PlayerHandler : BaseEntity
     {
         if (transform.position.y < m_fallThreshold)
             ResetPose();
-        if (YawController.Instance().Device.Status == DeviceStatus.Available)
+        if (Persistent.instance.yawEnabled)
             m_yawCamPivot.localEulerAngles = new Vector3(0, -transform.localEulerAngles.y, 0);
         else
             m_yawCamPivot.localEulerAngles = Vector3.zero;
