@@ -59,7 +59,7 @@ public class Persistent : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
         GO_STATIC = GameObject.Find("Static");
         GO_DYNAMIC = GameObject.Find("Dynamic");
         YAW_TRACKER = GameObject.Find("YAWTracker");
