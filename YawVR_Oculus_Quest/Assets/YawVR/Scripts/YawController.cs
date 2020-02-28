@@ -193,6 +193,7 @@ namespace YawVR {
             }
             else if (instance != this) {
                 DestroyImmediate(gameObject);
+                return;
             }
 
             orientation = GetComponentInChildren<Orientation>();

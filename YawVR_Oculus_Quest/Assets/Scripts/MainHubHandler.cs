@@ -23,6 +23,8 @@ public class MainHubHandler : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Toggle m_yawToggle;
     [SerializeField]
+    private UnityEngine.UI.Slider m_yawDelaySlider;
+    [SerializeField]
     private OVR.SoundFXRef m_spaceBgm;
     [SerializeField]
     private OVR.SoundFXRef m_welcomeAboardSound;
@@ -72,6 +74,8 @@ public class MainHubHandler : MonoBehaviour
         }
         m_coinsDisplayText.text = PlayerPrefs.GetInt("Currency", 0).ToString();
         m_yawToggle.SetIsOnWithoutNotify(Persistent.instance.yawEnabled);
+        m_yawDelaySlider.SetValueWithoutNotify(Persistent.instance.yawDelay);
+        m_yawDelaySlider.gameObject.SetActive(Persistent.instance.yawEnabled);
     }
 
     void Update()
@@ -152,6 +156,12 @@ public class MainHubHandler : MonoBehaviour
     public void SetYawIsEnabled()
     {
         Persistent.instance.yawEnabled = m_yawToggle.isOn;
+        m_yawDelaySlider.gameObject.SetActive(Persistent.instance.yawEnabled);
+    }
+
+    public void SetYawDelay()
+    {
+        Persistent.instance.yawDelay = m_yawDelaySlider.value;
     }
 
     IEnumerator fadeToScene(string _sceneName)

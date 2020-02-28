@@ -262,6 +262,7 @@ MonoBehaviour:
     soundFXName: Reload_FadeIn
   isFirstTime: 1
   yawEnabled: 0
+  yawDelay: 0.1
 --- !u!114 &1103807055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +526,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4223577705387104068}
     m_Modifications:
+    - target: {fileID: 1533629748126424, guid: b2db00cc4030f47faad8506c631645eb, type: 3}
+      propertyPath: m_Name
+      value: YawController
+      objectReference: {fileID: 0}
     - target: {fileID: 4904702685057778, guid: b2db00cc4030f47faad8506c631645eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -569,9 +574,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1533629748126424, guid: b2db00cc4030f47faad8506c631645eb, type: 3}
-      propertyPath: m_Name
-      value: YawController
+    - target: {fileID: 8804032174265894556, guid: b2db00cc4030f47faad8506c631645eb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2db00cc4030f47faad8506c631645eb, type: 3}
@@ -588,6 +594,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4223577705387104068}
     m_Modifications:
+    - target: {fileID: 2145586970531902850, guid: 90fd21b414afe0342acec0c5e71cbbb9,
+        type: 3}
+      propertyPath: m_Name
+      value: MECHARMOrigin_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145586970531902850, guid: 90fd21b414afe0342acec0c5e71cbbb9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 2145586970531902851, guid: 90fd21b414afe0342acec0c5e71cbbb9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -643,16 +659,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2145586970531902850, guid: 90fd21b414afe0342acec0c5e71cbbb9,
-        type: 3}
-      propertyPath: m_Name
-      value: MECHARMOrigin_L
-      objectReference: {fileID: 0}
-    - target: {fileID: 2145586970531902850, guid: 90fd21b414afe0342acec0c5e71cbbb9,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90fd21b414afe0342acec0c5e71cbbb9, type: 3}
 --- !u!4 &4223577706192702910 stripped
@@ -668,6 +674,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4223577705387104068}
     m_Modifications:
+    - target: {fileID: 5487406842446288567, guid: 43571d22433bc844e9432423f457b83b,
+        type: 3}
+      propertyPath: m_Name
+      value: MECHARMOrigin_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487406842446288567, guid: 43571d22433bc844e9432423f457b83b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 5487406842446288566, guid: 43571d22433bc844e9432423f457b83b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -722,16 +738,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487406842446288567, guid: 43571d22433bc844e9432423f457b83b,
-        type: 3}
-      propertyPath: m_Name
-      value: MECHARMOrigin_R
-      objectReference: {fileID: 0}
-    - target: {fileID: 5487406842446288567, guid: 43571d22433bc844e9432423f457b83b,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43571d22433bc844e9432423f457b83b, type: 3}

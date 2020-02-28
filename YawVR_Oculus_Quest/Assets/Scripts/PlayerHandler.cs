@@ -227,7 +227,8 @@ public class PlayerHandler : BaseEntity
         if (transform.position.y < m_fallThreshold)
             ResetPose();
         if (Persistent.instance.yawEnabled)
-            m_yawCamPivot.localEulerAngles = new Vector3(0, -transform.localEulerAngles.y, 0);
+            StartCoroutine(delaySetYawPivot(-transform.localEulerAngles.y));
+        //m_yawCamPivot.localEulerAngles = new Vector3(0, -transform.localEulerAngles.y, 0);
         else
             m_yawCamPivot.localEulerAngles = Vector3.zero;
         shakeElapsed -= Time.deltaTime;
@@ -440,6 +441,12 @@ public class PlayerHandler : BaseEntity
             yield return new WaitForFixedUpdate();
             elapsedTime += Time.fixedDeltaTime;
         }
+    }
+
+    private IEnumerator delaySetYawPivot(float _rotation)
+    {
+        yield return new WaitForSecondsRealtime(Persistent.instance.yawDelay);
+        m_yawCamPivot.localEulerAngles = new Vector3(m_yawCamPivot.localEulerAngles.x, _rotation, m_yawCamPivot.localEulerAngles.z);
     }
 
     /// <summary>

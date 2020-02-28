@@ -48,6 +48,7 @@ public class Persistent : MonoBehaviour
 
     public bool isFirstTime = true;
     public bool yawEnabled = false;
+    public float yawDelay = 0.1f;
 
     private void Awake()
     {
