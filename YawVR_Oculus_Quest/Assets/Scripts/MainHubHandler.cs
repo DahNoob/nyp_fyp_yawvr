@@ -64,7 +64,7 @@ public class MainHubHandler : MonoBehaviour
         m_spaceBgm.AttachToParent(Camera.main.transform);
         if (Persistent.instance.isFirstTime)
         {
-            m_welcomeAboardSound.PlaySound(2);
+            m_welcomeAboardSound.PlaySound(4);
             m_welcomeAboardSound.AttachToParent(Camera.main.transform);
         }
         else
