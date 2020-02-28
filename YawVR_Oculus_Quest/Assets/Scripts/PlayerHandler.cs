@@ -371,6 +371,11 @@ public class PlayerHandler : BaseEntity
         //GetComponent<CharacterController>().enabled = true;
     }
 
+    public void ResetView()
+    {
+        OVRManager.instance.RecenterPose();
+    }
+
     /// <summary>
     /// Adds currency to the player's currency values.
     /// </summary>
@@ -423,7 +428,6 @@ public class PlayerHandler : BaseEntity
     private IEnumerator buzzYawVR(float _duration, int _hz, int _right, int _center, int _left)
     {
         Buzzer b = YawController.Instance().Buzzer;
-        print(b.isOn);
         if (b.isOn)
             StopCoroutine(yawBuzzCoroutine);
         b.SetOn(true);

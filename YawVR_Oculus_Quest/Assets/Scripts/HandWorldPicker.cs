@@ -22,9 +22,13 @@ public class HandWorldPicker : MonoBehaviour
     void Update()
     {
         bool frameTriggered = false;
-        if (!indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > 0.55f)
+        //if (!indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) > 0.55f)
+        //    frameTriggered = indexTriggered = true;
+        //else if (indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < 0.35f)
+        //    indexTriggered = false;
+        if (!indexTriggered && OVRInput.Get(OVRInput.Button.One, m_controller))
             frameTriggered = indexTriggered = true;
-        else if (indexTriggered && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller) < 0.35f)
+        else
             indexTriggered = false;
         string[] layers = { "Props", "Pickable" };
 

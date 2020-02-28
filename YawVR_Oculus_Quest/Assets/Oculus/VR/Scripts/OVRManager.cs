@@ -1245,6 +1245,11 @@ public class OVRManager : MonoBehaviour
 
 	}
 
+    public void RecenterPose()
+    {
+        display.RecenterPose();
+    }
+
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
 	private bool suppressDisableMixedRealityBecauseOfNoMainCameraWarning = false;
 #endif

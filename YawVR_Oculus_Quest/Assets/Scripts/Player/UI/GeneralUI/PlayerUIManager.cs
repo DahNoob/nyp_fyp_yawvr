@@ -60,6 +60,8 @@ public class PlayerUIManager : MonoBehaviour
     private GameObject m_pauseUiButtons;
     [SerializeField]
     private GameObject m_confirmExitButtons;
+    [SerializeField]
+    private GameObject m_resetViewButton;
 
     
 
@@ -124,6 +126,8 @@ public class PlayerUIManager : MonoBehaviour
         //}
 
         //StartCoroutine(m_playerMinimap.UpdateMinimap());
+        if (Application.platform == RuntimePlatform.Android)
+            m_resetViewButton.SetActive(false);
     }
 
     // Update is called once per frame
