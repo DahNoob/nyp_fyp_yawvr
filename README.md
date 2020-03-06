@@ -6,4 +6,4 @@ OVRPlugin version : 1.35.0
 
 MAKE SURE THE VERSIONS DONT CHANGE
 
-prototyping currently in the scene SandboxTest and SandboxTest with Movement
+scenes used in release : MainHub, Tutorial, NewDesertMap
